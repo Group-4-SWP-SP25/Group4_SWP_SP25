@@ -1,1 +1,2 @@
-truong dzai top 1 fpt
+This is a dummy file for testing git
+Alo alo mic check mic check
