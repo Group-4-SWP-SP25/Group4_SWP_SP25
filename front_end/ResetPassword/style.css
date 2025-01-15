@@ -16,10 +16,6 @@
 .cancel {
   background-color: rgba(244, 67, 54, 1);
 }
-
-.error {
-  color: red;
-}
 /* Video background */
 .bg-lazy {
   height: 530px;
