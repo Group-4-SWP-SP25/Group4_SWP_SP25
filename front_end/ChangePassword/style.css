@@ -1,0 +1,152 @@
+@import url("https://fonts.googleapis.com/css2?family=Righteous&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.title {
+  font-family: "Righteous", serif;
+}
+
+.submit {
+  background-color: rgb(37, 141, 255);
+}
+
+.cancel {
+  background-color: rgba(244, 67, 54, 1);
+}
+/* Video background */
+.bg-lazy {
+  height: 530px;
+  position: relative;
+  padding: 8px 0;
+}
+
+.video-background {
+  position: absolute !important; /* Ensure it stays fixed while scrolling */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0; /* Push it behind other content */
+}
+
+iframe {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -2;
+}
+
+/* Content of changing password */
+.change-password {
+  min-height: inherit;
+  height: 100%;
+  max-width: 1406px;
+}
+
+.change-password .frame {
+  position: relative;
+  max-width: 100%;
+  min-height: 1px;
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.change-password .frame .content {
+  min-height: 353px;
+  padding: 5px 15px;
+}
+
+.change-password .content h2 {
+  color: rgb(2, 45, 78);
+  margin-bottom: 20px;
+}
+
+.form {
+  display: flex;
+  width: 100%;
+  flex-flow: wrap;
+  flex-direction: column;
+  gap: 15px 8px;
+  -webkit-box-align: center;
+  align-items: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.form label {
+  margin-bottom: 4px;
+  display: inline-flex;
+  -webkit-box-align: center;
+  align-items: center;
+  font-size: 15px;
+}
+
+.require::before {
+  display: inline-block;
+  margin-right: 4px;
+  color: red;
+  font-size: 14px;
+  font-family: Simsun, sans-serif;
+  line-height: 1;
+  content: "*";
+}
+
+.form input {
+  min-width: 100%;
+  padding: 4px 0.5rem;
+  border: 1px solid rgb(3, 169, 244);
+  border-radius: 4px;
+}
+
+.form input:focus {
+  outline: none;
+}
+
+.button {
+  margin-top: 10px;
+  width: 100%;
+}
+
+.button button {
+  color: #fff;
+  border: none;
+  padding: 5px 40px;
+  border-radius: 10px;
+}
+
+/* Window after successfull changing password */
+.hidden {
+  display: none;
+}
+.success {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 30%;
+  height: 60%;
+  padding: 1.5rem 0;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0 3rem 5rem rgba(0, 0, 0, 0.3);
+  z-index: 10;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(3px);
+  z-index: 5;
+}
