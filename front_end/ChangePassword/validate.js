@@ -86,7 +86,7 @@ function checkPassword(pass, err) {
     }
   }
   if (
-    (pass === confirmPassInput && regexPassword.test(confirmPassInput)) ||
+    (pass === confirmPassInput && regexPassword.test(confirmPassInput.value)) ||
     (pass === newPassInput && confirmPassInput.value.length > 0)
   ) {
     if (confirmPassInput.value !== newPassInput.value) {
