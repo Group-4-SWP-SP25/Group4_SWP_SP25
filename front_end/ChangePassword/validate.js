@@ -42,7 +42,7 @@ const closeSuccessWindow = function () {
     overlay.classList.add('hidden');
 };
 
-// Check password in tags
+// Check paXssword in tags
 let checkValidate = true;
 function checkPassword(pass, err) {
     if (pass.value.length === 0) {
