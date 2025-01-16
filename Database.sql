@@ -18,11 +18,45 @@ GO
 -- 1
 CREATE TABLE [User](
 UserID INT IDENTITY(1, 1) NOT NULL PRIMARY KEY,
-Username NVARCHAR(60) NOT NULL,
-[Password] NVARCHAR(20) NOT NULL,
-Email NVARCHAR(200) NOT NULL UNIQUE,
+UserName VARCHAR(60) NOT NULL,
+[Password] VARCHAR(20) NOT NULL,
+FirstName NVARCHAR(100) NOT NULL,
+LastName NVARCHAR(100) NOT NULL,
+Email VARCHAR(200) NOT NULL UNIQUE,
 Address VARCHAR(200),
 Role VARCHAR(15) DEFAULT 'User',
 Phone VARCHAR(11) NOT NULL UNIQUE
 );
 GO
+
+-- 2
+CREATE TABLE Car(
+UserID INT FOREIGN KEY REFERENCES [User](UserID),
+CarID INT NOT NULL,
+CarName VARCHAR(500),
+Brand TEXT,
+RegistrationNumber VARCHAR(50),
+[Year] INT,
+CONSTRAINT pk_Car PRIMARY KEY (UserID, CarID)
+);
+GO
+
+-- 3
+CREATE TABLE ServiceType(
+	ServiceTypeID INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+	ServiceTypeName VARCHAR(200),
+	Description TEXT
+);
+GO
+
+-- 4
+CREATE TABLE ComponentType (
+	ComponentTypeID INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+	ServiceTypeName VARCHAR(200),
+	Description TEXT
+);
+GO
+
+INSERT INTO [User](Username, Password, FirstName, LastName, Email, Phone)
+VALUES ('q8edh12hi', '1234', 'qwe8dyrwfhief', 'qwgufcqbw', 'qwficqwfc', '0123456789');
+-- 5
