@@ -1,3 +1,7 @@
+.error {
+    color: red;
+}
+
 .register {
     display: flex;
     flex-flow: row wrap;
@@ -79,6 +83,10 @@
     width: -webkit-fill-available;
     border-radius: 5px;
     text-overflow: ellipsis;
+}
+
+.register-field input:focus {
+    outline: none;
 }
 
 .register-button {
