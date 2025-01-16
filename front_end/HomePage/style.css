@@ -1,3 +1,8 @@
+body {
+  margin: 0;
+  background-color: black;
+}
+
 /* Header ------------------------------------*/
 .header {
   position: fixed;
