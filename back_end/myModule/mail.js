@@ -3,21 +3,34 @@ const fs = require('fs')
 const express = require('express');
 const router = express.Router()
 
-const emailTemplate = fs.readFileSync('./myModule/mail_Template.html','utf-8')
+let template = fs.readFileSync('./myModule/mail_Template.html','utf-8')
+
+let code = 'i love you'
+let username = 'Linh đáng iu của anh <33'
+
+const replacements = { username: username, code: code};
+
+for (const key in replacements) { 
+    if (replacements.hasOwnProperty(key)) { 
+        const value = replacements[key]; 
+        const pattern = new RegExp(`{{${key}}}`, 'g'); 
+        template = template.replace(pattern, value);
+    }
+}
 
 let transporter = nodemailer.createTransport({
-    service: 'gmail', // Bạn có thể sử dụng các dịch vụ khác như Yahoo, Outlook
+    service: 'gmail',
     auth: {
-        user: 'hieudmhe182298@fpt.edu.vn', // Thay bằng email của bạn
-        pass: 'ygbt nywx dvax cpkf' // Thay bằng mật khẩu của bạn
+        user: 'hieudmhe182298@fpt.edu.vn', 
+        pass: 'ygbt nywx dvax cpkf' 
     }
 });
 
 let mailOptions = {
     from: 'hieudmhe182298@fpt.edu.vn',
-    to: 'hhhttct102@gmail.com',
+    to: 'nlinh4339@gmail.com',
     subject: 'Hello from Node.js!',
-    html: emailTemplate
+    html: template
 };
 
 let send = transporter.sendMail(mailOptions, (error, info) => {
@@ -29,7 +42,6 @@ let send = transporter.sendMail(mailOptions, (error, info) => {
 
 router.post('/send_code', (req,res) => {
     send();
-    console.log('email was sent');
 })
 
 module.exports = router;
