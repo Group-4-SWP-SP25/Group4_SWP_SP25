@@ -28,11 +28,19 @@
                     <form
                         action="register"
                         method="post">
+                        <!-- Email field -->
                         <div class="register-field">
                             <div class="row">
                                 <div class="col">
                                     <label for="email">
-                                        <span style="color: red; padding-bottom: 10px">*</span> Email
+                                        <span
+                                            style="
+                                                color: red;
+                                                padding-bottom: 10px;
+                                            "
+                                            >*</span
+                                        >
+                                        Email
                                     </label>
                                 </div>
                                 <div class="col text-end">
@@ -48,10 +56,14 @@
                                 placeholder=" Your email" />
                         </div>
 
+                        <!-- Username field -->
                         <div class="register-field">
                             <div class="row">
                                 <div class="col">
-                                    <label for="username"> <span style="color: red">*</span> Username </label>
+                                    <label for="username">
+                                        <span style="color: red">*</span>
+                                        Username
+                                    </label>
                                 </div>
                                 <div class="col text-end">
                                     <span class="e_username error"></span>
@@ -62,43 +74,78 @@
                                 name="username"
                                 id="username"
                                 onkeyup="checkUsername(this, document.querySelector('.e_username'))"
-                                placeholder=" Your ideal username" /><br />
+                                placeholder=" Your ideal username" />
                         </div>
 
+                        <!-- Password field -->
                         <div class="register-field">
                             <div class="row">
                                 <div class="col">
-                                    <label for="password"> <span style="color: red">*</span> Password </label>
+                                    <label for="password">
+                                        <span style="color: red">*</span>
+                                        Password
+                                    </label>
                                 </div>
                                 <div class="col text-end">
                                     <span class="e_password error"></span>
                                 </div>
                             </div>
 
-                            <input
-                                type="password"
-                                name="password"
-                                id="password"
-                                placeholder=" Your ideal password" /><br />
+                            <div class="row">
+                                <div class="col-sm-11">
+                                    <input
+                                        type="password"
+                                        name="password"
+                                        id="password"
+                                        onkeyup="checkPassword(this, document.querySelector('.e_password'))"
+                                        placeholder=" Your ideal password" />
+                                </div>
+                                <div
+                                    class="col-sm-1 text-end"
+                                    style="padding: 0px 8px 0px">
+                                    <input
+                                        type="checkbox"
+                                        class="hide-password"
+                                        onchange="hidePassword(document.querySelector('#password'), this)" />
+                                </div>
+                            </div>
                         </div>
 
+                        <!-- Confirm password field -->
                         <div class="register-field">
                             <div class="row">
                                 <div class="col">
-                                    <label for="password"> <span style="color: red">*</span> Confirm Password </label>
+                                    <label for="password">
+                                        <span style="color: red">*</span>
+                                        Confirm Password
+                                    </label>
                                 </div>
                                 <div class="col text-end">
                                     <span class="e_repassword error"></span>
                                 </div>
                             </div>
 
-                            <input
-                                type="password"
-                                name="repassword"
-                                id="repassword"
-                                placeholder=" Retype password above" /><br />
+                            <div class="row">
+                                <div class="col-sm-11">
+                                    <input
+                                        type="password"
+                                        name="repassword"
+                                        id="repassword"
+                                        onkeyup="checkPassword(this, document.querySelector('.e_repassword'))"
+                                        placeholder=" Confirm password" />
+                                </div>
+                                <div
+                                    class="col-sm-1 text-end"
+                                    style="padding: 0px 8px 0px">
+                                    <input
+                                        type="checkbox"
+                                        class="hide-password"
+                                        onchange="hidePassword(document.querySelector('#repassword'), this)" />
+                                </div>
+                            </div>
                         </div>
 
+                        <!-- Register submit -->
                         <button
                             type="button"
                             class="register-button"
@@ -106,6 +153,7 @@
                             Register
                         </button>
 
+                        <!-- Login redirect -->
                         <button
                             type="button"
                             class="register-button"

@@ -32,17 +32,22 @@ const contentError = function (tag, err) {
 };
 
 // Function
+let validate = true;
+
 function checkEmail(emailTag, errorTag) {
     if (emailTag.value.trim().length === 0) {
         errorStyle(emailTag);
-        contentError(errorTag, 'Please fill your email!');
+        contentError(errorTag, 'Email cannot be empty!');
+        validate = false;
     } else {
         if (!regexEmail.test(emailTag.value.trim())) {
             errorStyle(emailTag);
             contentError(errorTag, 'Invalid email!');
+            validate = false;
         } else {
             successStyle(emailTag);
             contentError(errorTag, '');
+            validate = true;
         }
     }
 }
@@ -50,10 +55,51 @@ function checkEmail(emailTag, errorTag) {
 function checkUsername(usernameTag, errorTag) {
     if (usernameTag.value.trim().length === 0) {
         errorStyle(usernameTag);
-        contentError(errorTag, 'Please fill your username!');
+        contentError(errorTag, 'Username cannot be empty!');
+        validate = false;
     } else {
         contentError(errorTag, '');
+        validate = true;
+    }
+}
+function checkPassword(passwordTag, errorTag) {
+    if (passwordTag.value.trim().length === 0) {
+        errorStyle(passwordTag);
+        contentError(errorTag, 'Password cannot be empty!');
+        validate = false;
+        return;
+    }
+    if (!regexPassword.test(passwordTag.value.trim())) {
+        errorStyle(passwordTag);
+        contentError(errorTag, 'Invalid password');
+        validate = false;
+    } else {
+        successStyle(passwordTag);
+        contentError(errorTag, '');
+        validate = true;
+    }
+
+    if (
+        (passwordTag === repasswordInput &&
+            regexPassword.test(repasswordInput.value)) ||
+        (passwordTag === passwordInput && repasswordInput.value.length > 0)
+    ) {
+        if (repasswordInput.value !== pas.value) {
+            errorStyle(repasswordInput);
+            contentError(repasswordError, 'The password do not match!');
+            checkValidate = false;
+        } else {
+            successStyle(repasswordInput);
+            contentError(repasswordError, '');
+            checkValidate = true;
+        }
     }
 }
 
-function checkPassword() {}
+function hidePassword(hideTag, toggleTag) {
+    if (toggleTag.checked === true) {
+        hideTag.type = 'text';
+    } else {
+        hideTag.type = 'password';
+    }
+}
