@@ -1,12 +1,9 @@
-const connect = require("./connectDB.js");
+const connect = require("../connectDB.js");
 const sql = require("mssql");
-const express = require('express')
-const router = express.Router()
 
 const changePassword = async (req, res) => {
   try {
-
-    const {userID, newPassword} = req.body;
+    const { userId, newPassword } = req.body;
     const pool = await connect(); // Get the connection pool
 
     const query = `
@@ -28,6 +25,6 @@ const changePassword = async (req, res) => {
     console.error("Error updating password:", err.message);
     throw err; // Optionally re-throw the error
   }
-}
+};
 
-module.exports = changePassword
+module.exports = changePassword;
