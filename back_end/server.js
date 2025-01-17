@@ -19,7 +19,7 @@ const ResetPassword = require('./myModule/controller/resetpassword.js')
 // CREATE API
 
 app.post("/sendMail", sendMail);
-app.post("/chagnePassword", changePassword);
+app.post("/changePassword", changePassword);
 app.post("/checkAccountExist", CheckAccountExist);
 app.post("/checkEmail", CheckEmail);
 app.post("/getUserInfo", GetUserInfo);
