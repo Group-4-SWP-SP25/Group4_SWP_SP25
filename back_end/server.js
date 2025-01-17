@@ -12,7 +12,7 @@ const changePassword = require("./myModule/database/user/changePassword.js");
 const CheckAccountExist = require("./myModule/database/user/checkAccExist.js");
 const CheckEmail = require("./myModule/database/user/checkEmail.js");
 const GetUserInfo = require("./myModule/database/user/getUserInfo.js");
-const ResetPassword = require('./myModule/controller/resetpassword.js')
+const ResetPassword = require('./myModule/controller/resetpassword.js');
 
 // ----------------------------------------------------------
 
@@ -23,7 +23,7 @@ app.post("/changePassword", changePassword);
 app.post("/checkAccountExist", CheckAccountExist);
 app.post("/checkEmail", CheckEmail);
 app.post("/getUserInfo", GetUserInfo);
-app.post('/resetPassword',ResetPassword)
+app.post('/resetPassword', ResetPassword)
 
 // ----------------------------------------------------------
 
