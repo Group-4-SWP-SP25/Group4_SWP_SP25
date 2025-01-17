@@ -31,13 +31,13 @@
                         <!-- Email field -->
                         <div class="register-field">
                             <div class="row">
-                                <div class="col">
+                                <div class="col-sm-5">
                                     <label for="email">
                                         <span style="color: red; padding-bottom: 10px">*</span>
                                         Email
                                     </label>
                                 </div>
-                                <div class="col text-end">
+                                <div class="col-sm-7 text-end">
                                     <span class="e_email error"></span>
                                 </div>
                             </div>
@@ -54,13 +54,13 @@
                         <!-- Username field -->
                         <div class="register-field">
                             <div class="row">
-                                <div class="col">
+                                <div class="col-sm-5">
                                     <label for="username">
                                         <span style="color: red">*</span>
                                         Username
                                     </label>
                                 </div>
-                                <div class="col text-end">
+                                <div class="col-sm-7 text-end">
                                     <span class="e_username error"></span>
                                 </div>
                             </div>
@@ -69,19 +69,20 @@
                                 name="username"
                                 id="username"
                                 onkeyup="checkUsername(this, document.querySelector('.e_username'))"
-                                placeholder=" Your ideal username" />
+                                placeholder=" Your ideal username"
+                                required />
                         </div>
 
                         <!-- Password field -->
                         <div class="register-field">
                             <div class="row">
-                                <div class="col">
+                                <div class="col-sm-5">
                                     <label for="password">
                                         <span style="color: red">*</span>
                                         Password
                                     </label>
                                 </div>
-                                <div class="col text-end">
+                                <div class="col-sm-7 text-end">
                                     <span class="e_password error"></span>
                                 </div>
                             </div>
@@ -93,7 +94,8 @@
                                         name="password"
                                         id="password"
                                         onkeyup="checkPassword(this, document.querySelector('.e_password'))"
-                                        placeholder=" Your ideal password" />
+                                        placeholder=" Your ideal password"
+                                        required />
                                 </div>
                                 <div
                                     class="col-sm-1 text-end"
@@ -109,13 +111,13 @@
                         <!-- Confirm password field -->
                         <div class="register-field">
                             <div class="row">
-                                <div class="col">
+                                <div class="col-sm-5">
                                     <label for="password">
                                         <span style="color: red">*</span>
                                         Confirm Password
                                     </label>
                                 </div>
-                                <div class="col text-end">
+                                <div class="col-sm-7 text-end">
                                     <span class="e_repassword error"></span>
                                 </div>
                             </div>
@@ -127,7 +129,8 @@
                                         name="repassword"
                                         id="repassword"
                                         onkeyup="checkPassword(this, document.querySelector('.e_repassword'))"
-                                        placeholder=" Confirm password" />
+                                        placeholder=" Confirm password"
+                                        required />
                                 </div>
                                 <div
                                     class="col-sm-1 text-end"
