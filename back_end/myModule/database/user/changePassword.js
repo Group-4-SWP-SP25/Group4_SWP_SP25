@@ -12,17 +12,12 @@ const changePassword = async (req, res) => {
       WHERE UserID = @userId
     `;
     // Example query
-    const result = await pool
+    await pool
       .request()
       .input("newPassword", sql.VarChar, newPassword) // Password as string
       .input("userId", sql.Int, userId) // UserID as integer
       .query(query);
-
-    console.log("Password updated successfully.");
-    return result; // Optionally return the result
-    // Close the connection (optional because `mssql` handles pooling)
   } catch (err) {
-    console.error("Error updating password:", err.message);
     throw err; // Optionally re-throw the error
   }
 };
