@@ -1,15 +1,12 @@
-const send = require('../Utils/mail')
 const findUserById = require('../database/user/findUserById')
 const { getVerificationCode } = require('../Utils/verificationcode')
 
-// 
+// check verify code
 const resetPassword = (req, res) => {
     const { id, code } = req.body;
     findUserById(id)
         .then(user => {
-            send(user.email, user.firstName + ' ' + user.lastName);
-            const verification = getVerificationCode(user.email).code;
-
+            const verification = getVerificationCode(user.email);
             if (!verification) {
                 return res.status(400).send('Invalid code.');
             } // Kiểm tra thời gian hết hạn 
@@ -21,8 +18,6 @@ const resetPassword = (req, res) => {
             }
             res.send('Email verified successfully.')
         })
-
-
 }
 
 module.exports = resetPassword
