@@ -1,116 +1,164 @@
-@import url("https://fonts.googleapis.com/css2?family=Righteous&display=swap");
+/* Reset default styles */
 body {
     margin: 0;
     padding: 0;
-    background-image: url('car.jpg'); 
-    background-size: cover; 
-    background-repeat: no-repeat; 
-    background-position: center; 
-    height: 80vh; 
-}
-.login{
-    background-color:#9A9091 ;
-    display: center;
-   margin: 140px;
-    width: 30%;
-    border-radius: 10%;
-    height: 68%;
-
-}
-.form-title{
-    color: aliceblue;
-    text-align: center;
-    font-family: "Righteous",sans-serif ;
-}
-
-.social-button{
-    border-radius: 10px;
-    text-align: center;
-    border: none;
-    margin-left: 55px;
-}
-.social-login{
-    text-align: center;
-    margin-left: -60px;
-}
-
-.must{
-    display: inline-block;
-}
-.star{
-    margin-left: 100px;
-    font-size: medium;
-    margin-top: 15px;
-}
-#Box{
-    margin-left: 100px;
-    width: 280px;
-    border-radius: 5px;
-    border: none;
-    font-size: 12px; 
-    padding: 8px; 
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    background: #000;
   
-}
-.form-title1{
-    font-size: small;
-    font-family: "Righteous",sans-serif ;
-   padding-left: 80px;
-    text-decoration: none;
-    color: black;
-    
-}
-.form-title1:hover{
-    color:white; 
-}
-.repa{
-    
-    padding-left: 20px;
-    font-size: small;
-    font-family: "Righteous",sans-serif ;
-   padding-left: 1px;
-}
-.repa1{
-    margin-right:2px;
-    margin-left: 40px;
+    color: #fff;
    
+    background-image: url('car.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 100%;
 }
-.login1{
-    width: 180px;
-    height: 40px;
-    background-color: black;
-    color: aliceblue;
-    margin-left: 145px;
-    margin-top: 10px;
-    font-size: large;
+
+.container {
+    margin-top: 5%;
+    margin-left: 10%;
+    
+}
+
+/* Login Box */
+.login-box {
+    background-color: #625c5c;
+  
+    padding: 30px;
     border-radius: 20px;
-    margin-bottom: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
 }
-.form-title2{
-    margin-left: 50px;
 
-}
-p{
-    margin-left: 120px;
-    padding-top: 10px;
-   
-}
-p .highlight:hover {
-    color:white; 
-
-}
-.highlight {
+/* Title */
+.title {
+    font-size: 24px;
     font-weight: bold;
-    color:black; 
-    text-decoration: none; 
-  }
-.hide-password{
-    margin-left: -32px;
+    margin-bottom: 20px;
 }
-#warning{
-    color: red;
-    margin-left: 213px;
+
+/* Input Group */
+.input-group {
+    margin-bottom: 20px;
+    text-align: left;
 }
-#warning1{
+
+.input-group label {
+    font-size: 14px;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+/* Required mark */
+.required {
     color: red;
-    margin-left: 213px;
+}
+
+/* Password Toggle */
+.password-wrapper {
+    display: flex;
+    align-items: center;
+    margin-right: -10px;
+}
+
+.password-wrapper input {
+    flex: 1;
+}
+
+.toggle-password {
+    
+    cursor: pointer;
+    background-color: white;
+    
+}
+
+/* Options */
+.options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.options .forgot-password {
+    font-size: 12px;
+    color: #f1f1f1;
+    text-decoration: none;
+}
+
+/* Login Button */
+.login-button {
+    width: 100%;
+    padding: 10px;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.login-button:hover {
+    background-color: #333;
+}
+
+/* Social Login */
+.social-login {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.social-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48%;
+    padding: 10px;
+    border: 1px solid #fff;
+    border-radius: 5px;
+    background-color: transparent;
+    color: #fff;
+    cursor: pointer;
+}
+
+.social-button img {
+    width: 20px;
+    margin-right: 10px;
+}
+
+.social-button.google:hover {
+    background-color: #ea4335;
+    color: #fff;
+}
+
+.social-button.apple:hover {
+    background-color: #000;
+    color: #fff;
+}
+
+/* Register */
+.register {
+    font-size: 14px;
+}
+
+.register .highlight {
+    color: #ffd700;
+    text-decoration: none;
+    font-weight: bold;
+}
+#password{
+    margin-right: -50px;
 }
