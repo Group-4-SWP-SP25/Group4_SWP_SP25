@@ -1,26 +1,26 @@
 const connect = require("../connectDB.js");
 const sql = require("mssql");
+const User = require("../../model/user.js");
 
-const CheckAccountExist = async (req,res) => {
+const GetUserInfo = async (req,res) => {
   try {
-    const { account, password } = req.body;
+    const { id } = req.body;
     const pool = await connect(); // Get the connection pool
 
     const query = `
-      SELECT * FROM [User] WHERE (UserName = @account OR Email = @account) AND Password = @password
+      SELECT * FROM [User] WHERE UserID = @id
     `;
     // Example query
     const result = await pool
       .request()
-      .input("account", sql.VarChar, account)
-      .input("password", sql.VarChar, password)
+      .input("id", sql.Int, id)
       .query(query);
 
       if (result.recordset.length > 0) { console.log('Account exists.'); } else { console.log('Account does not exist.');}
 
       const userData = result.recordset[0];
-      const id = userData.UserID;
-      res.json({id:id});
+      const user = new User(userData);
+      res.json(user.userInfo());
       await pool.close();
   } catch (err) {
     res.status(404).send({ error: "Wrong account. Please check again!" });
@@ -29,4 +29,4 @@ const CheckAccountExist = async (req,res) => {
   
 };
 
-module.exports = CheckAccountExist;
+module.exports = GetUserInfo;
