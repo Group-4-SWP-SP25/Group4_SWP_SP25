@@ -6,7 +6,7 @@ const config = {
   server: "localhost",
   database: "SWP_G4",
   options: {
-    encrypt: true, // Set to true for Azure or false for local
+    encrypt: false, // Set to true for Azure or false for local
     trustServerCertificate: true, // Change to true for development
   },
 };
