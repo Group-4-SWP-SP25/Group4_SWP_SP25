@@ -17,7 +17,7 @@ const GetUserInfo = require("./myModule/database/user/getUserInfo.js");
 // CREATE API
 
 app.post("/sendMail", sendMail);
-app.post("/chagnePassword", changePassword);
+app.post("/changePassword", changePassword);
 app.post("/checkAccountExist", CheckAccountExist);
 app.post("/getUserInfo", GetUserInfo);
 
