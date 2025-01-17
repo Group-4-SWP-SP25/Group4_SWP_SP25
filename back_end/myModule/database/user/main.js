@@ -1,11 +1,15 @@
-const changePassword = require("./user/changePassword.js");
+const CheckAccountExist = require("./checkAccExist.js");
 
 async function run() {
   const userId = 1; // Example user ID (you can replace with dynamic input)
-  const newPassword = "asv"; // Example new password
+  const password = "new_secure_password"; // Example new password
 
   try {
-    const result = await changePassword(userId, newPassword);
+    data = {
+      userId: userId,
+      password: password,
+    };
+    const result = await CheckAccountExist(userId, password);
     console.log("Password change result:", result);
   } catch (err) {
     console.error("Failed to change password:", err.message);
