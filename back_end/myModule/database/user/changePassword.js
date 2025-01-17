@@ -1,5 +1,5 @@
 const connect = require("../connectDB.js");
-const findUserById = requi;
+const findUserById = require("./findUserById.js");
 const sql = require("mssql");
 
 const changePassword = async (req, res) => {
@@ -8,12 +8,19 @@ const changePassword = async (req, res) => {
     const pool = await connect(); // Get the connection pool
 
     // Check old password
-
+    const user = await findUserById(Number(userId));
+    if (oldPassword === user.password) {
+      res.status(200).json({ success: "Success" });
+    } else {
+      res.status(400).json({ error: "Your password is wrong" });
+      return;
+    }
     const query = `
       UPDATE [User]
       SET Password = @newPassword
       WHERE UserID = @userId
     `;
+
     // Example query
     await pool
       .request()
