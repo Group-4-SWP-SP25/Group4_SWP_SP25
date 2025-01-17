@@ -1,25 +1,25 @@
 const express = require("express");
-const cors = require('cors');
+const cors = require("cors");
 const PORT = 3000;
 const app = express();
 app.use(express.json());
-app.use(cors())
+app.use(cors());
 
 // IMPORT MODULE
 
-const sendMail = require('./myModule/Utils/mail.js')
+const sendMail = require("./myModule/Utils/mail.js");
 const changePassword = require("./myModule/database/user/changePassword.js");
-const CheckAccountExist = require('./myModule/database/user/checkAccExist.js')
-const GetUserInfo = require('./myModule/database/user/getUserInfo.js')
+const CheckAccountExist = require("./myModule/database/user/checkAccExist.js");
+const GetUserInfo = require("./myModule/database/user/getUserInfo.js");
 
 // ----------------------------------------------------------
 
 // CREATE API
 
-app.post('/sendMail',sendMail);
-app.post('/chagnePassword',changePassword)
-app.post('/checkAccountExist',CheckAccountExist)
-app.post('/getUserInfo',GetUserInfo)
+app.post("/sendMail", sendMail);
+app.post("/chagnePassword", changePassword);
+app.post("/checkAccountExist", CheckAccountExist);
+app.post("/getUserInfo", GetUserInfo);
 
 // ----------------------------------------------------------
 

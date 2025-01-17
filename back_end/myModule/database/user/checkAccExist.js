@@ -21,10 +21,10 @@ const CheckAccountExist = async (req, res) => {
     } else {
       console.log("Account does not exist.");
     }
-      const userData = result.recordset[0];
-      const id = userData.UserID;
-      res.json({id:id});
-      await pool.close();
+    const userData = result.recordset[0];
+    const id = userData.UserID;
+    res.json({ id: id });
+    await pool.close();
   } catch (err) {
     res.status(404).send({ error: "Wrong account. Please check again!" });
     console.log("Error", err);

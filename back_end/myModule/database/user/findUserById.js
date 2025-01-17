@@ -11,7 +11,7 @@ const findUserById = async (id) => {
     const result = await pool.request().input("id", sql.Int, id).query(query);
     const userData = result.recordset[0];
     const user = new User(userData);
-    return user
+    return user;
   } catch (err) {
     throw err;
   }
