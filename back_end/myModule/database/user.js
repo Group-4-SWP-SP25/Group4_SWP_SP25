@@ -7,14 +7,14 @@ async function changePassword(userId, newPassword) {
 
     const query = `
       UPDATE [User]
-      SET Password = ${newPassword}
-      WHERE UserID = ${userId}
+      SET Password = @newPassword
+      WHERE UserID = @userId
     `;
     // Example query
     const result = await pool
       .request()
-      .input("newPassword", sql.VarChar, newPassword) // Assuming password is a string
-      .input("userId", sql.Int, userId) // Assuming user_id is an integer
+      .input("newPassword", sql.VarChar, newPassword) // Password as string
+      .input("userId", sql.Int, userId) // UserID as integer
       .query(query);
 
     console.log("Password updated successfully.");
