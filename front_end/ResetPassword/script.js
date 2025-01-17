@@ -3,17 +3,17 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("submitEmail").addEventListener("click", async () => {
     event.preventDefault();
     const data = {
-      id: 1,
+      account: email.value,
     };
-    console.log("click, email: ", email.value);
-    try {
-      const response = await fetch("http://localhost:3000/sendMail", {
+    // checkAccountExist
+    await fetch("http://localhost:3000/checkEmail", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
-      });
-    } catch (error) {
-      console.error("Error: ", error);
-    }
-  });
+    })
+    .then(response => {return response.json()})
+    .then(result => console.log(result.id))
+    .catch
+     
+    });
 });

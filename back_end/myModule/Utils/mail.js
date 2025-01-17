@@ -3,11 +3,10 @@ const fs = require('fs');
 const {generateVerificationCode} = require('../Utils/verificationcode')
 const findUserById = require('../database/user/findUserById')
 
-let send = async (req, res) => {
+let send = async (id) => {
     // read template
     let template = fs.readFileSync('./myModule/Utils/mail_Template.html','utf-8')
     // info
-    const {id} = req.body;
     const user = await findUserById(id);
     const email = user.email;
     const code = generateVerificationCode(email);

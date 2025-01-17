@@ -10,6 +10,7 @@ app.use(cors());
 const sendMail = require("./myModule/Utils/mail.js");
 const changePassword = require("./myModule/database/user/changePassword.js");
 const CheckAccountExist = require("./myModule/database/user/checkAccExist.js");
+const CheckEmail = require("./myModule/database/user/checkEmail.js");
 const GetUserInfo = require("./myModule/database/user/getUserInfo.js");
 
 // ----------------------------------------------------------
@@ -19,6 +20,7 @@ const GetUserInfo = require("./myModule/database/user/getUserInfo.js");
 app.post("/sendMail", sendMail);
 app.post("/chagnePassword", changePassword);
 app.post("/checkAccountExist", CheckAccountExist);
+app.post("/checkEmail", CheckEmail);
 app.post("/getUserInfo", GetUserInfo);
 
 // ----------------------------------------------------------

@@ -1,5 +1,4 @@
 const connect = require("../connectDB.js");
-const findUserById = requi;
 const sql = require("mssql");
 
 const changePassword = async (req, res) => {
