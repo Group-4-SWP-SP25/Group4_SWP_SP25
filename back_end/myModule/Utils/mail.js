@@ -1,13 +1,20 @@
 const nodemailer = require('nodemailer')
 const fs = require('fs');
+const {generateVerificationCode} = require('../Utils/verificationcode')
+const findUserById = require('../database/user/findUserById')
 
-let send = (req, res) => {
+let send = async (req, res) => {
     // read template
-    let template = fs.readFileSync('./myModule/mail_Template.html','utf-8')
+    let template = fs.readFileSync('./myModule/Utils/mail_Template.html','utf-8')
     // info
-    const {username, code} = req.body;
-    console.log('Email:', username)
-    const replacements = { username: username, code: code};
+    const {id} = req.body;
+    const user = await findUserById(id);
+    const email = user.email;
+    const code = generateVerificationCode(email);
+    console.log('email:', email);
+    console.log('code:', code)
+    
+    const replacements = { username: user.firstName + " " + user.lastName, code: code};
     // 
     for (const key in replacements) { 
         if (replacements.hasOwnProperty(key)) { 
@@ -27,7 +34,7 @@ let send = (req, res) => {
     
     let mailOptions = {
         from: 'hieudmhe182298@fpt.edu.vn',
-        to: username,
+        to: email,
         subject: 'Hello from Node.js!',
         html: template
     };
