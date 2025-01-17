@@ -3,17 +3,13 @@ const fs = require('fs');
 const {generateVerificationCode} = require('../Utils/verificationcode')
 const findUserById = require('../database/user/findUserById')
 
-let send = async (id) => {
+let send = async (email, username) => {
     // read template
     let template = fs.readFileSync('./myModule/Utils/mail_Template.html','utf-8')
     // info
-    const user = await findUserById(id);
-    const email = user.email;
     const code = generateVerificationCode(email);
-    console.log('email:', email);
-    console.log('code:', code)
     
-    const replacements = { username: user.firstName + " " + user.lastName, code: code};
+    const replacements = { username: username, code: code};
     // 
     for (const key in replacements) { 
         if (replacements.hasOwnProperty(key)) { 
