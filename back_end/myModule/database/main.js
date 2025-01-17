@@ -1,4 +1,4 @@
-const changePassword = require("./user.js");
+const changePassword = require("./user/changePassword.js");
 
 async function run() {
   const userId = 1; // Example user ID (you can replace with dynamic input)
