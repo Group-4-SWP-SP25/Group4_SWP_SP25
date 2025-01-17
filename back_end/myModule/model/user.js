@@ -1,29 +1,28 @@
 class User {
-  constructor(data) {
-    userData = JSON.parse(data);
-    this.id = userData.id;
-    this.username = userData.username;
-    this.password = userData.password;
-    this.firstName = userData.firstName;
-    this.lastName = userData.lastName;
-    this.email = userData.email;
-    this.address = userData.address;
-    this.lastName = userData.lastName;
-    this.role = userData.role;
-    this.phone = userData.phone;
+  constructor(userData) {
+    this.id = userData.UserID;
+    this.username = userData.UserName;
+    this.password = userData.Password;
+    this.firstName = userData.FirstName;
+    this.lastName = userData.LastName;
+    this.email = userData.Email;
+    this.address = userData.Address;
+    this.lastName = userData.LastName;
+    this.role = userData.Role;
+    this.phone = userData.Phone;
   }
   userInfo() {
     let data = {
-      id: id,
-      username: username,
-      password: password,
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      address: address,
-      lastName: lastName,
-      role: role,
-      phone: phone,
+      id: this.id,
+      username: this.username,
+      password: this.password,
+      firstName: this.firstName,
+      lastName: this.lastName,
+      email: this.email,
+      address: this.address,
+      lastName: this.lastName,
+      role: this.role,
+      phone: this.phone,
     };
     return data;
   }

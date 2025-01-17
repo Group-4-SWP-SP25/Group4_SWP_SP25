@@ -7,8 +7,9 @@ app.use(cors())
 
 // IMPORT MODULE
 
-const sendMail = require('./myModule/mail.js')
-const changePassword = require("./myModule/database/user.js");
+const sendMail = require('./myModule/Utils/mail.js')
+const changePassword = require("./myModule/database/user/changePassword.js");
+const CheckAccountExist = require('./myModule/database/user/checkAccExist.js')
 
 // ----------------------------------------------------------
 
@@ -16,9 +17,25 @@ const changePassword = require("./myModule/database/user.js");
 
 app.post('/sendMail',sendMail);
 app.post('/chagnePassword',changePassword)
+app.post('/checkAccountExist',CheckAccountExist)
 
 // ----------------------------------------------------------
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
+  data = {
+    userId: 1,
+    password: "doanhieu",
+  };
+  try{
+    fetch('http://localhost:3000/checkAccountExist', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json'},
+      body: JSON.stringify(data)
+    })
+    .then(response => {return response.json()})
+    .then(result => console.log('result: ', result.password))
+  }catch (e){
+    console.log(e)
+  }
 });
