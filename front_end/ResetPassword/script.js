@@ -14,8 +14,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 headers: { 'Content-Type': 'application/json'},
                 body: JSON.stringify(data)
             })
-            const result = response.json()
-            console.log(result)
         } catch (error) {
             console.error("Error: ", error);
         }

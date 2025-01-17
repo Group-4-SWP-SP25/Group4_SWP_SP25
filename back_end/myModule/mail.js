@@ -38,7 +38,6 @@ let send = (req, res) => {
             return console.log(error);
         }
         console.log('Email sent: ' + info.response);
-        res.status(200).json({message: 'Email sent successfully'});
     });
 }
 

@@ -1,7 +1,5 @@
 const connect = require("./connectDB.js");
 const sql = require("mssql");
-const express = require('express')
-const router = express.Router()
 
 const changePassword = async (req, res) => {
   try {
