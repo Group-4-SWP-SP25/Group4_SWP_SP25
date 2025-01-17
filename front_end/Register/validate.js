@@ -79,11 +79,7 @@ function checkPassword(passwordTag, errorTag) {
         validate = true;
     }
 
-    if (
-        (passwordTag === repasswordInput &&
-            regexPassword.test(repasswordInput.value)) ||
-        (passwordTag === passwordInput && repasswordInput.value.length > 0)
-    ) {
+    if ((passwordTag === repasswordInput && regexPassword.test(repasswordInput.value)) || (passwordTag === passwordInput && repasswordInput.value.length > 0)) {
         if (repasswordInput.value !== pas.value) {
             errorStyle(repasswordInput);
             contentError(repasswordError, 'The password do not match!');
