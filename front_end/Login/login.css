@@ -1,0 +1,116 @@
+@import url("https://fonts.googleapis.com/css2?family=Righteous&display=swap");
+body {
+    margin: 0;
+    padding: 0;
+    background-image: url('car.jpg'); 
+    background-size: cover; 
+    background-repeat: no-repeat; 
+    background-position: center; 
+    height: 80vh; 
+}
+.login{
+    background-color:#9A9091 ;
+    display: center;
+   margin: 140px;
+    width: 30%;
+    border-radius: 10%;
+    height: 68%;
+
+}
+.form-title{
+    color: aliceblue;
+    text-align: center;
+    font-family: "Righteous",sans-serif ;
+}
+
+.social-button{
+    border-radius: 10px;
+    text-align: center;
+    border: none;
+    margin-left: 55px;
+}
+.social-login{
+    text-align: center;
+    margin-left: -60px;
+}
+
+.must{
+    display: inline-block;
+}
+.star{
+    margin-left: 100px;
+    font-size: medium;
+    margin-top: 15px;
+}
+#Box{
+    margin-left: 100px;
+    width: 280px;
+    border-radius: 5px;
+    border: none;
+    font-size: 12px; 
+    padding: 8px; 
+  
+}
+.form-title1{
+    font-size: small;
+    font-family: "Righteous",sans-serif ;
+   padding-left: 80px;
+    text-decoration: none;
+    color: black;
+    
+}
+.form-title1:hover{
+    color:white; 
+}
+.repa{
+    
+    padding-left: 20px;
+    font-size: small;
+    font-family: "Righteous",sans-serif ;
+   padding-left: 1px;
+}
+.repa1{
+    margin-right:2px;
+    margin-left: 40px;
+   
+}
+.login1{
+    width: 180px;
+    height: 40px;
+    background-color: black;
+    color: aliceblue;
+    margin-left: 145px;
+    margin-top: 10px;
+    font-size: large;
+    border-radius: 20px;
+    margin-bottom: 10px;
+}
+.form-title2{
+    margin-left: 50px;
+
+}
+p{
+    margin-left: 120px;
+    padding-top: 10px;
+   
+}
+p .highlight:hover {
+    color:white; 
+
+}
+.highlight {
+    font-weight: bold;
+    color:black; 
+    text-decoration: none; 
+  }
+.hide-password{
+    margin-left: -32px;
+}
+#warning{
+    color: red;
+    margin-left: 213px;
+}
+#warning1{
+    color: red;
+    margin-left: 213px;
+}
