@@ -3,8 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("submitEmail").addEventListener("click", async () => {
     event.preventDefault();
     const data = {
-      username: email.value,
-      code: "180204",
+      id: 1,
     };
     console.log("click, email: ", email.value);
     try {
