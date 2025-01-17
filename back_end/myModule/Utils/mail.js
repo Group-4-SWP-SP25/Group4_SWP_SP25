@@ -1,6 +1,5 @@
 const nodemailer = require('nodemailer')
 const fs = require('fs');
-const { use } = require('./database/user');
 
 let send = (req, res) => {
     // read template
