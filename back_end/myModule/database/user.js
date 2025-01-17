@@ -3,8 +3,10 @@ const sql = require("mssql");
 const express = require('express')
 const router = express.Router()
 
-async function changePassword(userId, newPassword) {
+const changePassword = async (req, res) => {
   try {
+
+    const {userID, newPassword} = req.body;
     const pool = await connect(); // Get the connection pool
 
     const query = `
@@ -28,6 +30,4 @@ async function changePassword(userId, newPassword) {
   }
 }
 
-router.post('/change_password',(req,res) => changePassword(1, 'hoanghh'))
-
-module.exports = router;
+module.exports = changePassword

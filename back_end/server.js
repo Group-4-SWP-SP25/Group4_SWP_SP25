@@ -15,7 +15,7 @@ const changePassword = require("./myModule/database/user.js");
 // CREATE API
 
 app.post('/sendMail',sendMail);
-//app.use(changePassword)
+app.post('/chagnePassword',changePassword)
 
 // ----------------------------------------------------------
 
