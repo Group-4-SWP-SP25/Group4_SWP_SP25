@@ -21,6 +21,7 @@ const updateProfile = async (req, res) => {
       .input("phone", sql.VarChar, phone)
       .input("id", sql.input, id)
       .query(query);
+    await pool.close();
   } catch (err) {
     throw err;
   }

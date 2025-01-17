@@ -14,6 +14,7 @@ const findUserById = async (req, res) => {
     const user = new User(userData);
     res.send(user.userInfo());
     await pool.close();
+    return user;
   } catch (err) {
     throw err;
   }

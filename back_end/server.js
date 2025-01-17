@@ -16,7 +16,7 @@ const CheckAccountExist = require("./myModule/database/user/checkAccExist.js");
 // CREATE API
 
 app.post("/sendMail", sendMail);
-app.post("/chagnePassword", changePassword);
+app.post("/changePassword", changePassword);
 app.post("/checkAccountExist", CheckAccountExist);
 
 // ----------------------------------------------------------

@@ -8,7 +8,7 @@ const CheckAccountExist = async (req, res) => {
     const pool = await connect(); // Get the connection pool
 
     const query = `
-      SELECT * FROM [User] WHERE (Username = @acc OR Email = @acc) AND Password = @password;
+      SELECT * FROM [User] WHERE (UserName = @acc OR Email = @acc) AND Password = @password;
     `;
     // Example query
     const result = await pool
