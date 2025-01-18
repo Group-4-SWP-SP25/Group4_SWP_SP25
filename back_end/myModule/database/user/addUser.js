@@ -1,35 +1,29 @@
 const connect = require("../connectDB.js");
 const sql = require("mssql");
+const User = require("../../model/user.js");
 
 const addUser = async (req, res) => {
   try {
-    const {
-      username,
-      password,
-      firstName,
-      lastName,
-      email,
-      address,
-      role,
-      phone,
-    } = req.body;
+    const user = new User(data);
     const pool = await connect(); // Get the connection pool
-
     const query = `
-      INSERT INTO [User](Username, Password, FirstName, LastName, Email, Phone)
-VALUES(@username, @password, @firstName, @lastName, @email, phone)
+      INSERT INTO [User](UserName, Password, FirstName, LastName, Email, Address, Phone)
+VALUES(@userName, @password, @firstName, @lastName, @email, @address, @phone);
     `;
     // Example query
     const result = await pool
       .request()
-      .input("username", sql.VarChar, username)
-      .input("password", sql.VarChar, password)
-      .input("password", sql.VarChar, password)
-      .input("password", sql.VarChar, password)
-      .input("password", sql.VarChar, password)
+      .input("userName", sql.VarChar, user.userName)
+      .input("password", sql.VarChar, user.password)
+      .input("firstName", sql.VarChar, user.firstName)
+      .input("lastName", sql.VarChar, user.lastName)
+      .input("email", sql.VarChar, user.email)
+      .input("address", sql.VarChar, user.address)
+      .input("phone", sql.VarChar, user.phone)
       .query(query);
 
     console.log("Password updated successfully.");
+    await pool.close();
     return result; // Optionally return the result
     // Close the connection (optional because `mssql` handles pooling)
   } catch (err) {
@@ -38,4 +32,4 @@ VALUES(@username, @password, @firstName, @lastName, @email, phone)
   }
 };
 
-module.exports = changePassword;
+module.exports = addUser;

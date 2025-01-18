@@ -1,28 +1,44 @@
 const connect = require("../connectDB.js");
+const findUserById = require("./findUserById.js");
+
 const sql = require("mssql");
 
 const changePassword = async (req, res) => {
   try {
-    const { userId, newPassword } = req.body;
+    const { userId, newPassword, oldPassword } = req.body;
     const pool = await connect(); // Get the connection pool
+    // Check old password
+    const user = await findUserById(Number(userId));
+    if (oldPassword === null) {
+      if (newPassword === user.password) {
+        res.status(300).send('same');
+        console.log('same')
+        return;
+      }
+    } else if (oldPassword === user.password) {
+      res.status(200).json({ success: "Success" });
+    } else {
+      res.status(400).json({ error: "Your password is wrong" });
+      return;
+    }
 
+
+    console.log('query')
     const query = `
       UPDATE [User]
       SET Password = @newPassword
       WHERE UserID = @userId
     `;
+
     // Example query
-    const result = await pool
+    await pool
       .request()
       .input("newPassword", sql.VarChar, newPassword) // Password as string
       .input("userId", sql.Int, userId) // UserID as integer
       .query(query);
-
-    console.log("Password updated successfully.");
-    return result; // Optionally return the result
-    // Close the connection (optional because `mssql` handles pooling)
+    res.status(200).json({ success: "Success" });
+    await pool.close();
   } catch (err) {
-    console.error("Error updating password:", err.message);
     throw err; // Optionally re-throw the error
   }
 };

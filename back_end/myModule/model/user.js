@@ -1,28 +1,29 @@
 class User {
-  constructor(
-    id,
-    username,
-    password,
-    firstName,
-    lastName,
-    email,
-    address,
-    role,
-    phone
-  ) {
-    this.id = id;
-    this.username = username;
-    this.password = password;
-    this.firstName = firstName;
-    this.lastName = lastName;
-    (this.email = email), atob;
-    this.address = address;
-    this.lastName = lastName;
-    this.role = role;
-    this.phone = phone;
+  constructor(userData) {
+    this.userID = userData.UserID;
+    this.userName = userData.UserName;
+    this.password = userData.Password;
+    this.firstName = userData.FirstName;
+    this.lastName = userData.LastName;
+    this.email = userData.Email;
+    this.address = userData.Address;
+    this.role = userData.Role;
+    this.phone = userData.Phone;
   }
-
-  get getID() {
-    return this.id;
+  userInfo() {
+    let data = {
+      userID: this.userID,
+      userName: this.userName,
+      password: this.password,
+      firstName: this.firstName,
+      lastName: this.lastName,
+      email: this.email,
+      address: this.address,
+      role: this.role,
+      phone: this.phone,
+    };
+    return data;
   }
 }
+
+module.exports = User;
