@@ -51,6 +51,50 @@
                                 required />
                         </div>
 
+                        <!-- Phone field -->
+                        <div class="register-field">
+                            <div class="row">
+                                <div class="col-sm-5">
+                                    <label for="phone">
+                                        <span style="color: red">*</span>
+                                        Phone
+                                    </label>
+                                </div>
+                                <div class="col-sm-7 text-end">
+                                    <span class="e_phone error"></span>
+                                </div>
+                            </div>
+                            <input
+                                type="text"
+                                name="phone"
+                                id="phone"
+                                onkeyup="checkPhone(this, document.querySelector('.e_phone'))"
+                                placeholder=" Your phone number"
+                                required />
+                        </div>
+
+                        <!-- Address field -->
+                        <div class="register-field">
+                            <div class="row">
+                                <div class="col-sm-5">
+                                    <label for="address">
+                                        <span style="color: red">*</span>
+                                        Address
+                                    </label>
+                                </div>
+                                <div class="col-sm-7 text-end">
+                                    <span class="e_address error"></span>
+                                </div>
+                            </div>
+                            <input
+                                type="text"
+                                name="address"
+                                id="address"
+                                onkeyup="checkAddress(this, document.querySelector('.e_address'))"
+                                placeholder=" Your address"
+                                required />
+                        </div>
+
                         <!-- Username field -->
                         <div class="register-field">
                             <div class="row">
@@ -98,8 +142,8 @@
                                         required />
                                 </div>
                                 <div
-                                    class="col-sm-1 text-end"
-                                    style="padding: 0px 8px 0px">
+                                    class="col-sm-1"
+                                    style="padding-left: 6px; padding-right: 6px">
                                     <input
                                         type="checkbox"
                                         class="hide-password"
@@ -133,8 +177,8 @@
                                         required />
                                 </div>
                                 <div
-                                    class="col-sm-1 text-end"
-                                    style="padding: 0px 8px 0px">
+                                    class="col-sm-1"
+                                    style="padding-left: 6px; padding-right: 6px">
                                     <input
                                         type="checkbox"
                                         class="hide-password"

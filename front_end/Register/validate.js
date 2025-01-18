@@ -1,15 +1,20 @@
 // Regex: Email
-const regexEmail = /^\w+@\w+(\.\w+)+$/;
-const regexPassword = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
+const regexEmail = /^\w+@\w+(\.\w+)+$/; // Start with >1 word chars, then @, then >1 word chars, then (. and >1 word chars) >1 times
+const regexPhone = /^0\d{9}$/; // Start with 0, follow by exact 9 digits
+const regexPassword = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/; // ???
 
 // Tag: Input field
 const emailInput = document.querySelector('#email');
+const phoneInput = document.querySelector('#phone');
+const addressInput = document.querySelector('#address');
 const usernameInput = document.querySelector('#username');
 const passwordInput = document.querySelector('#password');
 const repasswordInput = document.querySelector('#repassword');
 
 // Tag: Error
 const emailError = document.querySelector('.e_email');
+const phoneError = document.querySelector('.e_phone');
+const addressError = document.querySelector('.e_address');
 const usernameError = document.querySelector('.e_username');
 const passwordError = document.querySelector('.e_password');
 const repasswordError = document.querySelector('.e_repassword');
@@ -32,7 +37,7 @@ const contentError = function (tag, err) {
 };
 
 // Function
-let validate = true;
+let validate = true; // Validation flag
 
 function checkEmail(emailTag, errorTag) {
     if (emailTag.value.trim().length === 0) {
@@ -52,6 +57,34 @@ function checkEmail(emailTag, errorTag) {
     }
 }
 
+function checkPhone(phoneTag, errorTag) {
+    if (phoneTag.value.trim().length === 0) {
+        errorStyle(phoneTag);
+        contentError(errorTag, 'Phone number cannot be empty!');
+        validate = false;
+    } else {
+        if (!regexPhone.test(phoneTag.value.trim())) {
+            errorStyle(phoneTag);
+            contentError(errorTag, 'Invalid phone number!');
+            validate = false;
+        } else {
+            contentError(errorTag, '');
+            validate = true;
+        }
+    }
+}
+
+function checkAddress(addressTag, errorTag) {
+    if (addressTag.value.trim().length === 0) {
+        errorStyle(addressTag);
+        contentError(errorTag, 'Address cannot be empty!');
+        validate = false;
+    } else {
+        contentError(errorTag, '');
+        validate = true;
+    }
+}
+
 function checkUsername(usernameTag, errorTag) {
     if (usernameTag.value.trim().length === 0) {
         errorStyle(usernameTag);
@@ -62,6 +95,7 @@ function checkUsername(usernameTag, errorTag) {
         validate = true;
     }
 }
+
 function checkPassword(passwordTag, errorTag) {
     if (passwordTag.value.trim().length === 0) {
         errorStyle(passwordTag);
@@ -80,7 +114,7 @@ function checkPassword(passwordTag, errorTag) {
     }
 
     if ((passwordTag === repasswordInput && regexPassword.test(repasswordInput.value)) || (passwordTag === passwordInput && repasswordInput.value.length > 0)) {
-        if (repasswordInput.value !== pas.value) {
+        if (repasswordInput.value !== passwordInput.value) {
             errorStyle(repasswordInput);
             contentError(repasswordError, 'The password do not match!');
             checkValidate = false;
