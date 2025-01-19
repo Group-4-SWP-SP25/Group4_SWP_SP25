@@ -13,40 +13,17 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
     <link href="https://fonts.googleapis.com/css2?family=Bentham&display=swap" rel="stylesheet">
     <script src="/front_end/HomePage/script.js"></script>
 </head>
 
 <body>
-    <header class="header">
-        <div class="logo">
-            <a href="#">
-                <img src="/resource/logo.jpg" alt="Logo">
-            </a>
-        </div>
-        <nav class="navbar">
-            <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Services</a></li>
-                <li><a href="#">Contact</a></li>
-            </ul>
-        </nav>
-        <div class="user-login">
-            <a href="login.html">My cars</a>
-            <a href="login.html">Dashboard</a>
-            <a href="login.html">Login</a>
-        </div>
-    </header>
-    <div class="background-video">
-        <video autoplay loop muted>
-            <source src="/resource/background-video.mp4" type="video/mp4">
-        </video>
-        <div class="text-content">
-            Auto Care 247
-        </div>
-    </div>
+    <!-- Header -->
+    <div id="header-container"></div>
+    <!-- End header -->
 
+    <!-- About us -->
     <div class="about-us" id="about-us">
         <div class="left">
             <img src="/resource/logo.jpg" alt="Company logo">
@@ -63,7 +40,9 @@
                 cao.</p>
         </div>
     </div>
+    <!-- End about us -->
 
+    <!-- What we do -->
     <div class="what-we-do">
         <div class="container">
             <div class="card">
@@ -89,7 +68,9 @@
             </div>
         </div>
     </div>
+    <!-- End what we do -->
 
+    <!-- Slide -->
     <div class="slide-show">
         <div id="myCarousel" class="carousel slide" data-ride="carousel">
             <!-- Indicators -->
@@ -124,7 +105,7 @@
                 </div>
             </div>
 
-            <!-- Điều khiển trái và phải -->
+            <!-- Right and left control -->
             <a class="carousel-control-prev" href="#myCarousel" data-slide="prev">
                 <span class="carousel-control-prev-icon"></span>
             </a>
@@ -133,7 +114,9 @@
             </a>
         </div>
     </div>
+    <!-- End slide -->
 
+    <!-- Register for news -->
     <div class="form-container">
         <h2>ĐĂNG KÝ NHẬN TIN</h2>
         <form>
@@ -154,36 +137,31 @@
             </div>
         </form>
     </div>
+    <!-- End register for news -->
 
-    <footer class="footer">
-        <div class="footer-section">
-            <h4>Công Ty Bảo Dưỡng Xe</h4>
-            <p>Địa chỉ: Số 123, Đường ABC, Quận XYZ, Hà Nội</p>
-            <p>Điện thoại: (024) 123 4567</p>
-            <p>Email: info@baoduongxe.vn</p>
-        </div>
-        <div class="footer-section">
-            <h4>Hướng Dẫn</h4>
-            <ul>
-                <li><a href="#">Hướng dẫn bảo dưỡng xe</a></li>
-                <li><a href="#">Hướng dẫn sử dụng dịch vụ</a></li>
-                <li><a href="#">Các câu hỏi thường gặp</a></li>
-            </ul>
-        </div>
-        <div class="footer-section">
-            <h4>Kết Nối Với Chúng Tôi</h4>
-            <div class="social-links">
-                <a href="#" class="social-icon">Facebook</a>
-                <a href="#" class="social-icon">Twitter</a>
-                <a href="#" class="social-icon">Instagram</a>
-                <a href="#" class="social-icon">LinkedIn</a>
-            </div>
-        </div>
-    </footer>
+    <!-- Footer -->
+    <div id="footer-container"></div>
+    <!-- End footer -->
 
+    <!-- Notification icon -->
     <div class="fixed-notification-icon">
         <img src="/resource/information-icon.png" width="80" height="80" alt="Thông báo">
     </div>
+    <!-- End notification -->
+
+    <script>
+        fetch("../header/header.html")
+            .then((response) => response.text())
+            .then((data) => {
+                document.getElementById("header-container").innerHTML = data;
+            });
+
+        fetch("../footer/footer.html")
+            .then((response) => response.text())
+            .then((data) => {
+                document.getElementById("footer-container").innerHTML = data;
+            });
+    </script>
 </body>
 
 </html>

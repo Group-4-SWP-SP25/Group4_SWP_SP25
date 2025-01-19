@@ -2,6 +2,7 @@
 const oldPassInput = document.querySelector("#oldPassword");
 const newPassInput = document.querySelector("#newPassword");
 const confirmPassInput = document.querySelector("#confirmPassword");
+const userId = document.querySelector("#userId");
 
 // Get error tag
 const e_oldPass = document.querySelector(".e_oldPassword");
@@ -101,7 +102,6 @@ function checkPassword(pass, err) {
   }
 }
 
-var form = document.querySelector(".form");
 function checkSubmit() {
   checkPassword(oldPassInput, e_oldPass);
   checkPassword(newPassInput, e_newPass);
@@ -109,13 +109,42 @@ function checkSubmit() {
   if (!checkValidate) {
     return;
   } else {
-    showSuccessWindow();
+    fetch("http://localhost:3000/changePassword", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        userId: userId.value,
+        newPassword: newPassInput.value,
+        oldPassword: oldPassInput.value,
+      }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          return response.json();
+        }
+        return response.json();
+      })
+      .then((data) => {
+        if (data.success) {
+          showSuccessWindow();
+        }
+        if (data.error) {
+          console.log("b");
+          errorStyle(oldPassInput);
+          contentError(e_oldPass, data.error);
+        }
+      })
+      .catch((error) => {
+        throw error;
+      });
   }
 }
 
 document.addEventListener("keydown", function (e) {
-  console.log(e.key);
   if (e.key === "Enter" && successWindow.classList.contains("hidden")) {
     checkSubmit();
+  }
+  if (e.key === "Enter" && !successWindow.classList.contains("hidden")) {
+    window.location.href = "../HomePage/HomePage.html";
   }
 });
