@@ -60,7 +60,7 @@
     display: flex;
     flex-flow: wrap;
     flex-direction: column;
-    width: 70%;
+    /* width: 70%; */
     align-items: center;
 }
 

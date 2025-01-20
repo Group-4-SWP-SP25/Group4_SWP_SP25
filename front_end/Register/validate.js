@@ -1,9 +1,11 @@
 // Regex: Email
 const regexEmail = /^\w+@\w+(\.\w+)+$/; // Start with >1 word chars, then @, then >1 word chars, then (. and >1 word chars) >1 times
 const regexPhone = /^0\d{9}$/; // Start with 0, follow by exact 9 digits
-const regexPassword = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/; // ???
+const regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/; // Have at least 6 chars, include a-z, A-Z and 0-9
 
 // Tag: Input field
+const firstNameInput = document.querySelector('#firstName');
+const lastNameInput = document.querySelector('#lastName');
 const emailInput = document.querySelector('#email');
 const phoneInput = document.querySelector('#phone');
 const addressInput = document.querySelector('#address');
@@ -12,6 +14,8 @@ const passwordInput = document.querySelector('#password');
 const repasswordInput = document.querySelector('#repassword');
 
 // Tag: Error
+const firstNameError = document.querySelector('.e_firstName');
+const lastNameError = document.querySelector('.e_lastName');
 const emailError = document.querySelector('.e_email');
 const phoneError = document.querySelector('.e_phone');
 const addressError = document.querySelector('.e_address');
@@ -38,6 +42,17 @@ const contentError = function (tag, err) {
 
 // Function
 let validate = true; // Validation flag
+
+function checkName(addressTag, errorTag) {
+    if (addressTag.value.trim().length === 0) {
+        errorStyle(addressTag);
+        contentError(errorTag, 'Name cannot be empty!');
+        validate = false;
+    } else {
+        contentError(errorTag, '');
+        validate = true;
+    }
+}
 
 function checkEmail(emailTag, errorTag) {
     if (emailTag.value.trim().length === 0) {

@@ -30,8 +30,107 @@
                     <form
                         action="register"
                         method="post">
-                        <!-- Email field -->
+                        <!-- Name field -->
                         <div class="register-field">
+                            <div class="row">
+                                <!-- First name -->
+                                <div class="col">
+                                    <div class="row">
+                                        <div class="col-sm-5">
+                                            <label for="firstName">
+                                                <span style="color: red; padding-bottom: 10px">*</span>
+                                                First name
+                                            </label>
+                                        </div>
+                                        <div class="col-sm-7 text-end">
+                                            <span class="e_firstName error"></span>
+                                        </div>
+                                    </div>
+
+                                    <input
+                                        type="text"
+                                        name="firstName"
+                                        id="firstName"
+                                        onkeyup="checkName(this, document.querySelector('.e_firstName'))"
+                                        placeholder=" Your first name"
+                                        required />
+                                </div>
+                                <!-- Last name -->
+                                <div class="col">
+                                    <div class="row">
+                                        <div class="col-sm-5">
+                                            <label for="lastName">
+                                                <span style="color: red; padding-bottom: 10px">*</span>
+                                                Last name
+                                            </label>
+                                        </div>
+                                        <div class="col-sm-7 text-end">
+                                            <span class="e_lastName error"></span>
+                                        </div>
+                                    </div>
+
+                                    <input
+                                        type="text"
+                                        name="lastName"
+                                        id="lastName"
+                                        onkeyup="checkName(this, document.querySelector('.e_lastName'))"
+                                        placeholder=" Your last name"
+                                        required />
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Email and phone field -->
+                        <div class="register-field">
+                            <div class="row">
+                                <!-- Email -->
+                                <div class="col-md-9">
+                                    <div class="row">
+                                        <div class="col-sm-5">
+                                            <label for="email">
+                                                <span style="color: red; padding-bottom: 10px">*</span>
+                                                Email
+                                            </label>
+                                        </div>
+                                        <div class="col-sm-7 text-end">
+                                            <span class="e_email error"></span>
+                                        </div>
+                                    </div>
+
+                                    <input
+                                        type="text"
+                                        name="email"
+                                        id="email"
+                                        onkeyup="checkEmail(this, document.querySelector('.e_email'))"
+                                        placeholder=" Your email"
+                                        required />
+                                </div>
+                                <!-- Phone -->
+                                <div class="col-md-3">
+                                    <div class="row">
+                                        <div class="col-sm-5">
+                                            <label for="phone">
+                                                <span style="color: red">*</span>
+                                                Phone
+                                            </label>
+                                        </div>
+                                        <div class="col-sm-7 text-end">
+                                            <span class="e_phone error"></span>
+                                        </div>
+                                    </div>
+                                    <input
+                                        type="text"
+                                        name="phone"
+                                        id="phone"
+                                        onkeyup="checkPhone(this, document.querySelector('.e_phone'))"
+                                        placeholder=" Your phone number"
+                                        required />
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Email field -->
+                        <!-- <div class="register-field">
                             <div class="row">
                                 <div class="col-sm-5">
                                     <label for="email">
@@ -51,10 +150,10 @@
                                 onkeyup="checkEmail(this, document.querySelector('.e_email'))"
                                 placeholder=" Your email"
                                 required />
-                        </div>
+                        </div> -->
 
                         <!-- Phone field -->
-                        <div class="register-field">
+                        <!-- <div class="register-field">
                             <div class="row">
                                 <div class="col-sm-5">
                                     <label for="phone">
@@ -73,7 +172,7 @@
                                 onkeyup="checkPhone(this, document.querySelector('.e_phone'))"
                                 placeholder=" Your phone number"
                                 required />
-                        </div>
+                        </div> -->
 
                         <!-- Address field -->
                         <div class="register-field">
