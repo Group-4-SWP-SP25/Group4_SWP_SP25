@@ -1,7 +1,7 @@
 // Regex: Email
 const regexEmail = /^\w+@\w+(\.\w+)+$/; // Start with >1 word chars, then @, then >1 word chars, then (. and >1 word chars) >1 times
 const regexPhone = /^0\d{9}$/; // Start with 0, follow by exact 9 digits
-const regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/; // Have at least 6 chars, include a-z, A-Z and 0-9
+const regexPassword = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/; // Have at least 6 chars, include a-z, A-Z and 0-9
 
 // Tag: Input field
 const firstNameInput = document.querySelector('#firstName');
@@ -40,15 +40,30 @@ const contentError = function (tag, err) {
     tag.textContent = err;
 };
 
+// Show success window
+const successWindow = document.querySelector('.success');
+const overlay = document.querySelector('.overlay');
+const showSuccessWindow = function () {
+    successWindow.classList.remove('hidden');
+    overlay.classList.remove('hidden');
+};
+
+// Close success window
+const closeSuccessWindow = function () {
+    successWindow.classList.add('hidden');
+    overlay.classList.add('hidden');
+};
+
 // Function
 let validate = true; // Validation flag
 
-function checkName(addressTag, errorTag) {
-    if (addressTag.value.trim().length === 0) {
-        errorStyle(addressTag);
+function checkName(nameTag, errorTag) {
+    if (nameTag.value.trim().length === 0) {
+        errorStyle(nameTag);
         contentError(errorTag, 'Name cannot be empty!');
         validate = false;
     } else {
+        successStyle(nameTag);
         contentError(errorTag, '');
         validate = true;
     }
@@ -97,6 +112,7 @@ function checkPhone(phoneTag, errorTag) {
 //         contentError(errorTag, 'Address cannot be empty!');
 //         validate = false;
 //     } else {
+//         successStyle(addressTag);
 //         contentError(errorTag, '');
 //         validate = true;
 //     }
@@ -108,6 +124,7 @@ function checkUsername(usernameTag, errorTag) {
         contentError(errorTag, 'Username cannot be empty!');
         validate = false;
     } else {
+        successStyle(usernameTag);
         contentError(errorTag, '');
         validate = true;
     }
@@ -190,17 +207,15 @@ function checkSubmit() {
         //     .catch((error) => {
         //         throw error;
         //     });
+        showSuccessWindow();
     }
 }
 
 document.addEventListener('keydown', function (e) {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' && successWindow.classList.contains('hidden')) {
         checkSubmit();
     }
-    // if (e.key === 'Enter' && successWindow.classList.contains('hidden')) {
-    //     checkSubmit();
-    // }
-    // if (e.key === 'Enter' && !successWindow.classList.contains('hidden')) {
-    //     window.location.href = '../HomePage/HomePage.html';
-    // }
+    if (e.key === 'Enter' && !successWindow.classList.contains('hidden')) {
+        window.location.href = '../HomePage/HomePage.html';
+    }
 });
