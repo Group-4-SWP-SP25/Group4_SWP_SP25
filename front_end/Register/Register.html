@@ -52,8 +52,7 @@
                                         name="firstName"
                                         id="firstName"
                                         onkeyup="checkName(this, document.querySelector('.e_firstName'))"
-                                        placeholder=" Your first name"
-                                        required />
+                                        placeholder=" Your first name" />
                                 </div>
                                 <!-- Last name -->
                                 <div class="col">
@@ -74,8 +73,7 @@
                                         name="lastName"
                                         id="lastName"
                                         onkeyup="checkName(this, document.querySelector('.e_lastName'))"
-                                        placeholder=" Your last name"
-                                        required />
+                                        placeholder=" Your last name" />
                                 </div>
                             </div>
                         </div>
@@ -102,17 +100,13 @@
                                         name="email"
                                         id="email"
                                         onkeyup="checkEmail(this, document.querySelector('.e_email'))"
-                                        placeholder=" Your email"
-                                        required />
+                                        placeholder=" Your email" />
                                 </div>
                                 <!-- Phone -->
                                 <div class="col-md-3">
                                     <div class="row">
                                         <div class="col-sm-5">
-                                            <label for="phone">
-                                                <span style="color: red">*</span>
-                                                Phone
-                                            </label>
+                                            <label for="phone"> Phone </label>
                                         </div>
                                         <div class="col-sm-7 text-end">
                                             <span class="e_phone error"></span>
@@ -123,8 +117,7 @@
                                         name="phone"
                                         id="phone"
                                         onkeyup="checkPhone(this, document.querySelector('.e_phone'))"
-                                        placeholder=" Your phone number"
-                                        required />
+                                        placeholder=" Your phone number" />
                                 </div>
                             </div>
                         </div>
@@ -149,7 +142,7 @@
                                 id="email"
                                 onkeyup="checkEmail(this, document.querySelector('.e_email'))"
                                 placeholder=" Your email"
-                                required />
+                                 />
                         </div> -->
 
                         <!-- Phone field -->
@@ -171,17 +164,14 @@
                                 id="phone"
                                 onkeyup="checkPhone(this, document.querySelector('.e_phone'))"
                                 placeholder=" Your phone number"
-                                required />
+                                 />
                         </div> -->
 
                         <!-- Address field -->
                         <div class="register-field">
                             <div class="row">
                                 <div class="col-sm-5">
-                                    <label for="address">
-                                        <span style="color: red">*</span>
-                                        Address
-                                    </label>
+                                    <label for="address"> Address </label>
                                 </div>
                                 <div class="col-sm-7 text-end">
                                     <span class="e_address error"></span>
@@ -192,8 +182,7 @@
                                 name="address"
                                 id="address"
                                 onkeyup="checkAddress(this, document.querySelector('.e_address'))"
-                                placeholder=" Your address"
-                                required />
+                                placeholder=" Your address" />
                         </div>
 
                         <!-- Username field -->
@@ -214,8 +203,7 @@
                                 name="username"
                                 id="username"
                                 onkeyup="checkUsername(this, document.querySelector('.e_username'))"
-                                placeholder=" Your ideal username"
-                                required />
+                                placeholder=" Your ideal username" />
                         </div>
 
                         <!-- Password field -->
@@ -239,8 +227,7 @@
                                         name="password"
                                         id="password"
                                         onkeyup="checkPassword(this, document.querySelector('.e_password'))"
-                                        placeholder=" Your ideal password"
-                                        required />
+                                        placeholder=" Your ideal password" />
                                 </div>
                                 <div
                                     class="col-sm-1"
@@ -274,8 +261,7 @@
                                         name="repassword"
                                         id="repassword"
                                         onkeyup="checkPassword(this, document.querySelector('.e_repassword'))"
-                                        placeholder=" Confirm password"
-                                        required />
+                                        placeholder=" Confirm password" />
                                 </div>
                                 <div
                                     class="col-sm-1"
@@ -292,7 +278,7 @@
                         <button
                             type="button"
                             class="register-button"
-                            onclick="window.location.href=''">
+                            onclick="checkSubmit()">
                             Register
                         </button>
 

@@ -73,32 +73,34 @@ function checkEmail(emailTag, errorTag) {
 }
 
 function checkPhone(phoneTag, errorTag) {
-    if (phoneTag.value.trim().length === 0) {
-        errorStyle(phoneTag);
-        contentError(errorTag, 'Phone number cannot be empty!');
-        validate = false;
-    } else {
+    if (phoneTag.value.trim().length > 0) {
         if (!regexPhone.test(phoneTag.value.trim())) {
             errorStyle(phoneTag);
             contentError(errorTag, 'Invalid phone number!');
             validate = false;
         } else {
+            successStyle(phoneTag);
             contentError(errorTag, '');
             validate = true;
         }
-    }
-}
-
-function checkAddress(addressTag, errorTag) {
-    if (addressTag.value.trim().length === 0) {
-        errorStyle(addressTag);
-        contentError(errorTag, 'Address cannot be empty!');
-        validate = false;
     } else {
         contentError(errorTag, '');
+        phoneTag.style.borderColor = 'transparent';
+        phoneTag.style.boxShadow = 'none';
         validate = true;
     }
 }
+
+// function checkAddress(addressTag, errorTag) {
+//     if (addressTag.value.trim().length === 0) {
+//         errorStyle(addressTag);
+//         contentError(errorTag, 'Address cannot be empty!');
+//         validate = false;
+//     } else {
+//         contentError(errorTag, '');
+//         validate = true;
+//     }
+// }
 
 function checkUsername(usernameTag, errorTag) {
     if (usernameTag.value.trim().length === 0) {
@@ -132,11 +134,11 @@ function checkPassword(passwordTag, errorTag) {
         if (repasswordInput.value !== passwordInput.value) {
             errorStyle(repasswordInput);
             contentError(repasswordError, 'The password do not match!');
-            checkValidate = false;
+            validate = false;
         } else {
             successStyle(repasswordInput);
             contentError(repasswordError, '');
-            checkValidate = true;
+            validate = true;
         }
     }
 }
@@ -148,3 +150,57 @@ function hidePassword(hideTag, toggleTag) {
         hideTag.type = 'password';
     }
 }
+
+function checkSubmit() {
+    checkName(firstNameInput, firstNameError);
+    checkName(lastNameInput, lastNameError);
+    checkEmail(emailInput, emailError);
+    checkPhone(phoneInput, phoneError);
+    checkUsername(usernameInput, usernameError);
+    checkPassword(passwordInput, passwordError);
+    checkPassword(repasswordInput, repasswordError);
+    if (!validate) {
+        return;
+    } else {
+        // fetch('http://localhost:3000/changePassword', {
+        //     method: 'POST',
+        //     headers: { 'Content-Type': 'application/json' },
+        //     body: JSON.stringify({
+        //         userId: userId.value,
+        //         newPassword: newPassInput.value,
+        //         oldPassword: oldPassInput.value
+        //     })
+        // })
+        //     .then((response) => {
+        //         if (!response.ok) {
+        //             return response.json();
+        //         }
+        //         return response.json();
+        //     })
+        //     .then((data) => {
+        //         if (data.success) {
+        //             showSuccessWindow();
+        //         }
+        //         if (data.error) {
+        //             console.log('b');
+        //             errorStyle(oldPassInput);
+        //             contentError(e_oldPass, data.error);
+        //         }
+        //     })
+        //     .catch((error) => {
+        //         throw error;
+        //     });
+    }
+}
+
+document.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') {
+        checkSubmit();
+    }
+    // if (e.key === 'Enter' && successWindow.classList.contains('hidden')) {
+    //     checkSubmit();
+    // }
+    // if (e.key === 'Enter' && !successWindow.classList.contains('hidden')) {
+    //     window.location.href = '../HomePage/HomePage.html';
+    // }
+});
