@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
 .error {
     color: red;
 }
@@ -7,8 +8,8 @@
     flex-flow: row wrap;
     text-align: center;
     justify-content: center;
-    padding: 8px 16px 8px 16px;
-    height: 100vh;
+    /* padding: 16px 16px 8px 16px; */
+    height: 100vh; /**mobile 150*/
     max-width: 100%;
     text-align: -webkit-center;
 
@@ -42,6 +43,7 @@
 }
 
 .register-form {
+    margin-top: 5%; /*mobile 15*/
     position: relative;
     flex: 0 0 100%;
     max-width: 100% !important;
@@ -51,6 +53,7 @@
 .register-title {
     font-size: 70px;
     font-weight: bold;
+    font-family: 'Righteous', sans-serif;
 }
 
 .register-form form {
