@@ -1,20 +1,24 @@
 USE master
-GO;
+GO
+
 IF EXISTS (
 	SELECT name
 	FROM master.dbo.sysdatabases
 	WHERE name = N'SWP_G4'
 ) BEGIN ALTER DATABASE SWP_G4
 SET OFFLINE WITH ROLLBACK IMMEDIATE;
+
 ALTER DATABASE SWP_G4
 SET ONLINE;
 DROP DATABASE SWP_G4;
 END
-GO;
+GO
+
 CREATE DATABASE SWP_G4;
-GO;
-USE SWP_G4
-GO;
+GO
+
+USE SWP_G4;
+GO
 -- 1
 CREATE TABLE [User](
 	UserID INT IDENTITY(1, 1) NOT NULL PRIMARY KEY,
@@ -27,7 +31,8 @@ CREATE TABLE [User](
 	Role VARCHAR(15) DEFAULT 'User',
 	Phone VARCHAR(11) DEFAULT NULL UNIQUE
 );
-GO;
+GO
+
 -- 2
 CREATE TABLE Car(
 	UserID INT FOREIGN KEY REFERENCES [User](UserID),
@@ -38,35 +43,26 @@ CREATE TABLE Car(
 	[Year] INT,
 	CONSTRAINT pk_Car PRIMARY KEY (UserID, CarID)
 );
-GO;
+GO
+
 -- 3
 CREATE TABLE ServiceType(
 	ServiceTypeID INT IDENTITY(1, 1) NOT NULL PRIMARY KEY,
 	ServiceTypeName VARCHAR(200),
 	Description TEXT
 );
-GO;
+GO
+
 -- 4
 CREATE TABLE ComponentType (
 	ComponentTypeID INT IDENTITY(1, 1) NOT NULL PRIMARY KEY,
 	ServiceTypeName VARCHAR(200),
 	Description TEXT
 );
-GO;
-INSERT INTO [User](
-		Username,
-		Password,
-		FirstName,
-		LastName,
-		Email,
-		Phone
-	)
-VALUES (
-		'q8edh12hi',
-		'1234',
-		'qwe8dyrwfhief',
-		'qwgufcqbw',
-		'qwficqwfc',
-		'0123456789'
-	);
+GO
+
 -- 5
+
+-- Sample data
+INSERT INTO [User](Username, Password, FirstName, LastName, Email, Phone)
+VALUES ('q8edh12hi', '1234', 'qwe8dyrwfhief', 'qwgufcqbw', 'qwficqwfc', '0123456789');
