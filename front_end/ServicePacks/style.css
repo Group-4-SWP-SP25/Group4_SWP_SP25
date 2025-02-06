@@ -1,14 +1,15 @@
 .svc-packs {
-    display: flex;
-    width: 90%;
+    width: 95%;
     margin: 10% auto 0 auto;
-    gap: 20px;
-    justify-content: space-between;
+}
+
+.packs{
+    margin-bottom: 5vh;
 }
 
 .pack {
-    background-color: brown; /* Nền xanh lá mạ */
+    background-color: brown;
     padding: calc(40vw / 3);
-    border: 1px solid #ccc; /* Viền để dễ nhìn */
-    text-align: center; /* Căn giữa chữ trong pack */
+    border: 1px solid #ccc;
+    text-align: center;
 }
