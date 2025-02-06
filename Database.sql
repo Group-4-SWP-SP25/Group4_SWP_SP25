@@ -62,6 +62,18 @@ CREATE TABLE ComponentType (
 GO
 
 -- 5
+CREATE TABLE ServicePacks (
+	ServicePackID INT IDENTITY(1, 1) NOT NULL PRIMARY KEY,
+	ServicePackName VARCHAR(200),
+	ServicePackDescription TEXT
+);
+
+-- 6
+CREATE TABLE Services (
+	ServiceID INT IDENTITY(1, 1) NOT NULL PRIMARY KEY,
+	ServiceName VARCHAR(200),
+	ServiceDescription TEXT
+);
 
 -- Sample data
 INSERT INTO [User](Username, Password, FirstName, LastName, Email, Phone)
