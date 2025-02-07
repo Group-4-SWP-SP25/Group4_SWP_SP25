@@ -77,7 +77,7 @@ document.getElementById('newPassword').addEventListener('click', async () => {
             console.log(result)
             switch (result) {
                 case 300: alert('Cannot same to old password'); break;
-                case 200: alert('Success'); break;
+                case 200: alert('Success');window.location.href="../HomePage/HomePage.html" ;break;
                 case 400: alert('Error'); break;
             }
         })
