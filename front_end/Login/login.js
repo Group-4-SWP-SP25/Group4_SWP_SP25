@@ -24,11 +24,13 @@ async function login() {
             },
             body: JSON.stringify({ account, password })
         })
-        .then(response => {return response.json().id})
+        .then(response => {return response.json()})
         .then(result => {
-            if(result===-1){
+
+            if(result.id===-1){
                 alert("Invalid account or password")
             }else{
+             
                 window.location.href="../HomePage/HomePage.html";
             }
         })
