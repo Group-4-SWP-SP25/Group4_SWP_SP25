@@ -15,96 +15,26 @@
 
 <body>
 
-  <!-- <div class="login ">
-
-    <h2 class="form-title"> Welcome</h2>
-    
-
-    <div class="star">
-      <span class="must" style="color: red">*</span>
-      <h10 class="form-title"> Username</h10>
-    </div>
-    <div id="warning"> </div>
-    <div >
-      <input type="Text" Class="Box2" id="Box" placeholder=" Enter username" required/>
-    </div>
-    <div class="star">
-      <span class="must" style="color: red">*</span>
-      <h10 class="form-title"> Password</h10>
-    </div>
-    <div id="warning1"> </div>
-    <div>
-      <input type="password" class="Box1" id="Box" placeholder="Enter password"/>
-      <span class="hide-password" onclick="hidePassword()" style="cursor: pointer;">
-          👁️ 
-      </span>
-  </div>
-  
-
-    <input class="repa1" type="checkbox" id="remember" name="Remember password">
-    <label class="repa" for="example">Remember password</label>
-
-
-    <a href="" class="form-title1">Forgot your password ?</a>
-
-
-    <br>
-    <button class="login1" type="submit" id="loginButton">
-      Login
-    </button> <br>
-
-    <div class="social-login">
-      <button class="social-button">
-        <img src="google.svg" alt="Google" class="social-icon" />
-        Google
-      </button>
-      <button class="social-button">
-        <img src="apple.svg" alt="Apple" class="social-icon" />
-        Apple
-      </button>
-    </div>
-
-    <p> Don't have an account? <a href="" class="highlight">Register</a> </p>
-  </div>
-
-  </div> -->
-<!-- 
-  <header>
-
-  </header>
-
-  <div class="login">
-    <div class="login-title">
-      <h2> Welcome</h2>
-    </div class="login-field">
-    <input type="text">
-    <div>
-
-    </div>
-  </div>
-
-  <footer>
-
-  </footer> -->
+ 
 
   <div class="container">
     <div class="login-box">
       <h2 class="title">Welcome</h2>
 
-      <form>
+      
         <!-- Username -->
         <div class="input-group">
           <label for="username">Username <span class="required">*</span></label>
-          <input type="text" id="username" placeholder="Enter username" required>
+          <input type="text" id="username" placeholder="Enter username" >
         </div>
 
         <!-- Password -->
         <div class="input-group row ">
-          <label class="row" for="password">  Password <span class="required">*</span></label>
+          <label class="row" for="password">  Password <span class="required">*</span> </label>
         
           <div  class="password-wrapper">
 
-            <input   type="password" id="password" placeholder="Enter password">
+            <input   type="password" id="password" placeholder="Enter password" >
             <span class="toggle-password  " onclick="togglePassword()">👁️</span>
           </div> 
         </div>
@@ -117,10 +47,10 @@
           </div>
           <a href="#" class="forgot-password">Forgot your password?</a>
         </div>
-
+      
         <!-- Login Button -->
-        <button type="submit" class="login-button">Login</button>
-      </form>
+        <button id="loginButton" class="login-button">Login</button>
+      
 
       <!-- Social Login -->
       <div class="social-login">
@@ -137,11 +67,9 @@
     </div>
   </div>
 
-  <script src="hide-password">
-    
-  </script>
+  <script src="./hidePassword.js">    </script>
 
-
+  <script src="./login.js"></script>
 
 
 </body>
