@@ -55,54 +55,59 @@ const closeSuccessWindow = function () {
 };
 
 // Function
-let validate = true; // Validation flag
-
+let nameOK = true;
 function checkName(nameTag, errorTag) {
     if (nameTag.value.trim().length === 0) {
         errorStyle(nameTag);
         contentError(errorTag, 'Name cannot be empty!');
-        validate = false;
+        nameOK = false;
+        // console.log('name');
     } else {
         successStyle(nameTag);
         contentError(errorTag, '');
-        validate = true;
+        nameOK = true;
     }
 }
 
+let emailOK = true;
 function checkEmail(emailTag, errorTag) {
     if (emailTag.value.trim().length === 0) {
         errorStyle(emailTag);
         contentError(errorTag, 'Email cannot be empty!');
-        validate = false;
+        emailOK = false;
+        // console.log('email');
     } else {
         if (!regexEmail.test(emailTag.value.trim())) {
             errorStyle(emailTag);
             contentError(errorTag, 'Invalid email!');
-            validate = false;
+            emailOK = false;
+            // console.log('email');
         } else {
             successStyle(emailTag);
             contentError(errorTag, '');
-            validate = true;
+            emailOK = true;
         }
     }
 }
 
+let phoneOK = true;
 function checkPhone(phoneTag, errorTag) {
     if (phoneTag.value.trim().length > 0) {
         if (!regexPhone.test(phoneTag.value.trim())) {
             errorStyle(phoneTag);
             contentError(errorTag, 'Invalid phone number!');
-            validate = false;
+            phoneOK = false;
+            // console.log('phone');
         } else {
             successStyle(phoneTag);
             contentError(errorTag, '');
-            validate = true;
+            phoneOK = true;
         }
     } else {
         contentError(errorTag, '');
         phoneTag.style.borderColor = 'transparent';
         phoneTag.style.boxShadow = 'none';
-        validate = true;
+        phoneOK = true;
     }
 }
 
@@ -118,44 +123,50 @@ function checkPhone(phoneTag, errorTag) {
 //     }
 // }
 
+let usernameOK = true;
 function checkUsername(usernameTag, errorTag) {
     if (usernameTag.value.trim().length === 0) {
         errorStyle(usernameTag);
         contentError(errorTag, 'Username cannot be empty!');
-        validate = false;
+        usernameOK = false;
+        // console.log('username');
     } else {
         successStyle(usernameTag);
         contentError(errorTag, '');
-        validate = true;
+        usernameOK = true;
     }
 }
 
+let pwdOK = true;
 function checkPassword(passwordTag, errorTag) {
     if (passwordTag.value.trim().length === 0) {
         errorStyle(passwordTag);
         contentError(errorTag, 'Password cannot be empty!');
-        validate = false;
+        pwdOK = false;
+        // console.log('pwd1');
         return;
     }
     if (!regexPassword.test(passwordTag.value.trim())) {
         errorStyle(passwordTag);
         contentError(errorTag, 'Invalid password');
-        validate = false;
+        pwdOK = false;
+        // console.log('pwd2');
     } else {
         successStyle(passwordTag);
         contentError(errorTag, '');
-        validate = true;
+        pwdOK = true;
     }
 
     if ((passwordTag === repasswordInput && regexPassword.test(repasswordInput.value)) || (passwordTag === passwordInput && repasswordInput.value.length > 0)) {
         if (repasswordInput.value !== passwordInput.value) {
             errorStyle(repasswordInput);
             contentError(repasswordError, 'The password do not match!');
-            validate = false;
+            pwdOK = false;
+            // console.log('pwd3');
         } else {
             successStyle(repasswordInput);
             contentError(repasswordError, '');
-            validate = true;
+            pwdOK = true;
         }
     }
 }
@@ -176,38 +187,52 @@ function checkSubmit() {
     checkUsername(usernameInput, usernameError);
     checkPassword(passwordInput, passwordError);
     checkPassword(repasswordInput, repasswordError);
-    if (!validate) {
+    if (!(nameOK && emailOK && phoneOK && usernameOK && pwdOK)) {
         return;
     } else {
-        // fetch('http://localhost:3000/changePassword', {
-        //     method: 'POST',
-        //     headers: { 'Content-Type': 'application/json' },
-        //     body: JSON.stringify({
-        //         userId: userId.value,
-        //         newPassword: newPassInput.value,
-        //         oldPassword: oldPassInput.value
-        //     })
-        // })
-        //     .then((response) => {
-        //         if (!response.ok) {
-        //             return response.json();
-        //         }
-        //         return response.json();
-        //     })
-        //     .then((data) => {
-        //         if (data.success) {
-        //             showSuccessWindow();
-        //         }
-        //         if (data.error) {
-        //             console.log('b');
-        //             errorStyle(oldPassInput);
-        //             contentError(e_oldPass, data.error);
-        //         }
-        //     })
-        //     .catch((error) => {
-        //         throw error;
-        //     });
-        showSuccessWindow();
+        // data = {
+        //     firstName: firstNameInput.value,
+        //     lastName: lastNameInput.value,
+        //     email: emailInput.value,
+        //     phone: phoneInput.value,
+        //     address: addressInput.value,
+        //     username: usernameInput.value,
+        //     password: passwordInput.value
+        // };
+        // console.log(data);
+
+        fetch('http://localhost:3000/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                firstName: firstNameInput.value,
+                lastName: lastNameInput.value,
+                email: emailInput.value,
+                phone: phoneInput.value,
+                address: addressInput.value,
+                username: usernameInput.value,
+                password: passwordInput.value
+            })
+        })
+            .then((response) => {
+                return response.status();
+            })
+            .then((data) => {
+                console.log(data);
+                if (data == 200) {
+                    showSuccessWindow();
+                }
+                if (data == 400) {
+                    console.log('Create account error');
+                    errorStyle(passwordInput);
+                    contentError(passwordInput, data.error);
+                }
+            })
+            .catch((error) => {
+                throw error;
+            });
+
+        // showSuccessWindow();
     }
 }
 
