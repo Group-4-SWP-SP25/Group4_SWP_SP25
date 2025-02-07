@@ -46,29 +46,13 @@ CREATE TABLE Car(
 GO
 
 -- 3
-CREATE TABLE ServiceType(
-	ServiceTypeID INT IDENTITY(1, 1) NOT NULL PRIMARY KEY,
-	ServiceTypeName VARCHAR(200),
-	Description TEXT
-);
-GO
-
--- 4
-CREATE TABLE ComponentType (
-	ComponentTypeID INT IDENTITY(1, 1) NOT NULL PRIMARY KEY,
-	ServiceTypeName VARCHAR(200),
-	Description TEXT
-);
-GO
-
--- 5
 CREATE TABLE ServicePacks (
 	ServicePackID INT IDENTITY(1, 1) NOT NULL PRIMARY KEY,
 	ServicePackName VARCHAR(200),
 	ServicePackDescription TEXT
 );
 
--- 6
+-- 4
 CREATE TABLE Services (
 	ServiceID INT IDENTITY(1, 1) NOT NULL PRIMARY KEY,
 	ServiceName VARCHAR(200),
