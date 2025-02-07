@@ -46,19 +46,18 @@ iframe {
   z-index: -2;
   pointer-events: none;
 }
-
 /* Content of changing password */
 .change-password {
   min-height: inherit;
   height: 100%;
   max-width: 1406px;
+  margin: 5% auto;
 }
 
 .change-password .frame {
   position: relative;
   max-width: 100%;
   min-height: 1px;
-  margin-top: 30px;
   display: flex;
   flex-direction: column;
   justify-content: center;
