@@ -1,0 +1,37 @@
+.svc-types {
+    width: 95%;
+    margin: 10% auto 0 auto;
+}
+
+.types{
+    margin-bottom: 3vh;
+}
+
+.dark-overlay{
+    /* position: relative; */
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1
+}
+
+.type {
+    height: 70vh;
+    color: rgb(255, 255, 255);
+    border: 1px solid #ccc;
+
+    text-align: center;
+    background: center;
+    position: relative;
+    z-index: -1;
+}
+
+.type-title{
+    position: relative;
+    background-color: none;
+    z-index: 2;
+}
+
+
+
+/* .type:hover{
+    
+} */
