@@ -3,8 +3,8 @@ const sql = require("mssql");
 
 const checkEmail = async (req, res) => {
   try {
-    const { account} = req.body;
-    const pool = await connect(); // Get the connection pool
+    const { account } = req.body;
+    const pool = global.pool; // Get the connection pool
 
     const query = `
       SELECT * FROM [User] WHERE UserName = @account OR Email = @account
@@ -24,8 +24,7 @@ const checkEmail = async (req, res) => {
       console.log("Account does not exist.");
       res.json({ id: -1 });
     }
-    
-    await pool.close();
+
   } catch (err) {
     res.status(404).send({ error: "Wrong account. Please check again!" });
     console.log("Error", err);

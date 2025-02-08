@@ -24,20 +24,22 @@ async function login() {
             },
             body: JSON.stringify({ account, password })
         })
-        .then(response => {return response.json()})
-        .then(result => {
+            .then(response => { return response.json() })
+            .then(result => {
 
-            if(result.id===-1){
-                alert("Invalid account or password")
-            }else{
-             
-                window.location.href="../HomePage/HomePage.html";
-            }
-        })
+                if (result.id === -1) {
+                    alert("Invalid account or password")
+                } else {
+                    localStorage.setItem('loggedIn', 'true');
+                    localStorage.setItem('userID', result.id);
+                    localStorage.setItem('role', result.role);
+                    window.location.href = "../HomePage/HomePage.html";
+                }
+            })
 
 
     } catch (error) {
-        
+
         console.error("Error for login requestrequest:", error);
         alert("Error, try again.");
     }

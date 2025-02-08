@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+
+
+    <div class="header">
+        <h1>Dashboard</h1>
+        <div class="user-info">
+            <span>Welcome, Admin</span>
+        </div>
+    </div>
+
+    <div class="sidebar">
+        <h2><a href="../../HomePage/HomePage.html" id="HomePage">Auto Care 247</a>
+        </h2>
+        <div class="admin">
+            <img src="../../../resource/admin.jpg" alt="Admin">
+            <span>Admin</span>
+        </div>
+        <a href="../DashBoard/dashboard.html" style="background-color: #33334d">Overview</a>
+        <a href="#">Leaderboard</a>
+        <a href="#">Order</a>
+        <a href="#">Products</a>
+        <a href="#">Sales Report</a>
+        <a href="../CustomerManager/customer_management.html">Customer Management</a>
+        <a href="#">Messages</a>
+        <a href="#">Settings</a>
+        <a href="#">Sign Out</a>
+    </div>
+
+    <div class="content">
+        <div class="path">
+            <a href="../DashBoard/dashboard.html" style="text-decoration: none; color: white;">Home</a>
+            /
+            <a href="../CustomerManager/customer_management.html" style="text-decoration: none; color: white;">Customer
+                Management</a>
+            /
+            <a href="./CustomerProfile.html" style="text-decoration: none; color: #007bff;">{UserName}</a>
+        </div>
+
+
+
+    </div>
+</body>
+
+</html>
+<!--  -->
+
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+font-family: 'Arial', sans-serif;
+}
+
+body {
+display: flex;
+height: 100vh;
+background-color: #121212;
+color: #e0e0e0;
+overflow: hidden;
+}
+
+.sidebar {
+width: 250px;
+background-color: #1e1e2f;
+color: white;
+display: flex;
+flex-direction: column;
+/* padding: 20px; */
+position: fixed;
+height: 100%;
+overflow-y: auto;
+margin-top: 60px;
+}
+
+#HomePage {
+font-size: 20px;
+padding: 30px 10px;
+color: yellowgreen;
+}
+
+.sidebar a {
+color: white;
+text-decoration: none;
+padding: 30px 30px;
+display: block;
+font-size: 14px;
+}
+
+.sidebar a:hover {
+background-color: #33334d;
+}
+
+
+.path {
+width: 90%;
+margin: 20px auto;
+padding: 20px;
+}
+
+
+.content {
+flex: 1;
+padding: 20px;
+margin-left: 250px;
+overflow-y: auto;
+margin-top: 60px;
+}
+
+.admin {
+display: flex;
+align-items: center;
+padding: 30px 10px;
+background-color: #33334d;
+}
+
+.admin img {
+width: 40px;
+height: 40px;
+border-radius: 50%;
+margin-right: 10px;
+}
+
+.admin span {
+font-size: 14px;
+}
+
+
+.header {
+background-color: #1e1e2f;
+}
+
+
+.header {
+position: fixed;
+top: 0;
+width: 100%;
+height: 60px;
+background-color: #1e1e2f;
+color: #e0e0e0;
+display: flex;
+align-items: center;
+justify-content: space-between;
+padding: 0 20px;
+z-index: 1000;
+box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.header h1 {
+font-size: 18px;
+}
+
+.header .user-info {
+display: flex;
+align-items: center;
+}
