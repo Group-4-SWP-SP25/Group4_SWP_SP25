@@ -23,6 +23,7 @@ body {
     position: fixed;
     height: 100%;
     overflow-y: auto;
+    margin-top: 60px;
 }
 
 #HomePage {
@@ -34,9 +35,7 @@ body {
 .sidebar a {
     color: white;
     text-decoration: none;
-    /* margin: 20px 0; */
-    padding: 30px 10px;
-    /* border-radius: 8px; */
+    padding: 30px 30px;
     display: block;
     font-size: 14px;
 }
@@ -50,6 +49,7 @@ body {
     padding: 20px;
     margin-left: 250px;
     overflow-y: auto;
+    margin-top: 60px;
 }
 
 
@@ -73,6 +73,11 @@ body {
 
 /* ------------------- */
 
+.path {
+    width: 90%;
+    margin: 20px auto;
+    padding: 20px;
+}
 
 .container {
     width: 90%;
@@ -83,18 +88,18 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
 }
 
-.header {
+.table-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
 }
 
-.header h1 {
+.table-header h1 {
     font-size: 1.5rem;
 }
 
-.header .buttons button {
+.table-header .buttons button {
     padding: 10px 15px;
     margin-left: 10px;
     border: none;
@@ -103,11 +108,11 @@ body {
     color: white;
 }
 
-.header .buttons .filter {
+.table-header .buttons .filter {
     background: #007bff;
 }
 
-.header .buttons .add {
+.table-header .buttons .add {
     background: #28a745;
 }
 
@@ -190,4 +195,47 @@ table td {
 .pagination button.active {
     background: #007bff;
     color: white;
+}
+
+.pagination button:hover {
+    background: #007bff;
+    color: white;
+}
+
+/* ---------------- */
+
+.header {
+    background-color: #1e1e2f;
+}
+
+
+.header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 60px;
+    background-color: #1e1e2f;
+    color: #e0e0e0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.header h1 {
+    font-size: 18px;
+}
+
+.header .user-info {
+    display: flex;
+    align-items: center;
+}
+
+.header .user-info img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
 }

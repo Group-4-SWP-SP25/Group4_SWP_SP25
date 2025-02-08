@@ -4,7 +4,7 @@ const User = require("../../model/user.js");
 
 const findUserById = async (id) => {
   try {
-    const pool = await connect();
+    const pool = global.pool;
 
     const query = `SELECT * FROM [User] WHERE UserID = @id`;
 

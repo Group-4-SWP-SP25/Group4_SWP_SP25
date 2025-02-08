@@ -4,7 +4,7 @@ const sql = require("mssql");
 const CheckAccountExist = async (req, res) => {
   try {
     const { account, password } = req.body;
-    const pool = await connect(); // Get the connection pool
+    const pool = global.pool; // Get the connection pool
     console.log(account, " ", password)
 
     const query = `
@@ -21,13 +21,12 @@ const CheckAccountExist = async (req, res) => {
       console.log("Account exists.");
       const userData = result.recordset[0];
       const id = userData.UserID;
-      res.json({ id: id });
+      const role = userData.Role;
+      res.json({ id: id, role: role });
     } else {
       console.log("Account does not exist.");
       res.json({ id: -1 });
     }
-    
-    await pool.close();
   } catch (err) {
     res.status(404).send({ error: "Wrong account. Please check again!" });
     console.log("Error", err);

@@ -6,7 +6,7 @@ const sql = require("mssql");
 const changePassword = async (req, res) => {
   try {
     const { userId, newPassword, oldPassword } = req.body;
-    const pool = await connect(); // Get the connection pool
+    const pool = global.pool; // Get the connection pool
     // Check old password
     const user = await findUserById(Number(userId));
     if (oldPassword === null) {
@@ -37,7 +37,6 @@ const changePassword = async (req, res) => {
       .input("userId", sql.Int, userId) // UserID as integer
       .query(query);
     res.status(200).json({ success: "Success" });
-    await pool.close();
   } catch (err) {
     throw err; // Optionally re-throw the error
   }
