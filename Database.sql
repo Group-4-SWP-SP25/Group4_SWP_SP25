@@ -46,23 +46,31 @@ CREATE TABLE Car(
 GO
 
 -- 3
-CREATE TABLE ServiceType(
+CREATE TABLE ServiceTypes (
 	ServiceTypeID INT IDENTITY(1, 1) NOT NULL PRIMARY KEY,
 	ServiceTypeName VARCHAR(200),
-	Description TEXT
+	ServiceTypeDescription TEXT
 );
-GO
 
 -- 4
-CREATE TABLE ComponentType (
-	ComponentTypeID INT IDENTITY(1, 1) NOT NULL PRIMARY KEY,
-	ServiceTypeName VARCHAR(200),
-	Description TEXT
+CREATE TABLE Services (
+	ServiceTypeID INT FOREIGN KEY REFERENCES [ServiceTypes](ServiceTypeID),
+	ServiceID INT IDENTITY(1, 1) NOT NULL PRIMARY KEY,
+	ServiceName VARCHAR(200),
+	ServiceDescription TEXT
 );
-GO
-
--- 5
 
 -- Sample data
 INSERT INTO [User](Username, Password, FirstName, LastName, Email, Phone)
 VALUES ('q8edh12hi', '1234', 'qwe8dyrwfhief', 'qwgufcqbw', 'qwficqwfc', '0123456789');
+
+INSERT INTO [ServiceTypes](ServiceTypeName, ServiceTypeDescription)
+VALUES ('Tires', 'Including: Patching, Replacement, Pressure check, Wheel balancing and Wheel Alignment.'),
+       ('Braking System', 'Including: Pad replacement, Disc replacement, Fluid replacement, Cleaning & Maintenance and ABS System check.'),
+       ('Engine System', 'Including: Oil change, Spark plug inspection, Injector cleaning, Cooling system check and Engine repair.'),
+       ('Battery', 'Including: Health check, Charging, Replacement and Terminal cleaning.'),
+       ('Electrical System', 'Including: Bulb replacement, Fuse replacement, Electrical system diagnosis and Wiring repair.'),
+       ('Air Conditioning System', 'Including: Gas refill, Condenser cleaning, Filter replacement and System repair.'),
+       ('Shock Absorbers System', 'Including: Shock absorber replacement, Tie Rod/Control Arm Replacement and Suspension alignment.'),
+       ('Fuel System', 'Including: Pump cleaning, Filter replacement and Injection repair.'),
+       ('Cleaning & Maintenance', 'Including: Standard washes, Polishing, Interior cleaning and Waterproof coating.');

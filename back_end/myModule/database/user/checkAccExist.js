@@ -5,6 +5,7 @@ const CheckAccountExist = async (req, res) => {
   try {
     const { account, password } = req.body;
     const pool = await connect(); // Get the connection pool
+    console.log(account, " ", password)
 
     const query = `
       SELECT * FROM [User] WHERE (UserName = @account OR Email = @account) AND Password = @password

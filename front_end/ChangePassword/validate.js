@@ -66,7 +66,7 @@ function checkPassword(pass, err) {
   } else {
     contentError(err, "");
     successStyle(pass);
-    checkValidate = true;
+    // checkValidate = true;
   }
 
   if (
@@ -83,7 +83,7 @@ function checkPassword(pass, err) {
     } else {
       successStyle(newPassInput);
       contentError(e_newPass, "");
-      checkValidate = true;
+      // checkValidate = true;
     }
   }
   if (
