@@ -5,7 +5,7 @@ const User = require('../../model/user.js');
 const addUser = async (data) => {
     try {
         const user = new User(data);
-        const pool = await connect(); // Get the connection pool
+        const pool = global.pool; // Get the connection pool
         const query = `
       INSERT INTO [User](UserName, Password, FirstName, LastName, Email, Address, Phone)
 VALUES(@userName, @password, @firstName, @lastName, @email, @address, @phone);
@@ -23,7 +23,6 @@ VALUES(@userName, @password, @firstName, @lastName, @email, @address, @phone);
             .query(query);
 
         console.log('Password updated successfully.');
-        await pool.close();
         return 1; // Optionally return the result
         // Close the connection (optional because `mssql` handles pooling)
     } catch (err) {

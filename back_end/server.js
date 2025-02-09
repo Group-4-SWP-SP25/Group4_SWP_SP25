@@ -4,6 +4,7 @@ const PORT = 3000;
 const app = express();
 app.use(express.json());
 app.use(cors());
+const connectDB = require('./myModule/database/connectDB.js')
 
 // IMPORT MODULE
 
@@ -32,19 +33,5 @@ app.post('/register', Register);
 
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
-    // data = {
-    //   account: 'q8edh12hi',
-    //   password: 'doanhieu'
-    // };
-    // try{
-    //   fetch('http://localhost:3000/checkAccountExist', {
-    //     method: 'POST',
-    //     headers: { 'Content-Type': 'application/json'},
-    //     body: JSON.stringify(data)
-    //   })
-    //   .then(response => {return response.json()})
-    //   .then(result => console.log('result: ', result))
-    // }catch (e){
-    //   console.log(e)
-    // }
+    (async () => { global.pool = await connectDB() })();
 });
