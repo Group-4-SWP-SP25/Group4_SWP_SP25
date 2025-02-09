@@ -21,6 +21,7 @@
   position: relative;
   width: 100%;
   /* height: 100vh; Full heigh screen */
+  height: 750px;
   overflow: hidden;
 }
 
@@ -46,6 +47,7 @@ iframe {
   z-index: -2;
   pointer-events: none;
 }
+
 /* Content of changing password */
 .change-password {
   min-height: inherit;
@@ -125,7 +127,6 @@ iframe {
   padding: 5px 40px;
   border-radius: 10px;
 }
-
 /* Window after successfull changing password */
 .hidden {
   display: none;
