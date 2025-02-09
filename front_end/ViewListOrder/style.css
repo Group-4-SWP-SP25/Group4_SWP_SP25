@@ -183,7 +183,7 @@ a {
   font-weight: 700;
 }
 
-/* Order */
+/* Order table */
 .main-order-page {
   margin-bottom: 40px;
   width: 80%;
@@ -252,15 +252,6 @@ a {
   display: flex;
   align-items: center;
 }
-
-/* .order-page .order-body .order_image {
-  width: 110px;
-  height: 110px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-left: 10px;
-} */
 
 .order-page .order-body .order-info {
   vertical-align: top;
@@ -362,25 +353,6 @@ a {
   }
 }
 
-/* .order-page .order-body .order-info .order_name a {
-  margin-bottom: 4px;
-  font-size: 18px;
-  font-weight: 500;
-  line-height: 18px;
-  display: block;
-  text-decoration: none;
-} */
-
-/* .order-page .order-body .order-info .order_name a:hover {
-  color: #fe9614;
-} */
-
-/* .order-page .order-body .grid .order_prices .order-price {
-  font-weight: bold;
-  display: block;
-  font-size: 18px;
-} */
-
 .order-page .order-footer .order-subtotal {
   font-size: 18px;
   font-weight: 500;
@@ -425,7 +397,7 @@ a {
   font-weight: bold;
 }
 
-/* WIndow confirm delete order */
+/* Window confirm delete order */
 .hidden {
   display: none;
 }
@@ -447,23 +419,51 @@ a {
   left: 50%;
   transform: translate(-50%, -50%) scale(0.5);
   width: 35%;
-  height: 15%;
+  height: 18%;
   padding: 1.5rem 0;
-  background-color: white;
-  transition: transform 0.3s ease-out;
-  border-radius: 5px;
-  box-shadow: 0 3rem 5rem rgba(0, 0, 0, 0.3);
+  background-color: #1e1e1e;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.1);
   z-index: 10;
-  color: #000;
-  .btn-submit {
-    display: flex;
-    width: 100%;
-    justify-content: center;
-    gap: 20px;
-    .btn {
-      padding: 5px 20px;
-    }
-  }
+  color: #f9f9f9;
+  text-align: center;
+  transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+}
+
+.del-window .btn-submit {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 1rem;
+}
+
+.del-window .btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.del-window .btn-yes {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.del-window .btn-yes:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+.del-window .btn-cancel {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.del-window .btn-cancel:hover {
+  background-color: #a71d2a;
+  transform: scale(1.05);
 }
 
 .del-window.show {

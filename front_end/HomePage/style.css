@@ -6,7 +6,9 @@
 body {
   margin: 0;
   background-color: black;
+  overflow-x: hidden;
 }
+
 /* back ground video ------------------------------------- */
 
 .background-video {
