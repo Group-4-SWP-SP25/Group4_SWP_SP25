@@ -1,7 +1,7 @@
 //client
 
 document.getElementById('loginButton').addEventListener('click', login);
-
+document.getElementById("auth-google").addEventListener('click', loginGoogle)
 
 async function login() {
     // get information form login form
@@ -20,7 +20,7 @@ async function login() {
         await fetch("http://localhost:3000/checkAccountExist", {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
             body: JSON.stringify({ account, password })
         })
@@ -44,3 +44,22 @@ async function login() {
         alert("Error, try again.");
     }
 }
+
+// login with google
+
+function loginGoogle() {
+    window.location.href = 'http://localhost:3000/auth/google/login';
+}
+
+function getQueryParams() {
+    const params = new URLSearchParams(window.location.search);
+    return {
+        name: params.get('name'),
+        email: params.get('email'),
+        id: params.get('id'),
+    };
+}
+
+const userInfo = getQueryParams();
+console.log('User Info:', userInfo);
+if (userInfo.id !== null) window.location.href = 'http://localhost:5500/front_end/HomePage/HomePage.html'
