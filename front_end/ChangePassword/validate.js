@@ -10,7 +10,7 @@ const e_newPass = document.querySelector(".e_newPassword");
 const e_confirmPass = document.querySelector(".e_confirmPassword");
 
 // The password must be at least 6 characters and must contain both numbers and letters
-const regexPassword = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
+const regexPassword = /^(?=.*[A-Za-z])(?=.*\d).{6,}$/;
 
 // Style errors in tags
 const errorStyle = function (tag) {
@@ -35,15 +35,34 @@ const overlay = document.querySelector(".overlay");
 const showSuccessWindow = function () {
   successWindow.classList.remove("hidden");
   overlay.classList.remove("hidden");
+  document.body.classList.toggle("no-scroll");
+  setTimeout(() => {
+    successWindow.classList.add("show");
+  }, 10);
 };
 
-// Close success window
-const closeSuccessWindow = function () {
-  successWindow.classList.add("hidden");
-  overlay.classList.add("hidden");
-};
+// Show/Hide password
+function showHidePass(icon, passField) {
+  icon.classList.toggle("fa-eye");
+  icon.classList.toggle("fa-eye-slash");
 
-// Check paXssword in tags
+  const type =
+    passField.getAttribute("type") === "password" ? "text" : "password";
+  passField.setAttribute("type", type);
+}
+document.querySelector(".show-oldPass").addEventListener("click", function () {
+  showHidePass(this, oldPassInput);
+});
+document.querySelector(".show-newPass").addEventListener("click", function () {
+  showHidePass(this, newPassInput);
+});
+document
+  .querySelector(".show-confirmPass")
+  .addEventListener("click", function () {
+    showHidePass(this, confirmPassInput);
+  });
+
+// Check password in tags
 let checkValidate = true;
 function checkPassword(pass, err) {
   if (pass.value.length === 0) {
