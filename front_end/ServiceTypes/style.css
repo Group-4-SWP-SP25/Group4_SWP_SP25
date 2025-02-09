@@ -1,37 +1,66 @@
+.body{
+    background-color: lightgray;
+}
+
+/* Service types grid */
 .svc-types {
-    width: 95%;
-    margin: 10% auto 0 auto;
-}
-
-.types{
-    margin-bottom: 3vh;
-}
-
-.dark-overlay{
-    /* position: relative; */
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    height: auto;
+    margin-top: 8%;
+    margin-left: 3%;
+    margin-right: 3%;
+    margin-bottom: 5%;
 }
 
 .type {
-    height: 70vh;
-    color: rgb(255, 255, 255);
-    border: 1px solid #ccc;
+    position: relative;
+    overflow: hidden;
+}
 
+.type img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.type-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    transition: background-color 0.3s ease;
+    flex-direction: column;
+}
+
+.type:hover .type-overlay {
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.button-detail {
+    border-radius: 50px;
+    --border-color: green;
+    border: 2px solid var(--border-color);
+    background-color: transparent;
+    color: white;
+    /* font-weight: bolder; */
+    padding: 10px 20px;
     text-align: center;
-    background: center;
-    position: relative;
-    z-index: -1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-.type-title{
-    position: relative;
-    background-color: none;
-    z-index: 2;
+.button-detail:hover {
+    background-color: var(--border-color);
+    /* color: white; */
 }
-
-
-
-/* .type:hover{
-    
-} */
