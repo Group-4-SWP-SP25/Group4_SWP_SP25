@@ -3,13 +3,41 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đăng nhập bằng Google</title>
+    <title>Google Login Demo</title>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 
 <body>
     <h1>Đăng nhập bằng Google</h1>
-    <a href="/auth/google">Đăng nhập bằng Google</a>
+
+    <!-- Google Sign-In Button -->
+    <div id="g_id_onload" data-client_id="337733600812-vk80tkmu5juol3ovt4mc11vabpo10vn2.apps.googleusercontent.com"
+        data-callback="handleCredentialResponse">
+    </div>
+    <div class="g_id_signin" data-type="standard"></div>
+
+    <script>
+        async function handleCredentialResponse(response) {
+            // Nhận token từ Google
+            const token = response.credential;
+            console.log("token: ", token)
+            // Gửi token lên server qua API
+            const res = await fetch('http://localhost:3000/api/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ token }),
+            });
+
+            const result = await res.json();
+            if (result.success) {
+                // Thành công: Chuyển đến trang dashboard
+                window.location.href = '/success';
+            } else {
+                // Lỗi: Hiển thị thông báo
+                alert(result.message);
+            }
+        }
+    </script>
 </body>
 
 </html>

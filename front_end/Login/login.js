@@ -1,6 +1,7 @@
 //client
 
-document.getElementById("loginButton").addEventListener("click", login);
+document.getElementById('loginButton').addEventListener('click', login);
+document.getElementById("auth-google").addEventListener('click', loginGoogle)
 
 async function login() {
   // get information form login form
@@ -17,27 +18,48 @@ async function login() {
   try {
     // Send login request to server
     await fetch("http://localhost:3000/checkAccountExist", {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ account, password }),
+      body: JSON.stringify({ account, password })
     })
-      .then((response) => {
-        return response.json();
-      })
-      .then((result) => {
+      .then(response => { return response.json() })
+      .then(result => {
+
         if (result.id === -1) {
-          alert("Invalid account or password");
+          alert("Invalid account or password")
         } else {
-          localStorage.setItem("loggedIn", "true");
-          localStorage.setItem("userID", result.id);
-          localStorage.setItem("role", result.role);
+          localStorage.setItem('loggedIn', 'true');
+          localStorage.setItem('userID', result.id);
+          localStorage.setItem('role', result.role);
           window.location.href = "../HomePage/HomePage.html";
         }
-      });
+      })
+
+
   } catch (error) {
+
     console.error("Error for login requestrequest:", error);
     alert("Error, try again.");
   }
 }
+
+// login with google
+
+function loginGoogle() {
+  window.location.href = 'http://localhost:3000/auth/google/login';
+}
+
+function getQueryParams() {
+  const params = new URLSearchParams(window.location.search);
+  return {
+    name: params.get('name'),
+    email: params.get('email'),
+    id: params.get('id'),
+  };
+}
+
+const userInfo = getQueryParams();
+console.log('User Info:', userInfo);
+if (userInfo.id !== null) window.location.href = 'http://localhost:5500/front_end/HomePage/HomePage.html'
