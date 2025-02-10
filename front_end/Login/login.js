@@ -1,7 +1,6 @@
 //client
 
 document.getElementById('loginButton').addEventListener('click', login);
-document.getElementById("auth-google").addEventListener('click', loginGoogle)
 
 async function login() {
   // get information form login form
@@ -47,19 +46,24 @@ async function login() {
 
 // login with google
 
-function loginGoogle() {
-  window.location.href = 'http://localhost:3000/auth/google/login';
-}
+async function handleCredentialResponse(response) {
+  // Nhận token từ Google
+  const token = response.credential;
+  console.log("token: ", token)
+  // Gửi token lên server qua API
+  const res = await fetch('http://localhost:3000/auth/google/login', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ token }),
+  });
 
-function getQueryParams() {
-  const params = new URLSearchParams(window.location.search);
-  return {
-    name: params.get('name'),
-    email: params.get('email'),
-    id: params.get('id'),
-  };
+  const result = await res.json();
+  if (result.success) {
+    // Thành công: Chuyển đến trang dashboard
+    console.log(result)
+    document.getElementById('user').innerHTML = result.user
+  } else {
+    // Lỗi: Hiển thị thông báo
+    alert(result.message);
+  }
 }
-
-const userInfo = getQueryParams();
-console.log('User Info:', userInfo);
-if (userInfo.id !== null) window.location.href = 'http://localhost:5500/front_end/HomePage/HomePage.html'

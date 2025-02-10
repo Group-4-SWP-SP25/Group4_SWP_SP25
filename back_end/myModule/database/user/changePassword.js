@@ -1,4 +1,3 @@
-const connect = require("../connectDB.js");
 const findUserById = require("./findUserById.js");
 
 const sql = require("mssql");

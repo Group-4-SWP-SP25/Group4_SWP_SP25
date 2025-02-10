@@ -9,6 +9,7 @@ body {
   background-position: center;
   background-repeat: no-repeat;
 }
+
 .container {
   margin-top: 5%;
   margin-left: 10%;
@@ -117,31 +118,15 @@ input:focus {
 }
 
 .social-button {
-  display: flex;
+  /* display: flex;
   align-items: center;
   justify-content: center;
   width: 48%;
   padding: 10px;
-  border: 1px solid #fff;
   border-radius: 5px;
   background-color: transparent;
   color: #fff;
-  cursor: pointer;
-}
-
-.social-button img {
-  width: 20px;
-  margin-right: 10px;
-}
-
-.social-button.google:hover {
-  background-color: #ea4335;
-  color: #fff;
-}
-
-.social-button.apple:hover {
-  background-color: #000;
-  color: #fff;
+  cursor: pointer; */
 }
 
 /* Register */
@@ -154,6 +139,7 @@ input:focus {
   text-decoration: none;
   font-weight: bold;
 }
+
 #password {
   margin-right: -50px;
 }

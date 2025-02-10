@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <title>Google Login Demo</title>
     <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+
 </head>
 
 <body>
@@ -15,6 +17,8 @@
         data-callback="handleCredentialResponse">
     </div>
     <div class="g_id_signin" data-type="standard"></div>
+
+    <div id="user"></div>
 
     <script>
         async function handleCredentialResponse(response) {
@@ -31,7 +35,8 @@
             const result = await res.json();
             if (result.success) {
                 // Thành công: Chuyển đến trang dashboard
-                window.location.href = '/success';
+                console.log(result)
+                document.getElementById('user').innerHTML = result.user
             } else {
                 // Lỗi: Hiển thị thông báo
                 alert(result.message);

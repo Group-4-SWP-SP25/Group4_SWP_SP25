@@ -9,11 +9,6 @@ app.use(
         credentials: true, // Cho phép gửi cookie hoặc session
     })
 );
-// Session configuration
-
-
-// Passport initialization
-
 
 const connectDB = require('./myModule/database/connectDB.js')
 
@@ -26,7 +21,7 @@ const CheckEmail = require('./myModule/database/user/checkEmail.js');
 const GetUserInfo = require('./myModule/database/user/getUserInfo.js');
 const ResetPassword = require('./myModule/controller/resetpassword.js');
 const Register = require('./myModule/controller/register.js');
-const authRoutes = require('./myModule/controller/GoogleLogin.js');
+const AuthGoogle = require('./myModule/controller/Login.js')
 
 // ----------------------------------------------------------
 
@@ -39,7 +34,7 @@ app.post('/checkEmail', CheckEmail);
 app.post('/getUserInfo', GetUserInfo);
 app.post('/resetPassword', ResetPassword);
 app.post('/register', Register);
-app.use(authRoutes)
+app.post('/auth/google/login', AuthGoogle)
 
 
 // ----------------------------------------------------------
