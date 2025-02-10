@@ -191,3 +191,34 @@ iframe {
   backdrop-filter: blur(3px);
   z-index: 5;
 }
+
+.success svg path.circle {
+  stroke: #40c057; /* Màu viền */
+  stroke-width: 3; /* Độ dày nét vẽ */
+  fill: none; /* Không đổ màu */
+  stroke-dasharray: 150; /* Tổng độ dài của nét */
+  stroke-dashoffset: 150; /* Đưa nét ra ngoài */
+  animation: drawCircle 1s ease-out forwards; /* Hiệu ứng vẽ hình tròn */
+}
+
+.success svg path.tick {
+  stroke: #40c057;
+  stroke-width: 3;
+  fill: none;
+  stroke-dasharray: 50;
+  stroke-dashoffset: 50;
+  animation: drawTick 0.5s ease-out forwards;
+  animation-delay: 1s; /* Vẽ dấu tick sau khi hình tròn hoàn tất */
+}
+
+@keyframes drawCircle {
+  to {
+    stroke-dashoffset: 0; /* Vẽ trọn hình tròn */
+  }
+}
+
+@keyframes drawTick {
+  to {
+    stroke-dashoffset: 0; /* Vẽ trọn dấu tick */
+  }
+}

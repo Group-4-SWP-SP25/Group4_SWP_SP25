@@ -11,12 +11,6 @@
 </head>
 
 <body>
-    <!-- Header -->
-    <!-- <header>
-            <div id="header-container"></div>
-        </header> -->
-    <!-- End header -->
-
     <!-- Content -->
     <div class="register">
         <div class="register-overlay">
@@ -276,19 +270,6 @@
 
     <!-- Scripts -->
     <script src="scripts.js"></script>
-    <script>
-        fetch('../header/header.html')
-            .then((response) => response.text())
-            .then((data) => {
-                document.getElementById('header-container').innerHTML = data;
-            });
-
-        fetch('../footer/footer.html')
-            .then((response) => response.text())
-            .then((data) => {
-                document.getElementById('footer-container').innerHTML = data;
-            });
-    </script>
     <!-- End scripts -->
 </body>
 

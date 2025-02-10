@@ -159,12 +159,14 @@
         <img src="/resource/information-icon.png" width="80" height="80" alt="Thông báo">
     </div>
     <!-- End notification -->
-
     <script>
         fetch("../header/header.html")
-            .then((response) => response.text())
-            .then((data) => {
+            .then(response => response.text())
+            .then(data => {
                 document.getElementById("header-container").innerHTML = data;
+                const script = document.createElement("script");
+                script.src = "../header/script.js";
+                document.body.appendChild(script);
             });
 
         fetch("../footer/footer.html")
@@ -173,7 +175,7 @@
                 document.getElementById("footer-container").innerHTML = data;
             });
     </script>
-    <script src="./header_script.js"></script>
+
 </body>
 
 </html>

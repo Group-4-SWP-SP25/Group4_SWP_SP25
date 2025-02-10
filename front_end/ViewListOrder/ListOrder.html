@@ -9,39 +9,12 @@
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
   <link rel="stylesheet" href="./style.css" />
+
 </head>
 
 <body>
   <!-- Header -->
-  <header class="header">
-    <div class="logo">
-      <a href="#">
-        <img src="/resource/logo.jpg" alt="Logo">
-      </a>
-    </div>
-    <nav class="navbar">
-      <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">About</a></li>
-        <li><a href="#">Services</a></li>
-        <li><a href="#">Contact</a></li>
-      </ul>
-    </nav>
-    <div class="user-login">
-      <div class="user-name">
-        <div>
-          <i class="fa-solid fa-user user-icon"></i>
-          <p>aaa</p>
-        </div>
-        <button class="button"> <i class="fas fa-chevron-down fa-sm fa-user"></i></button>
-      </div>
-      <ul class="user-info">
-        <li><a href="#">Vỉew profile</a></li>
-        <li><a href="#">My Orders</a></li>
-        <li><a href="#">Logout</a></li>
-      </ul>
-    </div>
-  </header>
+  <div id="header-container"></div>
   <!-- End header -->
 
   <!-- Bread crumb -->
@@ -162,74 +135,39 @@
           </div>
         </div>
       </div>
-
     </div>
   </section>
   <!-- End order table -->
 
+  <!-- Window confirm to delete order -->
   <div class="del-window text-center hidden">
     <p class="display-6 container">Are you sure to delete this order?</p>
     <div class="btn-submit">
-      <button class="btn btn-primary">Yes</button>
-      <button class="btn btn-danger">No</button>
+      <button class="btn btn-yes">Yes</button>
+      <button class="btn btn-cancel">Cancel</button>
     </div>
   </div>
+  <!-- End window confirm to delete order -->
   <div class="overlay hidden"></div>
+
+
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
     integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script>
-    $(function () {
-      $(".user-login").click(function (e) {
-        e.preventDefault();
-        $(".user-info").slideToggle(500);
-        $(".fa-user").toggleClass("active");
-        e.stopPropagation();
+    fetch("../header/header.html")
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById("header-container").innerHTML = data;
+        const script = document.createElement("script");
+        script.src = "../header/script.js";
+        document.body.appendChild(script);
       });
-
-      $(document).click(function () {
-        $(".user-info").slideUp(500);
-        $(".fa-user").removeClass("active");
-      });
-    });
-
-    $(function () {
-      $(".btn-detail").click(function (e) {
-        e.preventDefault();
-        $(".order-detail").slideToggle(500);
-
-        $(this).find(".fa-see").toggleClass("active");
-
-        const currentText = $(this).text().trim();
-        if (currentText.includes("See detail")) {
-          $(this).contents().first().replaceWith("Collapse ");
-        } else {
-          $(this).contents().first().replaceWith("See detail ");
-        }
-
-        e.stopPropagation();
-      });
-    });
-
-    $(document).ready(function () {
-      $('.btn-del').click(function () {
-        $('.del-window').toggleClass('hidden');
-        $('.overlay').toggleClass('hidden');
-        $('.del-window').fadeIn(200).addClass('show');
-        $('body').addClass('no-scroll');
-      });
-
-      $('.btn-submit button').on('click', function () {
-        if ($(this).text() === 'Yes') {
-          //  Fetch
-        }
-        $('.del-window').removeClass('show').fadeOut(200);
-        $('.overlay').toggleClass('hidden');
-        $('body').removeClass('no-scroll');
-      });
-    });
-
   </script>
+  <script src="animation.js"></script>
+  <script src="press.js"></script>
+
 </body>
 
 </html>
