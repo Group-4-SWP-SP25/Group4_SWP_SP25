@@ -1,8 +1,7 @@
 const sql = require("mssql");
 
-const checkEmail = async (req, res) => {
+const checkUserName = async (account) => {
   try {
-    const { account } = req.body;
     const pool = global.pool; // Get the connection pool
 
     const query = `
@@ -15,13 +14,10 @@ const checkEmail = async (req, res) => {
       .query(query);
 
     if (result.recordset.length > 0) {
-      console.log("Account exists.");
       const userData = result.recordset[0];
-      const id = userData.UserID;
-      res.json({ id: id });
+      return userData;
     } else {
-      console.log("Account does not exist.");
-      res.json({ id: -1 });
+      return null;
     }
 
   } catch (err) {
@@ -30,4 +26,4 @@ const checkEmail = async (req, res) => {
   }
 };
 
-module.exports = checkEmail;
+module.exports = checkUserName;

@@ -1,15 +1,16 @@
 const findUserById = require("./findUserById.js");
+const checkUserName = require('./checkUserName.js')
 
 const sql = require("mssql");
 
 const changePassword = async (req, res) => {
   try {
-    const { userId, newPassword, oldPassword } = req.body;
+    const { account, newPassword, oldPassword } = req.body;
     const pool = global.pool; // Get the connection pool
     // Check old password
-    const user = await findUserById(Number(userId));
+    const user = await checkUserName(account);
     if (oldPassword === null) {
-      if (newPassword === user.password) {
+      if (newPassword === user.Password) {
         res.status(300).send('same');
         console.log('same')
         return;
@@ -21,7 +22,7 @@ const changePassword = async (req, res) => {
       return;
     }
 
-
+    const userId = user.UserID
     console.log('query')
     const query = `
       UPDATE [User]

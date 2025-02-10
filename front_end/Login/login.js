@@ -1,41 +1,40 @@
-//client
-
 document.getElementById('loginButton').addEventListener('click', login);
 
 async function login() {
-  // get information form login form
-  const account = document.getElementById("username").value; // mail or userName
+  // get login infomation
+  const account = document.getElementById("username").value;
   const password = document.getElementById("password").value;
-  console.log("acc:", account);
-  console.log("pass:", password);
+  console.log(account, ' ', password)
 
+  // check null
   if (!account || !password) {
-    alert("Invalid account or password!");
+    alert("Invalid account or password!"); // thay bằng animation trực quan hơn 
     return;
   }
 
   try {
     // Send login request to server
-    await fetch("http://localhost:3000/checkAccountExist", {
+    response = await fetch("http://localhost:3000/auth/login", {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ account, password })
     })
-      .then(response => { return response.json() })
-      .then(result => {
 
-        if (result.id === -1) {
-          alert("Invalid account or password")
-        } else {
-          localStorage.setItem('loggedIn', 'true');
-          localStorage.setItem('userID', result.id);
-          localStorage.setItem('role', result.role);
-          window.location.href = "../HomePage/HomePage.html";
-        }
-      })
-
+    switch (response.status) {
+      case 200:
+        const result = await response.json();
+        localStorage.setItem('token', result.token);
+        window.location.href = window.location.href = 'http://127.0.0.1:5500/front_end/HomePage/HomePage.html'
+        break;
+      case 404:
+        alert('Account not found');
+        break;
+      case 401:
+        alert('Wrong password');
+        break;
+    }
 
   } catch (error) {
 
@@ -59,9 +58,13 @@ async function handleCredentialResponse(response) {
 
   const result = await res.json();
   if (result.success) {
-    // Thành công: Chuyển đến trang dashboard
-    console.log(result)
-    document.getElementById('user').innerHTML = result.user
+
+    if (result.isExist) {
+      localStorage.setItem('token', result.token);
+      window.location.href = 'http://127.0.0.1:5500/front_end/HomePage/HomePage.html'
+    } else {
+      window.location.href = 'http://127.0.0.1:5500/front_end/Register/Register.html'
+    }
   } else {
     // Lỗi: Hiển thị thông báo
     alert(result.message);
