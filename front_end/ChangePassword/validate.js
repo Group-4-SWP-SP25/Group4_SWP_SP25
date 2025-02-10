@@ -121,18 +121,27 @@ function checkPassword(pass, err) {
   }
 }
 
-function checkSubmit() {
+async function checkSubmit() {
   checkPassword(oldPassInput, e_oldPass);
   checkPassword(newPassInput, e_newPass);
   checkPassword(confirmPassInput, e_confirmPass);
   if (!checkValidate) {
     return;
   } else {
+    const response = await fetch('http://localhost:3000/getUserInfo', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+      },
+    })
+    const result = await response.json();
+
     fetch("http://localhost:3000/changePassword", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        userId: userId.value,
+        account: result.account,
         newPassword: newPassInput.value,
         oldPassword: oldPassInput.value,
       }),

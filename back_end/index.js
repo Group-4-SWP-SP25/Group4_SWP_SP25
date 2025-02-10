@@ -1,5 +1,4 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const { OAuth2Client } = require('google-auth-library');
 const path = require('path');
 
@@ -14,7 +13,7 @@ app.use(cors({
 }));
 
 // Middleware
-app.use(bodyParser.json());
+app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public'))); // Phục vụ file tĩnh (index.html)
 
 // API: Xử lý đăng nhập
@@ -43,7 +42,6 @@ app.post('/api/login', async (req, res) => {
             picture: payload.picture,
         };
 
-        console.log('User Info:', user);
 
         // TODO: Lưu thông tin người dùng vào cơ sở dữ liệu (nếu cần)
 

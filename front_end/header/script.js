@@ -1,12 +1,27 @@
-$(document).ready(function () {
-  if (localStorage.getItem("loggedIn") !== "true") {
+
+
+$(document).ready(async function () {
+  //get user info
+  const response = await fetch('http://localhost:3000/getUserInfo', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('token')}`,
+    },
+  })
+
+  const result = await response.json();
+  // set name 
+  document.getElementById('name').innerHTML = result.name
+
+  if (localStorage.getItem("token") == null) {
     $(".guest").removeClass("hidden");
     $(".user-login").addClass("hidden");
   } else {
     $(".guest").addClass("hidden");
     $(".user-login").removeClass("hidden");
 
-    switch (localStorage.getItem("role")) {
+    switch (result.role) {
       case "Admin":
         $("#my-cars").addClass("hidden");
         $("#my-orders").addClass("hidden");
@@ -18,8 +33,12 @@ $(document).ready(function () {
   }
 
   $("#sign-out").on("click", function () {
-    localStorage.setItem("loggedIn", "false");
+    localStorage.removeItem("token");
     window.location.href = "../HomePage/HomePage.html";
+  });
+
+  $("#dashboard").on("click", function () {
+    window.location.href = "http://127.0.0.1:5500/front_end/Dashboard/DashBoard/dashboard.html";
   });
 
   $("#my-orders").on("click", function () {

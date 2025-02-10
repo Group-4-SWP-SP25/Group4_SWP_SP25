@@ -1,19 +1,14 @@
 const nodemailer = require('nodemailer')
 const fs = require('fs');
 const { generateVerificationCode } = require('../Utils/verificationcode')
-const findUserById = require('../database/user/findUserById')
 
-const send = async (req, res) => {
+const send = async (name, email) => {
     // read template
     let template = fs.readFileSync('./myModule/Utils/mail_Template.html', 'utf-8')
-    // inf
-    const { id } = req.body;
-    const user = await findUserById(id);
-    const email = user.email;
-    const code = generateVerificationCode(email);
-    console.log(code)
 
-    const replacements = { username: user.firstName + " " + user.lastName, code: code };
+    const code = generateVerificationCode(email);
+
+    const replacements = { username: name, code: code };
     // 
     for (const key in replacements) {
         if (replacements.hasOwnProperty(key)) {
