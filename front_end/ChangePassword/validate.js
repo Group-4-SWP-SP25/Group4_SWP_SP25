@@ -63,7 +63,7 @@ document
   });
 
 // Check password in tags
-function checkPassword(pass, err) {
+async function checkPassword(pass, err) {
   if (pass.value.length === 0) {
     errorStyle(pass);
     if (pass === oldPassInput || pass === newPassInput) {
