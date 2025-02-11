@@ -156,7 +156,6 @@ async function checkSubmit() {
           showSuccessWindow();
         }
         if (data.error) {
-          console.log("b");
           errorStyle(oldPassInput);
           contentError(e_oldPass, data.error);
         }
