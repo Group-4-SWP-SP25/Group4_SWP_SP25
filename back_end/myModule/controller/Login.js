@@ -32,7 +32,7 @@ const AuthGoogle = async (req, res) => {
         // get user info
         const user = await checkUserName(userGG.email);
         if (user == null) {
-            res.json({ success: true, isExist: false })
+            res.json({ success: true, isExist: false, email: payload.email })
         } else {
             const token = generateToken({ id: user.UserID, name: user.FirstName, role: user.Role });
             res.json({ success: true, isExist: true, token });

@@ -1,3 +1,10 @@
+const urlParams = new URLSearchParams(window.location.search);
+const email = urlParams.get('email');
+if (email != null) {
+    document.getElementById('email').value = email
+    document.getElementById('email').setAttribute("readonly", true);
+}
+
 // Regex: Email
 const regexEmail = /^\w+@\w+(\.\w+)+$/; // Start with >1 word chars, then @, then >1 word chars, then (. and >1 word chars) >1 times
 const regexPhone = /^0\d{9}$/; // Start with 0, follow by exact 9 digits
