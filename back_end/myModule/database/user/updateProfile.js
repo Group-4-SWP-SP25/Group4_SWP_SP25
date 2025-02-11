@@ -4,7 +4,7 @@ const User = require("../../model/user");
 
 const updateProfile = async (req, res) => {
   try {
-    const pool = await connect();
+    const pool = global.pool;
     // Get data to update profile from client
     const { id, firstName, lastName, email, address, phone } = req.body;
 
@@ -21,7 +21,6 @@ const updateProfile = async (req, res) => {
       .input("phone", sql.VarChar, phone)
       .input("id", sql.input, id)
       .query(query);
-    await pool.close();
   } catch (err) {
     throw err;
   }

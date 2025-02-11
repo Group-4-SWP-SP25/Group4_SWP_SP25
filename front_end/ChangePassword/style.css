@@ -5,6 +5,14 @@
   box-sizing: border-box;
 }
 
+body {
+  position: relative;
+}
+
+body.no-scroll {
+  overflow: hidden;
+}
+
 .title {
   font-family: "Righteous", serif;
 }
@@ -26,6 +34,7 @@
   width: 100%;
   /* height: 100vh; Full heigh screen */
   overflow: hidden;
+  height: 750px;
 }
 
 .video-background {
@@ -119,6 +128,24 @@ iframe {
   outline: none;
 }
 
+.pass-container {
+  position: relative;
+}
+
+.fa-eye {
+  position: absolute;
+  top: 28%;
+  right: 4%;
+  cursor: pointer;
+}
+
+.fa-eye-slash {
+  position: absolute;
+  top: 28%;
+  right: 4%;
+  cursor: pointer;
+}
+
 .button {
   margin-top: 10px;
   width: 100%;
@@ -136,17 +163,22 @@ iframe {
   display: none;
 }
 .success {
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%) scale(0.5);
   width: 30%;
-  height: 30%;
+  height: 32%;
   padding: 1.5rem 0;
   background-color: white;
   border-radius: 5px;
   box-shadow: 0 3rem 5rem rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease-out;
   z-index: 10;
+}
+
+.success.show {
+  transform: translate(-50%, -50%) scale(1);
 }
 
 .overlay {
@@ -158,4 +190,35 @@ iframe {
   background-color: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(3px);
   z-index: 5;
+}
+
+.success svg path.circle {
+  stroke: #40c057; /* Màu viền */
+  stroke-width: 3; /* Độ dày nét vẽ */
+  fill: none; /* Không đổ màu */
+  stroke-dasharray: 150; /* Tổng độ dài của nét */
+  stroke-dashoffset: 150; /* Đưa nét ra ngoài */
+  animation: drawCircle 1s ease-out forwards; /* Hiệu ứng vẽ hình tròn */
+}
+
+.success svg path.tick {
+  stroke: #40c057;
+  stroke-width: 3;
+  fill: none;
+  stroke-dasharray: 50;
+  stroke-dashoffset: 50;
+  animation: drawTick 0.5s ease-out forwards;
+  animation-delay: 1s; /* Vẽ dấu tick sau khi hình tròn hoàn tất */
+}
+
+@keyframes drawCircle {
+  to {
+    stroke-dashoffset: 0; /* Vẽ trọn hình tròn */
+  }
+}
+
+@keyframes drawTick {
+  to {
+    stroke-dashoffset: 0; /* Vẽ trọn dấu tick */
+  }
 }

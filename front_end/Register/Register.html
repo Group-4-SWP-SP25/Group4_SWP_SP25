@@ -1,129 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1.0" />
-        <title>Register</title>
-        <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-            rel="stylesheet"
-            integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-            crossorigin="anonymous" />
-        <link
-            rel="stylesheet"
-            href="style.css" />
-    </head>
-    <body>
-        <!-- Header -->
-        <header>
-            <div id="header-container"></div>
-        </header>
-        <!-- End header -->
 
-        <!-- Content -->
-        <div class="register">
-            <div class="register-overlay">
-                <div class="register-form">
-                    <p class="register-title">Create new account</p>
-                    <form
-                        action="register"
-                        method="post">
-                        <!-- Name field -->
-                        <div class="register-field">
-                            <div class="row">
-                                <!-- First name -->
-                                <div class="col">
-                                    <div class="row">
-                                        <div class="col-sm-5">
-                                            <label for="firstName">
-                                                <span style="color: red; padding-bottom: 10px">*</span>
-                                                First name
-                                            </label>
-                                        </div>
-                                        <div class="col-sm-7 text-end">
-                                            <span class="e_firstName error"></span>
-                                        </div>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <!-- Content -->
+    <div class="register">
+        <div class="register-overlay">
+            <div class="register-form">
+                <p class="register-title">Create new account</p>
+                <form action="register" method="post">
+                    <!-- Name field -->
+                    <div class="register-field">
+                        <div class="row">
+                            <!-- First name -->
+                            <div class="col">
+                                <div class="row">
+                                    <div class="col-sm-5">
+                                        <label for="firstName">
+                                            <span style="color: red; padding-bottom: 10px">*</span>
+                                            First name
+                                        </label>
                                     </div>
-
-                                    <input
-                                        type="text"
-                                        name="firstName"
-                                        id="firstName"
-                                        onkeyup="checkName(this, document.querySelector('.e_firstName'))"
-                                        placeholder=" Your first name" />
-                                </div>
-                                <!-- Last name -->
-                                <div class="col">
-                                    <div class="row">
-                                        <div class="col-sm-5">
-                                            <label for="lastName">
-                                                <span style="color: red; padding-bottom: 10px">*</span>
-                                                Last name
-                                            </label>
-                                        </div>
-                                        <div class="col-sm-7 text-end">
-                                            <span class="e_lastName error"></span>
-                                        </div>
+                                    <div class="col-sm-7 text-end">
+                                        <span class="e_firstName error"></span>
                                     </div>
-
-                                    <input
-                                        type="text"
-                                        name="lastName"
-                                        id="lastName"
-                                        onkeyup="checkName(this, document.querySelector('.e_lastName'))"
-                                        placeholder=" Your last name" />
                                 </div>
+
+                                <input type="text" name="firstName" id="firstName"
+                                    onkeyup="checkName(this, document.querySelector('.e_firstName'))"
+                                    placeholder=" Your first name" />
+                            </div>
+                            <!-- Last name -->
+                            <div class="col">
+                                <div class="row">
+                                    <div class="col-sm-5">
+                                        <label for="lastName">
+                                            <span style="color: red; padding-bottom: 10px">*</span>
+                                            Last name
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-7 text-end">
+                                        <span class="e_lastName error"></span>
+                                    </div>
+                                </div>
+
+                                <input type="text" name="lastName" id="lastName"
+                                    onkeyup="checkName(this, document.querySelector('.e_lastName'))"
+                                    placeholder=" Your last name" />
                             </div>
                         </div>
+                    </div>
 
-                        <!-- Email and phone field -->
-                        <div class="register-field">
-                            <div class="row">
-                                <!-- Email -->
-                                <div class="col-md-9">
-                                    <div class="row">
-                                        <div class="col-sm-5">
-                                            <label for="email">
-                                                <span style="color: red; padding-bottom: 10px">*</span>
-                                                Email
-                                            </label>
-                                        </div>
-                                        <div class="col-sm-7 text-end">
-                                            <span class="e_email error"></span>
-                                        </div>
+                    <!-- Email and phone field -->
+                    <div class="register-field">
+                        <div class="row">
+                            <!-- Email -->
+                            <div class="col-md-9">
+                                <div class="row">
+                                    <div class="col-sm-5">
+                                        <label for="email">
+                                            <span style="color: red; padding-bottom: 10px">*</span>
+                                            Email
+                                        </label>
                                     </div>
+                                    <div class="col-sm-7 text-end">
+                                        <span class="e_email error"></span>
+                                    </div>
+                                </div>
 
-                                    <input
-                                        type="text"
-                                        name="email"
-                                        id="email"
-                                        onkeyup="checkEmail(this, document.querySelector('.e_email'))"
-                                        placeholder=" Your email" />
-                                </div>
-                                <!-- Phone -->
-                                <div class="col-md-3">
-                                    <div class="row">
-                                        <div class="col-sm-5">
-                                            <label for="phone"> Phone </label>
-                                        </div>
-                                        <div class="col-sm-7 text-end">
-                                            <span class="e_phone error"></span>
-                                        </div>
+                                <input type="text" name="email" id="email"
+                                    onkeyup="checkEmail(this, document.querySelector('.e_email'))"
+                                    placeholder=" Your email" />
+                            </div>
+                            <!-- Phone -->
+                            <div class="col-md-3">
+                                <div class="row">
+                                    <div class="col-sm-5">
+                                        <label for="phone"> Phone </label>
                                     </div>
-                                    <input
-                                        type="text"
-                                        name="phone"
-                                        id="phone"
-                                        onkeyup="checkPhone(this, document.querySelector('.e_phone'))"
-                                        placeholder=" Your phone number" />
+                                    <div class="col-sm-7 text-end">
+                                        <span class="e_phone error"></span>
+                                    </div>
                                 </div>
+                                <input type="text" name="phone" id="phone"
+                                    onkeyup="checkPhone(this, document.querySelector('.e_phone'))"
+                                    placeholder=" Your phone number" />
                             </div>
                         </div>
+                    </div>
 
-                        <!-- Email field -->
-                        <!-- <div class="register-field">
+                    <!-- Email field -->
+                    <!-- <div class="register-field">
                             <div class="row">
                                 <div class="col-sm-5">
                                     <label for="email">
@@ -145,8 +120,8 @@
                                  />
                         </div> -->
 
-                        <!-- Phone field -->
-                        <!-- <div class="register-field">
+                    <!-- Phone field -->
+                    <!-- <div class="register-field">
                             <div class="row">
                                 <div class="col-sm-5">
                                     <label for="phone">
@@ -167,181 +142,135 @@
                                  />
                         </div> -->
 
-                        <!-- Address field -->
-                        <div class="register-field">
-                            <div class="row">
-                                <div class="col-sm-5">
-                                    <label for="address"> Address </label>
-                                </div>
-                                <div class="col-sm-7 text-end">
-                                    <span class="e_address error"></span>
-                                </div>
+                    <!-- Address field -->
+                    <div class="register-field">
+                        <div class="row">
+                            <div class="col-sm-5">
+                                <label for="address"> Address </label>
                             </div>
-                            <input
-                                type="text"
-                                name="address"
-                                id="address"
-                                placeholder=" Your address" />
+                            <div class="col-sm-7 text-end">
+                                <span class="e_address error"></span>
+                            </div>
                         </div>
+                        <input type="text" name="address" id="address" placeholder=" Your address" />
+                    </div>
 
-                        <!-- Username field -->
-                        <div class="register-field">
-                            <div class="row">
-                                <div class="col-sm-5">
-                                    <label for="username">
-                                        <span style="color: red">*</span>
-                                        Username
-                                    </label>
-                                </div>
-                                <div class="col-sm-7 text-end">
-                                    <span class="e_username error"></span>
-                                </div>
+                    <!-- Username field -->
+                    <div class="register-field">
+                        <div class="row">
+                            <div class="col-sm-5">
+                                <label for="username">
+                                    <span style="color: red">*</span>
+                                    Username
+                                </label>
                             </div>
-                            <input
-                                type="text"
-                                name="username"
-                                id="username"
-                                onkeyup="checkUsername(this, document.querySelector('.e_username'))"
-                                placeholder=" Your ideal username" />
+                            <div class="col-sm-7 text-end">
+                                <span class="e_username error"></span>
+                            </div>
                         </div>
+                        <input type="text" name="username" id="username"
+                            onkeyup="checkUsername(this, document.querySelector('.e_username'))"
+                            placeholder=" Your ideal username" />
+                    </div>
 
-                        <!-- Password field -->
-                        <div class="register-field">
-                            <div class="row">
-                                <div class="col-sm-5">
-                                    <label for="password">
-                                        <span style="color: red">*</span>
-                                        Password
-                                    </label>
-                                </div>
-                                <div class="col-sm-7 text-end">
-                                    <span class="e_password error"></span>
-                                </div>
+                    <!-- Password field -->
+                    <div class="register-field">
+                        <div class="row">
+                            <div class="col-sm-5">
+                                <label for="password">
+                                    <span style="color: red">*</span>
+                                    Password
+                                </label>
                             </div>
-
-                            <div class="row">
-                                <div class="col-sm-11">
-                                    <input
-                                        type="password"
-                                        name="password"
-                                        id="password"
-                                        onkeyup="checkPassword(this, document.querySelector('.e_password'))"
-                                        placeholder=" Your ideal password" />
-                                </div>
-                                <div
-                                    class="col-sm-1"
-                                    style="padding-left: 6px; padding-right: 6px">
-                                    <input
-                                        type="checkbox"
-                                        class="hide-password"
-                                        onchange="hidePassword(document.querySelector('#password'), this)" />
-                                </div>
+                            <div class="col-sm-7 text-end">
+                                <span class="e_password error"></span>
                             </div>
                         </div>
 
-                        <!-- Confirm password field -->
-                        <div class="register-field">
-                            <div class="row">
-                                <div class="col-sm-5">
-                                    <label for="password">
-                                        <span style="color: red">*</span>
-                                        Confirm Password
-                                    </label>
-                                </div>
-                                <div class="col-sm-7 text-end">
-                                    <span class="e_repassword error"></span>
-                                </div>
+                        <div class="row">
+                            <div class="col-sm-11">
+                                <input type="password" name="password" id="password"
+                                    onkeyup="checkPassword(this, document.querySelector('.e_password'))"
+                                    placeholder=" Your ideal password" />
                             </div>
+                            <div class="col-sm-1" style="padding-left: 6px; padding-right: 6px">
+                                <input type="checkbox" class="hide-password"
+                                    onchange="hidePassword(document.querySelector('#password'), this)" />
+                            </div>
+                        </div>
+                    </div>
 
-                            <div class="row">
-                                <div class="col-sm-11">
-                                    <input
-                                        type="password"
-                                        name="repassword"
-                                        id="repassword"
-                                        onkeyup="checkPassword(this, document.querySelector('.e_repassword'))"
-                                        placeholder=" Confirm password" />
-                                </div>
-                                <div
-                                    class="col-sm-1"
-                                    style="padding-left: 6px; padding-right: 6px">
-                                    <input
-                                        type="checkbox"
-                                        class="hide-password"
-                                        onchange="hidePassword(document.querySelector('#repassword'), this)" />
-                                </div>
+                    <!-- Confirm password field -->
+                    <div class="register-field">
+                        <div class="row">
+                            <div class="col-sm-5">
+                                <label for="password">
+                                    <span style="color: red">*</span>
+                                    Confirm Password
+                                </label>
+                            </div>
+                            <div class="col-sm-7 text-end">
+                                <span class="e_repassword error"></span>
                             </div>
                         </div>
 
-                        <!-- Register submit -->
-                        <button
-                            type="button"
-                            class="register-button"
-                            onclick="checkSubmit()">
-                            Register
-                        </button>
+                        <div class="row">
+                            <div class="col-sm-11">
+                                <input type="password" name="repassword" id="repassword"
+                                    onkeyup="checkPassword(this, document.querySelector('.e_repassword'))"
+                                    placeholder=" Confirm password" />
+                            </div>
+                            <div class="col-sm-1" style="padding-left: 6px; padding-right: 6px">
+                                <input type="checkbox" class="hide-password"
+                                    onchange="hidePassword(document.querySelector('#repassword'), this)" />
+                            </div>
+                        </div>
+                    </div>
 
-                        <!-- Login redirect -->
-                        <button
-                            type="button"
-                            class="register-button"
-                            style="width: auto"
-                            onclick="window.location.href='../Login/Login.html'">
-                            Already have an account? Log in now!
-                        </button>
-                    </form>
-                </div>
+                    <!-- Register submit -->
+                    <button type="button" class="register-button" onclick="window.location.href='../Login/Login.html'">
+                        Register
+                    </button>
+
+                    <!-- Login redirect -->
+                    <button type="button" class="register-button" style="width: auto"
+                        onclick="window.location.href='../Login/Login.html'">
+                        Already have an account? Log in now!
+                    </button>
+                </form>
             </div>
         </div>
-        <!-- End content -->
+    </div>
+    <!-- End content -->
 
-        <!-- Successful popup -->
-        <div class="success text-center hidden">
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                x="0px"
-                y="0px"
-                width="100"
-                height="100"
-                viewBox="0 0 50 50"
-                style="fill: #40c057">
-                <path
-                    d="M 25 2 C 12.317 2 2 12.317 2 25 C 2 37.683 12.317 48 25 48 C 37.683 48 48 37.683 48 25 C 48 20.44 46.660281 16.189328 44.363281 12.611328 L 42.994141 14.228516 C 44.889141 17.382516 46 21.06 46 25 C 46 36.579 36.579 46 25 46 C 13.421 46 4 36.579 4 25 C 4 13.421 13.421 4 25 4 C 30.443 4 35.393906 6.0997656 39.128906 9.5097656 L 40.4375 7.9648438 C 36.3525 4.2598437 30.935 2 25 2 z M 43.236328 7.7539062 L 23.914062 30.554688 L 15.78125 22.96875 L 14.417969 24.431641 L 24.083984 33.447266 L 44.763672 9.046875 L 43.236328 7.7539062 z"></path>
-            </svg>
+    <!-- Successful popup -->
+    <div class="success text-center hidden">
+        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 50 50"
+            style="fill: #40c057">
+            <path
+                d="M 25 2 C 12.317 2 2 12.317 2 25 C 2 37.683 12.317 48 25 48 C 37.683 48 48 37.683 48 25 C 48 20.44 46.660281 16.189328 44.363281 12.611328 L 42.994141 14.228516 C 44.889141 17.382516 46 21.06 46 25 C 46 36.579 36.579 46 25 46 C 13.421 46 4 36.579 4 25 C 4 13.421 13.421 4 25 4 C 30.443 4 35.393906 6.0997656 39.128906 9.5097656 L 40.4375 7.9648438 C 36.3525 4.2598437 30.935 2 25 2 z M 43.236328 7.7539062 L 23.914062 30.554688 L 15.78125 22.96875 L 14.417969 24.431641 L 24.083984 33.447266 L 44.763672 9.046875 L 43.236328 7.7539062 z">
+            </path>
+        </svg>
 
-            <p class="display-6">Your account created successfully!</p>
-            <div class="button text-center">
-                <button
-                    class="submit"
-                    onclick="window.location.href='../HomePage/HomePage.html'">
-                    <span>Back to homepage</span>
-                </button>
-            </div>
+        <p class="display-6">Your account created successfully!</p>
+        <div class="button text-center">
+            <button class="submit" onclick="window.location.href='../HomePage/HomePage.html'">
+                <span>Back to homepage</span>
+            </button>
         </div>
-        <!-- End successful popup -->
+    </div>
+    <!-- End successful popup -->
 
-        <div class="overlay hidden"></div>
-        <!-- Footer -->
-        <footer>
-            <div id="footer-container"></div>
-        </footer>
-        <!-- End footer -->
+    <div class="overlay hidden"></div>
+    <!-- Footer -->
+    <footer>
+        <div id="footer-container"></div>
+    </footer>
+    <!-- End footer -->
 
-        <!-- Scripts -->
-        <script src="scripts.js"></script>
-        <script>
-            fetch('../header/header.html')
-                .then((response) => response.text())
-                .then((data) => {
-                    document.getElementById('header-container').innerHTML = data;
-                });
+    <!-- Scripts -->
+    <script src="scripts.js"></script>
+    <!-- End scripts -->
+</body>
 
-            fetch('../footer/footer.html')
-                .then((response) => response.text())
-                .then((data) => {
-                    document.getElementById('footer-container').innerHTML = data;
-                });
-        </script>
-        <!-- End scripts -->
-    </body>
 </html>

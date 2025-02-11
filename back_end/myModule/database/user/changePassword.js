@@ -1,29 +1,27 @@
-const connect = require("../connectDB.js");
-const findUserById = require("./findUserById.js");
+const checkUserName = require("./checkUserName.js");
 
 const sql = require("mssql");
 
 const changePassword = async (req, res) => {
   try {
-    const { userId, newPassword, oldPassword } = req.body;
-    const pool = await connect(); // Get the connection pool
+    const { account, newPassword, oldPassword } = req.body;
+    console.log("acc: ", account);
+    const pool = global.pool; // Get the connection pool
     // Check old password
-    const user = await findUserById(Number(userId));
-    if (oldPassword === null) {
-      if (newPassword === user.password) {
-        res.status(300).send('same');
-        console.log('same')
-        return;
+    const user = await checkUserName(account);
+    console.log(user);
+    if (oldPassword == null) {
+      // RESET
+      if (newPassword == user.Password) {
+        return res.status(300).send("same");
       }
-    } else if (oldPassword === user.password) {
-      res.status(200).json({ success: "Success" });
-    } else {
-      res.status(400).json({ error: "Your password is wrong" });
-      return;
+    } else if (oldPassword != user.Password) {
+      return res.status(400).json({ error: "Your password is wrong" });
     }
 
-
-    console.log('query')
+    const userId = user.UserID;
+    console.log(userId);
+    console.log(newPassword);
     const query = `
       UPDATE [User]
       SET Password = @newPassword
@@ -37,7 +35,6 @@ const changePassword = async (req, res) => {
       .input("userId", sql.Int, userId) // UserID as integer
       .query(query);
     res.status(200).json({ success: "Success" });
-    await pool.close();
   } catch (err) {
     throw err; // Optionally re-throw the error
   }

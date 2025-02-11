@@ -159,12 +159,20 @@
         <img src="/resource/information-icon.png" width="80" height="80" alt="Thông báo">
     </div>
     <!-- End notification -->
-
     <script>
+        if (localStorage.getItem('token') == null) {
+            window.location.href = 'http://127.0.0.1:5500/front_end/Login/Login.html'
+        }
+
+
+
         fetch("../header/header.html")
-            .then((response) => response.text())
-            .then((data) => {
+            .then(response => response.text())
+            .then(data => {
                 document.getElementById("header-container").innerHTML = data;
+                const script = document.createElement("script");
+                script.src = "../header/script.js";
+                document.body.appendChild(script);
             });
 
         fetch("../footer/footer.html")
@@ -173,6 +181,7 @@
                 document.getElementById("footer-container").innerHTML = data;
             });
     </script>
+
 </body>
 
 </html>

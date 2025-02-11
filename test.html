@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Login</title>
+    <!-- <script src="https://accounts.google.com/gsi/client" async defer></script> -->
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <meta name="google-signin-client_id"
+        content="337733600812-vk80tkmu5juol3ovt4mc11vabpo10vn2.apps.googleusercontent.com">
+
+</head>
+
+<body>
+    <h1>Đăng nhập bằng Google</h1>
+
+    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+
+
+    <script>
+        function onSignIn(googleUser) {
+            // Lấy thông tin của người dùng đăng nhập
+            var profile = googleUser.getBasicProfile();
+            console.log('ID: ' + profile.getId());
+            console.log('Name: ' + profile.getName());
+            console.log('Image URL: ' + profile.getImageUrl());
+            console.log('Email: ' + profile.getEmail());
+
+            // Gửi token ID đến server của bạn
+            var id_token = googleUser.getAuthResponse().id_token;
+            console.log('ID Token: ' + id_token);
+
+            // Gửi token đến server để xác thực
+            // fetch('/path-to-your-server', {
+            //     method: 'POST',
+            //     headers: {
+            //         'Content-Type': 'application/json'
+            //     },
+            //     body: JSON.stringify({ id_token: id_token })
+            // }).then(response => {
+            //     return response.json();
+            // }).then(data => {
+            //     console.log(data);
+            // });
+        }
+    </script>
+</body>
+
+</html>

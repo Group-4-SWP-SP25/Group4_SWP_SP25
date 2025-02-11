@@ -1,0 +1,66 @@
+.body{
+    background-color: lightgray;
+}
+
+/* Service types grid */
+.svc-types {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    height: auto;
+    margin-top: 8%;
+    margin-left: 3%;
+    margin-right: 3%;
+    margin-bottom: 5%;
+}
+
+.type {
+    position: relative;
+    overflow: hidden;
+}
+
+.type img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.type-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    transition: background-color 0.3s ease;
+    flex-direction: column;
+}
+
+.type:hover .type-overlay {
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.button-detail {
+    border-radius: 50px;
+    --border-color: green;
+    border: 2px solid var(--border-color);
+    background-color: transparent;
+    color: white;
+    /* font-weight: bolder; */
+    padding: 10px 20px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.button-detail:hover {
+    background-color: var(--border-color);
+    /* color: white; */
+}

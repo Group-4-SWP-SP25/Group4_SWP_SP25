@@ -10,7 +10,7 @@ const e_newPass = document.querySelector(".e_newPassword");
 const e_confirmPass = document.querySelector(".e_confirmPassword");
 
 // The password must be at least 6 characters and must contain both numbers and letters
-const regexPassword = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
+const regexPassword = /^(?=.*[A-Za-z])(?=.*\d).{6,}$/;
 
 // Style errors in tags
 const errorStyle = function (tag) {
@@ -35,17 +35,35 @@ const overlay = document.querySelector(".overlay");
 const showSuccessWindow = function () {
   successWindow.classList.remove("hidden");
   overlay.classList.remove("hidden");
+  document.body.classList.toggle("no-scroll");
+  setTimeout(() => {
+    successWindow.classList.add("show");
+  }, 10);
 };
 
-// Close success window
-const closeSuccessWindow = function () {
-  successWindow.classList.add("hidden");
-  overlay.classList.add("hidden");
-};
+// Show/Hide password
+function showHidePass(icon, passField) {
+  icon.classList.toggle("fa-eye");
+  icon.classList.toggle("fa-eye-slash");
 
-// Check paXssword in tags
-let checkValidate = true;
-function checkPassword(pass, err) {
+  const type =
+    passField.getAttribute("type") === "password" ? "text" : "password";
+  passField.setAttribute("type", type);
+}
+document.querySelector(".show-oldPass").addEventListener("click", function () {
+  showHidePass(this, oldPassInput);
+});
+document.querySelector(".show-newPass").addEventListener("click", function () {
+  showHidePass(this, newPassInput);
+});
+document
+  .querySelector(".show-confirmPass")
+  .addEventListener("click", function () {
+    showHidePass(this, confirmPassInput);
+  });
+
+// Check password in tags
+async function checkPassword(pass, err) {
   if (pass.value.length === 0) {
     errorStyle(pass);
     if (pass === oldPassInput || pass === newPassInput) {
@@ -53,8 +71,7 @@ function checkPassword(pass, err) {
     } else {
       contentError(err, "You have not confirmed your password!");
     }
-    checkValidate = false;
-    return;
+    return false;
   }
   if (!regexPassword.test(pass.value)) {
     contentError(
@@ -62,12 +79,11 @@ function checkPassword(pass, err) {
       "The password must be at least 6 characters and must contain both numbers and letters!"
     );
     errorStyle(pass);
-    checkValidate = false;
-  } else {
-    contentError(err, "");
-    successStyle(pass);
-    // checkValidate = true;
+    return false;
   }
+
+  contentError(err, "");
+  successStyle(pass);
 
   if (
     (pass === newPassInput && regexPassword.test(newPassInput.value)) ||
@@ -79,13 +95,13 @@ function checkPassword(pass, err) {
         e_newPass,
         "The new password must be different from old password!"
       );
-      checkValidate = false;
+      return false;
     } else {
       successStyle(newPassInput);
       contentError(e_newPass, "");
-      // checkValidate = true;
     }
   }
+
   if (
     (pass === confirmPassInput && regexPassword.test(confirmPassInput.value)) ||
     (pass === newPassInput && confirmPassInput.value.length > 0)
@@ -93,27 +109,38 @@ function checkPassword(pass, err) {
     if (confirmPassInput.value !== newPassInput.value) {
       errorStyle(confirmPassInput);
       contentError(e_confirmPass, "The password do not match!");
-      checkValidate = false;
+      return false;
     } else {
       successStyle(confirmPassInput);
       contentError(e_confirmPass, "");
-      checkValidate = true;
     }
   }
+
+  return true;
 }
 
-function checkSubmit() {
-  checkPassword(oldPassInput, e_oldPass);
-  checkPassword(newPassInput, e_newPass);
-  checkPassword(confirmPassInput, e_confirmPass);
-  if (!checkValidate) {
+async function checkSubmit() {
+  const checkOldPass = checkPassword(oldPassInput, e_oldPass);
+  const checkNewPass = checkPassword(newPassInput, e_newPass);
+  const checkConfirmPass = checkPassword(confirmPassInput, e_confirmPass);
+
+  if (!(checkOldPass && checkNewPass && checkConfirmPass)) {
     return;
   } else {
+    const response = await fetch("http://localhost:3000/getUserInfo", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+    const result = await response.json();
+
     fetch("http://localhost:3000/changePassword", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        userId: userId.value,
+        account: result.account,
         newPassword: newPassInput.value,
         oldPassword: oldPassInput.value,
       }),
@@ -129,7 +156,6 @@ function checkSubmit() {
           showSuccessWindow();
         }
         if (data.error) {
-          console.log("b");
           errorStyle(oldPassInput);
           contentError(e_oldPass, data.error);
         }

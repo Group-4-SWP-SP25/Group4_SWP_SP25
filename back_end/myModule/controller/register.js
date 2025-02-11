@@ -1,10 +1,5 @@
-//
-const checkAccountExist = require('../database/user/checkAccExist.js');
-const checkEmail = require('../database/user/checkEmail.js');
 const addUser = require('../database/user/addUser.js');
-const { response, request } = require('express');
 
-//
 const register = async (req, res) => {
     try {
         const { firstName, lastName, email, phone, address, username, password } = req.body;
@@ -66,7 +61,7 @@ const register = async (req, res) => {
         } else {
             return res.status(400);
         }
-    } catch {}
+    } catch { }
 };
 
 module.exports = register;

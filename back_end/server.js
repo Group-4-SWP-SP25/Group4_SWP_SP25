@@ -3,48 +3,42 @@ const cors = require('cors');
 const PORT = 3000;
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(
+    cors({
+        origin: ['http://127.0.0.1:5500', 'http://localhost:5500'], // Chỉ định origin được phép truy cập
+        credentials: true, // Cho phép gửi cookie hoặc session
+    })
+);
+
+const connectDB = require('./myModule/database/connectDB.js')
+const { authenticateJWT } = require('./myModule/Utils/JWT.js')
 
 // IMPORT MODULE
 
-const sendMail = require('./myModule/Utils/mail.js');
 const changePassword = require('./myModule/database/user/changePassword.js');
-const CheckAccountExist = require('./myModule/database/user/checkAccExist.js');
-const CheckEmail = require('./myModule/database/user/checkEmail.js');
+const checkUserName = require('./myModule/database/user/checkUserName.js');
 const GetUserInfo = require('./myModule/database/user/getUserInfo.js');
-const ResetPassword = require('./myModule/controller/resetpassword.js');
+const { resetPassword, verification } = require('./myModule/controller/resetpassword.js');
 const Register = require('./myModule/controller/register.js');
+const { AuthGoogle, Auth } = require('./myModule/controller/Login.js')
 
 // ----------------------------------------------------------
 
 // CREATE API
 
-app.post('/sendMail', sendMail);
 app.post('/changePassword', changePassword);
-app.post('/checkAccountExist', CheckAccountExist);
-app.post('/checkEmail', CheckEmail);
-app.post('/getUserInfo', GetUserInfo);
-app.post('/resetPassword', ResetPassword);
+app.post('/checkUserName', checkUserName);
+app.post('/getUserInfo', authenticateJWT, GetUserInfo);
+app.post('/resetPassword', resetPassword);
+app.post('/verification', verification);
 app.post('/register', Register);
+app.post('/auth/google/login', AuthGoogle);
+app.post('/auth/login', Auth);
 
 
 // ----------------------------------------------------------
 
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
-    // data = {
-    //   account: 'q8edh12hi',
-    //   password: 'doanhieu'
-    // };
-    // try{
-    //   fetch('http://localhost:3000/checkAccountExist', {
-    //     method: 'POST',
-    //     headers: { 'Content-Type': 'application/json'},
-    //     body: JSON.stringify(data)
-    //   })
-    //   .then(response => {return response.json()})
-    //   .then(result => console.log('result: ', result))
-    // }catch (e){
-    //   console.log(e)
-    // }
+    (async () => { global.pool = await connectDB() })();
 });
