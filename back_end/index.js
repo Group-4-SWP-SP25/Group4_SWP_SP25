@@ -1,77 +1,65 @@
 const express = require('express');
-const session = require('express-session');
-const passport = require('passport');
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const { OAuth2Client } = require('google-auth-library');
+const path = require('path');
 
+// Tạo ứng dụng Express
 const app = express();
+const CLIENT_ID = '337733600812-vk80tkmu5juol3ovt4mc11vabpo10vn2.apps.googleusercontent.com'; // Thay bằng Client ID thực tế của bạn
+const client = new OAuth2Client(CLIENT_ID);
 
-// Cấu hình session
-app.use(session({
-    secret: 'your-secret-key', // Thay bằng một chuỗi bí mật
-    resave: false,
-    saveUninitialized: true,
+const cors = require('cors');
+app.use(cors({
+    origin: 'http://127.0.0.1:5500', // Thay bằng URL của Front-end
 }));
 
-// Khởi tạo Passport
-app.use(passport.initialize());
-app.use(passport.session());
+// Middleware
+app.use(express.json());
+app.use(express.static(path.join(__dirname, 'public'))); // Phục vụ file tĩnh (index.html)
 
-// Cấu hình Passport với Google OAuth 2.0
-const GOOGLE_CLIENT_ID = '337733600812-vk80tkmu5juol3ovt4mc11vabpo10vn2.apps.googleusercontent.com'; // Thay bằng Client ID của bạn
-const GOOGLE_CLIENT_SECRET = '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'; // Thay bằng Client Secret của bạn
+// API: Xử lý đăng nhập
+app.post('/api/login', async (req, res) => {
+    const { token } = req.body;
+    console.log('token:', token)
+    if (!token) {
+        return res.status(400).json({ success: false, message: 'Token is required' });
+    }
 
-passport.use(new GoogleStrategy({
-    clientID: GOOGLE_CLIENT_ID,
-    clientSecret: GOOGLE_CLIENT_SECRET,
-    callbackURL: "http://localhost:3000/auth/google/callback"
-},
-    (accessToken, refreshToken, profile, done) => {
-        // Lưu thông tin người dùng vào session
-        return done(null, profile);
-    }));
+    try {
+        // Xác thực token với Google
+        const ticket = await client.verifyIdToken({
+            idToken: token,
+            audience: CLIENT_ID,
+        });
+        const payload = ticket.getPayload();
 
-// Serialize và Deserialize user
-passport.serializeUser((user, done) => {
-    done(null, user);
-});
+        console.log(payload)
 
-passport.deserializeUser((user, done) => {
-    done(null, user);
-});
+        // Lấy thông tin người dùng từ token
+        const user = {
+            google_id: payload.sub, // ID duy nhất từ Google
+            email: payload.email,
+            name: payload.name,
+            picture: payload.picture,
+        };
 
-// Route đăng nhập bằng Google
-app.get('/auth/google',
-    passport.authenticate('google', { scope: ['profile', 'email'] }));
 
-// Callback sau khi đăng nhập thành công
-app.get('/auth/google/callback',
-    passport.authenticate('google', { failureRedirect: '/login' }),
-    (req, res) => {
-        // Đăng nhập thành công, chuyển hướng đến trang chính
-        res.redirect('/');
-    });
+        // TODO: Lưu thông tin người dùng vào cơ sở dữ liệu (nếu cần)
 
-// Route trang chủ
-app.get('/', (req, res) => {
-    if (req.isAuthenticated()) {
-        res.send(`Xin chào, ${req.user._json.sub}! <a href="/logout">Đăng xuất</a>`);
-    } else {
-        res.send('<a href="/auth/google">Đăng nhập bằng Google</a>');
+        // Trả kết quả thành công
+        res.json({ success: true, user });
+    } catch (error) {
+        console.error('Error verifying token:', error);
+        res.status(500).json({ success: false, message: 'Invalid token' });
     }
 });
 
-// Route đăng xuất
-app.get('/logout', (req, res) => {
-    req.logout((err) => {
-        if (err) {
-            return res.status(500).send('Không thể đăng xuất');
-        }
-        res.redirect('/');
-    });
+// Trang hiển thị sau đăng nhập
+app.get('/success', (req, res) => {
+    res.send('<h1>Đăng nhập thành công!</h1><a href="/">Quay lại trang chủ</a>');
 });
 
-// Khởi động server
+// Khởi chạy server
 const PORT = 3000;
 app.listen(PORT, () => {
-    console.log(`Server đang chạy trên http://localhost:${PORT}`);
+    console.log(`Server running at http://localhost:${PORT}`);
 });

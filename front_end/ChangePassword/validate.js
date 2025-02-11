@@ -127,11 +127,20 @@ function checkSubmit() {
   if (!(checkOldPass && checkNewPass && checkConfirmPass)) {
     return;
   } else {
+    const response = await fetch('http://localhost:3000/getUserInfo', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+      },
+    })
+    const result = await response.json();
+
     fetch("http://localhost:3000/changePassword", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        userId: userId.value,
+        account: result.account,
         newPassword: newPassInput.value,
         oldPassword: oldPassInput.value,
       }),
