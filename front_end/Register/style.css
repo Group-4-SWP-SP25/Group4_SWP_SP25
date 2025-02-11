@@ -120,6 +120,18 @@
     cursor: pointer;
 }
 
+.pwd-container {
+    position: relative;
+}
+
+.pwd-toggle {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
 /* Window after successfull changing password */
 .hidden {
     display: none;
