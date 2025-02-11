@@ -1,0 +1,39 @@
+/*  */
+.service-desc {
+    position: relative; /* Để lớp phủ nằm đúng vị trí */
+    width: 100%;
+    height: 500px; /* Chiều cao của section */
+    overflow: hidden; /* Ẩn ảnh nền tràn ra ngoài section */
+}
+
+.service-desc::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('https://www.getac.com/content/dam/uploads/2023/03/autorepairworkshop_cover.png'); /* Đường dẫn đến ảnh nền */
+    background-size: cover; /* Đảm bảo ảnh nền bao phủ toàn bộ section */
+    background-position: center; /* Căn giữa ảnh nền */
+    z-index: -1; /* Đặt ảnh nền phía sau nội dung */
+}
+
+.desc {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* Màu đen mờ 50% */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Căn giữa theo chiều dọc */
+    align-items: center; /* Căn giữa theo chiều ngang */
+    color: white; /* Màu chữ trắng */
+    text-align: center; /* Căn giữa chữ */
+}
+
+.desc h3{
+    margin: 0 10%;
+}
