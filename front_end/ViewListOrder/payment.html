@@ -1,1850 +1,707 @@
-<!DOCTYPE HTML>
-<html lang="en" class="supernova">
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <link rel="alternate" type="application/json+oembed"
-    href="https://www.jotform.com/oembed/?format=json&amp;url=https%3A%2F%2Fform.jotform.com%2F250385364398467"
-    title="oEmbed Form">
-  <link rel="alternate" type="text/xml+oembed"
-    href="https://www.jotform.com/oembed/?format=xml&amp;url=https%3A%2F%2Fform.jotform.com%2F250385364398467"
-    title="oEmbed Form">
-  <meta property="og:title" content="Order Your Products">
-  <meta property="og:url" content="https://form.jotform.com/250385364398467">
-  <meta property="og:description" content="Please click the link to complete this form.">
-  <meta name="slack-app-id" content="AHNMASS8M">
-  <meta property="og:image" content="https://cdn.jotfor.ms/assets/img/landing/opengraph.png" />
-  <link rel="shortcut icon" href="https://cdn.jotfor.ms/assets/img/favicons/favicon-2021-light%402x.png">
-  <link rel="apple-touch-icon" href="https://cdn.jotfor.ms/assets/img/favicons/favicon-2021-light%402x.png">
-  <script>
-    var favicon = document.querySelector('link[rel="shortcut icon"]');
-    window.isDarkMode = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
-    if (favicon && window.isDarkMode) {
-      favicon.href = favicon.href.replaceAll('favicon-2021-light%402x.png', 'favicon-2021-dark%402x.png');
-    }
-  </script>
-  <link rel="canonical" href="https://form.jotform.com/250385364398467" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0, user-scalable=1" />
-  <meta name="HandheldFriendly" content="true" />
-  <title>Order Your Products</title>
-  <link type="text/css" rel="stylesheet" href="https://cdn02.jotfor.ms/stylebuilder/static/form-common.css?v=674b3f4
-" />
-  <style type="text/css">
-    @media print {
-      * {
-        -webkit-print-color-adjust: exact !important;
-        color-adjust: exact !important;
-      }
-
-      .form-section {
-        display: inline !important
-      }
-
-      .form-pagebreak {
-        display: none !important
-      }
-
-      .form-section-closed {
-        height: auto !important
-      }
-
-      .page-section {
-        position: initial !important
-      }
-    }
-  </style>
-  <link type="text/css" rel="stylesheet"
-    href="https://cdn03.jotfor.ms/themes/CSS/5e6b428acc8c4e222d1beb91.css?v=3.3.60848&themeRevisionID=65660e4b326633110492e01a" />
-  <link type="text/css" rel="stylesheet"
-    href="https://cdn01.jotfor.ms/css/styles/payment/payment_styles.css?3.3.60848" />
-  <link type="text/css" rel="stylesheet"
-    href="https://cdn02.jotfor.ms/css/styles/payment/payment_feature.css?3.3.60848" />
-  <style type="text/css" id="form-designer-style">
-    /* Injected CSS Code */
-    /* 17 - INPUT WIDTHS */
-    /*  20 - FORM PADDING */
-    ul.form-section {
-      padding: 0px 38px;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
 
-    .form-textbox,
-    .form-textarea,
-    li[data-type=control_fileupload] .qq-upload-button,
-    .signature-wrapper {
-      border-color: rgba(195, 202, 216, 0.75);
+    :focus {
+      outline: 0;
     }
 
-    .form-textarea:hover,
-    .form-textbox:hover,
-    li[data-type=control_fileupload] .qq-upload-button:hover,
-    .signature-wrapper:hover {
-      border-color: rgba(195, 202, 216, 0.5);
-      box-shadow: 0 0 0 2px rgba(195, 202, 216, 0.25);
-    }
-
-    .form-textarea:focus,
-    .form-textbox:focus,
-    li[data-type=control_fileupload] .qq-upload-button:focus,
-    .signature-wrapper:focus {
-      border-color: #c3cad8;
-      box-shadow: 0 0 0 3px rgba(195, 202, 216, 0.25);
-    }
-
-    /* Heights */
-    /* 11 - LINE PADDING */
-    /* LABEL STYLE */
-    .form-dropdown:first-child {
-      border-color: rgba(195, 202, 216, 0.75);
-      background-color: #ffffff;
-    }
-
-    /* 12 - ROUNDED INPUTS */
-    .supernova .form-all,
-    .form-all {
+    .bill-info {
+      font-size: 16px;
+      font-family: Inter, sans-serif;
+      max-width: 758px;
+      color: #12458c;
       border-radius: 20px;
+      background-color: #d6e7ff;
+      background-attachment: scroll;
+      background-position: center top;
+      background-repeat: repeat;
     }
 
-    .form-section:first-child {
-      border-radius: 20px 20px 0 0;
+    ul.page-section {
+      display: flex;
+      flex-wrap: wrap;
+      margin: 0;
+      padding: 0 38px;
+      list-style: none;
     }
 
-    .form-section:last-child {
-      border-radius: 0 0 20px 20px;
-    }
-
-    .form-radio-item,
-    .form-checkbox-item {
-      padding-bottom: 0px;
-    }
-
-    .form-radio-item:last-child,
-    .form-checkbox-item:last-child {
-      padding-bottom: 0;
-    }
-
-    .form-single-column .form-checkbox-item,
-    .form-single-column .form-radio-item {
+    .form-input-wide {
       width: 100%;
     }
 
-    .form-checkbox-item .editor-container div,
-    .form-radio-item .editor-container div {
-      position: relative;
-    }
-
-    .form-checkbox-item .editor-container div:before,
-    .form-radio-item .editor-container div:before {
-      display: inline-block;
-      vertical-align: middle;
-      left: 0;
-      width: 20px;
-      height: 20px;
-    }
-
-    .form-checkbox-item input,
-    .form-radio-item input {
-      margin-top: 2px;
-    }
-
-    .form-checkbox:checked+label:before,
-    .form-checkbox:checked+span:before {
-      background-color: rgba(195, 202, 216, 0.75);
-      border-color: rgba(195, 202, 216, 0.75);
-    }
-
-    .form-radio:checked+label:before,
-    .form-radio:checked+span:before {
-      border-color: rgba(195, 202, 216, 0.75);
-    }
-
-    .form-radio:checked+label:after,
-    .form-radio:checked+span:after {
-      background-color: rgba(195, 202, 216, 0.75);
-    }
-
-    .form-checkbox:hover+label:before,
-    .form-checkbox:hover+span:before,
-    .form-radio:hover+label:before,
-    .form-radio:hover+span:before {
-      border-color: rgba(195, 202, 216, 0.5);
-      box-shadow: 0 0 0 2px rgba(195, 202, 216, 0.25);
-    }
-
-    .form-checkbox:focus+label:before,
-    .form-checkbox:focus+span:before,
-    .form-radio:focus+label:before,
-    .form-radio:focus+span:before {
-      border-color: #c3cad8;
-      box-shadow: 0 0 0 3px rgba(195, 202, 216, 0.25);
-    }
-
-    .submit-button {
-      font-size: 16px;
-      font-weight: normal;
-      font-family: inherit;
-      border-color: rgba(195, 202, 216, 0.75);
-    }
-
-    .submit-button {
-      min-width: 180px;
-    }
-
-    .form-all .form-pagebreak-back,
-    .form-all .form-pagebreak-next {
-      font-family: "Inter", sans-serif;
-      font-size: 16px;
-      font-weight: normal;
-    }
-
-    .form-all .form-pagebreak-back,
-    .form-all .form-pagebreak-next {
-      min-width: 128px;
-    }
-
-    li[data-type="control_image"] div {
-      text-align: left;
-    }
-
-    li[data-type="control_image"] img {
-      border: none;
-      border-width: 0px !important;
-      border-style: solid !important;
-      border-color: false !important;
-    }
-
-    .supernova {
-      height: 100%;
-      background-repeat: no-repeat;
-      background-attachment: scroll;
-      background-position: center top;
-      background-repeat: repeat;
-    }
-
-    .supernova {
-      background-image: none;
-    }
-
-    #stage {
-      background-image: none;
-    }
-
-    /* | */
-    .form-all {
-      background-repeat: no-repeat;
-      background-attachment: scroll;
-      background-position: center top;
-      background-repeat: repeat;
-    }
-
-    .form-header-group {
-      background-repeat: no-repeat;
-      background-attachment: scroll;
-      background-position: center top;
-    }
-
-    .header-large h1.form-header {
-      font-size: 2em;
-    }
-
-    .header-large h2.form-header {
-      font-size: 1.5em;
-    }
-
-    .header-large h3.form-header {
-      font-size: 1.17em;
-    }
-
-    .header-large h1+.form-subHeader {
-      font-size: 1em;
-    }
-
-    .header-large h2+.form-subHeader {
-      font-size: .875em;
-    }
-
-    .header-large h3+.form-subHeader {
-      font-size: .75em;
-    }
-
-    .header-default h1.form-header {
-      font-size: 2em;
-    }
-
-    .header-default h2.form-header {
-      font-size: 1.5em;
-    }
-
-    .header-default h3.form-header {
-      font-size: 1.17em;
-    }
-
-    .header-default h1+.form-subHeader {
-      font-size: 1em;
-    }
-
-    .header-default h2+.form-subHeader {
-      font-size: .875em;
-    }
-
-    .header-default h3+.form-subHeader {
-      font-size: .75em;
-    }
-
-    .header-small h1.form-header {
-      font-size: 2em;
-    }
-
-    .header-small h2.form-header {
-      font-size: 1.5em;
-    }
-
-    .header-small h3.form-header {
-      font-size: 1.17em;
-    }
-
-    .header-small h1+.form-subHeader {
-      font-size: 1em;
-    }
-
-    .header-small h2+.form-subHeader {
-      font-size: .875em;
-    }
-
-    .header-small h3+.form-subHeader {
-      font-size: .75em;
-    }
-
-    .form-header-group {
-      text-align: left;
-    }
-
-    .form-header-group {
-      font-family: "false", sans-serif;
-    }
-
-    div.form-header-group.header-large,
-    div.form-header-group.hasImage {
+    div.form-header-group.header-large {
+      padding: 40px 52px;
+      border-bottom: #12458c 1px solid;
       margin: 0px -38px;
     }
 
-    div.form-header-group.header-large,
-    div.form-header-group.hasImage {
-      padding: 40px 52px;
-    }
-
-    .form-header-group .form-header,
-    .form-header-group .form-subHeader {
-      color: #000000;
-    }
-
-    .form-line-error {
-      -webkit-transition-property: none;
-      -moz-transition-property: none;
-      -ms-transition-property: none;
-      -o-transition-property: none;
-      transition-property: none;
-      -webkit-transition-duration: 0.3s;
-      -moz-transition-duration: 0.3s;
-      -ms-transition-duration: 0.3s;
-      -o-transition-duration: 0.3s;
-      transition-duration: 0.3s;
-      -webkit-transition-timing-function: ease;
-      -moz-transition-timing-function: ease;
-      -ms-transition-timing-function: ease;
-      -o-transition-timing-function: ease;
-      transition-timing-function: ease;
-      background-color: #ffd6d6;
-    }
-
-    .form-line-error .form-error-message {
-      background-color: #f23a3c;
-      clear: both;
-      float: none;
-    }
-
-    .form-line-error .form-error-message .form-error-arrow {
-      border-bottom-color: #f23a3c;
-    }
-
-    .form-line-error input:not(#coupon-input),
-    .form-line-error textarea,
-    .form-line-error .form-validation-error {
-      border: 1px solid #f23a3c;
-      box-shadow: 0 0 3px #f23a3c;
-    }
-
-    .form-line-error {
-      -webkit-transition-property: none;
-      -moz-transition-property: none;
-      -ms-transition-property: none;
-      -o-transition-property: none;
-      transition-property: none;
-      -webkit-transition-duration: 0.3s;
-      -moz-transition-duration: 0.3s;
-      -ms-transition-duration: 0.3s;
-      -o-transition-duration: 0.3s;
-      transition-duration: 0.3s;
-      -webkit-transition-timing-function: ease;
-      -moz-transition-timing-function: ease;
-      -ms-transition-timing-function: ease;
-      -o-transition-timing-function: ease;
-      transition-timing-function: ease;
-      background-color: #ffd6d6;
-    }
-
-    .form-header-group .form-header,
-    .form-header-group .form-subHeader {
-      color: #000000;
-    }
-
-    .form-line-active {
-      background-color: #f1f5ff;
-    }
-
-    /* 29 - FORM COLUMNS */
-
-    /*PREFERENCES STYLE*/
-    .form-all {
-      font-family: Inter, sans-serif;
-    }
-
-    .form-label.form-label-auto {
-
-      display: block;
-      float: none;
-      text-align: left;
-      width: 100%;
-
+    .form-subHeader {
+      word-break: break-word;
+      font-size: 1em;
+      font-weight: 500;
+      line-height: 1.6;
     }
 
     .form-line {
-      margin-top: 12px;
+      padding: 12px 10px;
+      margin: 12px 4px;
+      border-radius: 3px;
+      position: relative;
+      width: 100%;
+      transition: background-color .15s;
+      display: flex;
+      flex-wrap: wrap;
+      margin-top: 28px;
       margin-bottom: 12px;
     }
 
-    .form-all {
-      max-width: 758px;
+    .form-label {
+      display: inline-block;
+      font-weight: 700;
+      word-break: break-word;
+    }
+
+    .form-label-top {
       width: 100%;
+      margin-left: 2px;
+      margin-bottom: 14px;
     }
 
-    .form-label.form-label-left,
-    .form-label.form-label-right,
-    .form-label.form-label-left.form-label-auto,
-    .form-label.form-label-right.form-label-auto {
-      width: 230px;
+    .card-2col .form-product-item,
+    .card-3col .form-product-item {
+      border-color: rgba(195, 202, 216, 0.5);
     }
 
-    .form-all {
-      font-size: 16px
+    .card-3col div[data-wrapper-react="true"] {
+      display: flex;
+      flex-wrap: wrap;
+      width: 100%;
+      align-items: stretch;
     }
 
-    .supernova {
-      background-color: #2461b7;
+    .filter-container {
+      display: flex;
+      justify-content: flex-end;
+      width: 100%;
+      margin-bottom: 12px;
     }
 
-    .supernova body {
-      background: transparent;
+    .card-3col span.form-product-item {
+      width: calc(33.333% - 8px);
+      margin-bottom: 12px;
     }
 
-    .supernova .form-all,
-    .form-all {
-      background-color: #d6e7ff;
+    .form-product-item.new_ui.p_selected {
+      background: rgba(85, 115, 215, 0.06);
+      border-radius: 4px !important;
     }
 
-    .form-all {
-      color: #12458c;
+    .card-3col .form-product-item.new_ui {
+      border-width: 1px;
+      border-style: solid;
+      padding: 12px 14px 12px 44px;
+      border-radius: 3px;
+      margin: 0px 12px 12px 0px;
     }
 
-    .form-header-group .form-header {
-      color: #12458c;
+    .card-3col .form-product-item.new_ui.show_image {
+      padding: 0px !important;
     }
 
-    .form-header-group .form-subHeader {
-      color: #12458c;
+    .form-line.card-3col .form-product-item {
+      background-color: #CBDBF2;
     }
 
-    .form-label-top,
-    .form-label-left,
-    .form-label-right,
-    .form-html,
-    .form-checkbox-item label,
-    .form-radio-item label,
-    span.FITB .qb-checkbox-label,
-    span.FITB .qb-radiobox-label,
-    span.FITB .form-radio label,
-    span.FITB .form-checkbox label,
-    [data-blotid][data-type=checkbox] [data-labelid],
-    [data-blotid][data-type=radiobox] [data-labelid],
-    span.FITB-inptCont[data-type=checkbox] label,
-    span.FITB-inptCont[data-type=radiobox] label {
-      color: #12458c;
+    .form-product-item .p_image {
+      position: relative;
     }
 
-    .form-sub-label {
-      color: #2c5fa6;
+    .show_image .p_image {
+      display: block;
     }
 
-    .form-textbox,
-    .form-textarea,
-    .form-dropdown,
-    .form-radio-other-input,
-    .form-checkbox-other-input,
-    .form-captcha input,
-    .form-spinner input {
-      background-color: #ffffff;
-    }
-
-    .form-line-error {
-      overflow: hidden;
-      transition: none;
-      background-color: #ffd6d6;
-    }
-
-    .form-line-error .form-error-message {
-      background-color: #DC2626;
-      clear: both;
+    .card-3col .form-product-item.new_ui.show_image .p_image {
+      padding: 0;
       float: none;
+      width: 100%;
+      height: 148px;
     }
 
-    .form-line-error .form-error-arrow {
-      border-bottom-color: #FF3200;
-    }
-
-    .form-line-error input:not(#coupon-input),
-    .form-line-error textarea,
-    .form-line-error .form-validation-error {
-      border: 1px solid #c61515;
-      box-shadow: 0 0 3px #c61515;
-    }
-
-
-    .supernova {
+    .form-product-item .p_image .image_area {
+      position: relative;
+      overflow: hidden;
+      background-position: center center;
       background-repeat: no-repeat;
-      background-size: cover;
-      background-attachment: fixed;
-      background-position: center top;
+      margin: 0;
+      top: 0;
     }
 
-    .supernova,
-    #stage {
-      background-image: none;
+    .show_image .p_image .image_area {
+      display: block;
     }
 
-    .form-all {
-      background-image: none;
+    .form-product-item.show_image.full_img .p_image .image_area {
+      background-size: contain !important;
     }
 
-    /*PREFERENCES STYLE*/
-    /*__INSPECT_SEPERATOR__*/
-    .form-header-group.header-large {
-      padding-bottom: 4px;
+    .card-3col .form-product-item.new_ui.show_image .image_area {
+      min-height: 124px;
+      max-height: 148px;
+      width: 100%;
+      height: 100%;
+      border-radius: 0;
+      border: 0;
+      background-color: #FFFFFF;
+      border-bottom: 1px solid #F4F4F4;
     }
 
-    .supernova {
-      background: linear-gradient(0deg, #447fbe 0%, #85d9e5 99.97%);
+    .form-product-item .p_image .image_area .image_zoom {
+      border: 0;
+      background: rgba(1, 118, 254, 0.5);
+      background-image: url(https://cdn.jotfor.ms/assets/img/payments/image_zoom.svg);
+      position: absolute;
+      display: none !important;
+      cursor: pointer;
+      background-position: center center;
+      background-size: 36px;
+      background-repeat: no-repeat;
     }
 
-    /* Injected CSS Code */
+    .form-product-item .p_image:hover .image_zoom {
+      display: block !important;
+      top: 0;
+      right: 0;
+      border-radius: 3px;
+    }
+
+    .card-3col .form-product-item.new_ui.show_image .image_zoom {
+      width: 100%;
+      height: 100%;
+    }
+
+    .form-product-item .form-product-container {
+      position: relative;
+      width: 100%;
+      display: block;
+      min-width: 0;
+    }
+
+    .card-3col .form-product-item.new_ui .form-product-container {
+      padding: 10px;
+      margin: 0 !important;
+    }
+
+    .show_image .title_description {
+      align-items: center;
+    }
+
+    .show_image.show_desc .title_description {
+      display: block;
+    }
+
+    .card-3col .form-product-item.new_ui.show_image .title_description {
+      padding: 0;
+      min-height: auto;
+    }
+
+    .form-product-item .form-product-container .form-product-name {
+      font-weight: 600;
+      max-width: 100%;
+      word-wrap: break-word;
+      white-space: pre-wrap;
+    }
+
+    .show_image .form-product-container .form-product-name {
+      align-items: center;
+    }
+
+    .show_image.show_desc .form-product-name {
+      display: block;
+    }
+
+    .card-3col .form-product-item.new_ui .form-product-container .form-product-name {
+      min-height: auto;
+      padding: 0 0 6px 0;
+    }
+
+    .show_desc .form-product-description {
+      display: block;
+      padding: 4px 0;
+    }
+
+    .form-product-item .form-product-container .form-product-description {
+      padding-top: 2px;
+      display: block;
+      font-size: 14px;
+      opacity: 0.8;
+    }
+
+    .card-3col .form-product-item.new_ui.show_image .form-product-container .form-product-description {
+      padding-right: 0 !important;
+    }
+
+    .form-product-item .form-product-container .form-product-details {
+      right: 0;
+      font-size: 14px;
+    }
+
+    .card-3col .form-product-item.new_ui .form-product-details {
+      padding-top: 4px;
+      position: absolute;
+      display: block;
+      top: 6px;
+      right: 5px;
+      margin-left: 0;
+    }
   </style>
-
-  <script src="https://cdn03.jotfor.ms/static/prototype.forms.js?v=3.3.60848" type="text/javascript"></script>
-  <script src="https://cdn01.jotfor.ms/static/jotform.forms.js?v=3.3.60848" type="text/javascript"></script>
-  <script src="https://cdn02.jotfor.ms/js/vendor/maskedinput_5.0.9.min.js?v=3.3.60848" type="text/javascript"></script>
-  <script src="https://cdn03.jotfor.ms/js/punycode-1.4.1.min.js?v=3.3.60848" type="text/javascript" defer></script>
-  <script src="https://cdn01.jotfor.ms/js/payments/paypalcomplete.js?v=3.3.60848" type="text/javascript"></script>
-  <script src="https://cdn02.jotfor.ms/js/libraries/promise-polyfill.js?v=3.3.60848" type="text/javascript"></script>
-  <script src="https://cdn03.jotfor.ms/js/payments/payment_form_embedded.js?v=3.3.60848"
-    type="text/javascript"></script>
-  <script src="https://cdn01.jotfor.ms/js/payments/paymentUtils.js?v=3.3.60848" type="text/javascript"></script>
-  <script src="https://cdn02.jotfor.ms/js/payments/validategateways.js?v=3.3.60848" type="text/javascript"></script>
-  <script src="https://cdn01.jotfor.ms/s/umd/c65b5c3eabe/for-appointment-field.js?v=3.3.60848"
-    type="text/javascript"></script>
-  <script src="https://cdn01.jotfor.ms/s/umd/c65b5c3eabe/for-form-branding-footer.js?v=3.3.60848" type="text/javascript"
-    defer></script>
-  <script src="https://cdn03.jotfor.ms/js/vendor/smoothscroll.min.js?v=3.3.60848" type="text/javascript"></script>
-  <script src="https://cdn01.jotfor.ms/js/errorNavigation.js?v=3.3.60848" type="text/javascript"></script>
-  <script type="text/javascript">
-    JotForm.extendsNewTheme = false;
-    JotForm.singleProduct = false;
-    JotForm.newPaymentUIForNewCreatedForms = false;
-    JotForm.texts = { "confirmEmail": "E-mail does not match", "pleaseWait": "Please wait...", "validateEmail": "You need to validate this e-mail", "confirmClearForm": "Are you sure you want to clear the form", "lessThan": "Your score should be less than or equal to", "incompleteFields": "There are incomplete required fields. Please complete them.", "required": "This field is required.", "requireOne": "At least one field required.", "requireEveryRow": "Every row is required.", "requireEveryCell": "Every cell is required.", "email": "Enter a valid e-mail address", "alphabetic": "This field can only contain letters", "numeric": "This field can only contain numeric values", "alphanumeric": "This field can only contain letters and numbers.", "cyrillic": "This field can only contain cyrillic characters", "url": "This field can only contain a valid URL", "currency": "This field can only contain currency values.", "fillMask": "Field value must fill mask.", "uploadExtensions": "You can only upload following files:", "noUploadExtensions": "File has no extension file type (e.g. .txt, .png, .jpeg)", "uploadFilesize": "File size cannot be bigger than:", "uploadFilesizemin": "File size cannot be smaller than:", "gradingScoreError": "Score total should only be less than or equal to", "inputCarretErrorA": "Input should not be less than the minimum value:", "inputCarretErrorB": "Input should not be greater than the maximum value:", "maxDigitsError": "The maximum digits allowed is", "minCharactersError": "The number of characters should not be less than the minimum value:", "maxCharactersError": "The number of characters should not be more than the maximum value:", "freeEmailError": "Free email accounts are not allowed", "minSelectionsError": "The minimum required number of selections is ", "maxSelectionsError": "The maximum number of selections allowed is ", "pastDatesDisallowed": "Date must not be in the past.", "dateLimited": "This date is unavailable.", "dateInvalid": "This date is not valid. The date format is {format}", "dateInvalidSeparate": "This date is not valid. Enter a valid {element}.", "ageVerificationError": "You must be older than {minAge} years old to submit this form.", "multipleFileUploads_typeError": "{file} has invalid extension. Only {extensions} are allowed.", "multipleFileUploads_sizeError": "{file} is too large, maximum file size is {sizeLimit}.", "multipleFileUploads_minSizeError": "{file} is too small, minimum file size is {minSizeLimit}.", "multipleFileUploads_emptyError": "{file} is empty, please select files again without it.", "multipleFileUploads_uploadFailed": "File upload failed, please remove it and upload the file again.", "multipleFileUploads_onLeave": "The files are being uploaded, if you leave now the upload will be cancelled.", "multipleFileUploads_fileLimitError": "Only {fileLimit} file uploads allowed.", "dragAndDropFilesHere_infoMessage": "Drag and drop files here", "chooseAFile_infoMessage": "Choose a file", "maxFileSize_infoMessage": "Max. file size", "generalError": "There are errors on the form. Please fix them before continuing.", "generalPageError": "There are errors on this page. Please fix them before continuing.", "wordLimitError": "Too many words. The limit is", "wordMinLimitError": "Too few words.  The minimum is", "characterLimitError": "Too many Characters.  The limit is", "characterMinLimitError": "Too few characters. The minimum is", "ccInvalidNumber": "Credit Card Number is invalid.", "ccInvalidCVC": "CVC number is invalid.", "ccInvalidExpireDate": "Expire date is invalid.", "ccInvalidExpireMonth": "Expiration month is invalid.", "ccInvalidExpireYear": "Expiration year is invalid.", "ccMissingDetails": "Please fill up the credit card details.", "ccMissingProduct": "Please select at least one product.", "ccMissingDonation": "Please enter numeric values for donation amount.", "disallowDecimals": "Please enter a whole number.", "restrictedDomain": "This domain is not allowed", "ccDonationMinLimitError": "Minimum amount is {minAmount} {currency}", "requiredLegend": "All fields marked with * are required and must be filled.", "geoPermissionTitle": "Permission Denied", "geoPermissionDesc": "Check your browser's privacy settings.", "geoNotAvailableTitle": "Position Unavailable", "geoNotAvailableDesc": "Location provider not available. Please enter the address manually.", "geoTimeoutTitle": "Timeout", "geoTimeoutDesc": "Please check your internet connection and try again.", "selectedTime": "Selected Time", "formerSelectedTime": "Former Time", "cancelAppointment": "Cancel Appointment", "cancelSelection": "Cancel Selection", "noSlotsAvailable": "No slots available", "slotUnavailable": "{time} on {date} has been selected is unavailable. Please select another slot.", "multipleError": "There are {count} errors on this page. Please correct them before moving on.", "oneError": "There is {count} error on this page. Please correct it before moving on.", "doneMessage": "Well done! All errors are fixed.", "invalidTime": "Enter a valid time", "doneButton": "Done", "reviewSubmitText": "Review and Submit", "nextButtonText": "Next", "prevButtonText": "Previous", "seeErrorsButton": "See Errors", "notEnoughStock": "Not enough stock for the current selection", "notEnoughStock_remainedItems": "Not enough stock for the current selection ({count} items left)", "soldOut": "Sold Out", "justSoldOut": "Just Sold Out", "selectionSoldOut": "Selection Sold Out", "subProductItemsLeft": "({count} items left)", "startButtonText": "START", "submitButtonText": "Submit", "submissionLimit": "Sorry! Only one entry is allowed. <br> Multiple submissions are disabled for this form.", "reviewBackText": "Back to Form", "seeAllText": "See All", "progressMiddleText": "of", "fieldError": "field has an error.", "error": "Error" };
-    JotForm.originalLanguage = "en";
-    JotForm.isFormViewTrackingAllowed = true;
-    JotForm.replaceTagTest = true;
-
-    JotForm.setConditions([{ "action": [{ "id": "action_1594379423339", "visibility": "Show", "isError": false, "field": "54" }], "id": "1594379434969", "index": "2", "isError": "1", "link": "Any", "priority": "2", "terms": [{ "id": "term_1594379423339", "field": "56", "operator": "equals", "value": "Yes", "isError": false }], "type": "field" }, { "action": [{ "id": "action_1594379392623", "visibility": "Show", "isError": false, "field": "55" }], "id": "1594379411599", "index": "3", "isError": "1", "link": "Any", "priority": "3", "terms": [{ "id": "term_1594379392623", "field": "56", "operator": "equals", "value": "Yes", "isError": false }], "type": "field" }, { "action": [{ "id": "action_1594378974017", "visibility": "Hide", "isError": false, "field": "52" }], "id": "1594378987259", "index": "4", "link": "Any", "priority": "4", "terms": [{ "id": "term_1594378974017", "field": "51", "operator": "equals", "value": "Yes", "isError": false }], "type": "field" }, { "action": [{ "id": "action_0_1594379880244", "visibility": "Hide", "isError": false, "field": "52" }], "id": "1594378967530", "index": "5", "link": "Any", "priority": "5", "terms": [{ "id": "term_0_1594379880244", "field": "51", "operator": "isEmpty", "value": "", "isError": false }], "type": "field" }]); JotForm.clearFieldOnHide = "disable";
-    JotForm.submitError = "jumpToFirstError";
-    JotForm.init(function () {
-      /*INIT-START*/
-      productID = { "0": "input_42_1000", "1": "input_42_1001", "2": "input_42_1002", "3": "input_42_1004", "4": "input_42_1005", "5": "input_42_1003" };
-      paymentType = "product";
-      JotForm.setCurrencyFormat('USD', true, 'point');
-      JotForm.totalCounter({ "input_42_1000": { "price": "10" }, "input_42_1001": { "price": "10" }, "input_42_1002": { "price": "10" }, "input_42_1004": { "price": "10", "quantityField": "input_42_quantity_1004_0", "custom_1": "input_42_custom_1004_1" }, "input_42_1005": { "price": "14", "quantityField": "input_42_quantity_1005_0", "custom_1": "input_42_custom_1005_1" }, "input_42_1003": { "price": "10", "quantityField": "input_42_quantity_1003_0", "custom_1": "input_42_custom_1003_1" } });
-      $$('.form-product-custom_quantity').each(function (el, i) { el.observe('blur', function () { isNaN(this.value) || this.value < 1 ? this.value = '0' : this.value = parseInt(this.value) }) });
-      $$('.form-product-custom_quantity').each(function (el, i) { el.observe('focus', function () { this.value == 0 ? this.value = '' : this.value }) });
-      JotForm.handleProductLightbox();
-      JotForm.paymentProperties = { "styleColor": "gold", "styleShape": "rect", "styleSize": "medium", "styleLabel": "checkout", "styleLayout": "vertical", "payLaterEnabled": "No", "paymentFormProperties": { "products": [{ "cid": "2001", "connectedCategories": "[\"2001\"]", "connectedProducts": "[]", "corder": "0", "description": "This style you'll want to wear every day is comfortable and durable for everyday use.", "fitImageToCanvas": "No", "hasExpandedOption": "", "hasQuantity": "", "hasSpecialPricing": "", "icon": "", "images": "[\"https:\\\u002F\\\u002Fwww.jotform.com\\\u002Fuploads\\\u002Fugurg\\\u002Fform_files\\\u002Fsweatshirt.png\"]", "isLowStockAlertEnabled": "No", "isStockControlEnabled": "No", "lowStockValue": "", "name": "Sweatshirt", "options": [], "paymentUUID": "0194e6f707497a5a83f7c17c7a17fe8f74ce", "pid": "1000", "price": "10", "required": "", "selected": "", "showSubtotal": "0" }, { "connectedCategories": "[]", "connectedProducts": "[]", "description": "Durably stitched surfaces, clean finishes and the perfect amount of shine to make you dazzle.", "fitImageToCanvas": "No", "hasExpandedOption": "", "hasQuantity": "", "hasSpecialPricing": "", "icon": "", "images": "[\"https:\\\u002F\\\u002Fwww.jotform.com\\\u002Fuploads\\\u002Fugurg\\\u002Fform_files\\\u002Fhoodie.png\"]", "isLowStockAlertEnabled": "No", "isStockControlEnabled": "No", "lowStockValue": "", "name": "Hoodie", "options": [], "paymentUUID": "0194e6f7074a7cc8a226a2a334760f7c2ed1", "pid": "1001", "price": "10", "required": "", "selected": "", "showSubtotal": "0" }, { "connectedCategories": "[]", "connectedProducts": "[]", "description": "Made from soft cotton fabric, it gives you the feel of your favorite tee from the first use.", "fitImageToCanvas": "No", "hasExpandedOption": "", "hasQuantity": "", "hasSpecialPricing": "", "icon": "", "images": "[\"https:\\\u002F\\\u002Fwww.jotform.com\\\u002Fuploads\\\u002Fugurg\\\u002Fform_files\\\u002Ft-shirt.png\"]", "isLowStockAlertEnabled": "No", "isStockControlEnabled": "No", "lowStockValue": "", "name": "T-Shirt", "options": [], "paymentUUID": "0194e6f7074b7dd781101693164b94dc08dd", "pid": "1002", "price": "10", "required": "", "selected": "", "showSubtotal": "0" }, { "connectedCategories": "[]", "connectedProducts": "[]", "description": "Durably stitched surfaces, clean finishes and the perfect amount of shine to make you dazzle.", "fitImageToCanvas": "Yes", "hasExpandedOption": "", "hasQuantity": "1", "hasSpecialPricing": "", "icon": "", "images": "[\"https:\\\u002F\\\u002Fwww.jotform.com\\\u002Fuploads\\\u002Fugurg\\\u002Fform_files\\\u002FBlack%20And%20Gray%20Abstract%20Shoes%20Promo%20Poster.png\"]", "isLowStockAlertEnabled": "No", "isProductOptionNew": "No", "isStockControlEnabled": "No", "lowStockValue": "", "name": "Sports Shoes", "options": [{ "type": "quantity", "properties": "1\n2\n3\n4\n5\n6\n7\n8\n9\n10", "name": "Quantity", "defaultQuantity": "", "specialPricing": false, "specialPrices": "", "expanded": false }, { "type": "custom", "name": "Shoe Size", "properties": "8\n8.5\n9\n9.5\n10\n10.5\n11\n11.5\n12\n13\n14", "defaultQuantity": "", "specialPricing": false, "expanded": false, "specialPrices": "", "specialPricingAllowed": true }], "paymentUUID": "0194e6f7074d709fafe1e4d02afc5e9a8228", "pid": "1004", "price": "10", "required": "", "selected": "", "showSubtotal": "0" }, { "connectedCategories": "[]", "connectedProducts": "[]", "description": "You will wear it again and again, this shoe is remarkable and loyal just like you.", "fitImageToCanvas": "Yes", "hasExpandedOption": "", "hasQuantity": "1", "hasSpecialPricing": "", "icon": "", "images": "[\"https:\\\u002F\\\u002Fwww.jotform.com\\\u002Fuploads\\\u002Fugurg\\\u002Fform_files\\\u002FBlue%20Minimalist%20Shoes%20Product%20.png\"]", "isLowStockAlertEnabled": "No", "isStockControlEnabled": "No", "lowStockValue": "", "name": "Linen Shoes", "options": [{ "type": "quantity", "properties": "1\n2\n3\n4\n5\n6\n7\n8\n9\n10", "name": "Quantity", "defaultQuantity": "", "specialPricing": false, "specialPrices": "", "expanded": false }, { "type": "custom", "name": "Shoe Size", "properties": "8\n8.5\n9\n9.5\n10\n10.5\n11\n11.5\n12\n13\n14", "defaultQuantity": "", "specialPricing": false, "expanded": false, "specialPrices": "", "specialPricingAllowed": true }], "paymentUUID": "0194e6f7074e72e59a29310790d3533ae776", "pid": "1005", "price": "14", "required": "0" }, { "connectedCategories": "[]", "connectedProducts": "[]", "description": "This product is made from at least 50% recycled polyester fiber.", "fitImageToCanvas": "Yes", "hasExpandedOption": "", "hasQuantity": "1", "hasSpecialPricing": "", "icon": "", "images": "[\"https:\\\u002F\\\u002Fwww.jotform.com\\\u002Fuploads\\\u002Fugurg\\\u002Fform_files\\\u002FYellow%20white%20simple%20caps%20fashion%20promotion%20-%20instagram%20post.png\"]", "isLowStockAlertEnabled": "No", "isStockControlEnabled": "No", "lowStockValue": "", "name": "Cap", "options": [{ "type": "quantity", "properties": "1\n2\n3\n4\n5\n6\n7\n8\n9\n10", "name": "Quantity", "defaultQuantity": "", "specialPricing": false, "specialPrices": "", "expanded": false }, { "type": "custom", "name": "Color", "properties": "Red\nBlue\nGreen\nYellow\nMagenta", "defaultQuantity": "", "specialPricing": false, "expanded": false, "specialPrices": "", "specialPricingAllowed": true }], "paymentUUID": "0194e6f707507599a66cf7463f6cf7e578f7", "pid": "1003", "price": "10", "required": "", "selected": "", "showSubtotal": "0" }] } }
-      JotForm.setPhoneMaskingValidator('input_61_full', '\u0028\u0023\u0023\u0023\u0029 \u0023\u0023\u0023\u002d\u0023\u0023\u0023\u0023');
-
-      JotForm.calendarMonths = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-      JotForm.appointmentCalendarMonths = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-      JotForm.appointmentCalendarDays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
-      JotForm.calendarOther = "Today";
-      window.initializeAppointment({ "text": { "text": "Question", "value": "Appointment" }, "labelAlign": { "text": "Label Align", "value": "Top", "dropdown": [["Auto", "Auto"], ["Left", "Left"], ["Right", "Right"], ["Top", "Top"]] }, "required": { "text": "Required", "value": "No", "dropdown": [["No", "No"], ["Yes", "Yes"]] }, "description": { "text": "Hover Text", "value": "", "textarea": true }, "slotDuration": { "text": "Slot Duration", "value": "60", "dropdown": [[15, "15 min"], [30, "30 min"], [45, "45 min"], [60, "60 min"], ["custom", "Custom min"]], "hint": "Select how long each slot will be." }, "startDate": { "text": "Start Date", "value": "" }, "endDate": { "text": "End Date", "value": "" }, "intervals": { "text": "Intervals", "value": [{ "from": "09:00", "to": "17:00", "days": ["Mon", "Tue", "Wed", "Thu", "Fri"] }], "hint": "The hours will be applied to the selected days and repeated." }, "useBlockout": { "text": "Blockout Custom Dates", "value": "No", "dropdown": [["No", "No"], ["Yes", "Yes"]], "hint": "Disable certain date(s) in the calendar." }, "blockoutDates": { "text": "Blockout dates", "value": [{ "startDate": "", "endDate": "" }] }, "useLunchBreak": { "text": "Lunch Time", "value": "Yes", "dropdown": [["No", "No"], ["Yes", "Yes"]], "hint": "Enable lunchtime in the calendar." }, "lunchBreak": { "text": "Lunchtime hours", "value": [{ "from": "12:00", "to": "14:00" }] }, "timezone": { "text": "Timezone", "value": "America\u002FNew_York (GMT-05:00)" }, "timeFormat": { "text": "Time Format", "value": "AM\u002FPM", "dropdown": [["24 Hour", "24 Hour"], ["AM\u002FPM", "AM\u002FPM"]], "icon": "images\u002Fblank.gif", "iconClassName": "toolbar-time_format_24" }, "months": { "value": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"], "hidden": true }, "days": { "value": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"], "hidden": true }, "startWeekOn": { "text": "Start Week On", "value": "Sunday", "dropdown": [["Monday", "Monday"], ["Sunday", "Sunday"]], "toolbar": false }, "rollingDays": { "text": "Rolling Days", "value": "", "toolbar": false }, "prevMonthButtonText": { "text": "Previous month", "value": "" }, "nextMonthButtonText": { "text": "Next month", "value": "" }, "prevYearButtonText": { "text": "Previous year", "value": "" }, "nextYearButtonText": { "text": "Next year", "value": "" }, "prevDayButtonText": { "text": "Previous day", "value": "" }, "nextDayButtonText": { "text": "Next day", "value": "" }, "appointmentType": { "hidden": true, "value": "single" }, "autoDetectTimezone": { "hidden": true, "value": "Yes" }, "dateFormat": { "hidden": true, "value": "mm\u002Fdd\u002Fyyyy" }, "maxAttendee": { "hidden": true, "value": "5" }, "maxEvents": { "hidden": true, "value": "" }, "minScheduleNotice": { "hidden": true, "value": "3" }, "name": { "hidden": true, "value": "appointment" }, "order": { "hidden": true, "value": "6" }, "qid": { "toolbar": false, "value": "input_63" }, "reminderEmails": { "hidden": true, "value": { "schedule": [{ "value": "2", "unit": "hour" }] } }, "type": { "hidden": true, "value": "control_appointment" }, "useReminderEmails": { "hidden": true, "value": "No" }, "id": { "toolbar": false, "value": "63" }, "qname": { "toolbar": false, "value": "q63_appointment" }, "cdnconfig": { "CDN": "https:\u002F\u002Fcdn.jotfor.ms\u002F" }, "passive": false, "formProperties": { "highlightLine": "Enabled", "coupons": false, "useStripeCoupons": false, "taxes": false, "comparePaymentForm": "", "paymentListSettings": [{ "minTotalOrderAmount": "0", "productCategories": "[{\"id\":\"2001\",\"name\":\"Wegetable\"}]", "productListLayout": "V3C", "showCategory": "No", "showCategoryTitle": "No", "showMinTotalOrderAmount": "No", "showSearch": "No" }], "newPaymentUIForNewCreatedForms": false, "formBackground": "#d6e7ff", "newAppointment": false, "isAutoCompleteEnabled": true }, "formID": 250385364398467, "isPaymentForm": false, "isOpenedInPortal": false, "isCheckoutForm": false, "isImportPDFForm": false, "isOfflineForms": false, "SSL_URL": "https:\u002F\u002Fwww.jotform.com\u002F", "themeVersion": "v2", "isEnterprise": false, "environment": "PRODUCTION" });
-      JotForm.displayLocalTime("input_64_hourSelect", "input_64_minuteSelect", "input_64_ampm", "input_64_timeInput", true);
-      JotForm.alterTexts(undefined);
-      JotForm.alterTexts(undefined, true);
-      /*INIT-END*/
-    });
-
-    setTimeout(function () {
-      JotForm.paymentExtrasOnTheFly([null, { "name": "orderYour", "qid": "1", "text": "Order Your Products", "type": "control_head" }, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, { "name": "productList", "qid": "42", "text": "Product List", "type": "control_paypalcomplete" }, { "name": "paymentMethods", "qid": "43", "text": "Payment Methods", "type": "control_paymentmethods" }, null, { "name": "yourEmail", "qid": "45", "subLabel": "example@example.com", "text": "Your Email", "type": "control_email" }, null, null, null, null, { "name": "address", "qid": "50", "text": "Billing Address", "type": "control_address" }, { "name": "typeA", "qid": "51", "text": "Is shipping address same as billing address?", "type": "control_radio" }, { "name": "address52", "qid": "52", "text": "Shipping Address", "type": "control_address" }, null, null, { "name": "name", "qid": "55", "text": "Recipient's Full Name", "type": "control_fullname" }, null, null, { "name": "submit", "qid": "58", "text": "Submit", "type": "control_button" }, { "description": "", "name": "name59", "qid": "59", "text": "Name", "type": "control_fullname" }, { "description": "", "name": "address60", "qid": "60", "text": "Address", "type": "control_address" }, { "description": "", "name": "phoneNumber", "qid": "61", "text": "Phone Number", "type": "control_phone" }, null, { "description": "", "name": "appointment", "qid": "63", "text": "Appointment", "type": "control_appointment" }, { "description": "", "name": "time", "qid": "64", "text": "Time", "type": "control_time" }, { "description": "", "name": "pleaseVerify", "qid": "65", "text": "Please verify that you are human", "type": "control_captcha" }, null, null, null, { "name": "pageBreak", "qid": "69", "text": "Page Break", "type": "control_pagebreak" }]);
-    }, 20); 
-  </script>
 </head>
 
-<body class="isDarkBlue">
-  <form class="jotform-form" onsubmit="return typeof testSubmitFunction !== 'undefined' && testSubmitFunction();"
-    action="https://submit.jotform.com/submit/250385364398467" method="post" name="form_250385364398467"
-    id="250385364398467" accept-charset="utf-8" autocomplete="on"><input type="hidden" name="formID"
-      value="250385364398467" /><input type="hidden" id="JWTContainer" value="" /><input type="hidden"
-      id="cardinalOrderNumber" value="" /><input type="hidden" id="jsExecutionTracker" name="jsExecutionTracker"
-      value="build-date-1739091785974" /><input type="hidden" id="submitSource" name="submitSource"
-      value="unknown" /><input type="hidden" id="buildDate" name="buildDate" value="1739091785974" /><input
-      type="hidden" name="uploadServerUrl" value="https://upload.jotform.com/upload" /><input type="hidden"
-      name="eventObserver" value="1" /><input type="hidden" name="eventObserverPayment"
-      value="control_paypalcomplete" />
-    <div role="main" class="form-all">
-      <ul class="form-section page-section" role="presentation">
-        <li id="cid_1" class="form-input-wide" data-type="control_head">
-          <div class="form-header-group  header-large">
-            <div class="header-text httal htvam">
-              <h1 id="header_1" class="form-header" data-component="header">Order Your Products</h1>
-              <div id="subHeader_1" class="form-subHeader">What are you interested in buying?</div>
-            </div>
+<body>
+  <div class="bill-info">
+    <ul class="bill-section page-section">
+      <li class="form-input-wide">
+        <div class="form-header-group  header-large">
+          <div>
+            <h1>Order Your Products</h1>
+            <div class="form-subHeader">What are you interested in buying?</div>
           </div>
-        </li>
-        <li class="form-line card-3col" data-type="control_paypalcomplete" id="id_42" data-payment="true"><label
-            class="form-label form-label-top" id="label_42" for="input_42" aria-hidden="false"> Product List </label>
-          <div id="cid_42" class="form-input-wide" data-layout="full">
+        </div>
+      </li>
+      <li class="form-line card-3col"><label class="form-label form-label-top">
+          Product List </label>
+        <div class="form-input-wide">
+          <div data-wrapper-react="true">
             <div data-wrapper-react="true">
-              <div data-wrapper-react="true" class="product-container-wrapper">
-                <div class="filter-container"></div><input type="hidden" name="simple_fpc"
-                  data-payment_type="paypalcomplete" data-component="payment1" value="42" /><input type="hidden"
-                  name="payment_transaction_uuid" id="paymentTransactionId" /><input type="hidden"
-                  name="payment_version" id="payment_version" value="4" /><input type="hidden"
-                  name="payment_total_checksum" id="payment_total_checksum" data-component="payment2" /><input
-                  type="hidden" name="payment_discount_value" id="payment_discount_value" data-component="payment3" />
-                <div id="image-overlay" class="overlay-content" style="display:none"><img id="current-image" /><span
-                    class="lb-prev-button">prev</span><span class="lb-next-button">next</span><span
-                    class="lb-close-button">( X )</span><span class="image-overlay-product-container">
-                    <ul class="form-overlay-item" pid="1000" hasicon="false" hasimages="true" iconvalue="">
-                      <li class="image-overlay-image"><img loading="lazy"
-                          src="https://www.jotform.com/uploads/ugurg/form_files/sweatshirt.png" /></li>
-                    </ul>
-                    <ul class="form-overlay-item" pid="1001" hasicon="false" hasimages="true" iconvalue="">
-                      <li class="image-overlay-image"><img loading="lazy"
-                          src="https://www.jotform.com/uploads/ugurg/form_files/hoodie.png" /></li>
-                    </ul>
-                    <ul class="form-overlay-item" pid="1002" hasicon="false" hasimages="true" iconvalue="">
-                      <li class="image-overlay-image"><img loading="lazy"
-                          src="https://www.jotform.com/uploads/ugurg/form_files/t-shirt.png" /></li>
-                    </ul>
-                    <ul class="form-overlay-item" pid="1004" hasicon="false" hasimages="true" iconvalue="">
-                      <li class="image-overlay-image"><img loading="lazy"
-                          src="https://www.jotform.com/uploads/ugurg/form_files/Black%20And%20Gray%20Abstract%20Shoes%20Promo%20Poster.png" />
-                      </li>
-                    </ul>
-                    <ul class="form-overlay-item" pid="1005" hasicon="false" hasimages="true" iconvalue="">
-                      <li class="image-overlay-image"><img loading="lazy"
-                          src="https://www.jotform.com/uploads/ugurg/form_files/Blue%20Minimalist%20Shoes%20Product%20.png" />
-                      </li>
-                    </ul>
-                    <ul class="form-overlay-item" pid="1003" hasicon="false" hasimages="true" iconvalue="">
-                      <li class="image-overlay-image"><img loading="lazy"
-                          src="https://www.jotform.com/uploads/ugurg/form_files/Yellow%20white%20simple%20caps%20fashion%20promotion%20-%20instagram%20post.png" />
-                      </li>
-                    </ul>
-                  </span></div>
-                <div data-wrapper-react="true"><span
-                    class="form-product-item hover-product-item on_col1 show_image show_desc full_img new_ui"
-                    categories="2001" active-category="2001" pid="1000" aria-labelledby="label_42">
-                    <div data-wrapper-react="true" class="form-product-item-detail new_ui">
-                      <div class="p_col">
-                        <div class="p_checkbox"><input class="form-checkbox  form-product-input" type="checkbox"
-                            id="input_42_1000" name="q42_productList[][id]" data-inputname="q42_productList[][id]"
-                            readonly="" aria-label="Select Product: Sweatshirt" data-is-default-required="false"
-                            data-is-default-selected="false" value="1000" />
-                          <div class="checked"></div>
-                          <div class="select_border"></div>
-                        </div>
+              <div class="filter-container"></div>
+              <div id="image-overlay" class="overlay-content" style="display:none"><img id="current-image" /><span
+                  class="lb-prev-button">prev</span><span class="lb-next-button">next</span><span
+                  class="lb-close-button">( X )</span><span class="image-overlay-product-container">
+                  <ul class="form-overlay-item" pid="1000" hasicon="false" hasimages="true" iconvalue="">
+                    <li class="image-overlay-image"><img loading="lazy"
+                        src="https://www.jotform.com/uploads/ugurg/form_files/sweatshirt.png" /></li>
+                  </ul>
+                  <ul class="form-overlay-item" pid="1001" hasicon="false" hasimages="true" iconvalue="">
+                    <li class="image-overlay-image"><img loading="lazy"
+                        src="https://www.jotform.com/uploads/ugurg/form_files/hoodie.png" /></li>
+                  </ul>
+                  <ul class="form-overlay-item" pid="1002" hasicon="false" hasimages="true" iconvalue="">
+                    <li class="image-overlay-image"><img loading="lazy"
+                        src="https://www.jotform.com/uploads/ugurg/form_files/t-shirt.png" /></li>
+                  </ul>
+                  <ul class="form-overlay-item" pid="1004" hasicon="false" hasimages="true" iconvalue="">
+                    <li class="image-overlay-image"><img loading="lazy"
+                        src="https://www.jotform.com/uploads/ugurg/form_files/Black%20And%20Gray%20Abstract%20Shoes%20Promo%20Poster.png" />
+                    </li>
+                  </ul>
+                  <ul class="form-overlay-item" pid="1005" hasicon="false" hasimages="true" iconvalue="">
+                    <li class="image-overlay-image"><img loading="lazy"
+                        src="https://www.jotform.com/uploads/ugurg/form_files/Blue%20Minimalist%20Shoes%20Product%20.png" />
+                    </li>
+                  </ul>
+                  <ul class="form-overlay-item" pid="1003" hasicon="false" hasimages="true" iconvalue="">
+                    <li class="image-overlay-image"><img loading="lazy"
+                        src="https://www.jotform.com/uploads/ugurg/form_files/Yellow%20white%20simple%20caps%20fashion%20promotion%20-%20instagram%20post.png" />
+                    </li>
+                  </ul>
+                </span></div>
+              <div data-wrapper-react="true"><span
+                  class="form-product-item hover-product-item on_col1 show_image show_desc full_img new_ui"
+                  categories="2001" active-category="2001" pid="1000" aria-labelledby="label_42">
+                  <div data-wrapper-react="true" class="form-product-item-detail new_ui">
+                    <div class="p_image">
+                      <div class="image_area form-product-image-with-options">
+                        <div style="position:absolute;width:100%;height:100%"><img loading="lazy" role="img"
+                            aria-label="Sweatshirt" alt="Sweatshirt Product Image"
+                            style="width:100%;height:100%;object-fit:contain"
+                            src="https://www.jotform.com/uploads/ugurg/form_files/sweatshirt.png" /></div>
+                        <div class="image_zoom"></div>
                       </div>
-                      <div class="p_image">
-                        <div class="image_area form-product-image-with-options">
-                          <div style="position:absolute;width:100%;height:100%"><img loading="lazy" role="img"
-                              aria-label="Sweatshirt" alt="Sweatshirt Product Image"
-                              style="width:100%;height:100%;object-fit:contain"
-                              src="https://www.jotform.com/uploads/ugurg/form_files/sweatshirt.png" /></div>
-                          <div class="image_zoom"></div>
-                        </div>
-                      </div>
-                      <div for="input_42_1000" class="form-product-container"><span data-wrapper-react="true">
-                          <div class="title_description"><span class="form-product-name"
-                              id="product-name-input_42_1000">Sweatshirt</span><span class="form-product-description"
-                              id="product-name-description-input_42_1000">This style you&#x27;ll want to wear every day
-                              is comfortable and durable for everyday use.</span></div><span
-                            class="form-product-details"><b><span data-wrapper-react="true">$<span
-                                  id="input_42_1000_price">10.00</span></span></b></span>
-                        </span></div>
-                      <div class="focus_action_button_container"><a class="btn-inline-product-delete" tabindex="0"
-                          role="button" aria-label="Delete Product"> </a><a class="btn-inline-product-settings"
-                          tabindex="0" role="button" aria-label="Product Settings"> </a></div>
                     </div>
-                  </span>
-                  <div class="p_item_separator "></div><span
-                    class="form-product-item hover-product-item on_col2 show_image show_desc full_img new_ui"
-                    categories="non-categorized" pid="1001" aria-labelledby="label_42">
-                    <div data-wrapper-react="true" class="form-product-item-detail new_ui">
-                      <div class="p_col">
-                        <div class="p_checkbox"><input class="form-checkbox  form-product-input" type="checkbox"
-                            id="input_42_1001" name="q42_productList[][id]" data-inputname="q42_productList[][id]"
-                            readonly="" aria-label="Select Product: Hoodie" data-is-default-required="false"
-                            data-is-default-selected="false" value="1001" />
-                          <div class="checked"></div>
-                          <div class="select_border"></div>
-                        </div>
+                    <div for="input_42_1000" class="form-product-container"><span data-wrapper-react="true">
+                        <div class="title_description"><span class="form-product-name"
+                            id="product-name-input_42_1000">Sweatshirt</span><span class="form-product-description"
+                            id="product-name-description-input_42_1000">This style you&#x27;ll want to wear every day is
+                            comfortable and durable for everyday use.</span></div><span
+                          class="form-product-details"><b><span data-wrapper-react="true">$<span
+                                id="input_42_1000_price">10.00</span></span></b></span>
+                      </span></div>
+                    <div class="focus_action_button_container"><a class="btn-inline-product-delete" tabindex="0"
+                        role="button" aria-label="Delete Product"> </a><a class="btn-inline-product-settings"
+                        tabindex="0" role="button" aria-label="Product Settings"> </a></div>
+                  </div>
+                </span>
+                <div class="p_item_separator "></div><span
+                  class="form-product-item hover-product-item on_col2 show_image show_desc full_img new_ui"
+                  categories="non-categorized" pid="1001" aria-labelledby="label_42">
+                  <div data-wrapper-react="true" class="form-product-item-detail new_ui">
+                    <div class="p_image">
+                      <div class="image_area form-product-image-with-options">
+                        <div style="position:absolute;width:100%;height:100%"><img loading="lazy" role="img"
+                            aria-label="Hoodie" alt="Hoodie Product Image"
+                            style="width:100%;height:100%;object-fit:contain"
+                            src="https://www.jotform.com/uploads/ugurg/form_files/hoodie.png" /></div>
+                        <div class="image_zoom"></div>
                       </div>
-                      <div class="p_image">
-                        <div class="image_area form-product-image-with-options">
-                          <div style="position:absolute;width:100%;height:100%"><img loading="lazy" role="img"
-                              aria-label="Hoodie" alt="Hoodie Product Image"
-                              style="width:100%;height:100%;object-fit:contain"
-                              src="https://www.jotform.com/uploads/ugurg/form_files/hoodie.png" /></div>
-                          <div class="image_zoom"></div>
-                        </div>
-                      </div>
-                      <div for="input_42_1001" class="form-product-container"><span data-wrapper-react="true">
-                          <div class="title_description"><span class="form-product-name"
-                              id="product-name-input_42_1001">Hoodie</span><span class="form-product-description"
-                              id="product-name-description-input_42_1001">Durably stitched surfaces, clean finishes and
-                              the perfect amount of shine to make you dazzle.</span></div><span
-                            class="form-product-details"><b><span data-wrapper-react="true">$<span
-                                  id="input_42_1001_price">10.00</span></span></b></span>
-                        </span></div>
-                      <div class="focus_action_button_container"><a class="btn-inline-product-delete" tabindex="0"
-                          role="button" aria-label="Delete Product"> </a><a class="btn-inline-product-settings"
-                          tabindex="0" role="button" aria-label="Product Settings"> </a></div>
                     </div>
-                  </span>
-                  <div class="p_item_separator "></div><span
-                    class="form-product-item hover-product-item on_col3 show_image show_desc full_img new_ui"
-                    categories="non-categorized" pid="1002" aria-labelledby="label_42">
-                    <div data-wrapper-react="true" class="form-product-item-detail new_ui">
-                      <div class="p_col">
-                        <div class="p_checkbox"><input class="form-checkbox  form-product-input" type="checkbox"
-                            id="input_42_1002" name="q42_productList[][id]" data-inputname="q42_productList[][id]"
-                            readonly="" aria-label="Select Product: T-Shirt" data-is-default-required="false"
-                            data-is-default-selected="false" value="1002" />
-                          <div class="checked"></div>
-                          <div class="select_border"></div>
-                        </div>
+                    <div for="input_42_1001" class="form-product-container"><span data-wrapper-react="true">
+                        <div class="title_description"><span class="form-product-name"
+                            id="product-name-input_42_1001">Hoodie</span><span class="form-product-description"
+                            id="product-name-description-input_42_1001">Durably stitched surfaces, clean finishes and
+                            the perfect amount of shine to make you dazzle.</span></div><span
+                          class="form-product-details"><b><span data-wrapper-react="true">$<span
+                                id="input_42_1001_price">10.00</span></span></b></span>
+                      </span></div>
+                    <div class="focus_action_button_container"><a class="btn-inline-product-delete" tabindex="0"
+                        role="button" aria-label="Delete Product"> </a><a class="btn-inline-product-settings"
+                        tabindex="0" role="button" aria-label="Product Settings"> </a></div>
+                  </div>
+                </span>
+                <div class="p_item_separator "></div><span
+                  class="form-product-item hover-product-item on_col3 show_image show_desc full_img new_ui"
+                  categories="non-categorized" pid="1002" aria-labelledby="label_42">
+                  <div data-wrapper-react="true" class="form-product-item-detail new_ui">
+                    <div class="p_image">
+                      <div class="image_area form-product-image-with-options">
+                        <div style="position:absolute;width:100%;height:100%"><img loading="lazy" role="img"
+                            aria-label="T-Shirt" alt="T-Shirt Product Image"
+                            style="width:100%;height:100%;object-fit:contain"
+                            src="https://www.jotform.com/uploads/ugurg/form_files/t-shirt.png" /></div>
+                        <div class="image_zoom"></div>
                       </div>
-                      <div class="p_image">
-                        <div class="image_area form-product-image-with-options">
-                          <div style="position:absolute;width:100%;height:100%"><img loading="lazy" role="img"
-                              aria-label="T-Shirt" alt="T-Shirt Product Image"
-                              style="width:100%;height:100%;object-fit:contain"
-                              src="https://www.jotform.com/uploads/ugurg/form_files/t-shirt.png" /></div>
-                          <div class="image_zoom"></div>
-                        </div>
-                      </div>
-                      <div for="input_42_1002" class="form-product-container"><span data-wrapper-react="true">
-                          <div class="title_description"><span class="form-product-name"
-                              id="product-name-input_42_1002">T-Shirt</span><span class="form-product-description"
-                              id="product-name-description-input_42_1002">Made from soft cotton fabric, it gives you the
-                              feel of your favorite tee from the first use.</span></div><span
-                            class="form-product-details"><b><span data-wrapper-react="true">$<span
-                                  id="input_42_1002_price">10.00</span></span></b></span>
-                        </span></div>
-                      <div class="focus_action_button_container"><a class="btn-inline-product-delete" tabindex="0"
-                          role="button" aria-label="Delete Product"> </a><a class="btn-inline-product-settings"
-                          tabindex="0" role="button" aria-label="Product Settings"> </a></div>
                     </div>
-                  </span>
-                  <div class="p_item_separator "></div><span
-                    class="form-product-item hover-product-item on_col1 show_image show_desc show_option new_ui"
-                    categories="non-categorized" pid="1004" aria-labelledby="label_42">
-                    <div data-wrapper-react="true" class="form-product-item-detail new_ui">
-                      <div class="p_col">
-                        <div class="p_checkbox"><input class="form-checkbox  form-product-input" type="checkbox"
-                            id="input_42_1004" name="q42_productList[][id]" data-inputname="q42_productList[][id]"
-                            readonly="" aria-label="Select Product: Sports Shoes" data-is-default-required="false"
-                            data-is-default-selected="false" value="1004" />
-                          <div class="checked"></div>
-                          <div class="select_border"></div>
+                    <div for="input_42_1002" class="form-product-container"><span data-wrapper-react="true">
+                        <div class="title_description"><span class="form-product-name"
+                            id="product-name-input_42_1002">T-Shirt</span><span class="form-product-description"
+                            id="product-name-description-input_42_1002">Made from soft cotton fabric, it gives you the
+                            feel of your favorite tee from the first use.</span></div><span
+                          class="form-product-details"><b><span data-wrapper-react="true">$<span
+                                id="input_42_1002_price">10.00</span></span></b></span>
+                      </span></div>
+                    <div class="focus_action_button_container"><a class="btn-inline-product-delete" tabindex="0"
+                        role="button" aria-label="Delete Product"> </a><a class="btn-inline-product-settings"
+                        tabindex="0" role="button" aria-label="Product Settings"> </a></div>
+                  </div>
+                </span>
+                <div class="p_item_separator "></div><span
+                  class="form-product-item hover-product-item on_col1 show_image show_desc show_option new_ui"
+                  categories="non-categorized" pid="1004" aria-labelledby="label_42">
+                  <div data-wrapper-react="true" class="form-product-item-detail new_ui">
+                    <div class="p_image">
+                      <div class="image_area form-product-image-with-options">
+                        <div style="position:absolute;width:100%;height:100%"><img loading="lazy" role="img"
+                            aria-label="Sports Shoes" alt="Sports Shoes Product Image"
+                            style="width:100%;height:100%;object-fit:cover"
+                            src="https://www.jotform.com/uploads/ugurg/form_files/Black%2520And%2520Gray%2520Abstract%2520Shoes%2520Promo%2520Poster.png" />
                         </div>
+                        <div class="image_zoom"></div>
                       </div>
-                      <div class="p_image">
-                        <div class="image_area form-product-image-with-options">
-                          <div style="position:absolute;width:100%;height:100%"><img loading="lazy" role="img"
-                              aria-label="Sports Shoes" alt="Sports Shoes Product Image"
-                              style="width:100%;height:100%;object-fit:cover"
-                              src="https://www.jotform.com/uploads/ugurg/form_files/Black%2520And%2520Gray%2520Abstract%2520Shoes%2520Promo%2520Poster.png" />
-                          </div>
-                          <div class="image_zoom"></div>
-                        </div>
-                      </div>
-                      <div for="input_42_1004" class="form-product-container"><span data-wrapper-react="true">
-                          <div class="title_description"><span class="form-product-name"
-                              id="product-name-input_42_1004">Sports Shoes</span><span class="form-product-description"
-                              id="product-name-description-input_42_1004">Durably stitched surfaces, clean finishes and
-                              the perfect amount of shine to make you dazzle.</span></div><span
-                            class="form-product-details"><b><span data-wrapper-react="true">$<span
-                                  id="input_42_1004_price">10.00</span></span></b></span>
-                        </span><span class="form-sub-label-container" style="vertical-align:top"><label
-                            class="form-sub-label" for="input_42_quantity_1004_0"
-                            style="min-height:13px">Quantity</label><span class="select_cont"><select
-                              class="form-dropdown" name="q42_productList[special_1004][item_0]"
-                              id="input_42_quantity_1004_0" aria-label="Select Quantity">
-                              <option value="1">1</option>
-                              <option value="2">2</option>
-                              <option value="3">3</option>
-                              <option value="4">4</option>
-                              <option value="5">5</option>
-                              <option value="6">6</option>
-                              <option value="7">7</option>
-                              <option value="8">8</option>
-                              <option value="9">9</option>
-                              <option value="10">10</option>
-                            </select></span></span><span class="form-sub-label-container"
-                          style="vertical-align:top"><label class="form-sub-label" for="input_42_custom_1004_1"
-                            style="min-height:13px">Shoe Size</label><span class="select_cont"><select
-                              class="form-dropdown" name="q42_productList[special_1004][item_1]"
-                              id="input_42_custom_1004_1" aria-label="Select Shoe Size">
-                              <option value="8">8</option>
-                              <option value="8.5">8.5</option>
-                              <option value="9">9</option>
-                              <option value="9.5">9.5</option>
-                              <option value="10">10</option>
-                              <option value="10.5">10.5</option>
-                              <option value="11">11</option>
-                              <option value="11.5">11.5</option>
-                              <option value="12">12</option>
-                              <option value="13">13</option>
-                              <option value="14">14</option>
-                            </select></span></span></div>
-                      <div class="focus_action_button_container"><a class="btn-inline-product-delete" tabindex="0"
-                          role="button" aria-label="Delete Product"> </a><a class="btn-inline-product-settings"
-                          tabindex="0" role="button" aria-label="Product Settings"> </a></div>
                     </div>
-                  </span>
-                  <div class="p_item_separator "></div><span
-                    class="form-product-item hover-product-item on_col2 show_image show_desc show_option new_ui"
-                    categories="non-categorized" pid="1005" aria-labelledby="label_42">
-                    <div data-wrapper-react="true" class="form-product-item-detail new_ui">
-                      <div class="p_col">
-                        <div class="p_checkbox"><input class="form-checkbox  form-product-input" type="checkbox"
-                            id="input_42_1005" name="q42_productList[][id]" data-inputname="q42_productList[][id]"
-                            readonly="" aria-label="Select Product: Linen Shoes" data-is-default-required="false"
-                            data-is-default-selected="false" value="1005" />
-                          <div class="checked"></div>
-                          <div class="select_border"></div>
+                    <div for="input_42_1004" class="form-product-container"><span data-wrapper-react="true">
+                        <div class="title_description"><span class="form-product-name"
+                            id="product-name-input_42_1004">Sports Shoes</span><span class="form-product-description"
+                            id="product-name-description-input_42_1004">Durably stitched surfaces, clean finishes and
+                            the perfect amount of shine to make you dazzle.</span></div><span
+                          class="form-product-details"><b><span data-wrapper-react="true">$<span
+                                id="input_42_1004_price">10.00</span></span></b></span>
+                      </span><span class="form-sub-label-container" style="vertical-align:top"><label
+                          class="form-sub-label" for="input_42_quantity_1004_0"
+                          style="min-height:13px">Quantity</label><span class="select_cont"><select
+                            class="form-dropdown" name="q42_productList[special_1004][item_0]"
+                            id="input_42_quantity_1004_0" aria-label="Select Quantity">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                          </select></span></span><span class="form-sub-label-container"
+                        style="vertical-align:top"><label class="form-sub-label" for="input_42_custom_1004_1"
+                          style="min-height:13px">Shoe Size</label><span class="select_cont"><select
+                            class="form-dropdown" name="q42_productList[special_1004][item_1]"
+                            id="input_42_custom_1004_1" aria-label="Select Shoe Size">
+                            <option value="8">8</option>
+                            <option value="8.5">8.5</option>
+                            <option value="9">9</option>
+                            <option value="9.5">9.5</option>
+                            <option value="10">10</option>
+                            <option value="10.5">10.5</option>
+                            <option value="11">11</option>
+                            <option value="11.5">11.5</option>
+                            <option value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                          </select></span></span></div>
+                    <div class="focus_action_button_container"><a class="btn-inline-product-delete" tabindex="0"
+                        role="button" aria-label="Delete Product"> </a><a class="btn-inline-product-settings"
+                        tabindex="0" role="button" aria-label="Product Settings"> </a></div>
+                  </div>
+                </span>
+                <div class="p_item_separator "></div><span
+                  class="form-product-item hover-product-item on_col2 show_image show_desc show_option new_ui"
+                  categories="non-categorized" pid="1005" aria-labelledby="label_42">
+                  <div data-wrapper-react="true" class="form-product-item-detail new_ui">
+                    <div class="p_image">
+                      <div class="image_area form-product-image-with-options">
+                        <div style="position:absolute;width:100%;height:100%"><img loading="lazy" role="img"
+                            aria-label="Linen Shoes" alt="Linen Shoes Product Image"
+                            style="width:100%;height:100%;object-fit:cover"
+                            src="https://www.jotform.com/uploads/ugurg/form_files/Blue%2520Minimalist%2520Shoes%2520Product%2520.png" />
                         </div>
+                        <div class="image_zoom"></div>
                       </div>
-                      <div class="p_image">
-                        <div class="image_area form-product-image-with-options">
-                          <div style="position:absolute;width:100%;height:100%"><img loading="lazy" role="img"
-                              aria-label="Linen Shoes" alt="Linen Shoes Product Image"
-                              style="width:100%;height:100%;object-fit:cover"
-                              src="https://www.jotform.com/uploads/ugurg/form_files/Blue%2520Minimalist%2520Shoes%2520Product%2520.png" />
-                          </div>
-                          <div class="image_zoom"></div>
-                        </div>
-                      </div>
-                      <div for="input_42_1005" class="form-product-container"><span data-wrapper-react="true">
-                          <div class="title_description"><span class="form-product-name"
-                              id="product-name-input_42_1005">Linen Shoes</span><span class="form-product-description"
-                              id="product-name-description-input_42_1005">You will wear it again and again, this shoe is
-                              remarkable and loyal just like you.</span></div><span
-                            class="form-product-details"><b><span data-wrapper-react="true">$<span
-                                  id="input_42_1005_price">14.00</span></span></b></span>
-                        </span><span class="form-sub-label-container" style="vertical-align:top"><label
-                            class="form-sub-label" for="input_42_quantity_1005_0"
-                            style="min-height:13px">Quantity</label><span class="select_cont"><select
-                              class="form-dropdown" name="q42_productList[special_1005][item_0]"
-                              id="input_42_quantity_1005_0" aria-label="Select Quantity">
-                              <option value="1">1</option>
-                              <option value="2">2</option>
-                              <option value="3">3</option>
-                              <option value="4">4</option>
-                              <option value="5">5</option>
-                              <option value="6">6</option>
-                              <option value="7">7</option>
-                              <option value="8">8</option>
-                              <option value="9">9</option>
-                              <option value="10">10</option>
-                            </select></span></span><span class="form-sub-label-container"
-                          style="vertical-align:top"><label class="form-sub-label" for="input_42_custom_1005_1"
-                            style="min-height:13px">Shoe Size</label><span class="select_cont"><select
-                              class="form-dropdown" name="q42_productList[special_1005][item_1]"
-                              id="input_42_custom_1005_1" aria-label="Select Shoe Size">
-                              <option value="8">8</option>
-                              <option value="8.5">8.5</option>
-                              <option value="9">9</option>
-                              <option value="9.5">9.5</option>
-                              <option value="10">10</option>
-                              <option value="10.5">10.5</option>
-                              <option value="11">11</option>
-                              <option value="11.5">11.5</option>
-                              <option value="12">12</option>
-                              <option value="13">13</option>
-                              <option value="14">14</option>
-                            </select></span></span></div>
-                      <div class="focus_action_button_container"><a class="btn-inline-product-delete" tabindex="0"
-                          role="button" aria-label="Delete Product"> </a><a class="btn-inline-product-settings"
-                          tabindex="0" role="button" aria-label="Product Settings"> </a></div>
                     </div>
-                  </span>
-                  <div class="p_item_separator "></div><span
-                    class="form-product-item hover-product-item on_col3 show_image show_desc show_option new_ui"
-                    categories="non-categorized" pid="1003" aria-labelledby="label_42">
-                    <div data-wrapper-react="true" class="form-product-item-detail new_ui">
-                      <div class="p_col">
-                        <div class="p_checkbox"><input class="form-checkbox  form-product-input" type="checkbox"
-                            id="input_42_1003" name="q42_productList[][id]" data-inputname="q42_productList[][id]"
-                            readonly="" aria-label="Select Product: Cap" data-is-default-required="false"
-                            data-is-default-selected="false" value="1003" />
-                          <div class="checked"></div>
-                          <div class="select_border"></div>
+                    <div for="input_42_1005" class="form-product-container"><span data-wrapper-react="true">
+                        <div class="title_description"><span class="form-product-name"
+                            id="product-name-input_42_1005">Linen Shoes</span><span class="form-product-description"
+                            id="product-name-description-input_42_1005">You will wear it again and again, this shoe is
+                            remarkable and loyal just like you.</span></div><span class="form-product-details"><b><span
+                              data-wrapper-react="true">$<span id="input_42_1005_price">14.00</span></span></b></span>
+                      </span><span class="form-sub-label-container" style="vertical-align:top"><label
+                          class="form-sub-label" for="input_42_quantity_1005_0"
+                          style="min-height:13px">Quantity</label></span><span class="form-sub-label-container"
+                        style="vertical-align:top"><label class="form-sub-label" for="input_42_custom_1005_1"
+                          style="min-height:13px">Shoe Size</label></span></div>
+                    <div class="focus_action_button_container"><a class="btn-inline-product-delete" tabindex="0"
+                        role="button" aria-label="Delete Product"> </a><a class="btn-inline-product-settings"
+                        tabindex="0" role="button" aria-label="Product Settings"> </a></div>
+                  </div>
+                </span>
+                <div class="p_item_separator "></div><span
+                  class="form-product-item hover-product-item on_col3 show_image show_desc show_option new_ui"
+                  categories="non-categorized" pid="1003" aria-labelledby="label_42">
+                  <div data-wrapper-react="true" class="form-product-item-detail new_ui">
+                    <div class="p_image">
+                      <div class="image_area form-product-image-with-options">
+                        <div style="position:absolute;width:100%;height:100%"><img loading="lazy" role="img"
+                            aria-label="Cap" alt="Cap Product Image" style="width:100%;height:100%;object-fit:cover"
+                            src="https://www.jotform.com/uploads/ugurg/form_files/Yellow%2520white%2520simple%2520caps%2520fashion%2520promotion%2520-%2520instagram%2520post.png" />
                         </div>
+                        <div class="image_zoom"></div>
                       </div>
-                      <div class="p_image">
-                        <div class="image_area form-product-image-with-options">
-                          <div style="position:absolute;width:100%;height:100%"><img loading="lazy" role="img"
-                              aria-label="Cap" alt="Cap Product Image" style="width:100%;height:100%;object-fit:cover"
-                              src="https://www.jotform.com/uploads/ugurg/form_files/Yellow%2520white%2520simple%2520caps%2520fashion%2520promotion%2520-%2520instagram%2520post.png" />
-                          </div>
-                          <div class="image_zoom"></div>
-                        </div>
-                      </div>
-                      <div for="input_42_1003" class="form-product-container"><span data-wrapper-react="true">
-                          <div class="title_description"><span class="form-product-name"
-                              id="product-name-input_42_1003">Cap</span><span class="form-product-description"
-                              id="product-name-description-input_42_1003">This product is made from at least 50%
-                              recycled polyester fiber.</span></div><span class="form-product-details"><b><span
-                                data-wrapper-react="true">$<span id="input_42_1003_price">10.00</span></span></b></span>
-                        </span><span class="form-sub-label-container" style="vertical-align:top"><label
-                            class="form-sub-label" for="input_42_quantity_1003_0"
-                            style="min-height:13px">Quantity</label><span class="select_cont"><select
-                              class="form-dropdown" name="q42_productList[special_1003][item_0]"
-                              id="input_42_quantity_1003_0" aria-label="Select Quantity">
-                              <option value="1">1</option>
-                              <option value="2">2</option>
-                              <option value="3">3</option>
-                              <option value="4">4</option>
-                              <option value="5">5</option>
-                              <option value="6">6</option>
-                              <option value="7">7</option>
-                              <option value="8">8</option>
-                              <option value="9">9</option>
-                              <option value="10">10</option>
-                            </select></span></span><span class="form-sub-label-container"
-                          style="vertical-align:top"><label class="form-sub-label" for="input_42_custom_1003_1"
-                            style="min-height:13px">Color</label><span class="select_cont"><select class="form-dropdown"
-                              name="q42_productList[special_1003][item_1]" id="input_42_custom_1003_1"
-                              aria-label="Select Color">
-                              <option value="Red">Red</option>
-                              <option value="Blue">Blue</option>
-                              <option value="Green">Green</option>
-                              <option value="Yellow">Yellow</option>
-                              <option value="Magenta">Magenta</option>
-                            </select></span></span></div>
-                      <div class="focus_action_button_container"><a class="btn-inline-product-delete" tabindex="0"
-                          role="button" aria-label="Delete Product"> </a><a class="btn-inline-product-settings"
-                          tabindex="0" role="button" aria-label="Product Settings"> </a></div>
                     </div>
-                  </span>
-                  <div class="payment_footer new_ui ">
-                    <div class="total_area">
-                      <div class="form-payment-total">
-                        <div id="total-text">Total</div>
-                        <div class="form-payment-price"><span data-wrapper-react="true">$<span
-                              id="payment_total">0.00</span></span></div>
-                      </div>
+                    <div for="input_42_1003" class="form-product-container"><span data-wrapper-react="true">
+                        <div class="title_description"><span class="form-product-name"
+                            id="product-name-input_42_1003">Cap</span><span class="form-product-description"
+                            id="product-name-description-input_42_1003">This product is made from at least 50% recycled
+                            polyester fiber.</span></div><span class="form-product-details"><b><span
+                              data-wrapper-react="true">$<span id="input_42_1003_price">10.00</span></span></b></span>
+                      </span><span class="form-sub-label-container" style="vertical-align:top"><label
+                          class="form-sub-label" for="input_42_quantity_1003_0"
+                          style="min-height:13px">Quantity</label><span class="select_cont"><select
+                            class="form-dropdown" name="q42_productList[special_1003][item_0]"
+                            id="input_42_quantity_1003_0" aria-label="Select Quantity">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                          </select></span></span><span class="form-sub-label-container"
+                        style="vertical-align:top"><label class="form-sub-label" for="input_42_custom_1003_1"
+                          style="min-height:13px">Color</label><span class="select_cont"><select class="form-dropdown"
+                            name="q42_productList[special_1003][item_1]" id="input_42_custom_1003_1"
+                            aria-label="Select Color">
+                            <option value="Red">Red</option>
+                            <option value="Blue">Blue</option>
+                            <option value="Green">Green</option>
+                            <option value="Yellow">Yellow</option>
+                            <option value="Magenta">Magenta</option>
+                          </select></span></span></div>
+                    <div class="focus_action_button_container"><a class="btn-inline-product-delete" tabindex="0"
+                        role="button" aria-label="Delete Product"> </a><a class="btn-inline-product-settings"
+                        tabindex="0" role="button" aria-label="Product Settings"> </a></div>
+                  </div>
+                </span>
+                <div class="payment_footer new_ui ">
+                  <div class="total_area">
+                    <div class="form-payment-total">
+                      <div id="total-text">Total</div>
+                      <div class="form-payment-price"><span data-wrapper-react="true">$<span
+                            id="payment_total">0.00</span></span></div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </li>
-        <li class="form-line" data-type="control_fullname" id="id_59"><label
-            class="form-label form-label-top form-label-auto" id="label_59" for="first_59" aria-hidden="false"> Name
-          </label>
-          <div id="cid_59" class="form-input-wide" data-layout="full">
-            <div data-wrapper-react="true"><span class="form-sub-label-container" style="vertical-align:top"
-                data-input-type="first"><input type="text" id="first_59" name="q59_name59[first]" class="form-textbox"
-                  data-defaultvalue="" autoComplete="section-input_59 given-name" size="10" data-component="first"
-                  aria-labelledby="label_59 sublabel_59_first" value="" /><label class="form-sub-label" for="first_59"
-                  id="sublabel_59_first" style="min-height:13px">First Name</label></span><span
-                class="form-sub-label-container" style="vertical-align:top" data-input-type="last"><input type="text"
-                  id="last_59" name="q59_name59[last]" class="form-textbox" data-defaultvalue=""
-                  autoComplete="section-input_59 family-name" size="15" data-component="last"
-                  aria-labelledby="label_59 sublabel_59_last" value="" /><label class="form-sub-label" for="last_59"
-                  id="sublabel_59_last" style="min-height:13px">Last Name</label></span></div>
+        </div>
+      </li>
+      <li class="form-line" data-type="control_appointment" id="id_63"><label class="form-label form-label-top"
+          id="label_63" for="input_63" aria-hidden="false"> Appointment </label>
+        <div id="cid_63" class="form-input-wide" data-layout="full">
+          <div id="input_63" class="appointmentFieldWrapper jfQuestion-fields"><input class="appointmentFieldInput"
+              name="q63_appointment[implementation]" id="input_63implementation" aria-hidden="true" type="hidden"
+              value="new" /><input class="appointmentFieldInput " name="q63_appointment[date]" id="input_63_date"
+              data-timeformat="AM/PM" aria-hidden="true" type="hidden" /><input class="appointmentFieldInput"
+              name="q63_appointment[duration]" id="input_63_duration" aria-hidden="true" type="hidden"
+              value="60" /><input class="appointmentFieldInput" name="q63_appointment[timezone]" id="input_63_timezone"
+              aria-hidden="true" type="hidden" value="America/New_York (GMT-05:00)" />
+            <div class="appointmentField"></div>
           </div>
-        </li>
-        <li class="form-line" data-type="control_address" id="id_60"
-          data-compound-hint=",,,,Please Select,,Please Select,"><label
-            class="form-label form-label-top form-label-auto" id="label_60" for="input_60_addr_line1"
-            aria-hidden="false"> Address </label>
-          <div id="cid_60" class="form-input-wide" data-layout="full">
-            <div summary="" class="form-address-table jsTest-addressField">
-              <div class="form-address-line-wrapper jsTest-address-line-wrapperField"><span
-                  class="form-address-line form-address-street-line jsTest-address-lineField"><span
-                    class="form-sub-label-container" style="vertical-align:top"><input type="text"
-                      id="input_60_addr_line1" name="q60_address60[addr_line1]" class="form-textbox form-address-line"
-                      data-defaultvalue="" autoComplete="section-input_60 address-line1" data-component="address_line_1"
-                      aria-labelledby="label_60 sublabel_60_addr_line1" value="" /><label class="form-sub-label"
-                      for="input_60_addr_line1" id="sublabel_60_addr_line1" style="min-height:13px">Street
-                      Address</label></span></span></div>
-              <div class="form-address-line-wrapper jsTest-address-line-wrapperField"><span
-                  class="form-address-line form-address-street-line jsTest-address-lineField"><span
-                    class="form-sub-label-container" style="vertical-align:top"><input type="text"
-                      id="input_60_addr_line2" name="q60_address60[addr_line2]" class="form-textbox form-address-line"
-                      data-defaultvalue="" autoComplete="section-input_60 address-line2" data-component="address_line_2"
-                      aria-labelledby="label_60 sublabel_60_addr_line2" value="" /><label class="form-sub-label"
-                      for="input_60_addr_line2" id="sublabel_60_addr_line2" style="min-height:13px">Street Address Line
-                      2</label></span></span></div>
-              <div class="form-address-line-wrapper jsTest-address-line-wrapperField"><span
-                  class="form-address-line form-address-city-line jsTest-address-lineField "><span
-                    class="form-sub-label-container" style="vertical-align:top"><input type="text" id="input_60_city"
-                      name="q60_address60[city]" class="form-textbox form-address-city" data-defaultvalue=""
-                      autoComplete="section-input_60 address-level2" data-component="city"
-                      aria-labelledby="label_60 sublabel_60_city" value="" /><label class="form-sub-label"
-                      for="input_60_city" id="sublabel_60_city" style="min-height:13px">City</label></span></span><span
-                  class="form-address-line form-address-state-line jsTest-address-lineField "><span
-                    class="form-sub-label-container" style="vertical-align:top"><input type="text" id="input_60_state"
-                      name="q60_address60[state]" class="form-textbox form-address-state" data-defaultvalue=""
-                      autoComplete="section-input_60 address-level1" data-component="state"
-                      aria-labelledby="label_60 sublabel_60_state" value="" /><label class="form-sub-label"
-                      for="input_60_state" id="sublabel_60_state" style="min-height:13px">State /
-                      Province</label></span></span></div>
-              <div class="form-address-line-wrapper jsTest-address-line-wrapperField"><span
-                  class="form-address-line form-address-zip-line jsTest-address-lineField "><span
-                    class="form-sub-label-container" style="vertical-align:top"><input type="text" id="input_60_postal"
-                      name="q60_address60[postal]" class="form-textbox form-address-postal" data-defaultvalue=""
-                      autoComplete="section-input_60 postal-code" data-component="zip"
-                      aria-labelledby="label_60 sublabel_60_postal" value="" /><label class="form-sub-label"
-                      for="input_60_postal" id="sublabel_60_postal" style="min-height:13px">Postal / Zip
-                      Code</label></span></span></div>
-            </div>
+        </div>
+      </li>
+      <li class="form-line" data-type="control_time" id="id_64"><label class="form-label form-label-top form-label-auto"
+          id="label_64" for="input_64_hourSelect" aria-hidden="false"> Time </label>
+        <div id="cid_64" class="form-input-wide" data-layout="half">
+          <div data-wrapper-react="true">
+            <div class="time-wrapper"><span class="form-sub-label-container hasAMPM" style="vertical-align:top"><input
+                  class="time-dropdown form-textbox validate[time]" id="input_64_timeInput" name="q64_time[timeInput]"
+                  type="text" placeholder="HH : MM" aria-labelledby="label_64 sublabel_64_hour" data-mask="hh:MM"
+                  autoComplete="off" data-version="v2" value="" /><input type="hidden" class="form-hidden-time"
+                  id="input_64_hourSelect" name="q64_time[hourSelect]" /><input type="hidden" class="form-hidden-time"
+                  id="input_64_minuteSelect" name="q64_time[minuteSelect]" /><label data-seperate-translate="true"
+                  class="form-sub-label" for="input_64_timeInput" id="sublabel_64_hour" style="min-height:13px">Hour
+                  Minutes</label></span></div>
+            <div class="time-wrapper"><span class="form-sub-label-container" style="vertical-align:top"><select
+                  class="time-dropdown form-dropdown" id="input_64_ampm" name="q64_time[ampm]"
+                  data-component="time-ampm" aria-labelledby="label_64 sublabel_64_ampm" autoComplete="off">
+                  <option value="AM" selected="">AM</option>
+                  <option value="PM">PM</option>
+                </select><label class="form-sub-label" for="input_64_ampm" id="sublabel_64_ampm"
+                  style="border:0;clip:rect(0 0 0 0);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;width:1px;white-space:nowrap">AM/PM
+                  Option</label></span></div>
           </div>
-        </li>
-        <li class="form-line" data-type="control_phone" id="id_61"><label
-            class="form-label form-label-top form-label-auto" id="label_61" for="input_61_full"> Phone Number </label>
-          <div id="cid_61" class="form-input-wide" data-layout="half"> <span class="form-sub-label-container"
-              style="vertical-align:top"><input type="tel" id="input_61_full" name="q61_phoneNumber[full]"
-                data-type="mask-number" class="mask-phone-number form-textbox validate[Fill Mask]" data-defaultvalue=""
-                autoComplete="section-input_61 tel-national" style="width:310px" data-masked="true"
-                placeholder="(000) 000-0000" data-component="phone" aria-labelledby="label_61 sublabel_61_masked"
-                value="" /><label class="form-sub-label" for="input_61_full" id="sublabel_61_masked"
-                style="min-height:13px">Please enter a valid phone number.</label></span> </div>
-        </li>
-        <li class="form-line" data-type="control_appointment" id="id_63"><label class="form-label form-label-top"
-            id="label_63" for="input_63" aria-hidden="false"> Appointment </label>
-          <div id="cid_63" class="form-input-wide" data-layout="full">
-            <div id="input_63" class="appointmentFieldWrapper jfQuestion-fields"><input class="appointmentFieldInput"
-                name="q63_appointment[implementation]" id="input_63implementation" aria-hidden="true" type="hidden"
-                value="new" /><input class="appointmentFieldInput " name="q63_appointment[date]" id="input_63_date"
-                data-timeformat="AM/PM" aria-hidden="true" type="hidden" /><input class="appointmentFieldInput"
-                name="q63_appointment[duration]" id="input_63_duration" aria-hidden="true" type="hidden"
-                value="60" /><input class="appointmentFieldInput" name="q63_appointment[timezone]"
-                id="input_63_timezone" aria-hidden="true" type="hidden" value="America/New_York (GMT-05:00)" />
-              <div class="appointmentField"></div>
-            </div>
-          </div>
-        </li>
-        <li class="form-line" data-type="control_time" id="id_64"><label
-            class="form-label form-label-top form-label-auto" id="label_64" for="input_64_hourSelect"
-            aria-hidden="false"> Time </label>
-          <div id="cid_64" class="form-input-wide" data-layout="half">
-            <div data-wrapper-react="true">
-              <div class="time-wrapper"><span class="form-sub-label-container hasAMPM" style="vertical-align:top"><input
-                    class="time-dropdown form-textbox validate[time]" id="input_64_timeInput" name="q64_time[timeInput]"
-                    type="text" placeholder="HH : MM" aria-labelledby="label_64 sublabel_64_hour" data-mask="hh:MM"
-                    autoComplete="off" data-version="v2" value="" /><input type="hidden" class="form-hidden-time"
-                    id="input_64_hourSelect" name="q64_time[hourSelect]" /><input type="hidden" class="form-hidden-time"
-                    id="input_64_minuteSelect" name="q64_time[minuteSelect]" /><label data-seperate-translate="true"
-                    class="form-sub-label" for="input_64_timeInput" id="sublabel_64_hour" style="min-height:13px">Hour
-                    Minutes</label></span></div>
-              <div class="time-wrapper"><span class="form-sub-label-container" style="vertical-align:top"><select
-                    class="time-dropdown form-dropdown" id="input_64_ampm" name="q64_time[ampm]"
-                    data-component="time-ampm" aria-labelledby="label_64 sublabel_64_ampm" autoComplete="off">
-                    <option value="AM" selected="">AM</option>
-                    <option value="PM">PM</option>
-                  </select><label class="form-sub-label" for="input_64_ampm" id="sublabel_64_ampm"
-                    style="border:0;clip:rect(0 0 0 0);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;width:1px;white-space:nowrap">AM/PM
-                    Option</label></span></div>
-            </div>
-          </div>
-        </li>
-        <li class="form-line" data-type="control_email" id="id_45"><label
-            class="form-label form-label-top form-label-auto" id="label_45" for="input_45" aria-hidden="false"> Your
-            Email </label>
-          <div id="cid_45" class="form-input-wide" data-layout="half"> <span class="form-sub-label-container"
-              style="vertical-align:top"><input type="email" id="input_45" name="q45_yourEmail"
-                class="form-textbox validate[Email]" data-defaultvalue="" autoComplete="section-input_45 email"
-                style="width:310px" size="310" data-component="email" aria-labelledby="label_45 sublabel_input_45"
-                value="" /><label class="form-sub-label" for="input_45" id="sublabel_input_45"
-                style="min-height:13px">example@example.com</label></span> </div>
-        </li>
-        <li class="form-line" data-type="control_address" id="id_50"><label
-            class="form-label form-label-top form-label-auto" id="label_50" for="input_50_addr_line1"
-            aria-hidden="false"> Billing Address </label>
-          <div id="cid_50" class="form-input-wide" data-layout="full">
-            <div summary="" class="form-address-table jsTest-addressField">
-              <div class="form-address-line-wrapper jsTest-address-line-wrapperField"><span
-                  class="form-address-line form-address-street-line jsTest-address-lineField"><span
-                    class="form-sub-label-container" style="vertical-align:top"><input type="text"
-                      id="input_50_addr_line1" name="q50_address[addr_line1]" class="form-textbox form-address-line"
-                      data-defaultvalue="" autoComplete="section-input_50 address-line1" data-component="address_line_1"
-                      aria-labelledby="label_50 sublabel_50_addr_line1" value="" /><label class="form-sub-label"
-                      for="input_50_addr_line1" id="sublabel_50_addr_line1" style="min-height:13px">Street
-                      Address</label></span></span></div>
-              <div class="form-address-line-wrapper jsTest-address-line-wrapperField"><span
-                  class="form-address-line form-address-street-line jsTest-address-lineField"><span
-                    class="form-sub-label-container" style="vertical-align:top"><input type="text"
-                      id="input_50_addr_line2" name="q50_address[addr_line2]" class="form-textbox form-address-line"
-                      data-defaultvalue="" autoComplete="section-input_50 address-line2" data-component="address_line_2"
-                      aria-labelledby="label_50 sublabel_50_addr_line2" value="" /><label class="form-sub-label"
-                      for="input_50_addr_line2" id="sublabel_50_addr_line2" style="min-height:13px">Street Address Line
-                      2</label></span></span></div>
-              <div class="form-address-line-wrapper jsTest-address-line-wrapperField"><span
-                  class="form-address-line form-address-city-line jsTest-address-lineField "><span
-                    class="form-sub-label-container" style="vertical-align:top"><input type="text" id="input_50_city"
-                      name="q50_address[city]" class="form-textbox form-address-city" data-defaultvalue=""
-                      autoComplete="section-input_50 address-level2" data-component="city"
-                      aria-labelledby="label_50 sublabel_50_city" value="" /><label class="form-sub-label"
-                      for="input_50_city" id="sublabel_50_city" style="min-height:13px">City</label></span></span><span
-                  class="form-address-line form-address-state-line jsTest-address-lineField "><span
-                    class="form-sub-label-container" style="vertical-align:top"><input type="text" id="input_50_state"
-                      name="q50_address[state]" class="form-textbox form-address-state" data-defaultvalue=""
-                      autoComplete="section-input_50 address-level1" data-component="state"
-                      aria-labelledby="label_50 sublabel_50_state" value="" /><label class="form-sub-label"
-                      for="input_50_state" id="sublabel_50_state" style="min-height:13px">State /
-                      Province</label></span></span></div>
-              <div class="form-address-line-wrapper jsTest-address-line-wrapperField"><span
-                  class="form-address-line form-address-zip-line jsTest-address-lineField "><span
-                    class="form-sub-label-container" style="vertical-align:top"><input type="text" id="input_50_postal"
-                      name="q50_address[postal]" class="form-textbox form-address-postal" data-defaultvalue=""
-                      autoComplete="section-input_50 postal-code" data-component="zip"
-                      aria-labelledby="label_50 sublabel_50_postal" value="" /><label class="form-sub-label"
-                      for="input_50_postal" id="sublabel_50_postal" style="min-height:13px">Postal / Zip
-                      Code</label></span></span><span
-                  class="form-address-line form-address-country-line jsTest-address-lineField "><span
-                    class="form-sub-label-container" style="vertical-align:top"><select
-                      class="form-dropdown form-address-country" name="q50_address[country]" id="input_50_country"
-                      data-component="country" required="" aria-labelledby="label_50 sublabel_50_country"
-                      autoComplete="section-input_50 country">
-                      <option value="">Please Select</option>
-                      <option value="Afghanistan">Afghanistan</option>
-                      <option value="Albania">Albania</option>
-                      <option value="Algeria">Algeria</option>
-                      <option value="American Samoa">American Samoa</option>
-                      <option value="Andorra">Andorra</option>
-                      <option value="Angola">Angola</option>
-                      <option value="Anguilla">Anguilla</option>
-                      <option value="Antigua and Barbuda">Antigua and Barbuda</option>
-                      <option value="Argentina">Argentina</option>
-                      <option value="Armenia">Armenia</option>
-                      <option value="Aruba">Aruba</option>
-                      <option value="Australia">Australia</option>
-                      <option value="Austria">Austria</option>
-                      <option value="Azerbaijan">Azerbaijan</option>
-                      <option value="The Bahamas">The Bahamas</option>
-                      <option value="Bahrain">Bahrain</option>
-                      <option value="Bangladesh">Bangladesh</option>
-                      <option value="Barbados">Barbados</option>
-                      <option value="Belarus">Belarus</option>
-                      <option value="Belgium">Belgium</option>
-                      <option value="Belize">Belize</option>
-                      <option value="Benin">Benin</option>
-                      <option value="Bermuda">Bermuda</option>
-                      <option value="Bhutan">Bhutan</option>
-                      <option value="Bolivia">Bolivia</option>
-                      <option value="Bosnia and Herzegovina">Bosnia and Herzegovina</option>
-                      <option value="Botswana">Botswana</option>
-                      <option value="Brazil">Brazil</option>
-                      <option value="Brunei">Brunei</option>
-                      <option value="Bulgaria">Bulgaria</option>
-                      <option value="Burkina Faso">Burkina Faso</option>
-                      <option value="Burundi">Burundi</option>
-                      <option value="Cambodia">Cambodia</option>
-                      <option value="Cameroon">Cameroon</option>
-                      <option value="Canada">Canada</option>
-                      <option value="Cape Verde">Cape Verde</option>
-                      <option value="Cayman Islands">Cayman Islands</option>
-                      <option value="Central African Republic">Central African Republic</option>
-                      <option value="Chad">Chad</option>
-                      <option value="Chile">Chile</option>
-                      <option value="China">China</option>
-                      <option value="Christmas Island">Christmas Island</option>
-                      <option value="Cocos (Keeling) Islands">Cocos (Keeling) Islands</option>
-                      <option value="Colombia">Colombia</option>
-                      <option value="Comoros">Comoros</option>
-                      <option value="Congo">Congo</option>
-                      <option value="Cook Islands">Cook Islands</option>
-                      <option value="Costa Rica">Costa Rica</option>
-                      <option value="Cote d&#x27;Ivoire">Cote d&#x27;Ivoire</option>
-                      <option value="Croatia">Croatia</option>
-                      <option value="Cuba">Cuba</option>
-                      <option value="Curaçao">Curaçao</option>
-                      <option value="Cyprus">Cyprus</option>
-                      <option value="Czech Republic">Czech Republic</option>
-                      <option value="Democratic Republic of the Congo">Democratic Republic of the Congo</option>
-                      <option value="Denmark">Denmark</option>
-                      <option value="Djibouti">Djibouti</option>
-                      <option value="Dominica">Dominica</option>
-                      <option value="Dominican Republic">Dominican Republic</option>
-                      <option value="Ecuador">Ecuador</option>
-                      <option value="Egypt">Egypt</option>
-                      <option value="El Salvador">El Salvador</option>
-                      <option value="Equatorial Guinea">Equatorial Guinea</option>
-                      <option value="Eritrea">Eritrea</option>
-                      <option value="Estonia">Estonia</option>
-                      <option value="Ethiopia">Ethiopia</option>
-                      <option value="Falkland Islands">Falkland Islands</option>
-                      <option value="Faroe Islands">Faroe Islands</option>
-                      <option value="Fiji">Fiji</option>
-                      <option value="Finland">Finland</option>
-                      <option value="France">France</option>
-                      <option value="French Polynesia">French Polynesia</option>
-                      <option value="Gabon">Gabon</option>
-                      <option value="The Gambia">The Gambia</option>
-                      <option value="Georgia">Georgia</option>
-                      <option value="Germany">Germany</option>
-                      <option value="Ghana">Ghana</option>
-                      <option value="Gibraltar">Gibraltar</option>
-                      <option value="Greece">Greece</option>
-                      <option value="Greenland">Greenland</option>
-                      <option value="Grenada">Grenada</option>
-                      <option value="Guadeloupe">Guadeloupe</option>
-                      <option value="Guam">Guam</option>
-                      <option value="Guatemala">Guatemala</option>
-                      <option value="Guernsey">Guernsey</option>
-                      <option value="Guinea">Guinea</option>
-                      <option value="Guinea-Bissau">Guinea-Bissau</option>
-                      <option value="Guyana">Guyana</option>
-                      <option value="Haiti">Haiti</option>
-                      <option value="Honduras">Honduras</option>
-                      <option value="Hong Kong">Hong Kong</option>
-                      <option value="Hungary">Hungary</option>
-                      <option value="Iceland">Iceland</option>
-                      <option value="India">India</option>
-                      <option value="Indonesia">Indonesia</option>
-                      <option value="Iran">Iran</option>
-                      <option value="Iraq">Iraq</option>
-                      <option value="Ireland">Ireland</option>
-                      <option value="Israel">Israel</option>
-                      <option value="Italy">Italy</option>
-                      <option value="Jamaica">Jamaica</option>
-                      <option value="Japan">Japan</option>
-                      <option value="Jersey">Jersey</option>
-                      <option value="Jordan">Jordan</option>
-                      <option value="Kazakhstan">Kazakhstan</option>
-                      <option value="Kenya">Kenya</option>
-                      <option value="Kiribati">Kiribati</option>
-                      <option value="North Korea">North Korea</option>
-                      <option value="South Korea">South Korea</option>
-                      <option value="Kosovo">Kosovo</option>
-                      <option value="Kuwait">Kuwait</option>
-                      <option value="Kyrgyzstan">Kyrgyzstan</option>
-                      <option value="Laos">Laos</option>
-                      <option value="Latvia">Latvia</option>
-                      <option value="Lebanon">Lebanon</option>
-                      <option value="Lesotho">Lesotho</option>
-                      <option value="Liberia">Liberia</option>
-                      <option value="Libya">Libya</option>
-                      <option value="Liechtenstein">Liechtenstein</option>
-                      <option value="Lithuania">Lithuania</option>
-                      <option value="Luxembourg">Luxembourg</option>
-                      <option value="Macau">Macau</option>
-                      <option value="Macedonia">Macedonia</option>
-                      <option value="Madagascar">Madagascar</option>
-                      <option value="Malawi">Malawi</option>
-                      <option value="Malaysia">Malaysia</option>
-                      <option value="Maldives">Maldives</option>
-                      <option value="Mali">Mali</option>
-                      <option value="Malta">Malta</option>
-                      <option value="Marshall Islands">Marshall Islands</option>
-                      <option value="Martinique">Martinique</option>
-                      <option value="Mauritania">Mauritania</option>
-                      <option value="Mauritius">Mauritius</option>
-                      <option value="Mayotte">Mayotte</option>
-                      <option value="Mexico">Mexico</option>
-                      <option value="Micronesia">Micronesia</option>
-                      <option value="Moldova">Moldova</option>
-                      <option value="Monaco">Monaco</option>
-                      <option value="Mongolia">Mongolia</option>
-                      <option value="Montenegro">Montenegro</option>
-                      <option value="Montserrat">Montserrat</option>
-                      <option value="Morocco">Morocco</option>
-                      <option value="Mozambique">Mozambique</option>
-                      <option value="Myanmar">Myanmar</option>
-                      <option value="Nagorno-Karabakh">Nagorno-Karabakh</option>
-                      <option value="Namibia">Namibia</option>
-                      <option value="Nauru">Nauru</option>
-                      <option value="Nepal">Nepal</option>
-                      <option value="Netherlands">Netherlands</option>
-                      <option value="Netherlands Antilles">Netherlands Antilles</option>
-                      <option value="New Caledonia">New Caledonia</option>
-                      <option value="New Zealand">New Zealand</option>
-                      <option value="Nicaragua">Nicaragua</option>
-                      <option value="Niger">Niger</option>
-                      <option value="Nigeria">Nigeria</option>
-                      <option value="Niue">Niue</option>
-                      <option value="Norfolk Island">Norfolk Island</option>
-                      <option value="Turkish Republic of Northern Cyprus">Turkish Republic of Northern Cyprus</option>
-                      <option value="Northern Mariana">Northern Mariana</option>
-                      <option value="Norway">Norway</option>
-                      <option value="Oman">Oman</option>
-                      <option value="Pakistan">Pakistan</option>
-                      <option value="Palau">Palau</option>
-                      <option value="Palestine">Palestine</option>
-                      <option value="Panama">Panama</option>
-                      <option value="Papua New Guinea">Papua New Guinea</option>
-                      <option value="Paraguay">Paraguay</option>
-                      <option value="Peru">Peru</option>
-                      <option value="Philippines">Philippines</option>
-                      <option value="Pitcairn Islands">Pitcairn Islands</option>
-                      <option value="Poland">Poland</option>
-                      <option value="Portugal">Portugal</option>
-                      <option value="Puerto Rico">Puerto Rico</option>
-                      <option value="Qatar">Qatar</option>
-                      <option value="Republic of the Congo">Republic of the Congo</option>
-                      <option value="Romania">Romania</option>
-                      <option value="Russia">Russia</option>
-                      <option value="Rwanda">Rwanda</option>
-                      <option value="Saint Barthelemy">Saint Barthelemy</option>
-                      <option value="Saint Helena">Saint Helena</option>
-                      <option value="Saint Kitts and Nevis">Saint Kitts and Nevis</option>
-                      <option value="Saint Lucia">Saint Lucia</option>
-                      <option value="Saint Martin">Saint Martin</option>
-                      <option value="Saint Pierre and Miquelon">Saint Pierre and Miquelon</option>
-                      <option value="Saint Vincent and the Grenadines">Saint Vincent and the Grenadines</option>
-                      <option value="Samoa">Samoa</option>
-                      <option value="San Marino">San Marino</option>
-                      <option value="Sao Tome and Principe">Sao Tome and Principe</option>
-                      <option value="Saudi Arabia">Saudi Arabia</option>
-                      <option value="Senegal">Senegal</option>
-                      <option value="Serbia">Serbia</option>
-                      <option value="Seychelles">Seychelles</option>
-                      <option value="Sierra Leone">Sierra Leone</option>
-                      <option value="Singapore">Singapore</option>
-                      <option value="Slovakia">Slovakia</option>
-                      <option value="Slovenia">Slovenia</option>
-                      <option value="Solomon Islands">Solomon Islands</option>
-                      <option value="Somalia">Somalia</option>
-                      <option value="Somaliland">Somaliland</option>
-                      <option value="South Africa">South Africa</option>
-                      <option value="South Ossetia">South Ossetia</option>
-                      <option value="South Sudan">South Sudan</option>
-                      <option value="Spain">Spain</option>
-                      <option value="Sri Lanka">Sri Lanka</option>
-                      <option value="Sudan">Sudan</option>
-                      <option value="Suriname">Suriname</option>
-                      <option value="Svalbard">Svalbard</option>
-                      <option value="eSwatini">eSwatini</option>
-                      <option value="Sweden">Sweden</option>
-                      <option value="Switzerland">Switzerland</option>
-                      <option value="Syria">Syria</option>
-                      <option value="Taiwan">Taiwan</option>
-                      <option value="Tajikistan">Tajikistan</option>
-                      <option value="Tanzania">Tanzania</option>
-                      <option value="Thailand">Thailand</option>
-                      <option value="Timor-Leste">Timor-Leste</option>
-                      <option value="Togo">Togo</option>
-                      <option value="Tokelau">Tokelau</option>
-                      <option value="Tonga">Tonga</option>
-                      <option value="Transnistria Pridnestrovie">Transnistria Pridnestrovie</option>
-                      <option value="Trinidad and Tobago">Trinidad and Tobago</option>
-                      <option value="Tristan da Cunha">Tristan da Cunha</option>
-                      <option value="Tunisia">Tunisia</option>
-                      <option value="Turkey">Turkey</option>
-                      <option value="Turkmenistan">Turkmenistan</option>
-                      <option value="Turks and Caicos Islands">Turks and Caicos Islands</option>
-                      <option value="Tuvalu">Tuvalu</option>
-                      <option value="Uganda">Uganda</option>
-                      <option value="Ukraine">Ukraine</option>
-                      <option value="United Arab Emirates">United Arab Emirates</option>
-                      <option value="United Kingdom">United Kingdom</option>
-                      <option value="United States">United States</option>
-                      <option value="Uruguay">Uruguay</option>
-                      <option value="Uzbekistan">Uzbekistan</option>
-                      <option value="Vanuatu">Vanuatu</option>
-                      <option value="Vatican City">Vatican City</option>
-                      <option value="Venezuela">Venezuela</option>
-                      <option value="Vietnam">Vietnam</option>
-                      <option value="British Virgin Islands">British Virgin Islands</option>
-                      <option value="Isle of Man">Isle of Man</option>
-                      <option value="US Virgin Islands">US Virgin Islands</option>
-                      <option value="Wallis and Futuna">Wallis and Futuna</option>
-                      <option value="Western Sahara">Western Sahara</option>
-                      <option value="Yemen">Yemen</option>
-                      <option value="Zambia">Zambia</option>
-                      <option value="Zimbabwe">Zimbabwe</option>
-                      <option value="other">Other</option>
-                    </select><label class="form-sub-label" for="input_50_country" id="sublabel_50_country"
-                      style="min-height:13px">Country</label></span></span></div>
-            </div>
-          </div>
-        </li>
-        <li class="form-line" data-type="control_radio" id="id_51"><label
-            class="form-label form-label-top form-label-auto" id="label_51" aria-hidden="false"> Is shipping address
-            same as billing address? </label>
-          <div id="cid_51" class="form-input-wide" data-layout="full">
-            <div class="form-single-column" role="group" aria-labelledby="label_51" data-component="radio"><span
-                class="form-radio-item" style="clear:left"><span class="dragger-item"></span><input
-                  aria-describedby="label_51" type="radio" class="form-radio" id="input_51_0" name="q51_typeA"
-                  value="Yes" /><label id="label_input_51_0" for="input_51_0">Yes</label></span><span
-                class="form-radio-item" style="clear:left"><span class="dragger-item"></span><input
-                  aria-describedby="label_51" type="radio" class="form-radio" id="input_51_1" name="q51_typeA"
-                  value="No" /><label id="label_input_51_1" for="input_51_1">No</label></span></div>
-          </div>
-        </li>
-        <li class="form-line form-field-hidden" style="display:none;" data-type="control_address" id="id_52"><label
-            class="form-label form-label-top form-label-auto" id="label_52" for="input_52_addr_line1"
-            aria-hidden="false"> Shipping Address </label>
-          <div id="cid_52" class="form-input-wide" data-layout="full">
-            <div summary="" class="form-address-table jsTest-addressField">
-              <div class="form-address-line-wrapper jsTest-address-line-wrapperField"><span
-                  class="form-address-line form-address-street-line jsTest-address-lineField"><span
-                    class="form-sub-label-container" style="vertical-align:top"><input type="text"
-                      id="input_52_addr_line1" name="q52_address52[addr_line1]" class="form-textbox form-address-line"
-                      data-defaultvalue="" autoComplete="section-input_52 address-line1" data-component="address_line_1"
-                      aria-labelledby="label_52 sublabel_52_addr_line1" value="" /><label class="form-sub-label"
-                      for="input_52_addr_line1" id="sublabel_52_addr_line1" style="min-height:13px">Street
-                      Address</label></span></span></div>
-              <div class="form-address-line-wrapper jsTest-address-line-wrapperField"><span
-                  class="form-address-line form-address-street-line jsTest-address-lineField"><span
-                    class="form-sub-label-container" style="vertical-align:top"><input type="text"
-                      id="input_52_addr_line2" name="q52_address52[addr_line2]" class="form-textbox form-address-line"
-                      data-defaultvalue="" autoComplete="section-input_52 address-line2" data-component="address_line_2"
-                      aria-labelledby="label_52 sublabel_52_addr_line2" value="" /><label class="form-sub-label"
-                      for="input_52_addr_line2" id="sublabel_52_addr_line2" style="min-height:13px">Street Address Line
-                      2</label></span></span></div>
-              <div class="form-address-line-wrapper jsTest-address-line-wrapperField"><span
-                  class="form-address-line form-address-city-line jsTest-address-lineField "><span
-                    class="form-sub-label-container" style="vertical-align:top"><input type="text" id="input_52_city"
-                      name="q52_address52[city]" class="form-textbox form-address-city" data-defaultvalue=""
-                      autoComplete="section-input_52 address-level2" data-component="city"
-                      aria-labelledby="label_52 sublabel_52_city" value="" /><label class="form-sub-label"
-                      for="input_52_city" id="sublabel_52_city" style="min-height:13px">City</label></span></span><span
-                  class="form-address-line form-address-state-line jsTest-address-lineField "><span
-                    class="form-sub-label-container" style="vertical-align:top"><input type="text" id="input_52_state"
-                      name="q52_address52[state]" class="form-textbox form-address-state" data-defaultvalue=""
-                      autoComplete="section-input_52 address-level1" data-component="state"
-                      aria-labelledby="label_52 sublabel_52_state" value="" /><label class="form-sub-label"
-                      for="input_52_state" id="sublabel_52_state" style="min-height:13px">State /
-                      Province</label></span></span></div>
-              <div class="form-address-line-wrapper jsTest-address-line-wrapperField"><span
-                  class="form-address-line form-address-zip-line jsTest-address-lineField "><span
-                    class="form-sub-label-container" style="vertical-align:top"><input type="text" id="input_52_postal"
-                      name="q52_address52[postal]" class="form-textbox form-address-postal" data-defaultvalue=""
-                      autoComplete="section-input_52 postal-code" data-component="zip"
-                      aria-labelledby="label_52 sublabel_52_postal" value="" /><label class="form-sub-label"
-                      for="input_52_postal" id="sublabel_52_postal" style="min-height:13px">Postal / Zip
-                      Code</label></span></span><span
-                  class="form-address-line form-address-country-line jsTest-address-lineField "><span
-                    class="form-sub-label-container" style="vertical-align:top"><select
-                      class="form-dropdown form-address-country" name="q52_address52[country]" id="input_52_country"
-                      data-component="country" required="" aria-labelledby="label_52 sublabel_52_country"
-                      autoComplete="section-input_52 country">
-                      <option value="">Please Select</option>
-                      <option value="Afghanistan">Afghanistan</option>
-                      <option value="Albania">Albania</option>
-                      <option value="Algeria">Algeria</option>
-                      <option value="American Samoa">American Samoa</option>
-                      <option value="Andorra">Andorra</option>
-                      <option value="Angola">Angola</option>
-                      <option value="Anguilla">Anguilla</option>
-                      <option value="Antigua and Barbuda">Antigua and Barbuda</option>
-                      <option value="Argentina">Argentina</option>
-                      <option value="Armenia">Armenia</option>
-                      <option value="Aruba">Aruba</option>
-                      <option value="Australia">Australia</option>
-                      <option value="Austria">Austria</option>
-                      <option value="Azerbaijan">Azerbaijan</option>
-                      <option value="The Bahamas">The Bahamas</option>
-                      <option value="Bahrain">Bahrain</option>
-                      <option value="Bangladesh">Bangladesh</option>
-                      <option value="Barbados">Barbados</option>
-                      <option value="Belarus">Belarus</option>
-                      <option value="Belgium">Belgium</option>
-                      <option value="Belize">Belize</option>
-                      <option value="Benin">Benin</option>
-                      <option value="Bermuda">Bermuda</option>
-                      <option value="Bhutan">Bhutan</option>
-                      <option value="Bolivia">Bolivia</option>
-                      <option value="Bosnia and Herzegovina">Bosnia and Herzegovina</option>
-                      <option value="Botswana">Botswana</option>
-                      <option value="Brazil">Brazil</option>
-                      <option value="Brunei">Brunei</option>
-                      <option value="Bulgaria">Bulgaria</option>
-                      <option value="Burkina Faso">Burkina Faso</option>
-                      <option value="Burundi">Burundi</option>
-                      <option value="Cambodia">Cambodia</option>
-                      <option value="Cameroon">Cameroon</option>
-                      <option value="Canada">Canada</option>
-                      <option value="Cape Verde">Cape Verde</option>
-                      <option value="Cayman Islands">Cayman Islands</option>
-                      <option value="Central African Republic">Central African Republic</option>
-                      <option value="Chad">Chad</option>
-                      <option value="Chile">Chile</option>
-                      <option value="China">China</option>
-                      <option value="Christmas Island">Christmas Island</option>
-                      <option value="Cocos (Keeling) Islands">Cocos (Keeling) Islands</option>
-                      <option value="Colombia">Colombia</option>
-                      <option value="Comoros">Comoros</option>
-                      <option value="Congo">Congo</option>
-                      <option value="Cook Islands">Cook Islands</option>
-                      <option value="Costa Rica">Costa Rica</option>
-                      <option value="Cote d&#x27;Ivoire">Cote d&#x27;Ivoire</option>
-                      <option value="Croatia">Croatia</option>
-                      <option value="Cuba">Cuba</option>
-                      <option value="Curaçao">Curaçao</option>
-                      <option value="Cyprus">Cyprus</option>
-                      <option value="Czech Republic">Czech Republic</option>
-                      <option value="Democratic Republic of the Congo">Democratic Republic of the Congo</option>
-                      <option value="Denmark">Denmark</option>
-                      <option value="Djibouti">Djibouti</option>
-                      <option value="Dominica">Dominica</option>
-                      <option value="Dominican Republic">Dominican Republic</option>
-                      <option value="Ecuador">Ecuador</option>
-                      <option value="Egypt">Egypt</option>
-                      <option value="El Salvador">El Salvador</option>
-                      <option value="Equatorial Guinea">Equatorial Guinea</option>
-                      <option value="Eritrea">Eritrea</option>
-                      <option value="Estonia">Estonia</option>
-                      <option value="Ethiopia">Ethiopia</option>
-                      <option value="Falkland Islands">Falkland Islands</option>
-                      <option value="Faroe Islands">Faroe Islands</option>
-                      <option value="Fiji">Fiji</option>
-                      <option value="Finland">Finland</option>
-                      <option value="France">France</option>
-                      <option value="French Polynesia">French Polynesia</option>
-                      <option value="Gabon">Gabon</option>
-                      <option value="The Gambia">The Gambia</option>
-                      <option value="Georgia">Georgia</option>
-                      <option value="Germany">Germany</option>
-                      <option value="Ghana">Ghana</option>
-                      <option value="Gibraltar">Gibraltar</option>
-                      <option value="Greece">Greece</option>
-                      <option value="Greenland">Greenland</option>
-                      <option value="Grenada">Grenada</option>
-                      <option value="Guadeloupe">Guadeloupe</option>
-                      <option value="Guam">Guam</option>
-                      <option value="Guatemala">Guatemala</option>
-                      <option value="Guernsey">Guernsey</option>
-                      <option value="Guinea">Guinea</option>
-                      <option value="Guinea-Bissau">Guinea-Bissau</option>
-                      <option value="Guyana">Guyana</option>
-                      <option value="Haiti">Haiti</option>
-                      <option value="Honduras">Honduras</option>
-                      <option value="Hong Kong">Hong Kong</option>
-                      <option value="Hungary">Hungary</option>
-                      <option value="Iceland">Iceland</option>
-                      <option value="India">India</option>
-                      <option value="Indonesia">Indonesia</option>
-                      <option value="Iran">Iran</option>
-                      <option value="Iraq">Iraq</option>
-                      <option value="Ireland">Ireland</option>
-                      <option value="Israel">Israel</option>
-                      <option value="Italy">Italy</option>
-                      <option value="Jamaica">Jamaica</option>
-                      <option value="Japan">Japan</option>
-                      <option value="Jersey">Jersey</option>
-                      <option value="Jordan">Jordan</option>
-                      <option value="Kazakhstan">Kazakhstan</option>
-                      <option value="Kenya">Kenya</option>
-                      <option value="Kiribati">Kiribati</option>
-                      <option value="North Korea">North Korea</option>
-                      <option value="South Korea">South Korea</option>
-                      <option value="Kosovo">Kosovo</option>
-                      <option value="Kuwait">Kuwait</option>
-                      <option value="Kyrgyzstan">Kyrgyzstan</option>
-                      <option value="Laos">Laos</option>
-                      <option value="Latvia">Latvia</option>
-                      <option value="Lebanon">Lebanon</option>
-                      <option value="Lesotho">Lesotho</option>
-                      <option value="Liberia">Liberia</option>
-                      <option value="Libya">Libya</option>
-                      <option value="Liechtenstein">Liechtenstein</option>
-                      <option value="Lithuania">Lithuania</option>
-                      <option value="Luxembourg">Luxembourg</option>
-                      <option value="Macau">Macau</option>
-                      <option value="Macedonia">Macedonia</option>
-                      <option value="Madagascar">Madagascar</option>
-                      <option value="Malawi">Malawi</option>
-                      <option value="Malaysia">Malaysia</option>
-                      <option value="Maldives">Maldives</option>
-                      <option value="Mali">Mali</option>
-                      <option value="Malta">Malta</option>
-                      <option value="Marshall Islands">Marshall Islands</option>
-                      <option value="Martinique">Martinique</option>
-                      <option value="Mauritania">Mauritania</option>
-                      <option value="Mauritius">Mauritius</option>
-                      <option value="Mayotte">Mayotte</option>
-                      <option value="Mexico">Mexico</option>
-                      <option value="Micronesia">Micronesia</option>
-                      <option value="Moldova">Moldova</option>
-                      <option value="Monaco">Monaco</option>
-                      <option value="Mongolia">Mongolia</option>
-                      <option value="Montenegro">Montenegro</option>
-                      <option value="Montserrat">Montserrat</option>
-                      <option value="Morocco">Morocco</option>
-                      <option value="Mozambique">Mozambique</option>
-                      <option value="Myanmar">Myanmar</option>
-                      <option value="Nagorno-Karabakh">Nagorno-Karabakh</option>
-                      <option value="Namibia">Namibia</option>
-                      <option value="Nauru">Nauru</option>
-                      <option value="Nepal">Nepal</option>
-                      <option value="Netherlands">Netherlands</option>
-                      <option value="Netherlands Antilles">Netherlands Antilles</option>
-                      <option value="New Caledonia">New Caledonia</option>
-                      <option value="New Zealand">New Zealand</option>
-                      <option value="Nicaragua">Nicaragua</option>
-                      <option value="Niger">Niger</option>
-                      <option value="Nigeria">Nigeria</option>
-                      <option value="Niue">Niue</option>
-                      <option value="Norfolk Island">Norfolk Island</option>
-                      <option value="Turkish Republic of Northern Cyprus">Turkish Republic of Northern Cyprus</option>
-                      <option value="Northern Mariana">Northern Mariana</option>
-                      <option value="Norway">Norway</option>
-                      <option value="Oman">Oman</option>
-                      <option value="Pakistan">Pakistan</option>
-                      <option value="Palau">Palau</option>
-                      <option value="Palestine">Palestine</option>
-                      <option value="Panama">Panama</option>
-                      <option value="Papua New Guinea">Papua New Guinea</option>
-                      <option value="Paraguay">Paraguay</option>
-                      <option value="Peru">Peru</option>
-                      <option value="Philippines">Philippines</option>
-                      <option value="Pitcairn Islands">Pitcairn Islands</option>
-                      <option value="Poland">Poland</option>
-                      <option value="Portugal">Portugal</option>
-                      <option value="Puerto Rico">Puerto Rico</option>
-                      <option value="Qatar">Qatar</option>
-                      <option value="Republic of the Congo">Republic of the Congo</option>
-                      <option value="Romania">Romania</option>
-                      <option value="Russia">Russia</option>
-                      <option value="Rwanda">Rwanda</option>
-                      <option value="Saint Barthelemy">Saint Barthelemy</option>
-                      <option value="Saint Helena">Saint Helena</option>
-                      <option value="Saint Kitts and Nevis">Saint Kitts and Nevis</option>
-                      <option value="Saint Lucia">Saint Lucia</option>
-                      <option value="Saint Martin">Saint Martin</option>
-                      <option value="Saint Pierre and Miquelon">Saint Pierre and Miquelon</option>
-                      <option value="Saint Vincent and the Grenadines">Saint Vincent and the Grenadines</option>
-                      <option value="Samoa">Samoa</option>
-                      <option value="San Marino">San Marino</option>
-                      <option value="Sao Tome and Principe">Sao Tome and Principe</option>
-                      <option value="Saudi Arabia">Saudi Arabia</option>
-                      <option value="Senegal">Senegal</option>
-                      <option value="Serbia">Serbia</option>
-                      <option value="Seychelles">Seychelles</option>
-                      <option value="Sierra Leone">Sierra Leone</option>
-                      <option value="Singapore">Singapore</option>
-                      <option value="Slovakia">Slovakia</option>
-                      <option value="Slovenia">Slovenia</option>
-                      <option value="Solomon Islands">Solomon Islands</option>
-                      <option value="Somalia">Somalia</option>
-                      <option value="Somaliland">Somaliland</option>
-                      <option value="South Africa">South Africa</option>
-                      <option value="South Ossetia">South Ossetia</option>
-                      <option value="South Sudan">South Sudan</option>
-                      <option value="Spain">Spain</option>
-                      <option value="Sri Lanka">Sri Lanka</option>
-                      <option value="Sudan">Sudan</option>
-                      <option value="Suriname">Suriname</option>
-                      <option value="Svalbard">Svalbard</option>
-                      <option value="eSwatini">eSwatini</option>
-                      <option value="Sweden">Sweden</option>
-                      <option value="Switzerland">Switzerland</option>
-                      <option value="Syria">Syria</option>
-                      <option value="Taiwan">Taiwan</option>
-                      <option value="Tajikistan">Tajikistan</option>
-                      <option value="Tanzania">Tanzania</option>
-                      <option value="Thailand">Thailand</option>
-                      <option value="Timor-Leste">Timor-Leste</option>
-                      <option value="Togo">Togo</option>
-                      <option value="Tokelau">Tokelau</option>
-                      <option value="Tonga">Tonga</option>
-                      <option value="Transnistria Pridnestrovie">Transnistria Pridnestrovie</option>
-                      <option value="Trinidad and Tobago">Trinidad and Tobago</option>
-                      <option value="Tristan da Cunha">Tristan da Cunha</option>
-                      <option value="Tunisia">Tunisia</option>
-                      <option value="Turkey">Turkey</option>
-                      <option value="Turkmenistan">Turkmenistan</option>
-                      <option value="Turks and Caicos Islands">Turks and Caicos Islands</option>
-                      <option value="Tuvalu">Tuvalu</option>
-                      <option value="Uganda">Uganda</option>
-                      <option value="Ukraine">Ukraine</option>
-                      <option value="United Arab Emirates">United Arab Emirates</option>
-                      <option value="United Kingdom">United Kingdom</option>
-                      <option value="United States">United States</option>
-                      <option value="Uruguay">Uruguay</option>
-                      <option value="Uzbekistan">Uzbekistan</option>
-                      <option value="Vanuatu">Vanuatu</option>
-                      <option value="Vatican City">Vatican City</option>
-                      <option value="Venezuela">Venezuela</option>
-                      <option value="Vietnam">Vietnam</option>
-                      <option value="British Virgin Islands">British Virgin Islands</option>
-                      <option value="Isle of Man">Isle of Man</option>
-                      <option value="US Virgin Islands">US Virgin Islands</option>
-                      <option value="Wallis and Futuna">Wallis and Futuna</option>
-                      <option value="Western Sahara">Western Sahara</option>
-                      <option value="Yemen">Yemen</option>
-                      <option value="Zambia">Zambia</option>
-                      <option value="Zimbabwe">Zimbabwe</option>
-                      <option value="other">Other</option>
-                    </select><label class="form-sub-label" for="input_52_country" id="sublabel_52_country"
-                      style="min-height:13px">Country</label></span></span></div>
-            </div>
-          </div>
-        </li>
-        <li class="form-line" data-type="control_fullname" id="id_55"><label
-            class="form-label form-label-top form-label-auto" id="label_55" for="first_55" aria-hidden="false">
-            Recipient's Full Name </label>
-          <div id="cid_55" class="form-input-wide" data-layout="full">
-            <div data-wrapper-react="true"><span class="form-sub-label-container" style="vertical-align:top"
-                data-input-type="first"><input type="text" id="first_55" name="q55_name[first]" class="form-textbox"
-                  data-defaultvalue="" autoComplete="section-input_55 given-name" size="10" data-component="first"
-                  aria-labelledby="label_55 sublabel_55_first" value="" /><label class="form-sub-label" for="first_55"
-                  id="sublabel_55_first" style="min-height:13px">First Name</label></span><span
-                class="form-sub-label-container" style="vertical-align:top" data-input-type="last"><input type="text"
-                  id="last_55" name="q55_name[last]" class="form-textbox" data-defaultvalue=""
-                  autoComplete="section-input_55 family-name" size="15" data-component="last"
-                  aria-labelledby="label_55 sublabel_55_last" value="" /><label class="form-sub-label" for="last_55"
-                  id="sublabel_55_last" style="min-height:13px">Last Name</label></span></div>
-          </div>
-        </li>
-        <li class="form-line jf-required" data-type="control_captcha" id="id_65"><label
-            class="form-label form-label-top form-label-auto" id="label_65" for="input_65" aria-hidden="false"> Please
-            verify that you are human<span class="form-required">*</span> </label>
-          <div id="cid_65" class="form-input-wide jf-required" data-layout="full">
-            <section data-wrapper-react="true">
-              <div id="hcaptcha_input_65" class="h-captcha" data-siteKey="772f4a50-7161-425e-8cd5-4d7e361ab765"
-                data-callback="hcaptchaCallbackinput_65" data-expired-callback="hcaptchaExpiredCallbackinput_65"></div>
-              <input type="hidden" id="input_65" class="hidden validate[required]" name="hcaptcha_visible"
-                required="" />
-              <script type="text/javascript" src="https://hcaptcha.com/1/api.js"></script>
-              <script type="text/javascript">
-                var hcaptchaCallbackinput_65 = function (token) {
-                  var hiddenInput = $("input_65");
-                  hiddenInput.setValue(1);
-                  if (hiddenInput.validateInput) {
-                    hiddenInput.validateInput();
-                  }
+        </div>
+      </li>
+      <li class="form-line" data-type="control_email" id="id_45"><label
+          class="form-label form-label-top form-label-auto" id="label_45" for="input_45" aria-hidden="false"> Your Email
+        </label>
+        <div id="cid_45" class="form-input-wide" data-layout="half"> <input type="email" id="input_45"
+            name="q45_yourEmail" class="form-textbox validate[Email]" data-defaultvalue=""
+            autoComplete="section-input_45 email" style="width:310px" size="310" data-component="email"
+            aria-labelledby="label_45" value="" /> </div>
+      </li>
+      <li class="form-line jf-required" data-type="control_captcha" id="id_65"><label
+          class="form-label form-label-top form-label-auto" id="label_65" for="input_65" aria-hidden="false"> Please
+          verify that you are human<span class="form-required">*</span> </label>
+        <div id="cid_65" class="form-input-wide jf-required" data-layout="full">
+          <section data-wrapper-react="true">
+            <div id="hcaptcha_input_65" class="h-captcha" data-siteKey="772f4a50-7161-425e-8cd5-4d7e361ab765"
+              data-callback="hcaptchaCallbackinput_65" data-expired-callback="hcaptchaExpiredCallbackinput_65"></div>
+            <input type="hidden" id="input_65" class="hidden validate[required]" name="hcaptcha_visible" required="" />
+            <script type="text/javascript" src="https://hcaptcha.com/1/api.js"></script>
+            <script type="text/javascript">
+              var hcaptchaCallbackinput_65 = function (token) {
+                var hiddenInput = $("input_65");
+                hiddenInput.setValue(1);
+                if (hiddenInput.validateInput) {
+                  hiddenInput.validateInput();
                 }
+              }
 
-                var hcaptchaExpiredCallbackinput_65 = function () {
-                  var hiddenInput = $("input_65");
-                  hiddenInput.writeAttribute("value", false);
-                  if (hiddenInput.validateInput) {
-                    hiddenInput.validateInput();
-                  }
+              var hcaptchaExpiredCallbackinput_65 = function () {
+                var hiddenInput = $("input_65");
+                hiddenInput.writeAttribute("value", false);
+                if (hiddenInput.validateInput) {
+                  hiddenInput.validateInput();
                 }
-              </script>
-            </section>
-          </div>
-        </li>
-        <li id="cid_69" class="form-input-wide" data-type="control_pagebreak">
-          <div class="form-pagebreak" data-component="pagebreak">
-            <div class="form-pagebreak-back-container"><button id="form-pagebreak-back_69" type="button"
-                class="form-pagebreak-back  jf-form-buttons" data-component="pagebreak-back">Back</button></div>
-            <div class="form-pagebreak-next-container"><button id="form-pagebreak-next_69" type="button"
-                class="form-pagebreak-next  jf-form-buttons" data-component="pagebreak-next">Next</button></div>
-            <div style="clear:both" class="pageInfo form-sub-label" id="pageInfo_69"></div>
-          </div>
-        </li>
-      </ul>
-      <ul class="form-section page-section" role="presentation" style="display:none;">
-        <li class="form-line" data-type="control_paymentmethods" id="id_43"><label class="form-label form-label-top"
-            id="label_43" for="input_43" aria-hidden="false"> Payment Methods </label>
-          <div id="cid_43" class="form-input-wide" data-layout="full">
-            <div class="payment-methods-area">
-              <div data-wrapper-react="true" class="paypalcomplete-payment-wrapper" data-sandbox="disabled"
-                data-currency="USD" data-merchantid="" data-auth-only="No" data-show-spb="true"
-                data-show-card-fields="true" data-show-fastlane="false">
-                <div id="paypal-commerce-platform-container">
-                  <div class="paypal-toggle-buttons">
-                    <div class="paypal-toggle">
-                      <div class="paypal-toggle-content paypal-new-radioView " render-paypal-type="">
-                        <div class="content-area">
-                          <div>
-                            <div id="paypal-card-fields">
-                              <div class="payment-method-container" data-id="paypal-card-fields"><input
-                                  class="form-radio" type="radio" name="paypal-payment-method"
-                                  data-id="paypal-card-fields" id="paypal-card-fields-input"
-                                  aria-describedby="label_43" /><label for="paypal-card-fields-input"><span
-                                    class="CC_ico"></span>Debit or Credit Card</label>
-                                <div id="paypal-credit-card-fields">
-                                  <div class="paypal-commerce-platform">
-                                    <div class="paypal-content">
-                                      <table class="form-address-table payment-form-table" style="border:0"
-                                        cellPadding="0" cellSpacing="0" role="presentation">
-                                        <tbody>
-                                          <tr>
-                                            <td width="50%"><input type="text" id="42_cc_firstName"
-                                                name="q42_productList[cc_firstName]" class="form-textbox cc_firstName"
-                                                data-defaultvalue="" size="20" placeholder="First Name"
-                                                data-component="cc_firstName" aria-label="Credit Card First Name"
-                                                aria-labelledby="" value="" /></td>
-                                            <td width="50%"><input type="text" id="42_cc_lastName"
-                                                name="q42_productList[cc_lastName]" class="form-textbox cc_lastName"
-                                                data-defaultvalue="" size="20" placeholder="Last Name"
-                                                data-component="cc_lastName" aria-label="Credit Card Last Name"
-                                                aria-labelledby="" value="" /></td>
-                                          </tr>
-                                          <tr class="if_cc_field">
-                                            <td width="50%">
-                                              <div class="cc_numberField" style="width:100%"></div>
-                                            </td>
-                                            <td width="50%">
-                                              <div class="cc_expiryField" style="width:100%"></div>
-                                            </td>
-                                          </tr>
-                                          <tr>
-                                            <td width="50%">
-                                              <div class="cc_cvvField" style="width:100%"></div>
-                                            </td>
-                                            <td width="50%">
-                                          <tr style="display:none">
-                                            <td><input id="paypal_complete_dummy" style="display:none" /></td>
-                                          </tr>
+              }
+            </script>
+          </section>
+        </div>
+      </li>
+      <li id="cid_69" class="form-input-wide" data-type="control_pagebreak">
+        <div class="form-pagebreak" data-component="pagebreak">
+          <div class="form-pagebreak-back-container"><button id="form-pagebreak-back_69" type="button"
+              class="form-pagebreak-back  jf-form-buttons" data-component="pagebreak-back">Back</button></div>
+          <div class="form-pagebreak-next-container"><button id="form-pagebreak-next_69" type="button"
+              class="form-pagebreak-next  jf-form-buttons" data-component="pagebreak-next">Next</button></div>
+          <div style="clear:both" class="pageInfo form-sub-label" id="pageInfo_69"></div>
+        </div>
+      </li>
+    </ul>
+    <ul class="form-section page-section" role="presentation" style="display:none;">
+      <li class="form-line" data-type="control_paymentmethods" id="id_43"><label class="form-label form-label-top"
+          id="label_43" for="input_43" aria-hidden="false"> Payment Methods </label>
+        <div id="cid_43" class="form-input-wide" data-layout="full">
+          <div class="payment-methods-area">
+            <div data-wrapper-react="true" class="paypalcomplete-payment-wrapper" data-sandbox="disabled"
+              data-currency="USD" data-merchantid="" data-auth-only="No" data-show-spb="true"
+              data-show-card-fields="true" data-show-fastlane="false">
+              <div id="paypal-commerce-platform-container">
+                <div class="paypal-toggle-buttons">
+                  <div class="paypal-toggle">
+                    <div class="paypal-toggle-content paypal-new-radioView " render-paypal-type="">
+                      <div class="content-area">
+                        <div>
+                          <div id="paypal-card-fields">
+                            <div class="payment-method-container" data-id="paypal-card-fields"><input class="form-radio"
+                                type="radio" name="paypal-payment-method" data-id="paypal-card-fields"
+                                id="paypal-card-fields-input" aria-describedby="label_43" /><label
+                                for="paypal-card-fields-input"><span class="CC_ico"></span>Debit or Credit Card</label>
+                              <div id="paypal-credit-card-fields">
+                                <div class="paypal-commerce-platform">
+                                  <div class="paypal-content">
+                                    <table class="form-address-table payment-form-table" style="border:0"
+                                      cellPadding="0" cellSpacing="0" role="presentation">
+                                      <tbody>
+                                        <tr>
+                                          <td width="50%"><input type="text" id="42_cc_firstName"
+                                              name="q42_productList[cc_firstName]" class="form-textbox cc_firstName"
+                                              data-defaultvalue="" size="20" placeholder="First Name"
+                                              data-component="cc_firstName" aria-label="Credit Card First Name"
+                                              aria-labelledby="" value="" /></td>
+                                          <td width="50%"><input type="text" id="42_cc_lastName"
+                                              name="q42_productList[cc_lastName]" class="form-textbox cc_lastName"
+                                              data-defaultvalue="" size="20" placeholder="Last Name"
+                                              data-component="cc_lastName" aria-label="Credit Card Last Name"
+                                              aria-labelledby="" value="" /></td>
+                                        </tr>
+                                        <tr class="if_cc_field">
+                                          <td width="50%">
+                                            <div class="cc_numberField" style="width:100%"></div>
                                           </td>
-                                          </tr>
-                                          <div id="payments-sdk__contingency-lightbox"></div>
-                                        </tbody>
-                                      </table>
-                                    </div>
+                                          <td width="50%">
+                                            <div class="cc_expiryField" style="width:100%"></div>
+                                          </td>
+                                        </tr>
+                                        <tr>
+                                          <td width="50%">
+                                            <div class="cc_cvvField" style="width:100%"></div>
+                                          </td>
+                                          <td width="50%">
+                                        <tr style="display:none">
+                                          <td><input id="paypal_complete_dummy" style="display:none" /></td>
+                                        </tr>
+                                        </td>
+                                        </tr>
+                                        <div id="payments-sdk__contingency-lightbox"></div>
+                                      </tbody>
+                                    </table>
                                   </div>
                                 </div>
                               </div>
                             </div>
-                            <div id="paypal-smart-buttons">
-                              <div class="payment-method-container" data-id="paypal-smart-buttons"><input
-                                  class="form-radio" type="radio" name="paypal-payment-method"
-                                  data-id="paypal-smart-buttons" id="paypal-smart-buttons-input" aria-label="Paypal"
-                                  aria-describedby="label_43" /><label for="paypal-smart-buttons-input"
-                                  aria-hidden="true"></label>
-                                <div id="paypal-spb-area">
-                                  <p class="paypal-smart-text">Choose from one of the PayPal options to <b>make your
-                                      payment.</b></p>
-                                  <div id="paypal-button-container"></div>
-                                </div>
+                          </div>
+                          <div id="paypal-smart-buttons">
+                            <div class="payment-method-container" data-id="paypal-smart-buttons"><input
+                                class="form-radio" type="radio" name="paypal-payment-method"
+                                data-id="paypal-smart-buttons" id="paypal-smart-buttons-input" aria-label="Paypal"
+                                aria-describedby="label_43" /><label for="paypal-smart-buttons-input"
+                                aria-hidden="true"></label>
+                              <div id="paypal-spb-area">
+                                <p class="paypal-smart-text">Choose from one of the PayPal options to <b>make your
+                                    payment.</b></p>
+                                <div id="paypal-button-container"></div>
                               </div>
                             </div>
                           </div>
@@ -1853,38 +710,23 @@
                     </div>
                   </div>
                 </div>
-              </div><input type="hidden" id="input_43_payment_method" name="q43_paymentMethods[payment_method]" class=""
-                data-defaultvalue="" data-component="payment_method" aria-labelledby="" value="" />
-            </div>
+              </div>
+            </div><input type="hidden" id="input_43_payment_method" name="q43_paymentMethods[payment_method]" class=""
+              data-defaultvalue="" data-component="payment_method" aria-labelledby="" value="" />
           </div>
-        </li>
-        <li class="form-line" data-type="control_button" id="id_58">
-          <div id="cid_58" class="form-input-wide" data-layout="full">
-            <div data-align="auto" class="form-buttons-wrapper form-buttons-auto   jsTest-button-wrapperField"><button
-                id="input_58" type="submit"
-                class="form-submit-button submit-button jf-form-buttons jsTest-submitField legacy-submit"
-                data-component="button" data-content="">Submit</button></div>
-          </div>
-        </li>
-        <li style="display:none">Should be Empty: <input type="text" name="website" value="" type="hidden" /></li>
-      </ul>
-    </div>
-    <script>
-      JotForm.showJotFormPowered = "new_footer";
-    </script>
-    <script>
-      JotForm.poweredByText = "Powered by Jotform";
-    </script><input type="hidden" class="simple_spc" id="simple_spc" name="simple_spc" value="250385364398467" />
-    <script type="text/javascript">
-      var all_spc = document.querySelectorAll("form[id='250385364398467'] .si" + "mple" + "_spc");
-      for (var i = 0; i < all_spc.length; i++) {
-        all_spc[i].value = "250385364398467-250385364398467";
-      }
-    </script>
-  </form>
-  <link id=color-scheme-style href="https://cdn01.jotfor.ms/stylebuilder/static/color-scheme.css?v=3.3.60848"
-    type="text/css" rel="stylesheet" />
+        </div>
+      </li>
+      <li class="form-line" data-type="control_button" id="id_58">
+        <div id="cid_58" class="form-input-wide" data-layout="full">
+          <div data-align="auto" class="form-buttons-wrapper form-buttons-auto   jsTest-button-wrapperField"><button
+              id="input_58" type="submit"
+              class="form-submit-button submit-button jf-form-buttons jsTest-submitField legacy-submit"
+              data-component="button" data-content="">Submit</button></div>
+        </div>
+      </li>
+      <li style="display:none">Should be Empty: <input type="text" name="website" value="" type="hidden" /></li>
+    </ul>
+  </div>
 </body>
 
 </html>
-<script type="text/javascript">JotForm.isNewSACL = true;</script>
