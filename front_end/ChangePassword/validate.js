@@ -119,7 +119,7 @@ async function checkPassword(pass, err) {
   return true;
 }
 
-function checkSubmit() {
+async function checkSubmit() {
   const checkOldPass = checkPassword(oldPassInput, e_oldPass);
   const checkNewPass = checkPassword(newPassInput, e_newPass);
   const checkConfirmPass = checkPassword(confirmPassInput, e_confirmPass);
@@ -127,13 +127,13 @@ function checkSubmit() {
   if (!(checkOldPass && checkNewPass && checkConfirmPass)) {
     return;
   } else {
-    const response = await fetch('http://localhost:3000/getUserInfo', {
-      method: 'POST',
+    const response = await fetch("http://localhost:3000/getUserInfo", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
-    })
+    });
     const result = await response.json();
 
     fetch("http://localhost:3000/changePassword", {
@@ -156,7 +156,6 @@ function checkSubmit() {
           showSuccessWindow();
         }
         if (data.error) {
-          console.log("b");
           errorStyle(oldPassInput);
           contentError(e_oldPass, data.error);
         }
