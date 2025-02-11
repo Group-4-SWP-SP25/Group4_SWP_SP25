@@ -63,7 +63,6 @@ document
   });
 
 // Check password in tags
-let checkValidate = true;
 function checkPassword(pass, err) {
   if (pass.value.length === 0) {
     errorStyle(pass);
@@ -72,8 +71,7 @@ function checkPassword(pass, err) {
     } else {
       contentError(err, "You have not confirmed your password!");
     }
-    checkValidate = false;
-    return;
+    return false;
   }
   if (!regexPassword.test(pass.value)) {
     contentError(
@@ -81,12 +79,11 @@ function checkPassword(pass, err) {
       "The password must be at least 6 characters and must contain both numbers and letters!"
     );
     errorStyle(pass);
-    checkValidate = false;
-  } else {
-    contentError(err, "");
-    successStyle(pass);
-    // checkValidate = true;
+    return false;
   }
+
+  contentError(err, "");
+  successStyle(pass);
 
   if (
     (pass === newPassInput && regexPassword.test(newPassInput.value)) ||
@@ -98,13 +95,13 @@ function checkPassword(pass, err) {
         e_newPass,
         "The new password must be different from old password!"
       );
-      checkValidate = false;
+      return false;
     } else {
       successStyle(newPassInput);
       contentError(e_newPass, "");
-      // checkValidate = true;
     }
   }
+
   if (
     (pass === confirmPassInput && regexPassword.test(confirmPassInput.value)) ||
     (pass === newPassInput && confirmPassInput.value.length > 0)
@@ -112,20 +109,22 @@ function checkPassword(pass, err) {
     if (confirmPassInput.value !== newPassInput.value) {
       errorStyle(confirmPassInput);
       contentError(e_confirmPass, "The password do not match!");
-      checkValidate = false;
+      return false;
     } else {
       successStyle(confirmPassInput);
       contentError(e_confirmPass, "");
-      checkValidate = true;
     }
   }
+
+  return true;
 }
 
 function checkSubmit() {
-  checkPassword(oldPassInput, e_oldPass);
-  checkPassword(newPassInput, e_newPass);
-  checkPassword(confirmPassInput, e_confirmPass);
-  if (!checkValidate) {
+  const checkOldPass = checkPassword(oldPassInput, e_oldPass);
+  const checkNewPass = checkPassword(newPassInput, e_newPass);
+  const checkConfirmPass = checkPassword(confirmPassInput, e_confirmPass);
+
+  if (!(checkOldPass && checkNewPass && checkConfirmPass)) {
     return;
   } else {
     fetch("http://localhost:3000/changePassword", {

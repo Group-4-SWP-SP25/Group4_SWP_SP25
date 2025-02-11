@@ -57,8 +57,8 @@ CREATE TABLE ServiceTypes (
 
 -- 4
 CREATE TABLE Services (
-	ServiceTypeID INT FOREIGN KEY REFERENCES [ServiceTypes](ServiceTypeID),
 	ServiceID INT IDENTITY(1, 1) NOT NULL PRIMARY KEY,
+	ServiceTypeID INT FOREIGN KEY REFERENCES [ServiceTypes](ServiceTypeID),
 	ServiceName VARCHAR(200),
 	ServiceDescription TEXT
 );

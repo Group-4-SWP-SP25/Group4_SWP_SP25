@@ -11,19 +11,15 @@ const changePassword = async (req, res) => {
     const user = await findUserById(Number(userId));
     if (oldPassword === null) {
       if (newPassword === user.password) {
-        res.status(300).send('same');
-        console.log('same')
-        return;
+        return res.status(300).send("same");
       }
     } else if (oldPassword === user.password) {
-      res.status(200).json({ success: "Success" });
+      return res.status(200).json({ success: "Success" });
     } else {
-      res.status(400).json({ error: "Your password is wrong" });
-      return;
+      return res.status(400).json({ error: "Your password is wrong" });
     }
 
-
-    console.log('query')
+    console.log("query");
     const query = `
       UPDATE [User]
       SET Password = @newPassword
