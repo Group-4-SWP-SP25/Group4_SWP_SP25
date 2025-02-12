@@ -160,11 +160,6 @@
     </div>
     <!-- End notification -->
     <script>
-        if (localStorage.getItem('token') == null) {
-            window.location.href = 'http://127.0.0.1:5500/front_end/Login/Login.html'
-        }
-
-
 
         fetch("../header/header.html")
             .then(response => response.text())

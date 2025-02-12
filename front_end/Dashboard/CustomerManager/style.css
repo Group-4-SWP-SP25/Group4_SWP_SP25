@@ -26,6 +26,51 @@ body {
     margin-top: 60px;
 }
 
+.option {
+    display: block;
+    /* Để các mục trong sidebar xếp dọc */
+    position: relative;
+    /* Giúp ::before căn chỉnh theo phần tử này */
+    text-decoration: none;
+    color: white;
+    padding: 10px 20px;
+    /* transition: color 0.2s ease; */
+    overflow: hidden;
+    /* Đảm bảo hiệu ứng không tràn ra ngoài */
+}
+
+
+.option::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #33334d;
+    transform: scaleX(0);
+    /* Ban đầu thu nhỏ lại */
+    transform-origin: center;
+    /* Xuất phát từ giữa */
+    transition: transform 0.1s ease-in-out;
+    z-index: -1;
+}
+
+/* Khi hover, mở rộng từ giữa ra hai bên */
+.option:hover::before {
+    transform: scaleX(1);
+}
+
+.homepath {
+    text-decoration: none;
+    color: white;
+    transition: color 0.3s ease;
+}
+
+.homepath:hover {
+    color: #007bff;
+}
+
 #HomePage {
     font-size: 20px;
     padding: 30px 10px;
@@ -38,10 +83,6 @@ body {
     padding: 30px 30px;
     display: block;
     font-size: 14px;
-}
-
-.sidebar a:hover {
-    background-color: #33334d;
 }
 
 .content {
@@ -86,6 +127,7 @@ body {
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    overflow-x: auto;
 }
 
 .table-header {
@@ -110,30 +152,47 @@ body {
 
 .table-header .buttons .filter {
     background: #007bff;
+    transition: background-color 0.3s ease;
+}
+
+.table-header .buttons .filter:hover {
+    background: #005abb;
 }
 
 .table-header .buttons .add {
     background: #28a745;
+    transition: background-color 0.3s ease;
+}
+
+.table-header .buttons .add:hover {
+    background: #006e1a;
 }
 
 .search {
     margin-bottom: 20px;
     display: flex;
     justify-content: center;
+    transition: width 0.4s ease-in-out;
 }
 
 .search input {
-    width: 50%;
+    width: 20%;
     padding: 8px;
     border: 1px solid #333;
     border-radius: 4px;
     background: #2c2c2c;
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s ease;
     color: #e0e0e0;
+}
+
+.search input:focus {
+    width: 60%;
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
+    table-layout: fixed;
 }
 
 table th,
@@ -142,30 +201,23 @@ table td {
     /* Increased row height */
     border: 1px solid #333;
     text-align: left;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 table th {
     background-color: #2c2c2c;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 table td {
     background-color: #1e1e1e;
 }
 
-.badge {
-    padding: 5px 10px;
-    border-radius: 4px;
-    font-size: 0.9rem;
-    color: white;
-}
 
-.badge.active {
-    background: #28a745;
-}
-
-.badge.pending {
-    background: #ff4d4d;
-}
 
 .details-btn {
     padding: 5px 10px;
@@ -174,6 +226,12 @@ table td {
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
+
+}
+
+.details-btn:hover {
+    background: #005abb;
 }
 
 .pagination {
@@ -190,6 +248,7 @@ table td {
     background: #333;
     color: #e0e0e0;
     cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 .pagination button.active {
@@ -238,4 +297,8 @@ table td {
     height: 40px;
     border-radius: 50%;
     margin-right: 10px;
+}
+
+#UserList {
+    width: 100%;
 }

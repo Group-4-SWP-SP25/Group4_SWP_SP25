@@ -29,7 +29,7 @@ CREATE TABLE [User](
 	Email VARCHAR(200) NOT NULL UNIQUE,
 	Address VARCHAR(200),
 	Role VARCHAR(15) DEFAULT 'User',
-	Phone VARCHAR(11) DEFAULT NULL UNIQUE,
+	Phone VARCHAR(11) DEFAULT NULL ,
 	DateCreated DATETIME DEFAULT CURRENT_TIMESTAMP,
 	DOB DATETIME NOT NULL,
 	LastActivity DATETIME,
@@ -64,8 +64,27 @@ CREATE TABLE Services (
 );
 
 -- Sample data
-INSERT INTO [User](Username, Password, FirstName, LastName, Email, Phone, DOB, LastActivity)
-VALUES ('q8edh12hi', '1234', 'qwe8dyrwfhief', 'qwgufcqbw', 'qwficqwfc', '0123456789', '01/01/2000', '01/01/2010');
+INSERT INTO [User](Username, Password, FirstName, LastName, Email, Phone, DOB)
+VALUES ('doanhieu18', 'doanhieu18@', 'Hieu', 'Doan', 'doanhieu180204@gmail.com', '0325413488', '2004-02-18');
+
+GO
+DECLARE @counter INT = 1
+WHILE @counter <= 100
+BEGIN
+    INSERT INTO [User] (Username, Password, FirstName, LastName, Email, Phone, DOB, LastActivity)
+    VALUES (
+        CONCAT('user', @counter), -- Username
+        'password', -- Password
+        CONCAT('FirstName', @counter), -- FirstName
+        CONCAT('LastName', @counter), -- LastName
+        CONCAT('user', @counter, '@example.com'), -- Email
+        CONCAT('01234567', @counter), -- Phone
+        DATEADD(DAY, -@counter, GETDATE()), -- DOB
+        GETDATE() -- LastActivity
+    )
+    SET @counter = @counter + 1
+END
+GO
 
 INSERT INTO [ServiceTypes](ServiceTypeName, ServiceTypeDescription)
 VALUES ('Tires', 'Including: Tires Patching, Tires Replacement, Tires Pressure Check, Wheel Balancing and Wheel Alignment.'),

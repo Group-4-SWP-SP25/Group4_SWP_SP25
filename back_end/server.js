@@ -11,7 +11,7 @@ app.use(
 );
 
 const connectDB = require('./myModule/database/connectDB.js')
-const { authenticateJWT } = require('./myModule/Utils/JWT.js')
+const { authenticateJWT, authenticateADMIN } = require('./myModule/Utils/JWT.js')
 
 // IMPORT MODULE
 
@@ -20,12 +20,14 @@ const checkUserName = require('./myModule/database/user/checkUserName.js');
 const GetUserInfo = require('./myModule/database/user/getUserInfo.js');
 const { resetPassword, verification } = require('./myModule/controller/resetpassword.js');
 const Register = require('./myModule/controller/register.js');
-const { AuthGoogle, Auth } = require('./myModule/controller/Login.js')
+const { AuthGoogle, Auth } = require('./myModule/controller/Login.js');
+const { getUserList, getTotalUserCount } = require('./myModule/controller/UserListControl.js')
 
 // ----------------------------------------------------------
 
 // CREATE API
 
+// user
 app.post('/changePassword', changePassword);
 app.post('/checkUserName', checkUserName);
 app.post('/getUserInfo', authenticateJWT, GetUserInfo);
@@ -34,7 +36,9 @@ app.post('/verification', verification);
 app.post('/register', Register);
 app.post('/auth/google/login', AuthGoogle);
 app.post('/auth/login', Auth);
-
+// admin
+app.post('/CustomerManager/getUserList', authenticateADMIN, getUserList);
+app.post('/CustomerManager/getTotelUserCount', authenticateADMIN, getTotalUserCount);
 
 // ----------------------------------------------------------
 
