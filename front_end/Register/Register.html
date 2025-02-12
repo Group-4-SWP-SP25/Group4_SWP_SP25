@@ -11,7 +11,9 @@
             rel="stylesheet"
             integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
             crossorigin="anonymous" />
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
         <link
             rel="stylesheet"
             href="style.css" />
@@ -171,25 +173,17 @@
                             </div>
 
                             <div class="row">
-                                <div class="col-sm-11 pwd-container">
+                                <div class="pwd-container">
                                     <input
                                         type="password"
                                         name="password"
                                         id="password"
                                         onkeyup="checkPassword(this, document.querySelector('.e_password'))"
                                         placeholder=" Your ideal password" />
-                                    <span class="pwd-toggle">
-                                        <i class="fa-solid fa-eye show-pwd"></i>
+                                    <span>
+                                        <i class="pwd-toggle fa-solid fa-eye show-pwd"></i>
                                     </span>
                                 </div>
-                                <!-- <div
-                                    class="col-sm-1"
-                                    style="padding-left: 6px; padding-right: 6px">
-                                    <input
-                                        type="checkbox"
-                                        class="hide-password"
-                                        onchange="hidePassword(document.querySelector('#password'), this)" />
-                                </div> -->
                             </div>
                         </div>
 
@@ -208,22 +202,17 @@
                             </div>
 
                             <div class="row">
-                                <div class="col-sm-11">
+                                <div class="pwd-container">
                                     <input
                                         type="password"
                                         name="repassword"
                                         id="repassword"
                                         onkeyup="checkPassword(this, document.querySelector('.e_repassword'))"
                                         placeholder=" Confirm password" />
+                                    <span>
+                                        <i class="pwd-toggle fa-solid fa-eye show-repwd"></i>
+                                    </span>
                                 </div>
-                                <!-- <div
-                                    class="col-sm-1"
-                                    style="padding-left: 6px; padding-right: 6px">
-                                    <input
-                                        type="checkbox"
-                                        class="hide-password"
-                                        onchange="hidePassword(document.querySelector('#repassword'), this)" />
-                                </div> -->
                             </div>
                         </div>
 
