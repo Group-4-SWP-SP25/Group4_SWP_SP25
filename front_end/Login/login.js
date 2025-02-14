@@ -63,7 +63,8 @@ async function handleCredentialResponse(response) {
       localStorage.setItem('token', result.token);
       window.location.href = 'http://127.0.0.1:5500/front_end/HomePage/HomePage.html'
     } else {
-      window.location.href = 'http://127.0.0.1:5500/front_end/Register/Register.html'
+      const email = result.email;
+      window.location.href = `http://127.0.0.1:5500/front_end/Register/Register.html?email=${email}`
     }
   } else {
     // Lỗi: Hiển thị thông báo
