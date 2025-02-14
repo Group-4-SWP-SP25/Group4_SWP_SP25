@@ -5,7 +5,7 @@ const app = express();
 app.use(express.json());
 app.use(
     cors({
-        origin: ['http://127.0.0.1:5500', 'http://localhost:5500'], // Chỉ định origin được phép truy cập
+        origin: ['http://127.0.0.1:5500', 'http://localhost:5500', 'http://127.0.0.1:3000', 'http://localhost:3000'], // Chỉ định origin được phép truy cập
         credentials: true, // Cho phép gửi cookie hoặc session
     })
 );
@@ -22,7 +22,6 @@ const { getUserList, getTotalUserCount } = require('./myModule/controller/UserLi
 const { resetPassword, verification } = require('./myModule/controller/resetpassword.js');
 const register = require('./myModule/controller/register.js');
 const { AuthGoogle, Auth } = require('./myModule/controller/Login.js');
-const getServiceDetail = require('./myModule/database/user/getServiceDetail.js');
 const getServiceTypeDetail = require('./myModule/database/user/getServiceTypeDetail.js');
 
 // ----------------------------------------------------------
@@ -38,14 +37,12 @@ app.post('/verification', verification);
 app.post('/register', register);
 app.post('/auth/google/login', AuthGoogle);
 app.post('/auth/login', Auth);
+app.post('/getServiceTypeDetail', getServiceTypeDetail);
 
 // admin
 app.post('/CustomerManager/getUserList', authenticateADMIN, getUserList);
 app.post('/CustomerManager/getTotelUserCount', authenticateADMIN, getTotalUserCount);
 app.post('/CustomerManager/getUserInfo', authenticateADMIN, GetUserInfo_Admin);
-
-app.post('/getServiceDetail', getServiceDetail);
-app.post('/getServiceTypeDetail', getServiceTypeDetail);
 
 
 

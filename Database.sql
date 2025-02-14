@@ -241,7 +241,7 @@ INSERT INTO [ServiceTypes](ServiceTypeName, ServiceTypeDescription) VALUES
 ('Air Conditioning System', 'Including: AC Gas Refill, AC Condenser Cleaning, AC Filter Replacement and AC System Repair.'),
 ('Shock Absorbers System', 'Including: Shock Absorbers Replacement, Tie Rod Replacement, Control Arm Replacement and Suspension Alignment.'),
 ('Fuel System', 'Including: Fuel Pump Cleaning, Fuel Filter Replacement and Fuel Injection Repair.'),
-('Cleaning & Maintenance', 'Including: Standard washes, Polishing, Interior Cleaning and Waterproof Coating.');
+('Cleaning and Maintenance', 'Including: Standard washes, Polishing, Interior Cleaning and Waterproof Coating.');
 GO
 
 INSERT INTO [Services](ServiceTypeID, ServiceName, ServiceDescription, Price) VALUES 
@@ -309,4 +309,3 @@ INSERT INTO Car(UserID, CarName, Brand, RegistrationNumber, [Year]) VALUES
 (1, 'Car 2', 'Honda', '654321', 2015),
 (1, 'Car 3', 'Ford', '987654', 2018);
 GO
-
