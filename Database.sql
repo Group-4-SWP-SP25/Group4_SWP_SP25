@@ -205,7 +205,7 @@ GO
 --GO
 
 -- Sample data
-
+<<<<<<< HEAD
 INSERT INTO [User](Username, Password, FirstName, LastName, Email, Phone, DOB)
 VALUES ('doanhieu18', 'doanhieu18@', 'Hieu', 'Doan', 'doanhieu180204@gmail.com', '0325413488', '2004-02-18');
 
@@ -225,9 +225,11 @@ BEGIN
         GETDATE() -- LastActivity
     )
     SET @counter = @counter + 1
-END;
-
-
+END
+=======
+INSERT INTO [User](Username, Password, FirstName, LastName, Email, Phone, DOB, LastActivity)
+VALUES ('q8edh12hi', '1234', 'qwe8dyrwfhief', 'qwgufcqbw', 'qwficqwfc', '0123456789', '01/01/2000', '01/01/2010');
+>>>>>>> 50983424e4164c2181af19be10ed90b620606753
 GO
 
 INSERT INTO [ServiceTypes](ServiceTypeName, ServiceTypeDescription) VALUES 
