@@ -10,7 +10,7 @@ const e_newPass = document.querySelector(".e_newPassword");
 const e_confirmPass = document.querySelector(".e_confirmPassword");
 
 // The password must be at least 6 characters and must contain both numbers and letters
-const regexPassword = /^(?=.*[A-Za-z])(?=.*\d).{6,}$/;
+const regexPassword = /^(?=.*[A-Za-z])(?=.*\d)[^\s]{6,}$/;
 
 // Style errors in tags
 const errorStyle = function (tag) {
@@ -76,7 +76,7 @@ async function checkPassword(pass, err) {
   if (!regexPassword.test(pass.value)) {
     contentError(
       err,
-      "The password must be at least 6 characters and must contain both numbers and letters!"
+      "The password must be at least 6 characters and must contain both numbers and letters and do not contain space!"
     );
     errorStyle(pass);
     return false;
