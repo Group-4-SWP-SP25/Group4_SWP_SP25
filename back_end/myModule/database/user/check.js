@@ -1,11 +1,11 @@
-const addUser = require("./addUser.js");
+const getUserList = require("./getUsetList");
 
 async function run() {
-  const userId = 1; // Example user ID (you can replace with dynamic input)
-  const password = "doanhieu"; // Example new password
+  const firstIndex = 1;
+  const lastIndex = 10;
 
   try {
-    const result = await addUser(data);
+    const result = await getUserList(firstIndex, lastIndex);
     console.log(result);
   } catch (err) {
     throw err;

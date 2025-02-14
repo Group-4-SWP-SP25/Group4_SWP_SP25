@@ -3,7 +3,6 @@ const sql = require("mssql");
 const checkUserName = async (account) => {
   try {
     const pool = global.pool; // Get the connection pool
-
     const query = `
       SELECT * FROM [User] WHERE UserName = @account OR Email = @account
     `;
@@ -21,7 +20,6 @@ const checkUserName = async (account) => {
     }
 
   } catch (err) {
-    res.status(404).send({ error: "Wrong account. Please check again!" });
     console.log("Error", err);
   }
 };

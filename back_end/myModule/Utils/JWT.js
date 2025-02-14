@@ -35,8 +35,26 @@ function authenticateJWT(req, res, next) {
     }
 }
 
+function authenticateADMIN(req, res, next) {
+    const token = req.headers.authorization?.split(' ')[1]; // Lấy token từ Header
+
+    if (!token) {
+        return res.status(403).json({ success: false, message: 'Token is required' });
+    }
+
+    try {
+        const user = jwt.verify(token, SECRET_KEY); // Giải mã token
+        if (user.role != 'Admin')
+            return res.status(403).json({ message: 'Access denied' })
+        next();
+    } catch (error) {
+        return res.status(401).json({ success: false, message: 'Invalid token' });
+    }
+}
+
 module.exports = {
     generateToken,
     verifyToken,
-    authenticateJWT
+    authenticateJWT,
+    authenticateADMIN
 };

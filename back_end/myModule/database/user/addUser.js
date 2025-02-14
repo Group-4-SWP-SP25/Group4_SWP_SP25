@@ -1,10 +1,7 @@
-const connect = require('../connectDB.js');
 const sql = require('mssql');
-const User = require('../../model/user.js');
 
-const addUser = async (data) => {
+const addUser = async (user) => {
     try {
-        const user = new User(data);
         const pool = global.pool; // Get the connection pool
         const query = `
       INSERT INTO [User](UserName, Password, FirstName, LastName, Email, Address, Phone)
@@ -13,7 +10,7 @@ VALUES(@userName, @password, @firstName, @lastName, @email, @address, @phone);
         // Example query
         const result = await pool
             .request()
-            .input('userName', sql.VarChar, user.userName)
+            .input('userName', sql.VarChar, user.username)
             .input('password', sql.VarChar, user.password)
             .input('firstName', sql.VarChar, user.firstName)
             .input('lastName', sql.VarChar, user.lastName)
