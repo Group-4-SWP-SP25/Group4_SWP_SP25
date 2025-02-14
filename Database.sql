@@ -120,8 +120,9 @@ BEGIN
 	SELECT
 		i.CarID,
 		ISNULL(
-			(SELECT MAX(cp.PartID) FROM CarPart cp WHERE cp.CarID = i.CarID), 0
-		) + 1 AS NewPartID,
+			(SELECT MAX(cp.PartID) FROM CarPart cp WHERE cp.CarID = i.CarID), 
+			0
+		) + 1,
 		i.PartName,
 		i.CarSystemID,
 		i.InstallationDate,
@@ -185,7 +186,7 @@ INSERT INTO [ServiceTypes](ServiceTypeName, ServiceTypeDescription) VALUES
 ('Air Conditioning System', 'Including: AC Gas Refill, AC Condenser Cleaning, AC Filter Replacement and AC System Repair.'),
 ('Shock Absorbers System', 'Including: Shock Absorbers Replacement, Tie Rod Replacement, Control Arm Replacement and Suspension Alignment.'),
 ('Fuel System', 'Including: Fuel Pump Cleaning, Fuel Filter Replacement and Fuel Injection Repair.'),
-('Cleaning & Maintenance', 'Including: Standard washes, Polishing, Interior Cleaning and Waterproof Coating.');
+('Cleaning and Maintenance', 'Including: Standard washes, Polishing, Interior Cleaning and Waterproof Coating.');
 GO
 
 INSERT INTO [Services](ServiceTypeID, ServiceName, ServiceDescription, Price) VALUES 
@@ -256,29 +257,29 @@ GO
 
 INSERT INTO CarPart(CarID, PartName, CarSystemID, InstallationDate, ExpiryDate, [Status]) VALUES 
 (1, 'Engine Oil', 1, '01/01/2020', '01/01/2021', 'Active'),
-(1, 'Spark plug', 1, '01/01/2020', '01/01/2021', 'Active'),
-(1, 'Injector', 1, '01/01/2020', '01/01/2021', 'Active'),
-(1, 'Cooling system', 1, '01/01/2020', '01/01/2021', 'Active'),
-(1, 'Brake pad', 2,'01/01/2020', '01/01/2021', 'Active'),
-(1, 'Rotor', 2,'01/01/2020', '01/01/2021', 'Active'),
-(1, 'Fluid', 2,'01/01/2020', '01/01/2021', 'Active'),
-(1, 'Buld', 3, '01/01/2020', '01/01/2021', 'Active'),
-(1, 'Fuse', 3, '01/01/2020', '01/01/2021', 'Active'),
-(1, 'Electric system', 3, '01/01/2020', '01/01/2021', 'Active'),
-(1, 'Gas', 4, '01/01/2020', '01/01/2021', 'Active'),
-(1, 'Condenser', 4, '01/01/2020', '01/01/2021', 'Active'),
-(1, 'Filter', 4, '01/01/2020', '01/01/2021', 'Active'),
-(1, 'Wiring', 4, '01/01/2020', '01/01/2021', 'Active'),
-(1, 'Pump', 5, '01/01/2020', '01/01/2021', 'Active'),
-(1, 'Filter', 5, '01/01/2020', '01/01/2021', 'Active'),
-(1, 'Injection', 5, '01/01/2020', '01/01/2021', 'Active'),
-(1, 'Charging', 6, '01/01/2020', '01/01/2021', 'Active'),
-(1, 'Terminal', 6, '01/01/2020', '01/01/2021', 'Active'),
-(1, 'Shock', 7, '01/01/2020', '01/01/2021', 'Active'),
-(1, 'Tie rod', 7, '01/01/2020', '01/01/2021', 'Active'),
-(1, 'Control arm', 7, '01/01/2020', '01/01/2021', 'Active'),
-(1, 'Suspension', 7, '01/01/2020', '01/01/2021', 'Active'),
-(1, 'Tire', 8, '01/01/2020', '01/01/2021', 'Active'),
-(1, 'Rim', 8, '01/01/2020', '01/01/2021', 'Active'),
-(1, 'Wheel Hub', 8, '01/01/2020', '01/01/2021', 'Active');
+(1, 'Spark plug', 1, '01/01/2020', '01/01/2021', 'Active')
+--(1, 'Injector', 1, '01/01/2020', '01/01/2021', 'Active'),
+--(1, 'Cooling system', 1, '01/01/2020', '01/01/2021', 'Active'),
+--(1, 'Brake pad', 2,'01/01/2020', '01/01/2021', 'Active'),
+--(1, 'Rotor', 2,'01/01/2020', '01/01/2021', 'Active'),
+--(1, 'Fluid', 2,'01/01/2020', '01/01/2021', 'Active'),
+--(1, 'Buld', 3, '01/01/2020', '01/01/2021', 'Active'),
+--(1, 'Fuse', 3, '01/01/2020', '01/01/2021', 'Active'),
+--(1, 'Electric system', 3, '01/01/2020', '01/01/2021', 'Active'),
+--(1, 'Gas', 4, '01/01/2020', '01/01/2021', 'Active'),
+--(1, 'Condenser', 4, '01/01/2020', '01/01/2021', 'Active'),
+--(1, 'Filter', 4, '01/01/2020', '01/01/2021', 'Active'),
+--(1, 'Wiring', 4, '01/01/2020', '01/01/2021', 'Active'),
+--(1, 'Pump', 5, '01/01/2020', '01/01/2021', 'Active'),
+--(1, 'Filter', 5, '01/01/2020', '01/01/2021', 'Active'),
+--(1, 'Injection', 5, '01/01/2020', '01/01/2021', 'Active'),
+--(1, 'Charging', 6, '01/01/2020', '01/01/2021', 'Active'),
+--(1, 'Terminal', 6, '01/01/2020', '01/01/2021', 'Active'),
+--(1, 'Shock', 7, '01/01/2020', '01/01/2021', 'Active'),
+--(1, 'Tie rod', 7, '01/01/2020', '01/01/2021', 'Active'),
+--(1, 'Control arm', 7, '01/01/2020', '01/01/2021', 'Active'),
+--(1, 'Suspension', 7, '01/01/2020', '01/01/2021', 'Active'),
+--(1, 'Tire', 8, '01/01/2020', '01/01/2021', 'Active'),
+--(1, 'Rim', 8, '01/01/2020', '01/01/2021', 'Active'),
+--(1, 'Wheel Hub', 8, '01/01/2020', '01/01/2021', 'Active');
 GO
