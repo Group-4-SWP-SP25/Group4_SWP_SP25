@@ -116,8 +116,21 @@
     cursor: pointer;
 }
 
-.hide-password {
+/* .hide-password {
     cursor: pointer;
+} */
+
+.pwd-container {
+    position: relative;
+}
+
+.pwd-toggle {
+    position: absolute;
+    top: 50%;
+    right: 25px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: black;
 }
 
 /* Window after successfull changing password */

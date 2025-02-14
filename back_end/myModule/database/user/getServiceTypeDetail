@@ -1,0 +1,17 @@
+const connect = require('../connectDB.js');
+const sql = require('mssql');
+
+const getServiceDetailByID = async (serviceTypeID) => {
+    try {
+        const pool = await connect();
+        const request = pool.request();
+        request.input('serviceTypeID', sql.Int, serviceTypeID);
+        const result = await request.query(`SELECT * FROM ServiceTypes WHERE serviceTypeID = @serviceTypeID`);
+        
+        return result.recordset;
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+module.exports = getServiceDetailByID;
