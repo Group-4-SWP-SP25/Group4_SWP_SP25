@@ -284,6 +284,7 @@ GO
 INSERT INTO Car(UserID, CarName, Brand, RegistrationNumber, [Year]) VALUES 
 (1, 'Car 1', 'Toyota', '123456', 2010),
 (1, 'Car 2', 'Honda', '654321', 2015),
-(1, 'Car 3', 'Ford', '987654', 2018);
+(1, 'Car 3', 'Ford', '987654', 2018),
+(1, 'Car 4', 'BMW', '125478', 2020);
 GO
 

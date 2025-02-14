@@ -1,7 +1,5 @@
 const checkUserName = require("./checkUserName.js");
 
-const sql = require("mssql");
-
 const changePassword = async (req, res) => {
   try {
     const { account, newPassword, oldPassword } = req.body;
