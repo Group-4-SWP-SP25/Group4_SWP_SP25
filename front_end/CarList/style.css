@@ -1,0 +1,36 @@
+h1{
+    text-align: center;
+    padding-bottom:40px;
+    }
+    .container {
+        display: flex;
+        gap: 40px;
+        justify-content: center; 
+        flex-wrap: wrap; 
+    }
+    
+    .car {
+        border: 1px solid #ccc;
+        padding: 10px;
+        border-radius: 10px;
+        text-align: center;
+        width: 300px; 
+    }
+    
+    .car img {
+        width: 260px;
+        height: 168px;
+        border-radius: 5px;
+        object-fit: fill;
+    }
+    
+    .car a {
+        display: block;
+        margin-top: 10px;
+        text-decoration: none;
+        background: rgb(108, 108, 223);
+        color: white;
+        padding: 5px;
+        border-radius: 5px;
+    }
+    

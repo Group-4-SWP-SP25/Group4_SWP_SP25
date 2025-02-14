@@ -1,0 +1,169 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #111;
+    color: white;
+    margin: 0;
+    padding: 0;
+
+    background-image: url('../CarDetail/background.png');
+    z-index: -1;
+    overflow: hidden;
+}
+.container {
+    display: flex;
+    padding: 30px;
+    gap: 20px;
+
+}
+
+.wheel-works {
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.6));
+    padding: 30px;
+    border-radius: 5px;
+    flex: 2;
+}
+
+.content {
+    display: flex;
+    align-items: center;
+}
+
+.content img {
+    max-width: 300px;
+    margin-right: 20px;
+    border-radius: 5px;
+}
+
+.text h3 {
+    font-size: 20px;
+    font-weight: bold;
+}
+ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+.image-container {
+    display: flex;
+    flex-direction: column;
+    
+    margin-top: -180px;
+
+}
+
+.image-container a {
+    margin-bottom: 40px;
+
+}.car-image {
+    width: 300px;
+    height: 200px;
+    display: block;
+}
+
+li {
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    color: white;
+    gap: 20px;
+}
+
+ #sub1::before {
+    content: '\2713';
+    color: red;
+    font-weight: bold;
+    margin-right: 5px;
+            }
+
+button {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 15px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.other-services {
+    width: 600x;
+    background-color: #222;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.other-services h3 {
+    color: white;
+    border-bottom: 2px solid red;
+    padding-bottom: 10px;
+}
+
+.other-services ul {
+    list-style: none;
+    padding: 0;
+}
+
+.other-services li {
+    background-color: #333;
+    padding: 15px;
+    margin: 5px 0;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+}
+
+
+
+
+#system-list {
+    list-style: none;
+ 
+    width: 100%;
+    padding: 30px;
+    flex-direction: column;
+    
+}
+
+
+#system-list>li {
+    display: flex;
+    align-items: center;
+    
+    margin-bottom: 10px;
+}
+
+
+#system-list>li>a {
+    display: block;
+    padding: 12px 20px;
+    color: white;
+    text-decoration: none;
+    background: #444;
+    border-radius: 5px;
+    margin-right: 15px;
+   
+    white-space: nowrap;
+  
+}
+
+
+.sub-list {
+    list-style: none;
+    display: flex;
+   
+    gap: 10px;
+    flex-wrap: wrap;
+   
+
+}
+
+
+
+
+

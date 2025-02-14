@@ -63,6 +63,7 @@ CREATE TABLE Services (
 	ServiceDescription TEXT
 );
 
+
 -- Sample data
 INSERT INTO [User](Username, Password, FirstName, LastName, Email, Phone, DOB, LastActivity)
 VALUES ('q8edh12hi', '1234', 'qwe8dyrwfhief', 'qwgufcqbw', 'qwficqwfc', '0123456789', '01/01/2000', '01/01/2010');
