@@ -17,7 +17,7 @@ const { authenticateJWT, authenticateADMIN } = require('./myModule/Utils/JWT.js'
 
 const changePassword = require('./myModule/database/user/changePassword.js');
 const checkUserName = require('./myModule/database/user/checkUserName.js');
-const GetUserInfo = require('./myModule/database/user/getUserInfo.js');
+const { GetUserInfo, GetUserInfo_Admin } = require('./myModule/database/user/getUserInfo.js');
 const { resetPassword, verification } = require('./myModule/controller/resetpassword.js');
 const Register = require('./myModule/controller/register.js');
 const { AuthGoogle, Auth } = require('./myModule/controller/Login.js');
@@ -39,6 +39,7 @@ app.post('/auth/login', Auth);
 // admin
 app.post('/CustomerManager/getUserList', authenticateADMIN, getUserList);
 app.post('/CustomerManager/getTotelUserCount', authenticateADMIN, getTotalUserCount);
+app.post('/CustomerManager/getUserInfo', authenticateADMIN, GetUserInfo_Admin);
 
 // ----------------------------------------------------------
 

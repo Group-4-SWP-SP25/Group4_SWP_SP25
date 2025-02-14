@@ -1,8 +1,12 @@
 const table = document.getElementById('UserList');
+
 var pageCount;
 var firstIndex;
-var lastIndex;
 var currentPage = 1;
+const numRowPerTable = 10;
+
+const searchInput = document.getElementById('searchString');
+let searchString = searchInput.value;
 
 const Previous = document.getElementById('Previous');
 const Next = document.getElementById('Next');
@@ -19,6 +23,9 @@ const buttons = document.getElementsByClassName("button");
 const firstDot = document.getElementById('firstDot');
 const secondDot = document.getElementById('secondDot');
 
+let sortColumn = '';
+let sortOrder = 'ASC';
+
 function addRow(user) {
     var newRow = table.insertRow();
     newRow.innerHTML = `
@@ -29,47 +36,103 @@ function addRow(user) {
         <td class="Date">${user.DateCreated}</td>
         <td><button class="details-btn">View Details</button></td>
     `;
+
+    // Add event listener for the "View Details" button
+    const detailsButton = newRow.querySelector('.details-btn');
+    detailsButton.addEventListener('click', () => {
+        window.location.href = `http://127.0.0.1:5500/front_end/Dashboard/CustomerProfile/CustomerProfile.html?ID=${user.UserID}`;
+    });
 }
 
+// chỉ số trang 
 async function setPagination(index) {
-    currentPage = index
+    currentPage = index;
     firstIndex = (currentPage - 1) * 10 + 1;
-    lastIndex = (currentPage - 1) * 10 + 10;
 
     // 2 button
     if (currentPage == 1) {
         Previous.style.display = 'none';
-        Next.style.display = 'block';
-    } else if (currentPage == pageCount) {
-        Previous.style.display = 'block';
-        Next.style.display = 'none';
     } else {
         Previous.style.display = 'block';
+    }
+    if (currentPage == pageCount) {
+        Next.style.display = 'none';
+    } else {
         Next.style.display = 'block';
     }
 
     // page index
-    if (currentPage <= 3) {
-        firstDot.style.display = 'none';
-        secondDot.style.display = 'block';
+    if (pageCount <= 7) {
+        document.querySelectorAll('.page').forEach(function (element) {
+            element.remove();
+        });
 
-        firstButton.innerHTML = '2';
-        secondButton.innerHTML = '3';
-        thirdButton.innerHTML = '4';
-    } else if (currentPage >= pageCount - 2) {
-        firstDot.style.display = 'block';
+        firstPage.style.display = 'none';
+        lastPage.style.display = 'none';
+
+        firstDot.style.display = 'none';
         secondDot.style.display = 'none';
 
-        firstButton.innerHTML = pageCount - 3;
-        secondButton.innerHTML = pageCount - 2;
-        thirdButton.innerHTML = pageCount - 1;
-    } else {
-        firstDot.style.display = 'block';
-        secondDot.style.display = 'block';
+        firstButton.style.display = 'none';
+        secondButton.style.display = 'none';
+        thirdButton.style.display = 'none';
 
-        firstButton.innerHTML = currentPage - 1;
-        secondButton.innerHTML = currentPage;
-        thirdButton.innerHTML = currentPage + 1;
+        Previous.style.display = 'none';
+        Next.style.display = 'none';
+
+        for (let i = 1; i <= pageCount; i++) {
+            let button = document.getElementById(`page${i}`);
+            if (!button) {
+                button = document.createElement('button');
+                button.classList.add('button');
+                button.id = `page${i}`;
+                button.classList.add('page');
+                button.innerHTML = i;
+                button.addEventListener('click', () => setPagination(i));
+                Next.parentNode.insertBefore(button, Next);
+            }
+            button.style.display = 'inline-block';
+            button.classList.remove('active');
+            if (i === currentPage) {
+                button.classList.add('active');
+
+            }
+        }
+
+    } else {
+        document.querySelectorAll('.page').forEach(function (element) {
+            element.remove();
+        });
+
+        firstPage.style.display = 'inline-block';
+        lastPage.style.display = 'inline-block';
+
+        if (currentPage <= 3) {
+            firstDot.style.display = 'none';
+            secondDot.style.display = 'block';
+
+            firstButton.innerHTML = '2';
+            secondButton.innerHTML = '3';
+            thirdButton.innerHTML = '4';
+        } else if (currentPage >= pageCount - 2) {
+            firstDot.style.display = 'block';
+            secondDot.style.display = 'none';
+
+            firstButton.innerHTML = pageCount - 3;
+            secondButton.innerHTML = pageCount - 2;
+            thirdButton.innerHTML = pageCount - 1;
+        } else {
+            firstDot.style.display = 'block';
+            secondDot.style.display = 'block';
+
+            firstButton.innerHTML = currentPage - 1;
+            secondButton.innerHTML = currentPage;
+            thirdButton.innerHTML = currentPage + 1;
+        }
+
+        firstButton.style.display = 'inline-block';
+        secondButton.style.display = 'inline-block';
+        thirdButton.style.display = 'inline-block';
     }
 
     // set active class
@@ -94,25 +157,33 @@ async function setPagination(index) {
             break;
     }
 
+    // remove all rows
     while (table.rows.length > 1) {
         table.deleteRow(1);
     }
 
+    // add row to table
     await fetch('http://localhost:3000/CustomerManager/getUserList', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${localStorage.getItem('token')}`,
         },
-        body: JSON.stringify({ firstIndex, lastIndex })
+        body: JSON.stringify({ firstIndex: firstIndex - 1, count: numRowPerTable, searchString: searchString, sortColumn: sortColumn, sortOrder: sortOrder })
     })
-        .then(response => { return response.json() })
+        .then(response => {
+            if (response.status === 403) {
+                localStorage.removeItem('token');
+                window.location.href = 'http://localhost:5500/front_end/Login/Login.html';
+            }
+            return response.json()
+        })
         .then(result => {
             for (i = 0; i < result.list.length; i++) {
                 let user = result.list[i];
                 addRow(user);
             }
-        })
+        });
 }
 
 async function showTable() {
@@ -123,9 +194,16 @@ async function showTable() {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${localStorage.getItem('token')}`,
         },
+        body: JSON.stringify({ searchString: searchString })
     })
-        .then(response => { return response.json() })
-        .then(result => pageCount = Math.ceil(result.count / 10));
+        .then(response => {
+            if (response.status === 403) {
+                localStorage.removeItem('token');
+                window.location.href = 'http://localhost:5500/front_end/Login/Login.html';
+            }
+            return response.json()
+        })
+        .then(result => pageCount = Math.ceil(result.count / numRowPerTable));
 
     firstPage.innerHTML = '1';
     lastPage.innerHTML = pageCount;
@@ -136,7 +214,7 @@ async function showTable() {
 
 window.onload = () => {
     showTable();
-    // add buton's event
+    // add button's event
     Previous.addEventListener('click', () => {
         setPagination(currentPage - 1);
     });
@@ -150,4 +228,25 @@ window.onload = () => {
             });
         })(buttons[i]);
     }
+
+    // Add event listener for search input
+    searchInput.addEventListener('input', () => {
+        searchString = searchInput.value;
+        showTable();
+    });
+
+    // Add event listener for sort buttons
+    const sortButtons = document.querySelectorAll('.sort');
+    sortButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const column = button.getAttribute('data-column');
+            if (sortColumn === column) {
+                sortOrder = sortOrder === 'ASC' ? 'DESC' : 'ASC';
+            } else {
+                sortColumn = column;
+                sortOrder = 'ASC';
+            }
+            showTable();
+        });
+    });
 }

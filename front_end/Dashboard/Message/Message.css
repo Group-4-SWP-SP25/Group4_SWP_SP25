@@ -76,6 +76,7 @@ body {
     color: #007bff;
 }
 
+
 #HomePage {
     font-size: 20px;
     padding: 30px 10px;
@@ -170,35 +171,4 @@ body {
     height: 40px;
     border-radius: 50%;
     margin-right: 10px;
-}
-
-.btn {
-    display: inline-block;
-    font-size: 16px;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    color: white;
-    font-family: Arial, sans-serif;
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.btn-delete {
-    background-color: #f8d7da;
-    color: #d9534f;
-}
-
-.btn-delete:hover {
-    background-color: #d9534f;
-    color: white;
-}
-
-.btn-edit {
-    background-color: #31a8ff;
-    color: #ffffff;
-}
-
-.btn-edit:hover {
-    background-color: #007ed9;
 }

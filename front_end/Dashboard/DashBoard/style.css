@@ -56,11 +56,12 @@ body {
     background-color: #33334d;
     transform: scaleX(0);
     /* Ban đầu thu nhỏ lại */
-    transform-origin: center;
+    transform-origin: left;
     /* Xuất phát từ giữa */
-    transition: transform 0.1s ease-in-out;
+    transition: transform 0.3s ease-in-out;
     z-index: -1;
 }
+
 
 /* Khi hover, mở rộng từ giữa ra hai bên */
 .option:hover::before {
@@ -75,15 +76,18 @@ body {
     font-size: 14px;
 }
 
-.sidebar a:hover {
-    background-color: #33334d;
-}
 
 
 .path {
     width: 90%;
     margin: 20px auto;
     padding: 20px;
+}
+
+
+.currentpath{
+    text-decoration: none; 
+    color: #007bff;
 }
 
 

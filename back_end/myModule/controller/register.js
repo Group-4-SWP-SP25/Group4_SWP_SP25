@@ -1,64 +1,27 @@
 const addUser = require('../database/user/addUser.js');
+const checkUserName = require('../database/user/checkUserName.js');
 
 const register = async (req, res) => {
     try {
         const { firstName, lastName, email, phone, address, username, password } = req.body;
-        // console.log(req.body);
-        // console.log('Step 1');
 
         // Check email existence
-        fetch('http://localhost:3000/checkEmail', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                account: email
-            })
-        })
-            .then((response) => {
-                return response.json();
-            })
-            .then((result) => {
-                if (result.id != -1) {
-                    return res.status(400);
-                }
-                console.log(result.id);
-            });
-        // console.log('Step 2');
-
-        // Check username existance
-        fetch('http://localhost:3000/checkEmail', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                account: username
-            })
-        })
-            .then((response) => {
-                return response.json();
-            })
-            .then((result) => {
-                if (result.id != -1) {
-                    return res.status(400);
-                }
-                console.log(result.id);
-            });
-        // console.log('Step 3');
-
+        let user1 = await checkUserName(req.body.email);
+        if (user1 != null) {
+            console.log('Email already exists!');
+            return res.status(400).json({ error: "Email already exists!" });
+        }
+        let user2 = await checkUserName(req.body.username);
+        if (user2 != null) {
+            console.log('Username already exists!');
+            return res.status(400).json({ error: "Username already exists!" });
+        }
         // Add user
-        user = {
-            UserID: 0,
-            UserName: username,
-            Password: password,
-            FirstName: firstName,
-            LastName: lastName,
-            Email: email,
-            Address: address,
-            Role: 'User',
-            Phone: phone
-        };
-        if (addUser(user) == 1) {
+        if (await addUser(req.body) == 1) {
+            console.log('Add user successfully.');
             return res.status(200);
         } else {
+            console.log('Add user error.');
             return res.status(400);
         }
     } catch { }

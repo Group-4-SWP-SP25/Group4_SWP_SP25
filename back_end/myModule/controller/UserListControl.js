@@ -1,14 +1,14 @@
 const { UserList, TotalUserCount } = require("../database/user/UserList");
-const User = require("../model/user");
 
 const getUserList = async (req, res) => {
-    const { firstIndex, lastIndex } = req.body;
-    const userData = await UserList(firstIndex, lastIndex);
-    res.status(200).json({ list: userData })
+    const { firstIndex, count, searchString, sortColumn, sortOrder } = req.body;
+    const userData = await UserList(firstIndex, count, searchString, sortColumn, sortOrder);
+    res.status(200).json({ list: userData });
 }
 
 const getTotalUserCount = async (req, res) => {
-    const totalUserCount = await TotalUserCount()
+    const { searchString } = req.body;
+    const totalUserCount = await TotalUserCount(searchString);
     res.status(200).json({ count: totalUserCount });
 }
 
