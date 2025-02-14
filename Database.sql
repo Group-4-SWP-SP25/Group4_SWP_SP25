@@ -75,7 +75,7 @@ CREATE TABLE ServiceTypes (
 GO
 
 -- 6
-CREATE TABLE Services (
+CREATE TABLE [Service] (
 	ServiceID INT IDENTITY(1, 1) NOT NULL PRIMARY KEY,
 	ServiceTypeID INT FOREIGN KEY REFERENCES [ServiceTypes](ServiceTypeID) ON DELETE CASCADE,
 	ServiceName VARCHAR(200) NOT NULL,
@@ -101,8 +101,10 @@ CREATE TABLE [Order] (
     OrderID INT NOT NULL,
     CarID INT NOT NULL,
     PartID INT NOT NULL,
+	ServiceID INT FOREIGN KEY REFERENCES [Service](ServiceID),
     QuantityUsed INT NOT NULL,
     EstimatedCost FLOAT NOT NULL,
+	OrderDate DATETIME DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT pk_Orders PRIMARY KEY (UserID, OrderID)
 );
 GO
@@ -165,49 +167,61 @@ GO
 GO
 
 -- Trigger for Order
---CREATE TRIGGER InsertInOrder
---ON [Order]
---INSTEAD OF INSERT
---AS
---BEGIN
---	SET NOCOUNT ON;
+CREATE TRIGGER InsertOrder
+ON [Order]
+INSTEAD OF INSERT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    -- Update existing order quantity and recalculate EstimatedCost
+    UPDATE o
+    SET o.QuantityUsed = o.QuantityUsed + i.QuantityUsed,
+        o.EstimatedCost = (o.QuantityUsed + i.QuantityUsed) * inv.UnitPrice + COALESCE(s.Price, 0)
+    FROM [Order] o
+    INNER JOIN inserted i
+        ON o.UserID = i.UserID
+        AND o.CarID = i.CarID 
+        AND o.PartID = i.PartID 
+        AND COALESCE(o.ServiceID, 0) = COALESCE(i.ServiceID, 0)
+    INNER JOIN Inventory inv ON o.PartID = inv.PartID
+    LEFT JOIN [Service] s ON o.ServiceID = s.ServiceID;
 
---	UPDATE o
---    SET o.QuantityUsed = o.QuantityUsed + i.QuantityUsed
---    FROM [Order] o
---    INNER JOIN inserted i
---        ON o.UserID = i.UserID
---        AND o.CarID = i.CarID AND o.PartID = i.PartID;
+    -- Insert new order if it does not exist
+    INSERT INTO [Order](UserID, OrderID, CarID, PartID, ServiceID, QuantityUsed, EstimatedCost)
+    SELECT
+        i.UserID,
+        ISNULL(
+            (SELECT MAX(OrderID) FROM [Order] o WHERE o.UserID = i.UserID), 0
+        ) + 1,
+        i.CarID,
+        i.PartID,
+        i.ServiceID,
+        i.QuantityUsed,
+        (i.QuantityUsed * inv.UnitPrice) + COALESCE(s.Price, 0)
+    FROM inserted i
+    INNER JOIN Inventory inv ON i.PartID = inv.PartID
+    LEFT JOIN [Service] s ON i.ServiceID = s.ServiceID
+    WHERE NOT EXISTS (
+        SELECT 1
+        FROM [Order] o
+        WHERE o.UserID = i.UserID
+        AND o.CarID = i.CarID 
+        AND o.PartID = i.PartID
+        AND COALESCE(o.ServiceID, 0) = COALESCE(i.ServiceID, 0)
+    );
 
---	INSERT INTO [Order](UserID, OrderID, CarID, PartID, QuantityUsed, EstimatedCost)
---	SELECT
---		i.UserID,
---		ISNULL(
---			(SELECT MAX(PartID) FROM [Order] o WHERE o.UserID = i.UserID), 0
---		) + 1,
---		i.CarID,
---		i.PartID,
---		i.QuantityUsed,
---		i.EstimatedCost
---	FROM inserted i
---	WHERE NOT EXISTS (
---		SELECT 1
---		FROM [Order] o
---		WHERE o.UserID = i.UserID
---        AND o.CarID = i.CarID AND o.PartID = i.PartID
---	);
+    -- Update inventory quantity
+    UPDATE ivt
+    SET ivt.Quantity = ivt.Quantity - i.QuantityUsed
+    FROM Inventory ivt
+    INNER JOIN inserted i ON i.PartID = ivt.PartID;
+END;
 
---	UPDATE Inventory
---  SET Quantity = Quantity - i.QuantityUsed
---  FROM Inventory ivt
---  INNER JOIN inserted i ON i.PartID = ivt.PartID;
---END;
---GO
 
 -- Sample data
-<<<<<<< HEAD
-INSERT INTO [User](Username, Password, FirstName, LastName, Email, Phone, DOB)
-VALUES ('doanhieu18', 'doanhieu18@', 'Hieu', 'Doan', 'doanhieu180204@gmail.com', '0325413488', '2004-02-18');
+
+--INSERT INTO [User](Username, Password, FirstName, LastName, Email, Phone, DOB)
+--VALUES ('doanhieu18', 'doanhieu18@', 'Hieu', 'Doan', 'doanhieu180204@gmail.com', '0325413488', '2004-02-18');
 
 GO
 DECLARE @counter INT = 1
@@ -225,11 +239,11 @@ BEGIN
         GETDATE() -- LastActivity
     )
     SET @counter = @counter + 1
-END
-=======
+END;
+GO
+
 INSERT INTO [User](Username, Password, FirstName, LastName, Email, Phone, DOB, LastActivity)
 VALUES ('q8edh12hi', '1234', 'qwe8dyrwfhief', 'qwgufcqbw', 'qwficqwfc', '0123456789', '01/01/2000', '01/01/2010');
->>>>>>> 50983424e4164c2181af19be10ed90b620606753
 GO
 
 INSERT INTO [ServiceTypes](ServiceTypeName, ServiceTypeDescription) VALUES 
@@ -244,7 +258,7 @@ INSERT INTO [ServiceTypes](ServiceTypeName, ServiceTypeDescription) VALUES
 ('Cleaning and Maintenance', 'Including: Standard washes, Polishing, Interior Cleaning and Waterproof Coating.');
 GO
 
-INSERT INTO [Services](ServiceTypeID, ServiceName, ServiceDescription, Price) VALUES 
+INSERT INTO [Service](ServiceTypeID, ServiceName, ServiceDescription, Price) VALUES 
 ('1', 'Tires Patching', 'Repair small punctures in tires to restore functionality.', ROUND(ROUND(RAND() * 500000 + 750000, 0) / 10000, 0) * 10000),
 ('1', 'Tires Replacement', 'Replace old or damaged tires with new ones for better safety and performance.', ROUND(ROUND(RAND() * 500000 + 750000, 0) / 10000, 0) * 10000),
 ('1', 'Tires Pressure Check', 'Check and adjust tire pressure to ensure optimal driving conditions.', ROUND(ROUND(RAND() * 500000 + 750000, 0) / 10000, 0) * 10000),
@@ -307,5 +321,38 @@ GO
 INSERT INTO Car(UserID, CarName, Brand, RegistrationNumber, [Year]) VALUES 
 (1, 'Car 1', 'Toyota', '123456', 2010),
 (1, 'Car 2', 'Honda', '654321', 2015),
-(1, 'Car 3', 'Ford', '987654', 2018);
+(1, 'Car 3', 'Ford', '987654', 2018),
+(1, 'Car 4', 'BMW', '125478', 2020);
 GO
+
+INSERT INTO Inventory (PartName, CarSystemID, [Description], Quantity, UnitPrice) VALUES (
+    'Engine Oil', 1, 'Engine oil for lubrication and cooling.', 100, 50000),
+    ('Spark Plug', 1, 'Spark plugs for ignition.', 50, 20000),
+    ('Injector', 1, 'Fuel injectors for fuel delivery.', 30, 30000),
+    ('Cooling System', 1, 'Cooling system components.', 20, 40000),
+    ('Brake Pad', 2, 'Brake pads for stopping power.', 40, 60000),
+    ('Rotor', 2, 'Brake rotors for braking force.', 30, 80000),
+    ('Fluid', 2, 'Brake fluid for hydraulic system.', 50, 10000),
+    ('Bulb', 3, 'Light bulbs for illumination.', 60, 5000),
+    ('Fuse', 3, 'Fuses for electrical protection.', 40, 1000),
+    ('Electric System', 3, 'Electrical system components.', 30, 20000),
+    ('Wiring', 3, 'Wiring harness for electrical connections.', 20, 30000),
+    ('Gas', 4, 'AC gas for cooling.', 50, 20000),
+    ('Condenser', 4, 'AC condenser for heat exchange.', 30, 40000),
+    ('Filter', 4, 'AC filters for air quality.', 40, 10000),
+    ('Pump', 5, 'Fuel pump for fuel delivery.', 30, 30000),
+    ('Filter', 5, 'Fuel filters for fuel quality.', 40, 20000),
+    ('Injection', 5, 'Fuel injectors for fuel delivery.', 20, 40000),
+    ('Charging', 6, 'Battery charging service.', 50, 10000),
+    ('Terminal', 6, 'Battery terminals for electrical connections.', 40, 5000),
+    ('Shock', 7, 'Shock absorbers for suspension.', 30, 60000),
+    ('Control Arm', 7, 'Control arms for suspension.', 20, 80000),
+    ('Tie Rod', 7, 'Tie rods for steering.', 40, 10000),
+    ('Suspension', 7, 'Suspension components.', 50, 20000),
+    ('Tire', 8, 'Tires for wheel system.', 100, 500000),
+    ('Rim', 8, 'Rims for wheel system.', 50, 800000),
+    ('Wheel Hub', 8, 'Wheel hubs for wheel system.', 30, 100000);
+GO
+
+INSERT INTO [Order](UserID, CarID, PartID, ServiceID, QuantityUsed) VALUES
+(1, 1, 3, 1, 2)
