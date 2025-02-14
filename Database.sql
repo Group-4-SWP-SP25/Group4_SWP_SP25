@@ -1,4 +1,4 @@
-USE master
+﻿USE master
 GO
 
 IF EXISTS (
@@ -59,9 +59,9 @@ CREATE TABLE CarPart (
     PartID INT NOT NULL,
     PartName VARCHAR(200) NOT NULL,
     CarSystemID INT NOT NULL FOREIGN KEY REFERENCES CarSystem(CarSystemID) ON DELETE CASCADE,
-    InstallationDate DATETIME NOT NULL,
-    ExpiryDate DATETIME NOT NULL,
-    [Status] VARCHAR(10) NOT NULL CHECK ([Status] IN ('Active', 'Broken', 'Expired')),
+    InstallationDate DATETIME DEFAULT NULL,
+    ExpiryDate DATETIME DEFAULT NULL,
+    [Status] VARCHAR(10) DEFAULT NULL CHECK ([Status] IN ('Active', 'Broken', 'Expired')),
     CONSTRAINT pk_CarPart PRIMARY KEY (CarID, PartID)
 );
 GO
@@ -85,7 +85,7 @@ CREATE TABLE Services (
 GO
 
 -- 7
-CREATE TABLE Inventory(
+CREATE TABLE Inventory (
 	PartID INT IDENTITY(1, 1) NOT NULL PRIMARY KEY,
 	PartName VARCHAR(200) NOT NULL,
 	CarSystemID INT FOREIGN KEY REFERENCES CarSystem(CarSystemID) ON DELETE CASCADE,
@@ -94,41 +94,74 @@ CREATE TABLE Inventory(
 	UnitPrice FLOAT NOT NULL
 );
 GO
+ 
 -- 7
---CREATE TABLE [Order] (
---	 UserID INT NOT NULL,
---    OrderID INT NOT NULL,
---    CarID INT NOT NULL,
---    PartID INT NOT NULL,
---    QuantityUsed INT NOT NULL,
---    EstimatedCost FLOAT NOT NULL,
---    CONSTRAINT pk_Orders PRIMARY KEY (UserID, OrderID),
---    CONSTRAINT fk_Orders_User FOREIGN KEY (UserID) REFERENCES [User](UserID) ON DELETE CASCADE,
---    CONSTRAINT fk_Orders_CarPart FOREIGN KEY (CarID, PartID) REFERENCES CarPart(CarID, PartID)
---);
---GO
+CREATE TABLE [Order] (
+	UserID INT NOT NULL FOREIGN KEY REFERENCES [User](UserID) ON DELETE CASCADE,
+    OrderID INT NOT NULL,
+    CarID INT NOT NULL,
+    PartID INT NOT NULL,
+    QuantityUsed INT NOT NULL,
+    EstimatedCost FLOAT NOT NULL,
+    CONSTRAINT pk_Orders PRIMARY KEY (UserID, OrderID)
+);
+GO
 
 -- Trigger for Car Parts
-CREATE TRIGGER InsertInCarPart
-ON CarPart
-INSTEAD OF INSERT
+CREATE TRIGGER InsertCar
+ON Car
+AFTER INSERT
 AS
 BEGIN
-	SET NOCOUNT ON;
+    SET NOCOUNT ON;
 
-	INSERT INTO CarPart(CarID, PartID, PartName, CarSystemID, InstallationDate, ExpiryDate, [Status])
-	SELECT
-		i.CarID,
-		ISNULL(
-			(SELECT MAX(cp.PartID) FROM CarPart cp WHERE cp.CarID = i.CarID), 0
-		) + 1 AS NewPartID,
-		i.PartName,
-		i.CarSystemID,
-		i.InstallationDate,
-		i.ExpiryDate,
-		i.[Status]
-	FROM inserted i
+	-- Danh sách các bộ phận mặc định của xe
+    DECLARE @DefaultParts TABLE (
+        PartName VARCHAR(200),
+        CarSystemID INT
+    );
+
+    -- Thêm danh sách các bộ phận mặc định
+    INSERT INTO @DefaultParts (PartName, CarSystemID)
+    VALUES 
+        ('Engine Oil', 1),
+        ('Spark Plug', 1),
+        ('Injector', 1),
+        ('Cooling System', 1),
+        ('Brake Pad', 2),
+        ('Rotor', 2),
+        ('Fluid', 2),
+		('Bulb', 3),
+        ('Fuse', 3),
+        ('Electric System', 3),
+		('Wiring', 3),
+        ('Gas', 4),
+		('Condenser', 4),
+		('Filter', 4),
+        ('Pump', 5),
+        ('Filter', 5),
+		('Injection', 5),
+		('Charging', 6),
+		('Terminal', 6),
+        ('Shock', 7),
+        ('Control Arm', 7),
+        ('Tie Rod', 7),
+		('Suspension', 7),
+        ('Tire', 8),
+        ('Rim', 8),
+        ('Wheel Hub', 8);
+
+   INSERT INTO CarPart (CarID, PartID, PartName, CarSystemID)
+    SELECT 
+        i.CarID,
+        ROW_NUMBER() OVER (PARTITION BY i.CarID ORDER BY d.CarSystemID) AS PartID,
+        d.PartName,
+        d.CarSystemID
+    FROM inserted i
+    CROSS JOIN @DefaultParts d;
 END;
+GO
+
 GO
 
 -- Trigger for Order
@@ -254,31 +287,3 @@ INSERT INTO Car(UserID, CarName, Brand, RegistrationNumber, [Year]) VALUES
 (1, 'Car 3', 'Ford', '987654', 2018);
 GO
 
-INSERT INTO CarPart(CarID, PartName, CarSystemID, InstallationDate, ExpiryDate, [Status]) VALUES 
-(1, 'Engine Oil', 1, '01/01/2020', '01/01/2021', 'Active'),
-(1, 'Spark plug', 1, '01/01/2020', '01/01/2021', 'Active'),
-(1, 'Injector', 1, '01/01/2020', '01/01/2021', 'Active'),
-(1, 'Cooling system', 1, '01/01/2020', '01/01/2021', 'Active'),
-(1, 'Brake pad', 2,'01/01/2020', '01/01/2021', 'Active'),
-(1, 'Rotor', 2,'01/01/2020', '01/01/2021', 'Active'),
-(1, 'Fluid', 2,'01/01/2020', '01/01/2021', 'Active'),
-(1, 'Buld', 3, '01/01/2020', '01/01/2021', 'Active'),
-(1, 'Fuse', 3, '01/01/2020', '01/01/2021', 'Active'),
-(1, 'Electric system', 3, '01/01/2020', '01/01/2021', 'Active'),
-(1, 'Gas', 4, '01/01/2020', '01/01/2021', 'Active'),
-(1, 'Condenser', 4, '01/01/2020', '01/01/2021', 'Active'),
-(1, 'Filter', 4, '01/01/2020', '01/01/2021', 'Active'),
-(1, 'Wiring', 4, '01/01/2020', '01/01/2021', 'Active'),
-(1, 'Pump', 5, '01/01/2020', '01/01/2021', 'Active'),
-(1, 'Filter', 5, '01/01/2020', '01/01/2021', 'Active'),
-(1, 'Injection', 5, '01/01/2020', '01/01/2021', 'Active'),
-(1, 'Charging', 6, '01/01/2020', '01/01/2021', 'Active'),
-(1, 'Terminal', 6, '01/01/2020', '01/01/2021', 'Active'),
-(1, 'Shock', 7, '01/01/2020', '01/01/2021', 'Active'),
-(1, 'Tie rod', 7, '01/01/2020', '01/01/2021', 'Active'),
-(1, 'Control arm', 7, '01/01/2020', '01/01/2021', 'Active'),
-(1, 'Suspension', 7, '01/01/2020', '01/01/2021', 'Active'),
-(1, 'Tire', 8, '01/01/2020', '01/01/2021', 'Active'),
-(1, 'Rim', 8, '01/01/2020', '01/01/2021', 'Active'),
-(1, 'Wheel Hub', 8, '01/01/2020', '01/01/2021', 'Active');
-GO
