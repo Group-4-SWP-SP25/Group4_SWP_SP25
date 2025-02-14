@@ -1,6 +1,14 @@
 
 
 $(document).ready(async function () {
+  if (localStorage.getItem("token") == null) {
+    $(".guest").removeClass("hidden");
+    $(".user-login").addClass("hidden");
+    return;
+  } else {
+    $(".guest").addClass("hidden");
+    $(".user-login").removeClass("hidden");
+  }
   //get user info
   const response = await fetch('http://localhost:3000/getUserInfo', {
     method: 'POST',
@@ -14,23 +22,16 @@ $(document).ready(async function () {
   // set name 
   document.getElementById('name').innerHTML = result.name
 
-  if (localStorage.getItem("token") == null) {
-    $(".guest").removeClass("hidden");
-    $(".user-login").addClass("hidden");
-  } else {
-    $(".guest").addClass("hidden");
-    $(".user-login").removeClass("hidden");
-
-    switch (result.role) {
-      case "Admin":
-        $("#my-cars").addClass("hidden");
-        $("#my-orders").addClass("hidden");
-        break;
-      case "User":
-        $("#dashboard").addClass("hidden");
-        break;
-    }
+  switch (result.role) {
+    case "Admin":
+      $("#my-cars").addClass("hidden");
+      $("#my-orders").addClass("hidden");
+      break;
+    case "User":
+      $("#dashboard").addClass("hidden");
+      break;
   }
+
 
   $("#sign-out").on("click", function () {
     localStorage.removeItem("token");

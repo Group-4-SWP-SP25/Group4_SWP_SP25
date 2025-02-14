@@ -1,27 +1,24 @@
-const sql = require("mssql");
-
-const checkUserName = async (account) => {
+const getCarByID = async (carIDid) => {
   try {
     const pool = global.pool; // Get the connection pool
     const query = `
-      SELECT * FROM [User] WHERE UserName = @account OR Email = @account
+      SELECT * FROM [Car] WHERE CarID = @carID
     `;
     // Example query
     const result = await pool
       .request()
-      .input("account", sql.VarChar, account)
+      .input("carID", sql.Int, carIDid)
       .query(query);
 
     if (result.recordset.length > 0) {
-      const userData = result.recordset[0];
-      return userData;
+      const carData = result.recordset[0];
+      return carData;
     } else {
       return null;
     }
-
   } catch (err) {
     console.log("Error", err);
   }
 };
 
-module.exports = checkUserName;
+module.exports = getCarByID;

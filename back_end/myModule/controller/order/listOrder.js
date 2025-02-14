@@ -2,7 +2,8 @@ const getListOrderByUserID = require("../../database/order/getListOrderByUserID.
 
 const listOrder = async (req, res) => {
   try {
-    const { userId } = req.body;
+    const { account } = req.body;
+    const userId = account.UserID;
     const orderList = await getListOrderByUserID(userId);
     res.status(200).send(orderList);
   } catch (err) {
