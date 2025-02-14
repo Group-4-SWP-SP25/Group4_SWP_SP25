@@ -1,8 +1,8 @@
-const getCarByID = async (carID) => {
+const getAllCartPart = async (carID) => {
   try {
     const pool = global.pool; // Get the connection pool
     const query = `
-      SELECT * FROM [Car] WHERE CarID = @carID
+      SELECT * FROM [CarPart] WHERE CarID = @carID
     `;
     // Example query
     const result = await pool
@@ -10,11 +10,11 @@ const getCarByID = async (carID) => {
       .input("carID", sql.Int, carID)
       .query(query);
 
-    const carData = result.recordset[0];
-    return carData;
+    const carPartData = result.recordset;
+    return carPartData;
   } catch (err) {
     console.log("Error", err);
   }
 };
 
-module.exports = getCarByID;
+module.exports = getAllCartPart;

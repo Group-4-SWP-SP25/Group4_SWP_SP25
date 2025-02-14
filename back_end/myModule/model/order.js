@@ -6,6 +6,7 @@ class Order {
     this.partID = orderData.PartID;
     this.quantityUsed = orderData.QuantityUsed;
     this.estimatedCost = orderData.EstimatedCost;
+    this.orderDate = orderData.OrderDate;
   }
   OrderInfo() {
     let data = {
@@ -15,6 +16,7 @@ class Order {
       partID: this.partID,
       quantityUsed: this.quantityUsed,
       estimatedCost: this.estimatedCost,
+      orderDate: this.orderDate,
     };
     return data;
   }
