@@ -19,7 +19,6 @@ const changePassword = require('./myModule/database/user/changePassword.js');
 const checkUserName = require('./myModule/database/user/checkUserName.js');
 const { GetUserInfo, GetUserInfo_Admin } = require('./myModule/database/user/getUserInfo.js');
 const { getUserList, getTotalUserCount } = require('./myModule/controller/UserListControl.js')
-const getUserInfo = require('./myModule/database/user/getUserInfo.js');
 const { resetPassword, verification } = require('./myModule/controller/resetpassword.js');
 const register = require('./myModule/controller/register.js');
 const { AuthGoogle, Auth } = require('./myModule/controller/Login.js');
@@ -33,7 +32,7 @@ const getServiceTypeDetail = require('./myModule/database/user/getServiceTypeDet
 // user
 app.post('/changePassword', changePassword);
 app.post('/checkUserName', checkUserName);
-app.post('/getUserInfo', authenticateJWT, getUserInfo);
+app.post('/getUserInfo', authenticateJWT, GetUserInfo);
 app.post('/resetPassword', resetPassword);
 app.post('/verification', verification);
 app.post('/register', register);
