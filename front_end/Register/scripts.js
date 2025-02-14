@@ -1,7 +1,7 @@
 // Regex: Email
 const regexEmail = /^\w+@\w+(\.\w+)+$/; // Start with >1 word chars, then @, then >1 word chars, then (. and >1 word chars) >1 times
 const regexPhone = /^0\d{9}$/; // Start with 0, follow by exact 9 digits
-const regexPassword = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/; // Have at least 6 chars, include a-z, A-Z and 0-9
+const regexPassword = /^(?=.*[A-Za-z])(?=.*\d)[^\s]{6,}$/; // Have at least 6 chars, include a-z, A-Z and 0-9
 
 // Tag: Input field
 const firstNameInput = document.querySelector('#firstName');
@@ -178,6 +178,20 @@ function hidePassword(hideTag, toggleTag) {
         hideTag.type = 'password';
     }
 }
+
+function showHidePass(icon, passField) {
+    icon.classList.toggle('fa-eye');
+    icon.classList.toggle('fa-eye-slash');
+
+    const type = passField.getAttribute('type') === 'password' ? 'text' : 'password';
+    passField.setAttribute('type', type);
+}
+document.querySelector('.show-pwd').addEventListener('click', function () {
+    showHidePass(this, passwordInput);
+});
+document.querySelector('.show-repwd').addEventListener('click', function () {
+    showHidePass(this, repasswordInput);
+});
 
 function checkSubmit() {
     checkName(firstNameInput, firstNameError);

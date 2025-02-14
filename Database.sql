@@ -287,8 +287,3 @@ INSERT INTO Car(UserID, CarName, Brand, RegistrationNumber, [Year]) VALUES
 (1, 'Car 3', 'Ford', '987654', 2018);
 GO
 
-INSERT INTO [Order](UserID, OrderID, CarID, PartID, QuantityUsed, EstimatedCost) VALUES 
-(1, 1, 1, 1, 2, 50000),
-(1, 2, 1, 2, 1, 30000),
-(1, 3, 2, 3, 3, 75000);
-GO
