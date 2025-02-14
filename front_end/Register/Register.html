@@ -143,37 +143,19 @@
                             </div>
                         </div>
 
-                        <div class="row">
-                            <div class="col-sm-11 pwd-container">
-                                <input type="password" name="password" id="password"
-                                    onkeyup="checkPassword(this, document.querySelector('.e_password'))"
-                                    placeholder=" Your ideal password" />
-                                <span class="pwd-toggle">
-                                    <i class="fa-solid fa-eye show-pwd"></i>
-                                </span>
-                            </div>
-                            <!-- <div
-                                    class="col-sm-1"
-                                    style="padding-left: 6px; padding-right: 6px">
+                            <div class="row">
+                                <div class="pwd-container">
                                     <input
-                                        type="checkbox"
-                                        class="hide-password"
-                                        onchange="hidePassword(document.querySelector('#password'), this)" />
-                                </div> -->
-                        </div>
-                    </div>
+                                        type="password"
+                                        name="password"
+                                        id="password"
+                                        onkeyup="checkPassword(this, document.querySelector('.e_password'))"
+                                        placeholder=" Your ideal password" />
+                                    <span>
+                                        <i class="pwd-toggle fa-solid fa-eye show-pwd"></i>
+                                    </span>
+                                </div>
 
-                    <!-- Confirm password field -->
-                    <div class="register-field">
-                        <div class="row">
-                            <div class="col-sm-5">
-                                <label for="password">
-                                    <span style="color: red">*</span>
-                                    Confirm Password
-                                </label>
-                            </div>
-                            <div class="col-sm-7 text-end">
-                                <span class="e_repassword error"></span>
                             </div>
                         </div>
 
@@ -183,14 +165,22 @@
                                     onkeyup="checkPassword(this, document.querySelector('.e_repassword'))"
                                     placeholder=" Confirm password" />
                             </div>
-                            <!-- <div
-                                    class="col-sm-1"
-                                    style="padding-left: 6px; padding-right: 6px">
+
+
+                            <div class="row">
+                                <div class="pwd-container">
                                     <input
-                                        type="checkbox"
-                                        class="hide-password"
-                                        onchange="hidePassword(document.querySelector('#repassword'), this)" />
-                                </div> -->
+                                        type="password"
+                                        name="repassword"
+                                        id="repassword"
+                                        onkeyup="checkPassword(this, document.querySelector('.e_repassword'))"
+                                        placeholder=" Confirm password" />
+                                    <span>
+                                        <i class="pwd-toggle fa-solid fa-eye show-repwd"></i>
+                                    </span>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
 
