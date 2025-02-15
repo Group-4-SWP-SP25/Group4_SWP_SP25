@@ -19,7 +19,6 @@ body {
     color: white;
     display: flex;
     flex-direction: column;
-    /* padding: 20px; */
     position: fixed;
     height: 100%;
     overflow-y: auto;
@@ -93,10 +92,11 @@ body {
 
 .content {
     flex: 1;
-    padding: 20px;
+    /* padding: 20px; */
     margin-left: 250px;
     overflow-y: auto;
     margin-top: 60px;
+    display: flex;
 }
 
 
@@ -172,3 +172,23 @@ body {
     border-radius: 50%;
     margin-right: 10px;
 }
+
+/* --------------------content---------------- */
+
+.message-left {
+    display: flex;
+    flex-direction: column;
+    flex: 3;
+    height: 100%;
+    background-color: gray;
+}
+
+.message-right {
+    display: flex;
+    flex-direction: column;
+    flex: 9;
+    height: 100%;
+    background-color: green;
+}
+
+.message-item {}
