@@ -356,4 +356,3 @@ GO
 
 INSERT INTO [Order](UserID, CarID, PartID, ServiceID, QuantityUsed) VALUES
 (1, 1, 3, 1, 2)
- 
