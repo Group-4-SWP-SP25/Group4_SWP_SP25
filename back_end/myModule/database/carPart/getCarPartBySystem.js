@@ -1,14 +1,15 @@
 const sql = require("mssql");
-const getAllCartPart = async (carID) => {
+const getCarPartBySystem = async (carID, carSystemID) => {
   try {
     const pool = global.pool; // Get the connection pool
     const query = `
-      SELECT * FROM [CarPart] WHERE CarID = @carID
+      SELECT * FROM [CarPart] WHERE CarID = @carID AND CarSystemID = @carSystemID
     `;
     // Example query
     const result = await pool
       .request()
       .input("carID", sql.Int, carID)
+      .input("carSystemID", sql.Int, carSystemID)
       .query(query);
 
     const carPartData = result.recordset;
@@ -18,4 +19,4 @@ const getAllCartPart = async (carID) => {
   }
 };
 
-module.exports = getAllCartPart;
+module.exports = getCarPartBySystem;

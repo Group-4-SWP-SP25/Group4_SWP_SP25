@@ -355,9 +355,4 @@ INSERT INTO Inventory (PartName, CarSystemID, [Description], Quantity, UnitPrice
 GO
 
 INSERT INTO [Order](UserID, CarID, PartID, ServiceID, QuantityUsed) VALUES
-<<<<<<< HEAD
 (1, 1, 3, 1, 2)
-=======
-(1, 1, 3, 1, 2)
- 
->>>>>>> 751bf86db9912b06802341fb9e2bd39808bee0a9

@@ -50,7 +50,7 @@ const serviceInfo = require("./myModule/controller/service/serviceInfo.js");
 const carInfo = require("./myModule/controller/car/carInfo.js");
 
 // car part
-const listCarPart = require("./myModule/controller/carPart/listCarPart.js");
+const listCarPartBySystem = require("./myModule/controller/carPart/listCarPartBySystem.js");
 const carPartInfoInCar = require("./myModule/controller/carPart/carPartInfoInCar.js");
 
 // car system
@@ -104,7 +104,7 @@ app.post("/carInfo", carInfo);
 app.post("/listCarSystem", listCarSystem);
 
 // car part
-app.post("/listCarPart", listCarPart);
+app.post("/listCarPartBySystem", listCarPartBySystem);
 app.post("/carPartInfoInCar", carPartInfoInCar);
 
 // inventory
