@@ -1,3 +1,4 @@
+const sql = require("mssql");
 const getCarByID = async (carID) => {
   try {
     const pool = global.pool; // Get the connection pool

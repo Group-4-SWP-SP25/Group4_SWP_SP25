@@ -1,13 +1,13 @@
-const findUserById = require('./findUserById.js')
+const findUserById = require("./findUserById.js");
 
 const GetUserInfo = async (req, res) => {
   const userData = await findUserById(req.user.id);
   res.json({
+    id: userData.UserID,
     name: userData.FirstName,
     role: userData.Role,
-    account: userData.UserName
-  })
-
+    account: userData.UserName,
+  });
 };
 
 const GetUserInfo_Admin = async (req, res) => {
@@ -20,11 +20,11 @@ const GetUserInfo_Admin = async (req, res) => {
     Role: userData.Role,
     Address: userData.Address,
     DateCreated: userData.DateCreated,
-    DOB: userData.DOB
-  })
-}
+    DOB: userData.DOB,
+  });
+};
 
 module.exports = {
   GetUserInfo,
-  GetUserInfo_Admin
+  GetUserInfo_Admin,
 };

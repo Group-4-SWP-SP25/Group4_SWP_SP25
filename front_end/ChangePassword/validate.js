@@ -10,8 +10,7 @@ const e_newPass = document.querySelector(".e_newPassword");
 const e_confirmPass = document.querySelector(".e_confirmPassword");
 
 // The password must be at least 6 characters and must contain both numbers and letters
-const regexPassword = /^(?=.*[A-Za-z])(?=.*\d)[^\s]{6,}$/;
-
+const regexPassword = /^(?=.*[A-Za-z])(?=.*\d).{6,}$/;
 // Style errors in tags
 const errorStyle = function (tag) {
   tag.style.borderColor = "red";
@@ -69,21 +68,50 @@ async function checkPassword(pass, err) {
     if (pass === oldPassInput || pass === newPassInput) {
       contentError(err, "Please enter password!");
     } else {
-      contentError(err, "You have not confirmed your password!");
+      contentError(err, "You have not confirmed to change password!");
     }
     return false;
   }
   if (!regexPassword.test(pass.value)) {
     contentError(
       err,
-      "The password must be at least 6 characters and must contain both numbers and letters and do not contain space!"
+      "The password must be at least 6 characters and must contain both numbers and letters"
     );
     errorStyle(pass);
     return false;
   }
 
-  contentError(err, "");
-  successStyle(pass);
+  if (pass.value.includes(" ")) {
+    contentError(err, "The password must not contain spaces!");
+    errorStyle(pass);
+    return false;
+  }
+
+  if (pass === oldPassInput) {
+    const response = await fetch("http://localhost:3000/getUserInfo", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+    const result = await response.json();
+
+    const password = await fetch("http://localhost:3000/getPassword", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ userID: result.id }),
+    });
+    const pass = await password.json();
+    if (pass.Password !== oldPassInput.value) {
+      errorStyle(oldPassInput);
+      contentError(e_oldPass, "The password is incorrect!");
+      return false;
+    } else {
+      successStyle(oldPassInput);
+      contentError(e_oldPass, "");
+    }
+  }
 
   if (
     (pass === newPassInput && regexPassword.test(newPassInput.value)) ||
@@ -120,9 +148,9 @@ async function checkPassword(pass, err) {
 }
 
 async function checkSubmit() {
-  const checkOldPass = checkPassword(oldPassInput, e_oldPass);
-  const checkNewPass = checkPassword(newPassInput, e_newPass);
-  const checkConfirmPass = checkPassword(confirmPassInput, e_confirmPass);
+  const checkOldPass = await checkPassword(oldPassInput, e_oldPass);
+  const checkNewPass = await checkPassword(newPassInput, e_newPass);
+  const checkConfirmPass = await checkPassword(confirmPassInput, e_confirmPass);
 
   if (!(checkOldPass && checkNewPass && checkConfirmPass)) {
     return;
@@ -152,13 +180,7 @@ async function checkSubmit() {
         return response.json();
       })
       .then((data) => {
-        if (data.success) {
-          showSuccessWindow();
-        }
-        if (data.error) {
-          errorStyle(oldPassInput);
-          contentError(e_oldPass, data.error);
-        }
+        showSuccessWindow();
       })
       .catch((error) => {
         throw error;

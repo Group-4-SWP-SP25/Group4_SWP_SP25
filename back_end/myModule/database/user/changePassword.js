@@ -1,9 +1,8 @@
 const checkUserName = require("./checkUserName.js");
-
+const sql = require("mssql");
 const changePassword = async (req, res) => {
   try {
     const { account, newPassword, oldPassword } = req.body;
-    console.log("acc: ", account);
     const pool = global.pool; // Get the connection pool
     // Check old password
     const user = await checkUserName(account);

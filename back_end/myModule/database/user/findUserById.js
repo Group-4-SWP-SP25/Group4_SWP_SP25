@@ -1,3 +1,4 @@
+const sql = require("mssql");
 const findUserById = async (id) => {
   try {
     const pool = global.pool;
