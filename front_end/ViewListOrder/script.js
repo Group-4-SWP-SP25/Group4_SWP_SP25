@@ -16,7 +16,7 @@ fetch("http://localhost:3000/listOrder", {
     Authorization: `Bearer ${localStorage.getItem("token")}`,
   },
   body: JSON.stringify({ account: user.account }),
-})
+})  
   .then((response) => response.json())
   .then((result) => {
     result.forEach((order) => {

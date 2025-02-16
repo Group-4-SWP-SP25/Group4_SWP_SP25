@@ -1,23 +1,20 @@
 document.addEventListener("DOMContentLoaded", function () {
-    let carPartContainer = document.querySelector(".CarPart"); // Chọn phần CarPart
-    let items = document.querySelectorAll("#system-list li a");
+    // Giả sử CarID được lấy từ URL hoặc một nguồn khác
+    const carID = 1; 
 
-    // Ẩn CarPart khi trang tải
-    carPartContainer.style.display = "none";
-
-    items.forEach(item => {
-        item.addEventListener("click", function () {
-            let partName = this.textContent; // Lấy tên bộ phận xe được click
-            let Status = this.textContent;
-            let ExpiryDate = this.textContent;
-            // Hiển thị CarPart khi click
-            carPartContainer.style.display = "block";
-
-            // Cập nhật nội dung của CarPart
-            document.getElementById("carPart").textContent = `Car Part: ${partName}`;
-            document.getElementById("carStatus").textContent = `Car satus: ${Status}`;
-            document.getElementById("expiredDate").textContent =`Expried date: ${ExpiryDate}`;
-        });
-    });
+    fetch(`CarPartServlet?CarID=${carID}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.length > 0) {
+                const part = data[0]; // Lấy phần đầu tiên (hoặc lặp qua danh sách nếu cần)
+                document.getElementById("carPart").textContent = `Part name: ${part.PartName}`;
+                document.getElementById("carStatus").textContent = `Part Status: ${part.Status}`;
+                document.getElementById("expiredDate").textContent = `Expired date: ${part.ExpiryDate || "N/A"}`;
+            } else {
+                console.log("No parts found for this car.");
+            }
+        })
+        .catch(error => console.error("Error fetching car parts:", error));
 });
+
 
