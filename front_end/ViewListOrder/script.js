@@ -11,20 +11,7 @@ async function fetchUserOrders() {
 
     const user = await accountResponse.json();
 
-<<<<<<< HEAD
-fetch("http://localhost:3000/listOrder", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-    Authorization: `Bearer ${localStorage.getItem("token")}`,
-  },
-  body: JSON.stringify({ account: user.account }),
-})  
-  .then((response) => response.json())
-  .then((result) => {
-    result.forEach((order) => {
-      const carInfo = fetch("http://localhost:3000/carInfo", {
-=======
+
     // Lấy danh sách đơn hàng
     const orderResponse = await fetch("http://localhost:3000/listOrder", {
       method: "POST",
@@ -48,7 +35,6 @@ fetch("http://localhost:3000/listOrder", {
     orders.forEach(async (order, index) => {
       // Gọi API lấy thông tin xe
       const carResponse = await fetch("http://localhost:3000/carInfo", {
->>>>>>> 751bf86db9912b06802341fb9e2bd39808bee0a9
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ carID: order.CarID }),

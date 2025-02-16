@@ -141,14 +141,14 @@ button {
 }
 
 /* Mỗi mục chính */
-#system-list>li {
+.system-list>li {
     display: flex;
     align-items: center;
     margin-bottom: 10px;
 }
 
 /* Link chính */
-#system-list>li>a {
+.system-list>li>a {
     display: block;
     padding: 12px 20px;
     color: white;
