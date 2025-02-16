@@ -1,3 +1,4 @@
+const sql = require("mssql");
 const getServiceDetailByName = async (req, res) => {
   try {
     console.log(req.body);

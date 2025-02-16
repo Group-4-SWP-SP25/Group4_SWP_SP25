@@ -2,9 +2,8 @@ const getListOrderByUserID = require("../../database/order/getListOrderByUserID.
 
 const listOrder = async (req, res) => {
   try {
-    const { account } = req.body;
-    const userId = account.UserID;
-    const orderList = await getListOrderByUserID(userId);
+    const { userID } = req.body;
+    const orderList = await getListOrderByUserID(userID);
     res.status(200).send(orderList);
   } catch (err) {
     res.status(500).send({ error: "Internal Server Error" });

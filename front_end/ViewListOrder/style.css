@@ -251,6 +251,14 @@ a {
   text-align: center;
 }
 
+.order-body .order-row {
+  border-top: 1px solid #007bff;
+}
+
+.order-body .order-row:first-child {
+  border-top: none;
+}
+
 .order-page .order-body .order-row .order-product {
   width: 100%;
   height: 100px;
@@ -474,4 +482,95 @@ a {
 
 .del-window.show {
   transform: translate(-50%, -50%) scale(1);
+}
+
+/* Order empty */
+.order-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 60vh;
+  text-align: center;
+}
+
+.icon-box {
+  width: 100px;
+  height: 100px;
+  fill: #b0b0b0;
+}
+
+.order-empty p {
+  margin-top: 10px;
+  color: #b0b0b0;
+  font-size: 16px;
+  font-family: Arial, sans-serif;
+}
+
+/* Notify delete order */
+#notificationContainer {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+  z-index: 1000;
+}
+
+.notification {
+  position: relative;
+  background: #4caf50;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  color: black;
+  padding: 15px;
+  margin-bottom: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  animation: slideIn 0.5s ease-in-out;
+}
+
+.progress-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background-color: hsla(0, 0%, 100%, 0.664);
+  transition: width 3s linear;
+}
+
+.notification svg {
+  fill: #fff;
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
+
+.notification span {
+  font-size: 16px;
+  color: #fff;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(100%);
+  }
 }

@@ -1,3 +1,4 @@
+const sql = require("mssql");
 const getListOrderByUserID = async (userId) => {
   try {
     const pool = global.pool;
@@ -15,3 +16,5 @@ const getListOrderByUserID = async (userId) => {
     throw err;
   }
 };
+
+module.exports = getListOrderByUserID;

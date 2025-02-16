@@ -22,7 +22,7 @@ const {
 } = require("./myModule/Utils/JWT.js");
 
 // IMPORT MODULE
-
+const getPassword = require("./myModule/controller/user/getPassword.js");
 const changePassword = require("./myModule/database/user/changePassword.js");
 const checkUserName = require("./myModule/database/user/checkUserName.js");
 const {
@@ -40,7 +40,7 @@ const {
 } = require("./myModule/controller/resetpassword.js");
 const register = require("./myModule/controller/register.js");
 const { AuthGoogle, Auth } = require("./myModule/controller/Login.js");
-const getServiceDetail = require("./myModule/database/user/getServiceDetail.js");
+// const getServiceDetail = require("./myModule/database/user/getServiceDetail.js");
 const getServiceTypeDetail = require("./myModule/database/user/getServiceTypeDetail.js");
 
 // service
@@ -61,13 +61,17 @@ const componentInfo = require("./myModule/controller/inventory/componentInfo.js"
 
 // order
 const listOrder = require("./myModule/controller/order/listOrder.js");
+const {
+  removeAnOrder,
+  removeAllOrder,
+} = require("./myModule/controller/order/removeOrder.js");
 
 // ----------------------------------------------------------
 
 // CREATE API
 
 // user
-
+app.post("/getPassword", getPassword);
 app.post("/changePassword", changePassword);
 app.post("/checkUserName", checkUserName);
 app.post("/getUserInfo", authenticateJWT, GetUserInfo);
@@ -87,7 +91,7 @@ app.post(
 );
 app.post("/CustomerManager/getUserInfo", authenticateADMIN, GetUserInfo_Admin);
 
-app.post("/getServiceDetail", getServiceDetail);
+// app.post("/getServiceDetail", getServiceDetail);
 app.post("/getServiceTypeDetail", getServiceTypeDetail);
 
 // service
@@ -107,7 +111,9 @@ app.post("/carPartInfoInCar", carPartInfoInCar);
 app.post("/componentInfo", componentInfo);
 
 // order
-app.post("/listOrder", authenticateJWT, listOrder);
+app.post("/listOrder", listOrder);
+app.post("/removeAnOrder", removeAnOrder);
+app.post("/removeAllOrder", removeAllOrder);
 
 // ----------------------------------------------------------
 
