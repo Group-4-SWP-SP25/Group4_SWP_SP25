@@ -4,21 +4,14 @@ const checkUserName = async (account) => {
   try {
     const pool = global.pool; // Get the connection pool
     const query = `
-      SELECT * FROM [User] WHERE UserName = @account OR Email = @account
+      SELECT * FROM [User] WHERE UserName = @account OR Email = @account OR Phone = @account
     `;
     // Example query
     const result = await pool
       .request()
       .input("account", sql.VarChar, account)
       .query(query);
-
-    if (result.recordset.length > 0) {
-      const userData = result.recordset[0];
-      return userData;
-    } else {
-      return null;
-    }
-
+    return result.recordset[0];
   } catch (err) {
     console.log("Error", err);
   }

@@ -24,6 +24,7 @@ const {
 // IMPORT MODULE
 const getPassword = require("./myModule/controller/user/getPassword.js");
 const changePassword = require("./myModule/database/user/changePassword.js");
+const checkAccount = require("./myModule/controller/user/checkAccount.js");
 const checkUserName = require("./myModule/database/user/checkUserName.js");
 const {
   GetUserInfo,
@@ -50,7 +51,7 @@ const serviceInfo = require("./myModule/controller/service/serviceInfo.js");
 const carInfo = require("./myModule/controller/car/carInfo.js");
 
 // car part
-const listCarPart = require("./myModule/controller/carPart/listCarPart.js");
+const listCarPartBySystem = require("./myModule/controller/carPart/listCarPartBySystem.js");
 const carPartInfoInCar = require("./myModule/controller/carPart/carPartInfoInCar.js");
 
 // car system
@@ -73,6 +74,7 @@ const {
 // user
 app.post("/getPassword", getPassword);
 app.post("/changePassword", changePassword);
+app.post("/checkAccount", checkAccount);
 app.post("/checkUserName", checkUserName);
 app.post("/getUserInfo", authenticateJWT, GetUserInfo);
 app.post("/resetPassword", resetPassword);
@@ -104,7 +106,7 @@ app.post("/carInfo", carInfo);
 app.post("/listCarSystem", listCarSystem);
 
 // car part
-app.post("/listCarPart", listCarPart);
+app.post("/listCarPartBySystem", listCarPartBySystem);
 app.post("/carPartInfoInCar", carPartInfoInCar);
 
 // inventory
