@@ -11,6 +11,7 @@ async function fetchUserOrders() {
 
     const user = await accountResponse.json();
 
+
     // Lấy danh sách đơn hàng
     const orderResponse = await fetch("http://localhost:3000/listOrder", {
       method: "POST",
