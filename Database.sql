@@ -109,6 +109,17 @@ CREATE TABLE [Order] (
 );
 GO
 
+CREATE TABLE Messages (
+    MessageID INT PRIMARY KEY AUTO_INCREMENT,
+    SenderID INT NOT NULL,
+    ReceiverID INT NOT NULL,
+    Content TEXT NOT NULL,
+    SentAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (SenderID) REFERENCES Users(UserID),
+    FOREIGN KEY (ReceiverID) REFERENCES Users(UserID)
+);
+GO
+
 -- Trigger for Car Parts
 CREATE TRIGGER InsertCar
 ON Car
