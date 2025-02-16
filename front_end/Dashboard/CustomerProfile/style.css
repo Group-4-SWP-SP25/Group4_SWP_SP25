@@ -26,6 +26,56 @@ body {
     margin-top: 60px;
 }
 
+.option {
+    display: block;
+    /* Để các mục trong sidebar xếp dọc */
+    position: relative;
+    /* Giúp ::before căn chỉnh theo phần tử này */
+    text-decoration: none;
+    color: white;
+    padding: 10px 20px;
+    /* transition: color 0.2s ease; */
+    overflow: hidden;
+    /* Đảm bảo hiệu ứng không tràn ra ngoài */
+}
+
+
+.option::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #33334d;
+    transform: scaleX(0);
+    /* Ban đầu thu nhỏ lại */
+    transform-origin: left;
+    /* Xuất phát từ giữa */
+    transition: transform 0.3s ease-in-out;
+    z-index: -1;
+}
+
+/* Khi hover, mở rộng từ giữa ra hai bên */
+.option:hover::before {
+    transform: scaleX(1);
+}
+
+.homepath {
+    text-decoration: none;
+    color: white;
+    transition: color 0.3s ease;
+}
+
+.homepath:hover {
+    color: #007bff;
+}
+
+.currentpath {
+    text-decoration: none;
+    color: #007bff;
+}
+
 #HomePage {
     font-size: 20px;
     padding: 30px 10px;
@@ -40,24 +90,6 @@ body {
     font-size: 14px;
 }
 
-.sidebar a:hover {
-    background-color: #33334d;
-}
-
-
-.path {
-    width: 90%;
-    margin: 20px auto;
-    padding: 20px;
-}
-
-.container {
-    width: 90%;
-    margin: 20px auto;
-    padding: 20px;
-}
-
-
 .content {
     flex: 1;
     padding: 20px;
@@ -65,6 +97,7 @@ body {
     overflow-y: auto;
     margin-top: 60px;
 }
+
 
 .admin {
     display: flex;
@@ -82,6 +115,24 @@ body {
 
 .admin span {
     font-size: 14px;
+}
+
+/* ------------------- */
+
+.path {
+    width: 90%;
+    margin: 20px auto;
+    padding: 20px;
+}
+
+.container {
+    width: 90%;
+    margin: 20px auto;
+    background: #1e1e1e;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    overflow-x: auto;
 }
 
 
@@ -112,6 +163,13 @@ body {
 .header .user-info {
     display: flex;
     align-items: center;
+}
+
+.header .user-info img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
 }
 
 .btn {

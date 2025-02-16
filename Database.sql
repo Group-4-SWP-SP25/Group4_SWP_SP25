@@ -1,4 +1,4 @@
-USE master
+﻿USE master
 GO
 
 IF EXISTS (
@@ -29,61 +29,222 @@ CREATE TABLE [User](
 	Email VARCHAR(200) NOT NULL UNIQUE,
 	Address VARCHAR(200),
 	Role VARCHAR(15) DEFAULT 'User',
-	Phone VARCHAR(11) DEFAULT NULL UNIQUE,
+	Phone VARCHAR(11) DEFAULT NULL ,
 	DateCreated DATETIME DEFAULT CURRENT_TIMESTAMP,
-	DOB DATETIME NOT NULL,
+	DOB DATETIME DEFAULT NULL,
 	LastActivity DATETIME,
 );
 GO
 
 -- 2
 CREATE TABLE Car(
-	UserID INT FOREIGN KEY REFERENCES [User](UserID),
-	CarID INT NOT NULL,
-	CarName VARCHAR(500),
+	CarID INT IDENTITY(1, 1) NOT NULL PRIMARY KEY,
+	UserID INT FOREIGN KEY REFERENCES [User](UserID) ON DELETE CASCADE,
+	CarName VARCHAR(500) NOT NULL,
 	Brand TEXT,
-	RegistrationNumber VARCHAR(50),
+	RegistrationNumber VARCHAR(50) NOT NULL,
 	[Year] INT,
-	CONSTRAINT pk_Car PRIMARY KEY (UserID, CarID)
 );
 GO
 
 -- 3
+CREATE TABLE CarSystem ( 
+	CarSystemID INT NOT NULL PRIMARY KEY IDENTITY(1, 1),
+	CarSystemName VARCHAR(200) NOT NULL,
+);
+GO
+
+CREATE TABLE CarPart (
+    CarID INT NOT NULL FOREIGN KEY REFERENCES Car(CarID) ON DELETE CASCADE,
+    PartID INT NOT NULL,
+    PartName VARCHAR(200) NOT NULL,
+    CarSystemID INT NOT NULL FOREIGN KEY REFERENCES CarSystem(CarSystemID) ON DELETE CASCADE,
+    InstallationDate DATETIME DEFAULT NULL,
+    ExpiryDate DATETIME DEFAULT NULL,
+    [Status] VARCHAR(10) DEFAULT NULL CHECK ([Status] IN ('Active', 'Broken', 'Expired')),
+    CONSTRAINT pk_CarPart PRIMARY KEY (CarID, PartID)
+);
+GO
+
+-- 5
 CREATE TABLE ServiceTypes (
 	ServiceTypeID INT IDENTITY(1, 1) NOT NULL PRIMARY KEY,
 	ServiceTypeName VARCHAR(200),
 	ServiceTypeDescription TEXT
 );
+GO
 
--- 4
-CREATE TABLE Services (
+-- 6
+CREATE TABLE [Service] (
 	ServiceID INT IDENTITY(1, 1) NOT NULL PRIMARY KEY,
-	ServiceTypeID INT FOREIGN KEY REFERENCES [ServiceTypes](ServiceTypeID),
-	ServiceName VARCHAR(200),
+	ServiceTypeID INT FOREIGN KEY REFERENCES [ServiceTypes](ServiceTypeID) ON DELETE CASCADE,
+	ServiceName VARCHAR(200) NOT NULL,
 	ServiceDescription TEXT,
 	Price FLOAT NOT NULL
 );
+GO
 
--- 5
-CREATE TABLE CarPart (
-	PartID INT PRIMARY KEY,
-	CarID INT,
-	PartName VARCHAR(200),
-	InstallationDate DATETIME,
-	ExpiryDate DATETIME
-)
-
--- 6
-CREATE TABLE CarSystem (
-	CarSystemID INT FOREIGN KEY REFERENCES [CarPart](PartID),
-	CarSystemName VARCHAR(200),
-	Status VARCHAR(50)
+-- 7
+CREATE TABLE Inventory (
+	PartID INT IDENTITY(1, 1) NOT NULL PRIMARY KEY,
+	PartName VARCHAR(200) NOT NULL,
+	CarSystemID INT FOREIGN KEY REFERENCES CarSystem(CarSystemID) ON DELETE CASCADE,
+	[Description] TEXT NOT NULL,
+	Quantity INT NOT NULL,
+	UnitPrice FLOAT NOT NULL
 );
+GO
+ 
+-- 7
+CREATE TABLE [Order] (
+	UserID INT NOT NULL FOREIGN KEY REFERENCES [User](UserID) ON DELETE CASCADE,
+    OrderID INT NOT NULL,
+    CarID INT NOT NULL,
+    PartID INT NOT NULL,
+	ServiceID INT FOREIGN KEY REFERENCES [Service](ServiceID),
+    QuantityUsed INT NOT NULL,
+    EstimatedCost FLOAT NOT NULL,
+	OrderDate DATETIME DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT pk_Orders PRIMARY KEY (UserID, OrderID)
+);
+GO
+
+-- Trigger for Car Parts
+CREATE TRIGGER InsertCar
+ON Car
+AFTER INSERT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+	-- Danh sách các bộ phận mặc định của xe
+    DECLARE @DefaultParts TABLE (
+        PartName VARCHAR(200),
+        CarSystemID INT
+    );
+
+    -- Thêm danh sách các bộ phận mặc định
+    INSERT INTO @DefaultParts (PartName, CarSystemID)
+    VALUES 
+        ('Engine Oil', 1),
+        ('Spark Plug', 1),
+        ('Injector', 1),
+        ('Cooling System', 1),
+        ('Brake Pad', 2),
+        ('Rotor', 2),
+        ('Fluid', 2),
+		('Bulb', 3),
+        ('Fuse', 3),
+        ('Electric System', 3),
+		('Wiring', 3),
+        ('Gas', 4),
+		('Condenser', 4),
+		('Filter', 4),
+        ('Pump', 5),
+        ('Filter', 5),
+		('Injection', 5),
+		('Charging', 6),
+		('Terminal', 6),
+        ('Shock', 7),
+        ('Control Arm', 7),
+        ('Tie Rod', 7),
+		('Suspension', 7),
+        ('Tire', 8),
+        ('Rim', 8),
+        ('Wheel Hub', 8);
+
+   INSERT INTO CarPart (CarID, PartID, PartName, CarSystemID)
+    SELECT 
+        i.CarID,
+        ROW_NUMBER() OVER (PARTITION BY i.CarID ORDER BY d.CarSystemID) AS PartID,
+        d.PartName,
+        d.CarSystemID
+    FROM inserted i
+    CROSS JOIN @DefaultParts d;
+END;
+GO
+
+GO
+
+-- Trigger for Order
+CREATE TRIGGER InsertOrder
+ON [Order]
+INSTEAD OF INSERT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    -- Update existing order quantity and recalculate EstimatedCost
+    UPDATE o
+    SET o.QuantityUsed = o.QuantityUsed + i.QuantityUsed,
+        o.EstimatedCost = (o.QuantityUsed + i.QuantityUsed) * inv.UnitPrice + COALESCE(s.Price, 0)
+    FROM [Order] o
+    INNER JOIN inserted i
+        ON o.UserID = i.UserID
+        AND o.CarID = i.CarID 
+        AND o.PartID = i.PartID 
+        AND COALESCE(o.ServiceID, 0) = COALESCE(i.ServiceID, 0)
+    INNER JOIN Inventory inv ON o.PartID = inv.PartID
+    LEFT JOIN [Service] s ON o.ServiceID = s.ServiceID;
+
+    -- Insert new order if it does not exist
+    INSERT INTO [Order](UserID, OrderID, CarID, PartID, ServiceID, QuantityUsed, EstimatedCost)
+    SELECT
+        i.UserID,
+        ISNULL(
+            (SELECT MAX(OrderID) FROM [Order] o WHERE o.UserID = i.UserID), 0
+        ) + 1,
+        i.CarID,
+        i.PartID,
+        i.ServiceID,
+        i.QuantityUsed,
+        (i.QuantityUsed * inv.UnitPrice) + COALESCE(s.Price, 0)
+    FROM inserted i
+    INNER JOIN Inventory inv ON i.PartID = inv.PartID
+    LEFT JOIN [Service] s ON i.ServiceID = s.ServiceID
+    WHERE NOT EXISTS (
+        SELECT 1
+        FROM [Order] o
+        WHERE o.UserID = i.UserID
+        AND o.CarID = i.CarID 
+        AND o.PartID = i.PartID
+        AND COALESCE(o.ServiceID, 0) = COALESCE(i.ServiceID, 0)
+    );
+
+    -- Update inventory quantity
+    UPDATE ivt
+    SET ivt.Quantity = ivt.Quantity - i.QuantityUsed
+    FROM Inventory ivt
+    INNER JOIN inserted i ON i.PartID = ivt.PartID;
+END;
 
 
 -- Sample data
+
+--INSERT INTO [User](Username, Password, FirstName, LastName, Email, Phone, DOB)
+--VALUES ('doanhieu18', 'doanhieu18@', 'Hieu', 'Doan', 'doanhieu180204@gmail.com', '0325413488', '2004-02-18');
+
+GO
+DECLARE @counter INT = 1
+WHILE @counter <= 100
+BEGIN
+    INSERT INTO [User] (Username, Password, FirstName, LastName, Email, Phone, DOB, LastActivity)
+    VALUES (
+        CONCAT('user', @counter), -- Username
+        'password', -- Password
+        CONCAT('FirstName', @counter), -- FirstName
+        CONCAT('LastName', @counter), -- LastName
+        CONCAT('user', @counter, '@example.com'), -- Email
+        CONCAT('01234567', @counter), -- Phone
+        DATEADD(DAY, -@counter, GETDATE()), -- DOB
+        GETDATE() -- LastActivity
+    )
+    SET @counter = @counter + 1
+END;
+GO
+
 INSERT INTO [User](Username, Password, FirstName, LastName, Email, Phone, DOB, LastActivity)
 VALUES ('q8edh12hi', '1234', 'qwe8dyrwfhief', 'qwgufcqbw', 'qwficqwfc', '0123456789', '01/01/2000', '01/01/2010');
+GO
 
 INSERT INTO [ServiceTypes](ServiceTypeName, ServiceTypeDescription) VALUES 
 ('Wheel System', 'Including: Tires Patching, Tires Replacement, Tires Pressure Check, Wheel Balancing and Wheel Alignment.'),
@@ -94,9 +255,10 @@ INSERT INTO [ServiceTypes](ServiceTypeName, ServiceTypeDescription) VALUES
 ('Air Conditioning System', 'Including: AC Gas Refill, AC Condenser Cleaning, AC Filter Replacement and AC System Repair.'),
 ('Shock Absorbers System', 'Including: Shock Absorbers Replacement, Tie Rod Replacement, Control Arm Replacement and Suspension Alignment.'),
 ('Fuel System', 'Including: Fuel Pump Cleaning, Fuel Filter Replacement and Fuel Injection Repair.'),
-('Cleaning & Maintenance', 'Including: Standard washes, Polishing, Interior Cleaning and Waterproof Coating.');
+('Cleaning and Maintenance', 'Including: Standard washes, Polishing, Interior Cleaning and Waterproof Coating.');
+GO
 
-INSERT INTO [Services](ServiceTypeID, ServiceName, ServiceDescription, Price) VALUES 
+INSERT INTO [Service](ServiceTypeID, ServiceName, ServiceDescription, Price) VALUES 
 ('1', 'Tires Patching', 'Repair small punctures in tires to restore functionality.', ROUND(ROUND(RAND() * 500000 + 750000, 0) / 10000, 0) * 10000),
 ('1', 'Tires Replacement', 'Replace old or damaged tires with new ones for better safety and performance.', ROUND(ROUND(RAND() * 500000 + 750000, 0) / 10000, 0) * 10000),
 ('1', 'Tires Pressure Check', 'Check and adjust tire pressure to ensure optimal driving conditions.', ROUND(ROUND(RAND() * 500000 + 750000, 0) / 10000, 0) * 10000),
@@ -139,14 +301,58 @@ INSERT INTO [Services](ServiceTypeID, ServiceName, ServiceDescription, Price) VA
 ('8', 'Fuel Filter Replacement', 'Replace old fuel filters to maintain engine performance.', ROUND(ROUND(RAND() * 500000 + 750000, 0) / 10000, 0) * 10000),
 ('8', 'Fuel Injection Repair', 'Repair or clean fuel injectors for optimal fuel efficiency.', ROUND(ROUND(RAND() * 500000 + 750000, 0) / 10000, 0) * 10000),
 
-<<<<<<< HEAD
-('9', 'Standard Washes', ''),
-('9', 'Polishing', ''),
-('9', 'Interior Cleaning', ''),
-('9', 'Waterproof Coating.', '')
-=======
 ('9', 'Standard Washes', 'Basic exterior cleaning to keep your car looking fresh.', ROUND(ROUND(RAND() * 500000 + 750000, 0) / 10000, 0) * 10000),
 ('9', 'Polishing', 'Polish the exterior to restore shine and protect the paint.', ROUND(ROUND(RAND() * 500000 + 750000, 0) / 10000, 0) * 10000),
 ('9', 'Interior Cleaning', 'Thorough cleaning of the car interior for a fresh and tidy look.', ROUND(ROUND(RAND() * 500000 + 750000, 0) / 10000, 0) * 10000),
 ('9', 'Waterproof Coating', 'Apply a waterproof coating to protect the exterior from water damage.', ROUND(ROUND(RAND() * 500000 + 750000, 0) / 10000, 0) * 10000);
->>>>>>> b83eec34130f2a6d9260c1ac0560d11b751eaa58
+GO
+
+INSERT INTO CarSystem(CarSystemName) VALUES 
+('Engine System'),
+('Braking System'),
+('Electrical System'),
+('Air Conditioning System'),
+('Fuel System'),
+('Battery System'),
+('Shock Absorbers System'),
+('Wheel System');
+GO
+
+INSERT INTO Car(UserID, CarName, Brand, RegistrationNumber, [Year]) VALUES 
+(1, 'Car 1', 'Toyota', '123456', 2010),
+(1, 'Car 2', 'Honda', '654321', 2015),
+(1, 'Car 3', 'Ford', '987654', 2018),
+(1, 'Car 4', 'BMW', '125478', 2020);
+GO
+
+INSERT INTO Inventory (PartName, CarSystemID, [Description], Quantity, UnitPrice) VALUES (
+    'Engine Oil', 1, 'Engine oil for lubrication and cooling.', 100, 50000),
+    ('Spark Plug', 1, 'Spark plugs for ignition.', 50, 20000),
+    ('Injector', 1, 'Fuel injectors for fuel delivery.', 30, 30000),
+    ('Cooling System', 1, 'Cooling system components.', 20, 40000),
+    ('Brake Pad', 2, 'Brake pads for stopping power.', 40, 60000),
+    ('Rotor', 2, 'Brake rotors for braking force.', 30, 80000),
+    ('Fluid', 2, 'Brake fluid for hydraulic system.', 50, 10000),
+    ('Bulb', 3, 'Light bulbs for illumination.', 60, 5000),
+    ('Fuse', 3, 'Fuses for electrical protection.', 40, 1000),
+    ('Electric System', 3, 'Electrical system components.', 30, 20000),
+    ('Wiring', 3, 'Wiring harness for electrical connections.', 20, 30000),
+    ('Gas', 4, 'AC gas for cooling.', 50, 20000),
+    ('Condenser', 4, 'AC condenser for heat exchange.', 30, 40000),
+    ('Filter', 4, 'AC filters for air quality.', 40, 10000),
+    ('Pump', 5, 'Fuel pump for fuel delivery.', 30, 30000),
+    ('Filter', 5, 'Fuel filters for fuel quality.', 40, 20000),
+    ('Injection', 5, 'Fuel injectors for fuel delivery.', 20, 40000),
+    ('Charging', 6, 'Battery charging service.', 50, 10000),
+    ('Terminal', 6, 'Battery terminals for electrical connections.', 40, 5000),
+    ('Shock', 7, 'Shock absorbers for suspension.', 30, 60000),
+    ('Control Arm', 7, 'Control arms for suspension.', 20, 80000),
+    ('Tie Rod', 7, 'Tie rods for steering.', 40, 10000),
+    ('Suspension', 7, 'Suspension components.', 50, 20000),
+    ('Tire', 8, 'Tires for wheel system.', 100, 500000),
+    ('Rim', 8, 'Rims for wheel system.', 50, 800000),
+    ('Wheel Hub', 8, 'Wheel hubs for wheel system.', 30, 100000);
+GO
+
+INSERT INTO [Order](UserID, CarID, PartID, ServiceID, QuantityUsed) VALUES
+(1, 1, 3, 1, 2)

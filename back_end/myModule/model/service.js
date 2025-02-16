@@ -1,22 +1,20 @@
 class Service {
-    constructor(serviceData) {
-        this.serviceID = serviceData.ServiceID;
-        this.serviceTypeID = serviceData.ServiceTypeID;
-        this.serviceName = serviceData.ServiceName;
-        this.serviceDescription = serviceData.ServiceDescription;
-        this.price = serviceData.Price;
-    }
+  constructor(serviceData) {
+    this.serviceID = serviceData.ServiceID;
+    this.serviceName = serviceData.ServiceName;
+    this.serviceTypeID = serviceData.ServiceTypeID;
+    this.price = serviceData.Price;
+    this.description = serviceData.Description;
+  }
 
-    serviceInfo() {
-        let data = {
-            serviceID: this.serviceID,
-            serviceTypeID: this.serviceTypeID,
-            serviceName: this.serviceName,
-            serviceDescription: this.serviceDescription,
-            price: this.price,
-        };
-        return data;
-    }
+  serviceInfo() {
+    let data = {
+      serviceID: this.serviceID,
+      serviceName: this.serviceName,
+      serviceTypeID: this.serviceTypeID,
+      price: this.price,
+      description: this.description,
+    };
+    return data;
+  }
 }
-
-module.exports = Service;

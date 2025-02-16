@@ -1,22 +1,23 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const mainItems = document.querySelectorAll("#system-list > li");
+    let carPartContainer = document.querySelector(".CarPart"); // Chọn phần CarPart
+    let items = document.querySelectorAll("#system-list li a");
 
-    mainItems.forEach((item) => {
-        const mainLink = item.querySelector("a"); 
-        const subList = item.querySelector(".sub-list"); 
+    // Ẩn CarPart khi trang tải
+    carPartContainer.style.display = "none";
 
-        if (subList) {
-           
-            subList.style.display = "none";
+    items.forEach(item => {
+        item.addEventListener("click", function () {
+            let partName = this.textContent; // Lấy tên bộ phận xe được click
+            let Status = this.textContent;
+            let ExpiryDate = this.textContent;
+            // Hiển thị CarPart khi click
+            carPartContainer.style.display = "block";
 
-            mainLink.addEventListener("click", function () {
-               if (subList.style.display === "none") {
-                    subList.style.display = "flex"; 
-                } else {
-                    subList.style.display = "none"; 
-                }
-            });
-        }
+            // Cập nhật nội dung của CarPart
+            document.getElementById("carPart").textContent = `Car Part: ${partName}`;
+            document.getElementById("carStatus").textContent = `Car satus: ${Status}`;
+            document.getElementById("expiredDate").textContent =`Expried date: ${ExpiryDate}`;
+        });
     });
 });
 

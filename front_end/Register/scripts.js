@@ -1,3 +1,10 @@
+const urlParams = new URLSearchParams(window.location.search);
+const email = urlParams.get('email');
+if (email != null) {
+    document.getElementById('email').value = email
+    document.getElementById('email').setAttribute("readonly", true);
+}
+
 // Regex: Email
 const regexEmail = /^\w+@\w+(\.\w+)+$/; // Start with >1 word chars, then @, then >1 word chars, then (. and >1 word chars) >1 times
 const regexPhone = /^0\d{9}$/; // Start with 0, follow by exact 9 digits
@@ -186,14 +193,14 @@ function showHidePass(icon, passField) {
     const type = passField.getAttribute('type') === 'password' ? 'text' : 'password';
     passField.setAttribute('type', type);
 }
-document.querySelector('.show-pwd').addEventListener('click', function () {
-    showHidePass(this, passwordInput);
-});
-document.querySelector('.show-repwd').addEventListener('click', function () {
-    showHidePass(this, repasswordInput);
-});
+// document.querySelector('.show-pwd').addEventListener('click', function () {
+//     showHidePass(this, passwordInput);
+// });
+// document.querySelector('.show-repwd').addEventListener('click', function () {
+//     showHidePass(this, repasswordInput);
+// });
 
-function checkSubmit() {
+async function checkSubmit() {
     checkName(firstNameInput, firstNameError);
     checkName(lastNameInput, lastNameError);
     checkEmail(emailInput, emailError);
@@ -202,6 +209,7 @@ function checkSubmit() {
     checkPassword(passwordInput, passwordError);
     checkPassword(repasswordInput, repasswordError);
     if (!(nameOK && emailOK && phoneOK && usernameOK && pwdOK)) {
+        alert('Please fill in all required fields');
         return;
     } else {
         // data = {
@@ -214,8 +222,7 @@ function checkSubmit() {
         //     password: passwordInput.value
         // };
         // console.log(data);
-
-        fetch('http://localhost:3000/register', {
+        response = await fetch('http://localhost:3000/register', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -228,31 +235,21 @@ function checkSubmit() {
                 password: passwordInput.value
             })
         })
-            .then((response) => {
-                return response.status();
-            })
-            .then((data) => {
-                console.log(data);
-                if (data == 200) {
-                    showSuccessWindow();
-                }
-                if (data == 400) {
-                    console.log('Create account error');
-                    errorStyle(passwordInput);
-                    contentError(passwordInput, data.error);
-                }
-            })
-            .catch((error) => {
-                throw error;
-            });
-
-        // showSuccessWindow();
+        if (response.status === 200) {
+            showSuccessWindow();
+        } else {
+            msg = await response.json();
+            alert(msg.error);
+        }
     }
 }
+
+document.getElementById('register-button').addEventListener('click', checkSubmit);
 
 document.addEventListener('keydown', function (e) {
     if (e.key === 'Enter' && successWindow.classList.contains('hidden')) {
         checkSubmit();
+        alert('Create account successfully');
     }
     if (e.key === 'Enter' && !successWindow.classList.contains('hidden')) {
         window.location.href = '../HomePage/HomePage.html';

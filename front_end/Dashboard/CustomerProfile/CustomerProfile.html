@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link rel="stylesheet" href="./style.css">
 </head>
 
@@ -19,62 +20,64 @@
     </div>
 
     <div class="sidebar">
-        <h2><a href="../../HomePage/HomePage.html" id="HomePage">Auto Care 247</a>
-        </h2>
+        <a href="../../HomePage/HomePage.html" id="HomePage">Auto Care 247</a>
+
         <div class="admin">
             <img src="../../../resource/admin.jpg" alt="Admin">
             <span>Admin</span>
         </div>
-        <a href="../DashBoard/dashboard.html" style="background-color: #33334d">Overview</a>
-        <a href="#">Leaderboard</a>
-        <a href="#">Order</a>
-        <a href="#">Products</a>
-        <a href="#">Sales Report</a>
-        <a href="../CustomerManager/customer_management.html">Customer Management</a>
-        <a href="#">Messages</a>
-        <a href="#">Settings</a>
-        <a href="#">Sign Out</a>
+        <a class="option" href="../DashBoard/dashboard.html">Overview</a>
+        <a class="option" href="#">Leaderboard</a>
+        <a class="option" href="#">Order</a>
+        <a class="option" href="#">Products</a>
+        <a class="option" href="#">Sales Report</a>
+        <a class="option" href="../CustomerManager/customer_management.html" style="background-color: #33334d">Customer
+            Management</a>
+        <a class="option" href="http://127.0.0.1:5500/front_end/Dashboard/Message/Message.html">Messages</a>
+        <a class="option" href="#">Settings</a>
+        <a class="option" href="#">Sign Out</a>
     </div>
+
 
     <div class="content">
 
         <div class="path">
-            <a href="../DashBoard/dashboard.html" style="text-decoration: none; color: white;">Home</a>
+            <a href="../DashBoard/dashboard.html" class="homepath">Home</a>
             /
-            <a href="../CustomerManager/customer_management.html" style="text-decoration: none; color: white;">Customer
-                Management</a>
+            <a href="http://127.0.0.1:5500/front_end/Dashboard/CustomerManager/customer_management.html"
+                style="text-decoration: none;" class="homepath">Customer Management</a>
             /
-            <a href="./CustomerProfile.html" style="text-decoration: none; color: #007bff;">{UserName}</a>
+            <a href="#" class="currentpath" id="currentpath">{UserName}</a>
         </div>
 
         <div class="container">
             <div class="user-info">
                 <div class="user-info avatar">
                     <img src="../../../resource/admin.jpg" alt="User avatar">
-                    <h4> User Name</h4>
+                    <h4 id="user-name"> User Name</h4>
                 </div>
 
                 <div class="user-info details">
                     <ul>
                         <li>
                             <span>Email</span>
-                            <p>Customer@gmail.com</p>
+                            <p id="user-email">Customer@gmail.com</p>
                         </li>
                         <li>
                             <span>Phone</span>
-                            <p>0123456789</p>
+                            <p id="user-phone">0123456789</p>
                         </li>
                         <li>
                             <span>Date of birth</span>
-                            <p>20 May 2004</p>
+                            <p id="user-dob">20 May 2004</p>
                         </li>
                         <li>
-                            <span>Position</span>
-                            <p>Ho Chi Minh city</p>
+                            <span>Address</span>
+                            <p id="user-address">Ho Chi Minh city</p>
                         </li>
                         <li>
                             <span>Date created</span>
-                            <p>3 September 2024</p>
+                            <p id="user-datecreated">3 September 2024</p>
                         </li>
                     </ul>
                 </div>
@@ -122,6 +125,8 @@
         </div>
 
     </div>
+
+    <script src="./CustomerProfile.js"></script>
 </body>
 
 </html>

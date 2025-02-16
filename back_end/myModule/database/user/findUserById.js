@@ -1,6 +1,3 @@
-const sql = require("mssql");
-// const User = require("../../model/user.js");
-
 const findUserById = async (id) => {
   try {
     const pool = global.pool;

@@ -133,9 +133,10 @@ button {
 #system-list {
     list-style: none;
 
-    width: 100%;
+    width: 30%;
     padding: 30px;
     flex-direction: column;
+  
 
 }
 
@@ -159,33 +160,50 @@ button {
     white-space: nowrap;
 
 }
-
-
-.sub-list {
-    list-style: none;
+.text{
     display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
+}
+/* Car part */
 
-
+.CarPart {
+    width: 200px; 
+    height: 230px;
+    background-color: gray;
+    padding: 15px;
+    border-radius: 10px; 
+    text-align: center; 
+ 
 }
 
-.sub-list li a {
-    display: block;
-    padding: 8px 12px;
+#CarPart_img {
+    width: 100%; 
+    height: auto; 
+    border-radius: 5px
+}
+
+p {
+    margin: 5px 0; 
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.ServiceButton {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 15px;
+    background: #444;
     color: white;
     text-decoration: none;
-    background: #666;
     border-radius: 5px;
-    white-space: nowrap;
-
+    font-size: 14px;
+    font-weight: bold;
 }
 
-.sub-list li a:hover {
-    background: #9e9d9d;
+.ServiceButton:hover {
+    background-color: #676363; 
 }
 
-html,
-body {
-    overflow: hidden;
-}
+
+
+
+

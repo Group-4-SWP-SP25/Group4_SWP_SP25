@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Customer Management</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link rel="stylesheet" href="./style.css">
 </head>
 
@@ -18,28 +19,29 @@
     </div>
 
     <div class="sidebar">
-        <h2><a href="../../HomePage/HomePage.html" id="HomePage">Auto Care 247</a>
-        </h2>
+        <a href="../../HomePage/HomePage.html" id="HomePage">Auto Care 247</a>
+
         <div class="admin">
             <img src="../../../resource/admin.jpg" alt="Admin">
             <span>Admin</span>
         </div>
-        <a href="../DashBoard/dashboard.html">Overview</a>
-        <a href="#">Leaderboard</a>
-        <a href="#">Order</a>
-        <a href="#">Products</a>
-        <a href="#">Sales Report</a>
-        <a href="../CustomerManager/customer_management.html" style="background-color: #33334d">Customer Management</a>
-        <a href="#">Messages</a>
-        <a href="#">Settings</a>
-        <a href="#">Sign Out</a>
+        <a class="option" href="../DashBoard/dashboard.html">Overview</a>
+        <a class="option" href="#">Leaderboard</a>
+        <a class="option" href="#">Order</a>
+        <a class="option" href="#">Products</a>
+        <a class="option" href="#">Sales Report</a>
+        <a class="option" href="../CustomerManager/customer_management.html" style="background-color: #33334d">Customer
+            Management</a>
+        <a class="option" href="http://127.0.0.1:5500/front_end/Dashboard/Message/Message.html">Messages</a>
+        <a class="option" href="#">Settings</a>
+        <a class="option" href="#">Sign Out</a>
     </div>
 
     <div class="content">
         <div class="path">
-            <a href="../DashBoard/dashboard.html" style="text-decoration: none; color: white;">Home</a>
+            <a href="../DashBoard/dashboard.html" class="homepath">Home</a>
             /
-            <a href="./customer_management.html" style="text-decoration: none; color: #007bff;">Customer Management</a>
+            <a href="./customer_management.html" class="currentpath">Customer Management</a>
         </div>
 
         <div class="container">
@@ -52,112 +54,42 @@
             </div>
 
             <div class="search">
-                <input type="text" placeholder="Search...">
+                <input id="searchString" type="text" placeholder="Search...">
             </div>
 
-            <table>
+            <table id="UserList">
                 <thead>
                     <tr>
-                        <th>Customer ID</th>
-                        <th>Customer Name</th>
-                        <th>Email Address</th>
-                        <th>Contact Number</th>
-                        <th>Status</th>
-                        <th>Actions</th>
+                        <th style="width: 10%;">Customer ID <button class="sort" data-column="UserID">⇅</button></th>
+                        <th style="width: 25%;">Customer Name <button class="sort" data-column="FirstName">⇅</button>
+                        </th>
+                        <th style="width: 25%;">Email Address <button class="sort" data-column="Email">⇅</button></th>
+                        <th style="width: 15%;">Contact Number <button class="sort" data-column="Phone">⇅</button></th>
+                        <th style="width: 15%;">Date Created <button class="sort" data-column="DateCreated">⇅</button>
+                        </th>
+                        <th style="width: 10%;">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>001</td>
-                        <td>Customer 1</td>
-                        <td>customer1@gmail.com</td>
-                        <td>+1 123 456 7890</td>
-                        <td><span class="badge active">Active</span></td>
-                        <td><button class="details-btn">View Details</button></td>
-                    </tr>
-                    <tr>
-                        <td>002</td>
-                        <td>Customer 2</td>
-                        <td>customer2@gmail.com</td>
-                        <td>+1 234 567 8901</td>
-                        <td><span class="badge pending">Pending</span></td>
-                        <td><button class="details-btn">View Details</button></td>
-                    </tr>
-                    <tr>
-                        <td>003</td>
-                        <td>Customer 3</td>
-                        <td>customer3@gmail.com</td>
-                        <td>+1 345 678 9012</td>
-                        <td><span class="badge active">Active</span></td>
-                        <td><button class="details-btn">View Details</button></td>
-                    </tr>
-                    <tr>
-                        <td>004</td>
-                        <td>Customer 4</td>
-                        <td>customer4@gmail.com</td>
-                        <td>+1 456 789 0123</td>
-                        <td><span class="badge pending">Pending</span></td>
-                        <td><button class="details-btn">View Details</button></td>
-                    </tr>
-                    <tr>
-                        <td>005</td>
-                        <td>Customer 5</td>
-                        <td>customer5@gmail.com</td>
-                        <td>+1 567 890 1234</td>
-                        <td><span class="badge active">Active</span></td>
-                        <td><button class="details-btn">View Details</button></td>
-                    </tr>
-                    <tr>
-                        <td>006</td>
-                        <td>Customer 6</td>
-                        <td>customer6@gmail.com</td>
-                        <td>+1 678 901 2345</td>
-                        <td><span class="badge pending">Pending</span></td>
-                        <td><button class="details-btn">View Details</button></td>
-                    </tr>
-                    <tr>
-                        <td>007</td>
-                        <td>Customer 7</td>
-                        <td>customer7@gmail.com</td>
-                        <td>+1 789 012 3456</td>
-                        <td><span class="badge active">Active</span></td>
-                        <td><button class="details-btn">View Details</button></td>
-                    </tr>
-                    <tr>
-                        <td>008</td>
-                        <td>Customer 8</td>
-                        <td>customer8@gmail.com</td>
-                        <td>+1 890 123 4567</td>
-                        <td><span class="badge pending">Pending</span></td>
-                        <td><button class="details-btn">View Details</button></td>
-                    </tr>
-                    <tr>
-                        <td>009</td>
-                        <td>Customer 9</td>
-                        <td>customer9@gmail.com</td>
-                        <td>+1 901 234 5678</td>
-                        <td><span class="badge active">Active</span></td>
-                        <td><button class="details-btn">View Details</button></td>
-                    </tr>
-                    <tr>
-                        <td>010</td>
-                        <td>Customer 10</td>
-                        <td>customer10@gmail.com</td>
-                        <td>+1 012 345 6789</td>
-                        <td><span class="badge pending">Pending</span></td>
-                        <td><button class="details-btn">View Details</button></td>
-                    </tr>
+
                 </tbody>
             </table>
 
             <div class="pagination">
-                <button class="active">1</button>
-                <button>2</button>
-                <button>3</button>
-                <button>Next</button>
+                <button id="Previous">Previous</button>
+                <button class="button" id="firstPage">1</button>
+                <span id="firstDot"> .... </span>
+                <button class="button" id="firstButton">3</button>
+                <button class="button" id="secondButton">4</button>
+                <button class="button" id="thirdButton">5</button>
+                <span id="secondDot"> .... </span>
+                <button class="button" id="lastPage">7</button>
+                <button id="Next">Next</button>
             </div>
         </div>
     </div>
+
+    <script src="./CustomerManager.js"></script>
 </body>
 
 </html>
