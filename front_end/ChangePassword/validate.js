@@ -63,7 +63,7 @@ document
 
 // Check password in tags
 async function checkPassword(pass, err) {
-  if (pass.value.length === 0) {
+  if (pass.value.trim().length === 0) {
     errorStyle(pass);
     if (pass === oldPassInput || pass === newPassInput) {
       contentError(err, "Please enter password!");
@@ -143,7 +143,6 @@ async function checkPassword(pass, err) {
       contentError(e_confirmPass, "");
     }
   }
-
   return true;
 }
 

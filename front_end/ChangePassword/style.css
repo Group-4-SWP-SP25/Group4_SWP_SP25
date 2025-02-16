@@ -146,6 +146,11 @@ iframe {
   cursor: pointer;
 }
 
+/* Window after successfull changing password */
+.hidden {
+  display: none;
+}
+
 .button {
   margin-top: 10px;
   width: 100%;
@@ -158,10 +163,6 @@ iframe {
   border-radius: 10px;
 }
 
-/* Window after successfull changing password */
-.hidden {
-  display: none;
-}
 .success {
   position: fixed;
   top: 50%;

@@ -24,6 +24,7 @@ const {
 // IMPORT MODULE
 const getPassword = require("./myModule/controller/user/getPassword.js");
 const changePassword = require("./myModule/database/user/changePassword.js");
+const checkAccount = require("./myModule/controller/user/checkAccount.js");
 const checkUserName = require("./myModule/database/user/checkUserName.js");
 const {
   GetUserInfo,
@@ -73,6 +74,7 @@ const {
 // user
 app.post("/getPassword", getPassword);
 app.post("/changePassword", changePassword);
+app.post("/checkAccount", checkAccount);
 app.post("/checkUserName", checkUserName);
 app.post("/getUserInfo", authenticateJWT, GetUserInfo);
 app.post("/resetPassword", resetPassword);

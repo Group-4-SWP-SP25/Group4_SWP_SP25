@@ -19,7 +19,6 @@ VALUES(@userName, @password, @firstName, @lastName, @email, @address, @phone);
       .input("phone", sql.VarChar, user.phone)
       .query(query);
 
-    console.log("Add user successfully.");
     return 1; // Optionally return the result
     // Close the connection (optional because `mssql` handles pooling)
   } catch (err) {
