@@ -1,0 +1,38 @@
+name: SonarCloud Analysis
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  sonarcloud:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests with coverage
+        run: npm test -- --coverage
+
+      - name: Run SonarScanner
+        run: |
+          npx sonarqube-scanner \
+            -Dsonar.projectKey=Group-4-SWP-SP25_Group4_SWP_SP25 \
+            -Dsonar.organization=group-4-swp-sp25 \
+            -Dsonar.host.url=https://sonarcloud.io \
+            -Dsonar.sources=src \
+            -Dsonar.exclusions=**/*.test.js,**/__mocks__/** \
+            -Dsonar.tests=src \
+            -Dsonar.test.inclusions=**/*.test.js \
+            -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
