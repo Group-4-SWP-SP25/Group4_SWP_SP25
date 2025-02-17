@@ -1,12 +1,12 @@
 /*  */
-.service-desc {
+.service-info {
     position: relative; /* Để lớp phủ nằm đúng vị trí */
     width: 100%;
     height: 500px; /* Chiều cao của section */
     overflow: hidden; /* Ẩn ảnh nền tràn ra ngoài section */
 }
 
-.service-desc::before {
+.service-info::before {
     content: '';
     position: absolute;
     top: 0;
@@ -19,7 +19,7 @@
     z-index: -1; /* Đặt ảnh nền phía sau nội dung */
 }
 
-.desc {
+.info {
     position: absolute;
     top: 0;
     left: 0;
@@ -34,6 +34,19 @@
     text-align: center; /* Căn giữa chữ */
 }
 
-.desc h3{
+.info-desc{
     margin: 0 10%;
+}
+
+.service-detail {
+    margin: 3% 10%;
+
+    position: relative;
+    background-color: white;
+    color: black;
+    text-align: left;
+}
+
+.detail-title{
+    text-align: center;
 }
