@@ -16,6 +16,8 @@ jobs:
           cache: 'npm' # Cache node_modules để tăng tốc build
       - name: Install dependencies
         run: npm ci # npm ci nhanh và ổn định hơn npm install cho CI
+      - name: Install dependencies
+        run: npm install mssql
       - name: Run tests with coverage
         run: npm test -- --coverage --passWithNoTests # --passWithNoTests để workflow không fail nếu không có test nào
       - name: Generate coverage report (nếu cần)
