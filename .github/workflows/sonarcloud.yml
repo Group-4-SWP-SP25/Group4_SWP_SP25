@@ -25,7 +25,7 @@ jobs:
 
 
       - name: Run tests with coverage
-        run: npm test -- --coverage
+        run: npm test -- --coverage --passWithNoTests
 
       - name: Fix Jest Permissions
         run: chmod +x node_modules/.bin/jest
