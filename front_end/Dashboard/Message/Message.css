@@ -261,13 +261,22 @@ body {
     background-color: #2c2c2c;
 }
 
+#message-item-action {
+    width: 24px;
+    height: 24px;
+}
+
 .message-item-action {
     display: none;
     /* Ẩn phần tử mặc định */
+    height: 40px;
+    width: 40px;
+    justify-content: center;
+    align-items: center;
 }
 
 .message-item:hover .message-item-action {
-    display: block;
+    display: flex;
     /* Hiện phần tử khi di chuột qua */
 }
 
@@ -491,6 +500,7 @@ body {
 
 .right-msg {
     justify-content: flex-end;
+    align-items: end;
     padding: 10px;
 }
 
@@ -507,7 +517,6 @@ body {
     padding: 10px;
     border-radius: 15px;
     max-width: 70%;
-    margin-right: 10px;
 }
 
 .msg-img img {
@@ -517,11 +526,13 @@ body {
 }
 
 
-.msg-text {
+.msg-text,
+.msg-text span {
     position: relative;
     display: inline-block;
     cursor: pointer;
     margin: 5px;
+    font-size: 20px;
 }
 
 .msg-info-left {
@@ -574,6 +585,20 @@ body {
     opacity: 1;
 }
 
+.status {
+    height: 14px;
+    width: 14px;
+}
+
+.status img {
+    height: 100%;
+    border-radius: 50%;
+}
+
+.status span {
+    font-size: 14px;
+}
+
 /* -----------------------------------scrolbar---------------------------- */
 .custom-scrollbar {
     overflow-y: auto;
@@ -604,4 +629,25 @@ body {
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
     background: #888;
     /* Màu của thanh cuộn khi hover */
+}
+
+/* loader */
+
+.loader {
+    border: 2px solid #5e5e5e;
+    border-top: 2px solid #3498db;
+    border-radius: 50%;
+    width: 14px;
+    height: 14px;
+    animation: spin 0.5s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }

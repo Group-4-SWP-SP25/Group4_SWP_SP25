@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Infinite Scroll</title>
+    <style>
+        .content {
+            height: 800px;
+            overflow-y: auto;
+            border: 1px solid black;
+        }
+
+        .item {
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="content" id="content">
+        <!-- Các nội dung ban đầu -->
+        <div class="item">Nội dung 1</div>
+        <div class="item">Nội dung 2</div>
+        <div class="item">Nội dung 3</div>
+        <div class="item">Nội dung 4</div>
+        <div class="item">Nội dung 5</div>
+        <div class="item">Nội dung 1</div>
+        <div class="item">Nội dung 2</div>
+        <div class="item">Nội dung 3</div>
+        <div class="item">Nội dung 4</div>
+        <div class="item">Nội dung 5</div>
+        <div class="item">Nội dung 1</div>
+        <div class="item">Nội dung 2</div>
+        <div class="item">Nội dung 3</div>
+        <div class="item">Nội dung 4</div>
+        <div class="item">Nội dung 5</div>
+        <div class="item">Nội dung 1</div>
+        <div class="item">Nội dung 2</div>
+        <div class="item">Nội dung 3</div>
+        <div class="item">Nội dung 4</div>
+        <div class="item">Nội dung 5</div>
+        <div class="item">Nội dung 1</div>
+        <div class="item">Nội dung 2</div>
+        <div class="item">Nội dung 3</div>
+        <div class="item">Nội dung 4</div>
+        <div class="item">Nội dung 5</div>
+        <div class="item">Nội dung 1</div>
+        <div class="item">Nội dung 2</div>
+        <div class="item">Nội dung 3</div>
+        <div class="item">Nội dung 4</div>
+        <div class="item">Nội dung 5</div>
+        <div class="item">Nội dung 1</div>
+        <div class="item">Nội dung 2</div>
+        <div class="item">Nội dung 3</div>
+        <div class="item">Nội dung 4</div>
+        <div class="item">Nội dung 5</div>
+        <div class="item">Nội dung 1</div>
+        <div class="item">Nội dung 2</div>
+        <div class="item">Nội dung 3</div>
+        <div class="item">Nội dung 4</div>
+        <div class="item">Nội dung 5</div>
+        <div class="item">Nội dung 1</div>
+        <div class="item">Nội dung 2</div>
+        <div class="item">Nội dung 3</div>
+        <div class="item">Nội dung 4</div>
+        <div class="item">Nội dung 5</div>
+    </div>
+
+    <script>
+        const content = document.getElementById('content');
+
+        content.addEventListener('scroll', function () {
+            if (content.scrollTop + content.clientHeight >= content.scrollHeight) {
+                loadMoreContent();
+            }
+        });
+
+        function loadMoreContent() {
+            for (let i = 0; i < 5; i++) {
+                let newItem = document.createElement('div');
+                newItem.className = 'item';
+                newItem.textContent = 'Nội dung ' + (document.querySelectorAll('.item').length + 1);
+                content.appendChild(newItem);
+            }
+        }
+    </script>
+</body>
+
+</html>
