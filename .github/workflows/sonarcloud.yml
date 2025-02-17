@@ -29,9 +29,9 @@ jobs:
             -Dsonar.projectKey=Group-4-SWP-SP25_Group4_SWP_SP25 \
             -Dsonar.organization=group-4-swp-sp25 \
             -Dsonar.host.url=https://sonarcloud.io \
-            -Dsonar.sources=src \
+            -Dsonar.sources=.
             -Dsonar.exclusions=**/*.test.js,**/__mocks__/** \
-            -Dsonar.tests=src \
+            -Dsonar.tests=__tests__
             -Dsonar.test.inclusions=**/*.test.js \
             -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
         env:
