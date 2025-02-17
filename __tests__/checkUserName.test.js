@@ -1,4 +1,4 @@
-const checkUserName = require('./your-file-name'); // Thay 'your-file-name' bằng tên file của bạn
+const checkUserName = require('../back_end/myModule/database/user/checkUserName'); // Thay 'your-file-name' bằng tên file của bạn
 const sql = require('mssql');
 
 // Mock connection pool và request
