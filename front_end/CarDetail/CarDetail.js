@@ -47,8 +47,10 @@ async function getPart(carSystemID) {
   carParts.forEach((carPart) => {
     const part = document.createElement("div");
     part.classList.add("CarPart");
+ 
     part.innerHTML = `
-      <img src="../CarList/vin.png" id="CarPart_img">
+      <img src="${carPart.Image}" id="CarPart_img" alt="${carPart.PartName}">
+    
       <p>Part name: ${carPart.PartName}</p>
       <p>Part Status: ${carPart.Status ? carPart.Status : "N/A"}</p>
       <p>Installation date: ${carPart.InstallationDate ? carPart.InstallationDate : "N/A"}</p>
@@ -58,6 +60,7 @@ async function getPart(carSystemID) {
     carPartList.appendChild(part);
   });
 }
+
 
 // Gọi hàm để tải danh sách hệ thống khi trang load
 getSystem();
