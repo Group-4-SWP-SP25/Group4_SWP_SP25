@@ -80,65 +80,63 @@ function checkName(nameTag, errorTag) {
 }
 
 async function checkEmail(emailTag, errorTag) {
-    if (emailTag.value.trim().length === 0) {
-        errorStyle(emailTag);
-        contentError(errorTag, 'Email cannot be empty!');
-        return false;
+  if (emailTag.value.trim().length === 0) {
+    errorStyle(emailTag);
+    contentError(errorTag, "Email cannot be empty!");
+    return false;
+  } else {
+    if (!regexEmail.test(emailTag.value.trim())) {
+      errorStyle(emailTag);
+      contentError(errorTag, "Invalid email!");
+      return false;
     } else {
-        if (!regexEmail.test(emailTag.value.trim())) {
-            errorStyle(emailTag);
-            contentError(errorTag, 'Invalid email!');
-            return false;
-        } else {
-            const checkEmail = await fetch('http://localhost:3000/checkAccount', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ account: emailTag.value })
-            });
-            if (checkEmail.status === 404) {
-                errorStyle(emailTag);
-                contentError(errorTag, 'Email is already taken!');
-                return false;
-            } else {
-                successStyle(emailTag);
-                contentError(errorTag, '');
-            }
-        }
+      const checkEmail = await fetch("http://localhost:3000/checkAccount", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ accountType: "Email", account: emailTag.value }),
+      });
+      if (checkEmail.status === 404) {
+        errorStyle(emailTag);
+        contentError(errorTag, 'Email is already taken!');
+        return false;
+      } else {
+        successStyle(emailTag);
+        contentError(errorTag, '');
+      }
     }
     return true;
 }
 
 async function checkPhone(phoneTag, errorTag) {
-    if (phoneTag.value.trim().length > 0) {
-        if (!regexPhone.test(phoneTag.value.trim())) {
-            errorStyle(phoneTag);
-            contentError(errorTag, 'Invalid phone number!');
-            return false;
-        } else {
-            const checkPhone = await fetch('http://localhost:3000/checkAccount', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ account: phoneTag.value })
-            });
-            if (checkPhone.status === 404) {
-                errorStyle(phoneTag);
-                contentError(errorTag, 'Phone number is already taken!');
-                return false;
-            } else {
-                successStyle(phoneTag);
-                contentError(errorTag, '');
-            }
-        }
+  if (phoneTag.value.trim().length > 0) {
+    if (!regexPhone.test(phoneTag.value.trim())) {
+      errorStyle(phoneTag);
+      contentError(errorTag, "Invalid phone number!");
+      return false;
+    } else {
+      const checkPhone = await fetch("http://localhost:3000/checkAccount", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ accountType: "Phone", account: phoneTag.value }),
+      });
+      if (checkPhone.status === 404) {
+        errorStyle(phoneTag);
+        contentError(errorTag, "Phone number is already taken!");
+        return false;
+      } else {
+        successStyle(phoneTag);
+        contentError(errorTag, "");
+      }
     }
     return true;
 }
 
 async function checkUsername(usernameTag, errorTag) {
-    if (usernameTag.value.trim().length === 0) {
-        errorStyle(usernameTag);
-        contentError(errorTag, 'Username cannot be empty!');
-        return false;
-    }
+  if (usernameTag.value.trim().length === 0) {
+    errorStyle(usernameTag);
+    contentError(errorTag, "Username cannot be empty!");
+    return false;
+  }
     if (!regexUsername.test(usernameTag.value.trim())) {
         errorStyle(usernameTag);
         contentError(errorTag, 'Invalid username!');
@@ -154,17 +152,20 @@ async function checkUsername(usernameTag, errorTag) {
         return false;
     }
 
-    const checkUsername = await fetch('http://localhost:3000/checkAccount', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ account: usernameTag.value })
+    const checkUsername = await fetch("http://localhost:3000/checkAccount", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        accountType: "UserName",
+        account: usernameTag.value,
+      }),
     });
+    
     if (checkUsername.status === 404) {
         errorStyle(usernameTag);
         contentError(errorTag, 'Username is already taken!');
         return false;
     }
-
     return true;
 }
 

@@ -17,83 +17,20 @@ $(document).ready(function () {
     let selectedRow = $(this).closest(".order-row");
     $(".del-window").data("selectedRow", selectedRow); // Lưu hàng cần xóa
 
-    $(".del-window").removeClass("hidden").fadeIn(200).addClass("show");
-    $(".overlay").removeClass("hidden");
-    $("body").addClass("no-scroll");
+    showHideConfimationDialog();
   });
 
   $(document).on("click", ".btn-submit button", async function () {
     if ($(this).text().trim() === "Yes") {
-      let selectedRow = $(".del-window").data("selectedRow"); // Lấy hàng đã lưu trước đó
-      if (!selectedRow) return;
-
-      try {
-        // Lấy thông tin tài khoản
-        const accountResponse = await fetch(
-          "http://localhost:3000/getUserInfo",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          }
-        );
-
-        const user = await accountResponse.json();
-        const orderID = selectedRow.find(".order-id").val().trim();
-        console.log(orderID);
-
-        // Gửi request xóa đơn hàng
-        await fetch("http://localhost:3000/removeAnOrder", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ userID: user.id, orderID: orderID }),
-        });
-
-        // Sau khi request thành công, mới fadeOut rồi remove()
-        selectedRow.fadeOut(300, function () {
-          $(this).remove();
-        });
-
-        showNotification();
-
-        const orderResponse = await fetch("http://localhost:3000/listOrder", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ userID: user.id }),
-        });
-
-        const orders = await orderResponse.json();
-
-        const orderEmpty = document.querySelector(".order-empty");
-
-        if (orders.length !== 0) {
-          document.querySelector(".main-order-page").classList.remove("hidden");
-          orderEmpty.classList.add("hidden");
-        } else {
-          document.querySelector(".main-order-page").classList.add("hidden");
-          orderEmpty.classList.remove("hidden");
-        }
-      } catch (error) {
-        console.error("Lỗi khi xóa đơn hàng:", error);
-      }
+      deleteAnOrder();
     }
 
     // Ẩn hộp thoại xác nhận
-    $(".del-window").removeClass("show").fadeOut(200);
-    $(".overlay").addClass("hidden");
-    $("body").removeClass("no-scroll");
+    showHideConfimationDialog();
   });
 
   $(".overlay").click(function () {
-    $(".del-window").removeClass("show").fadeOut(200);
-    $(".overlay").addClass("hidden");
-    $("body").removeClass("no-scroll");
+    showHideConfimationDialog();
   });
 });
 
@@ -134,4 +71,68 @@ function showNotification() {
       notification.remove();
     }, 500);
   }, 3000);
+}
+
+function showHideConfimationDialog() {
+  $(".del-window").fadeToggle(200).toggleClass("hidden show");
+  $(".overlay").toggleClass("hidden");
+  $("body").toggleClass("no-scroll");
+}
+
+async function deleteAnOrder() {
+  let selectedRow = $(".del-window").data("selectedRow"); // Lấy hàng đã lưu trước đó
+  if (!selectedRow) return;
+
+  try {
+    // Get account info
+    const accountResponse = await fetch("http://localhost:3000/getUserInfo", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+
+    const user = await accountResponse.json();
+    const orderID = selectedRow.find(".order-id").val().trim();
+    console.log(orderID);
+
+    // Request to delete an order
+    await fetch("http://localhost:3000/removeAnOrder", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ userID: user.id, orderID: orderID }),
+    });
+
+    // Sau khi request thành công, mới fadeOut rồi remove()
+    selectedRow.fadeOut(300, function () {
+      $(this).remove();
+    });
+
+    showNotification();
+
+    const orderResponse = await fetch("http://localhost:3000/listOrder", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ userID: user.id }),
+    });
+
+    const orders = await orderResponse.json();
+
+    const orderEmpty = document.querySelector(".order-empty");
+
+    if (orders.length !== 0) {
+      document.querySelector(".main-order-page").classList.remove("hidden");
+      orderEmpty.classList.add("hidden");
+    } else {
+      document.querySelector(".main-order-page").classList.add("hidden");
+      orderEmpty.classList.remove("hidden");
+    }
+  } catch (error) {
+    console.error("Lỗi khi xóa đơn hàng:", error);
+  }
 }

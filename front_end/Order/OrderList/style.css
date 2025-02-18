@@ -412,9 +412,6 @@ a {
 }
 
 /* Window confirm delete order */
-.hidden {
-  display: none;
-}
 
 .overlay {
   position: absolute;
@@ -573,4 +570,8 @@ a {
   to {
     transform: translateX(100%);
   }
+}
+
+.hidden {
+  display: none;
 }

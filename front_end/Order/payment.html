@@ -88,11 +88,11 @@
     }
 
     .card-2col .form-product-item,
-    .card-3col .form-product-item {
+    .list-service .form-product-item {
       border-color: rgba(195, 202, 216, 0.5);
     }
 
-    .card-3col div[data-wrapper-react="true"] {
+    .list-service div[data-wrapper-react="true"] {
       display: flex;
       flex-wrap: wrap;
       width: 100%;
@@ -106,7 +106,7 @@
       margin-bottom: 12px;
     }
 
-    .card-3col span.form-product-item {
+    .list-service span.form-product-item {
       width: calc(33.333% - 12px);
       margin-bottom: 12px;
     }
@@ -116,7 +116,7 @@
       border-radius: 4px !important;
     }
 
-    .card-3col .form-product-item.new_ui {
+    .list-service .form-product-item.new_ui {
       border-width: 1px;
       border-style: solid;
       padding: 12px 14px 12px 44px;
@@ -124,11 +124,11 @@
       margin: 0px 12px 12px 0px;
     }
 
-    .card-3col .form-product-item.new_ui.show_image {
+    .list-service .form-product-item.new_ui.show_image {
       padding: 0px !important;
     }
 
-    .form-line.card-3col .form-product-item {
+    .form-line.list-service .form-product-item {
       background-color: #CBDBF2;
     }
 
@@ -140,7 +140,7 @@
       display: block;
     }
 
-    .card-3col .form-product-item.new_ui.show_image .p_image {
+    .list-service .form-product-item.new_ui.show_image .p_image {
       padding: 0;
       float: none;
       width: 100%;
@@ -164,7 +164,7 @@
       background-size: contain !important;
     }
 
-    .card-3col .form-product-item.new_ui.show_image .image_area {
+    .list-service .form-product-item.new_ui.show_image .image_area {
       min-height: 124px;
       max-height: 148px;
       width: 100%;
@@ -175,30 +175,6 @@
       border-bottom: 1px solid #F4F4F4;
     }
 
-    .form-product-item .p_image .image_area .image_zoom {
-      border: 0;
-      background: rgba(1, 118, 254, 0.5);
-      background-image: url(https://cdn.jotfor.ms/assets/img/payments/image_zoom.svg);
-      position: absolute;
-      display: none !important;
-      cursor: pointer;
-      background-position: center center;
-      background-size: 36px;
-      background-repeat: no-repeat;
-    }
-
-    .form-product-item .p_image:hover .image_zoom {
-      display: block !important;
-      top: 0;
-      right: 0;
-      border-radius: 3px;
-    }
-
-    .card-3col .form-product-item.new_ui.show_image .image_zoom {
-      width: 100%;
-      height: 100%;
-    }
-
     .form-product-item .form-product-container {
       position: relative;
       width: 100%;
@@ -206,7 +182,7 @@
       min-width: 0;
     }
 
-    .card-3col .form-product-item.new_ui .form-product-container {
+    .list-service .form-product-item.new_ui .form-product-container {
       padding: 10px;
       margin: 0 !important;
     }
@@ -219,7 +195,7 @@
       display: block;
     }
 
-    .card-3col .form-product-item.new_ui.show_image .title_description {
+    .list-service .form-product-item.new_ui.show_image .title_description {
       padding: 0;
       min-height: auto;
     }
@@ -239,7 +215,7 @@
       display: block;
     }
 
-    .card-3col .form-product-item.new_ui .form-product-container .form-product-name {
+    .list-service .form-product-item.new_ui .form-product-container .form-product-name {
       min-height: auto;
       padding: 0 0 6px 0;
     }
@@ -256,7 +232,7 @@
       opacity: 0.8;
     }
 
-    .card-3col .form-product-item.new_ui.show_image .form-product-container .form-product-description {
+    .list-service .form-product-item.new_ui.show_image .form-product-container .form-product-description {
       padding-right: 0 !important;
     }
 
@@ -265,7 +241,7 @@
       font-size: 14px;
     }
 
-    .card-3col .form-product-item.new_ui .form-product-details {
+    .list-service .form-product-item.new_ui .form-product-details {
       padding-top: 4px;
       position: absolute;
       display: block;
@@ -282,12 +258,12 @@
       width: auto;
     }
 
-    .card-3col .form-product-item.new_ui.show_image .form-product-container .form-sub-label-container {
+    .list-service .form-product-item.new_ui.show_image .form-product-container .form-sub-label-container {
       margin-right: 10px;
       margin-top: 2px;
     }
 
-    .card-3col .form-product-item .form-product-container .form-sub-label-container label.form-sub-label {
+    .list-service .form-product-item .form-product-container .form-sub-label-container label.form-sub-label {
       white-space: normal !important;
       height: auto !important;
       min-height: auto !important;
@@ -352,7 +328,7 @@
       padding: 16px 0 !important;
     }
 
-    .card-3col .payment_footer.new_ui {
+    .list-service .payment_footer.new_ui {
       margin: 10px 0;
       position: relative;
     }
@@ -384,7 +360,7 @@
       text-align: right;
     }
 
-    .card-3col .payment_footer.new_ui .total_area {
+    .list-service .payment_footer.new_ui .total_area {
       padding-right: 0;
     }
 
@@ -503,7 +479,7 @@
           </div>
         </div>
       </li>
-      <li class="form-line card-3col"><label class="form-label form-label-top">
+      <li class="form-line list-service"><label class="form-label form-label-top">
           Product List </label>
         <div class="form-input-wide">
           <div data-wrapper-react="true">
@@ -710,14 +686,14 @@
         </div>
       </li>
 
-      <li class="form-line" ]><label class="form-label form-label-top">
+      <li class="form-line"><label class="form-label form-label-top">
           Booking<span class="form-required">*</span></label>
         <div>
           <div data-wrapper-react="true">
             <input type="date" id="appointment-date">
             <input type="time" id="appointment-time">
           </div>
-          <div class="form-error-message hidden" role="alert">
+          <div class="form-error-message hidden]" role="alert">
             <span class="error-navigation-message">This field is required.</span>
           </div>
         </div>

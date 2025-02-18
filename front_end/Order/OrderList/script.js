@@ -1,5 +1,7 @@
+let totalPrice = 0;
 async function fetchUserOrders() {
   try {
+    const promises = [];
     // Lấy thông tin người dùng
     const accountResponse = await fetch("http://localhost:3000/getUserInfo", {
       method: "POST",
@@ -10,7 +12,6 @@ async function fetchUserOrders() {
     });
 
     const user = await accountResponse.json();
-
 
     // Lấy danh sách đơn hàng
     const orderResponse = await fetch("http://localhost:3000/listOrder", {
@@ -33,48 +34,52 @@ async function fetchUserOrders() {
     }
 
     orders.forEach(async (order, index) => {
-      // Gọi API lấy thông tin xe
-      const carResponse = await fetch("http://localhost:3000/carInfo", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ carID: order.CarID }),
-      });
-
-      const car = await carResponse.json();
-
-      // Gọi API lấy thông tin dịch vụ
-      const serviceResponse = await fetch("http://localhost:3000/serviceInfo", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ serviceID: order.ServiceID }),
-      });
-
-      const service = await serviceResponse.json();
-
-      // Gọi API lấy thông tin phụ tùng
-      const carPartResponse = await fetch(
-        "http://localhost:3000/carPartInfoInCar",
-        {
+      const promise = (async () => {
+        // Gọi API lấy thông tin xe
+        const carResponse = await fetch("http://localhost:3000/carInfo", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ carID: order.CarID, partID: order.PartID }),
-        }
-      );
+          body: JSON.stringify({ carID: order.CarID }),
+        });
 
-      const carPart = await carPartResponse.json();
+        const car = await carResponse.json();
 
-      const partInfo = await fetch("http://localhost:3000/componentInfo", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ partID: order.PartID }),
-      });
+        // Gọi API lấy thông tin dịch vụ
+        const serviceResponse = await fetch(
+          "http://localhost:3000/serviceInfo",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ serviceID: order.ServiceID }),
+          }
+        );
 
-      const part = await partInfo.json();
+        const service = await serviceResponse.json();
 
-      // Tạo phần tử đơn hàng
-      const orderElement = document.createElement("div");
-      orderElement.classList.add("order-row");
-      orderElement.innerHTML = `
+        // Gọi API lấy thông tin phụ tùng
+        const carPartResponse = await fetch(
+          "http://localhost:3000/carPartInfoInCar",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ carID: order.CarID, partID: order.PartID }),
+          }
+        );
+
+        const carPart = await carPartResponse.json();
+
+        const partInfo = await fetch("http://localhost:3000/componentInfo", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ partID: order.PartID }),
+        });
+
+        const part = await partInfo.json();
+
+        // Tạo phần tử đơn hàng
+        const orderElement = document.createElement("div");
+        orderElement.classList.add("order-row");
+        orderElement.innerHTML = `
         <div class="order-product">
           <input type="hidden" class="order-id" value="${order.OrderID}"/>
           <div class="order-info">
@@ -112,9 +117,13 @@ async function fetchUserOrders() {
             </div>
           </div>
         </div>`;
-
-      orderBody.appendChild(orderElement);
+        totalPrice += order.EstimatedCost;
+        orderBody.appendChild(orderElement);
+      })();
+      promises.push(promise);
     });
+    await Promise.all(promises);
+    document.querySelector(".total-price").innerHTML = totalPrice;
   } catch (error) {
     console.error("Error:", error);
   }
