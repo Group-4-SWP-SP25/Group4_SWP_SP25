@@ -38,6 +38,7 @@ const UserList = async (firstIndex, count, searchString, sortColumn = 'UserID', 
         const userData = result.recordset;
         return userData;
     } catch (err) {
+        console.log(err);
         throw err;
     }
 }
@@ -65,6 +66,7 @@ const TotalUserCount = async (searchString) => {
         const totalUserCount = result.recordset[0].TotalUserCount;
         return totalUserCount;
     } catch (err) {
+        console.log(err);
         throw err;
     }
 };
@@ -89,6 +91,7 @@ const search = async (searchString) => {
         const userData = result.recordset;
         return userData;
     } catch (err) {
+        console.log(err);
         throw err;
     }
 };

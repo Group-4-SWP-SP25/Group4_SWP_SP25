@@ -67,7 +67,7 @@ CREATE TABLE CarPart (
 GO
 
 -- 5
-CREATE TABLE ServiceTypes (
+CREATE TABLE ServiceType (
 	ServiceTypeID INT IDENTITY(1, 1) NOT NULL PRIMARY KEY,
 	ServiceTypeName VARCHAR(200),
 	ServiceTypeDescription TEXT
@@ -77,10 +77,10 @@ GO
 -- 6
 CREATE TABLE [Service] (
 	ServiceID INT IDENTITY(1, 1) NOT NULL PRIMARY KEY,
-	ServiceTypeID INT FOREIGN KEY REFERENCES [ServiceTypes](ServiceTypeID) ON DELETE CASCADE,
+	ServiceTypeID INT FOREIGN KEY REFERENCES [ServiceType](ServiceTypeID) ON DELETE CASCADE,
 	ServiceName VARCHAR(200) NOT NULL,
 	ServiceDescription TEXT,
-	Price FLOAT NOT NULL
+	ServicePrice FLOAT NOT NULL
 );
 GO
 
@@ -106,6 +106,17 @@ CREATE TABLE [Order] (
     EstimatedCost FLOAT NOT NULL,
 	OrderDate DATETIME DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT pk_Orders PRIMARY KEY (UserID, OrderID)
+);
+GO
+
+-- MESSAGE
+CREATE TABLE [Messages] (
+    MessageID INT IDENTITY(1, 1) PRIMARY KEY,
+    SenderID INT FOREIGN KEY REFERENCES [User](UserID),
+    ReceiverID INT FOREIGN KEY REFERENCES [User](UserID),
+    Content TEXT NOT NULL,
+    SentAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    IsRead BIT DEFAULT 0
 );
 GO
 
@@ -176,7 +187,7 @@ BEGIN
     -- Update existing order quantity and recalculate EstimatedCost
     UPDATE o
     SET o.QuantityUsed = o.QuantityUsed + i.QuantityUsed,
-        o.EstimatedCost = (o.QuantityUsed + i.QuantityUsed) * inv.UnitPrice + COALESCE(s.Price, 0)
+        o.EstimatedCost = (o.QuantityUsed + i.QuantityUsed) * inv.UnitPrice + COALESCE(s.ServicePrice, 0)
     FROM [Order] o
     INNER JOIN inserted i
         ON o.UserID = i.UserID
@@ -197,7 +208,7 @@ BEGIN
         i.PartID,
         i.ServiceID,
         i.QuantityUsed,
-        (i.QuantityUsed * inv.UnitPrice) + COALESCE(s.Price, 0)
+        (i.QuantityUsed * inv.UnitPrice) + COALESCE(s.ServicePrice, 0)
     FROM inserted i
     INNER JOIN Inventory inv ON i.PartID = inv.PartID
     LEFT JOIN [Service] s ON i.ServiceID = s.ServiceID
@@ -256,19 +267,19 @@ INSERT INTO [User](Username, Password, FirstName, LastName, Email, Phone, DOB, L
 VALUES ('q8edh12hi', '1234', 'qwe8dyrwfhief', 'qwgufcqbw', 'qwficqwfc', '0123456789', '01/01/2000', '01/01/2010');
 GO
 
-INSERT INTO [ServiceTypes](ServiceTypeName, ServiceTypeDescription) VALUES 
-('Wheel System', 'Including: Tires Patching, Tires Replacement, Tires Pressure Check, Wheel Balancing and Wheel Alignment.'),
-('Braking System', 'Including: Braking Pad Replacement, Braking Disc Replacement, Braking Fluid Change, Braking Maintenance and ABS System Check.'),
-('Engine System', 'Including: Engine Oil Change, Engine Sparkplug Inspection, Engine Injector Cleaning, Engine Cooling System check and Engine Repair.'),
-('Battery System', 'Including: Battery Health check, Battery Charging, Battery Replacement and Battery Terminal Cleaning.'),
-('Electrical System', 'Including: Bulb replacement, Fuse Replacement, Electrical system Diagnosis and Wiring Repair.'),
-('Air Conditioning System', 'Including: AC Gas Refill, AC Condenser Cleaning, AC Filter Replacement and AC System Repair.'),
-('Shock Absorbers System', 'Including: Shock Absorbers Replacement, Tie Rod Replacement, Control Arm Replacement and Suspension Alignment.'),
-('Fuel System', 'Including: Fuel Pump Cleaning, Fuel Filter Replacement and Fuel Injection Repair.'),
-('Cleaning and Maintenance', 'Including: Standard washes, Polishing, Interior Cleaning and Waterproof Coating.');
+INSERT INTO [ServiceType](ServiceTypeName, ServiceTypeDescription) VALUES 
+('Wheel System', 'This service is to ensure your vehicle''s wheels are in perfect condition. It provides: Tires Patching, Tires Replacement, Tires Pressure Check, Wheel Balancing, and Wheel Alignment.'),
+('Braking System', 'This service is to maintain the safety and efficiency of your vehicle''s braking system. It provides: Braking Pad Replacement, Braking Disc Replacement, Braking Fluid Change, Braking Maintenance, and ABS System Check.'),
+('Engine System', 'This service is to keep your engine running smoothly and efficiently. It provides: Engine Oil Change, Engine Sparkplug Inspection, Engine Injector Cleaning, Engine Cooling System check, and Engine Repair.'),
+('Battery System', 'This service is to ensure your vehicle''s battery is reliable and fully functional. It provides: Battery Health Check, Battery Charging, Battery Replacement, and Battery Terminal Cleaning.'),
+('Electrical System', 'This service is to address all electrical issues in your vehicle. It provides: Bulb Replacement, Fuse Replacement, Electrical System Diagnosis, and Wiring Repair.'),
+('Air Conditioning System', 'This service is to ensure your vehicle''s air conditioning system works efficiently. It provides: AC Gas Refill, AC Condenser Cleaning, AC Filter Replacement, and AC System Repair.'),
+('Shock Absorbers System', 'This service is to maintain your vehicle''s suspension and ride comfort. It provides: Shock Absorber Replacement, Tie Rod Replacement, Control Arm Replacement, and Suspension Alignment.'),
+('Fuel System', 'This service is to ensure your vehicle''s fuel system is clean and efficient. It provides: Fuel Pump Cleaning, Fuel Filter Replacement, and Fuel Injection Repair.'),
+('Cleaning and Maintenance', 'This service is to keep your vehicle clean and well-maintained. It provides: Standard Washes, Polishing, Interior Cleaning, and Waterproof Coating.');
 GO
 
-INSERT INTO [Service](ServiceTypeID, ServiceName, ServiceDescription, Price) VALUES 
+INSERT INTO [Service](ServiceTypeID, ServiceName, ServiceDescription, ServicePrice) VALUES 
 ('1', 'Tires Patching', 'Repair small punctures in tires to restore functionality.', ROUND(ROUND(RAND() * 500000 + 750000, 0) / 10000, 0) * 10000),
 ('1', 'Tires Replacement', 'Replace old or damaged tires with new ones for better safety and performance.', ROUND(ROUND(RAND() * 500000 + 750000, 0) / 10000, 0) * 10000),
 ('1', 'Tires Pressure Check', 'Check and adjust tire pressure to ensure optimal driving conditions.', ROUND(ROUND(RAND() * 500000 + 750000, 0) / 10000, 0) * 10000),

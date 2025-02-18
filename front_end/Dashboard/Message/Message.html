@@ -5,8 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Message</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,0,1,0&icon_names=check_circle" />
     <link rel="stylesheet" href="Message.css">
 </head>
 
@@ -42,54 +43,183 @@
 
     <div class="content" style="overflow-y: hidden;">
         <div class="message-left">
-            <ul class="collection" style="margin: 0;">
-                <a href="" class="collection-item avatar"></a>
-                <a class="collection-item avatar active " onclick="myFunction()">
-                    <img src="images/yuna.jpg" alt="" class="circle">
-                    <span class="title">Title</span>
-                    <p>First Line <br>
-                        Second Line
-                    </p>
-                </a>
-                <li class="collection-item avatar">
-                    <i class="material-icons circle">folder</i>
-                    <span class="title">Title</span>
-                    <p>First Line <br>
-                        Second Line
-                    </p>
-                    <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
-                </li>
-                <li class="collection-item avatar">
-                    <i class="material-icons circle green">insert_chart</i>
-                    <span class="title">Title</span>
-                    <p>First Line <br>
-                        Second Line
-                    </p>
-                    <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
-                </li>
-                <li class="collection-item avatar">
-                    <i class="material-icons circle red">play_arrow</i>
-                    <span class="title">Title</span>
-                    <p>First Line <br>
-                        Second Line
-                    </p>
-                    <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
-                </li>
-            </ul>
+            <div class="message-head">
+                <span>Messages</span>
+                <button class="message-head-action">
+                    <span class="material-icons md-light">
+                        library_add
+                    </span>
+                </button>
+            </div>
+            <div class="search">
+                <span class="material-icons">
+                    search
+                </span>
+                <input type="text" placeholder="Search..." id="searchString">
+            </div>
+            <div class="message-item">
+                <div class="message-item-info">
+                    <img src="../../../resource/admin.jpg" alt="Admin">
+                    <div class="message-item-info-detail">
+                        <span class="message-item-username">Admin</span>
+                        <span class="last-message">Hi, how can I help you asdasdasdas asda dawsdwa adsd asd qwd as
+                        </span>
+                    </div>
+                </div>
+                <div class="message-item-action">
+                    <button id="message-item-action">
+                        <span class="material-icons">
+                            menu
+                        </span>
+                    </button>
+                </div>
+            </div>
+            <div class="message-item">
+                <div class="message-item-info">
+                    <img src="../../../resource/admin.jpg" alt="Admin">
+                    <div class="message-item-info-detail">
+                        <span class="message-item-username">Admin</span>
+                        <span class="last-message">Hi, how can I help you asdasdasdas asda dawsdwa adsd asd qwd as
+                        </span>
+                    </div>
+                </div>
+                <div class="message-item-action">
+                    <button id="message-item-action">
+                        <span class="material-icons">
+                            menu
+                        </span>
+                    </button>
+                </div>
+            </div>
+            <div class="message-item">
+                <div class="message-item-info">
+                    <img src="../../../resource/admin.jpg" alt="Admin">
+                    <div class="message-item-info-detail">
+                        <span class="message-item-username">Admin</span>
+                        <span class="last-message">Hi, how can I help you asdasdasdas asda dawsdwa adsd asd qwd as
+                        </span>
+                    </div>
+                </div>
+                <div class="message-item-action">
+                    <button id="message-item-action">
+                        <span class="material-icons">
+                            menu
+                        </span>
+                    </button>
+                </div>
+            </div>
+
+
         </div>
         <div class="message-right">
+            <!-- Head  -->
+            <div class="message-right-header">
+                <a href="#" class="message-right-header-user">
+                    <img src="../../../resource/admin.jpg" alt="Admin">
+                    <span>Đoàn Minh Hiếu </span>
+                </a>
+                <div class="message-right-header-action">
+                    <button id="message-right-header-action-btn">
+                        <span class="material-icons md-light md-36">
+                            info
+                        </span>
+                    </button>
+                </div>
+            </div>
+            <!-- Body  -->
+            <div class="message-right-body custom-scrollbar">
 
+                <div class="msg left-msg">
+                    <div class="msg-img">
+                        <img src="../../../resource/admin.jpg" alt="Admin">
+                    </div>
+                    <div class="msg-bubble">
+                        <div class="msg-text">Hi, how can I help you? asdasdasdas asda dawsdwa adsd asd qwd as Lorem
+                            ipsum dolor sit amet, consectetur adipiscing elit.
+                            Proin volutpat massa non mi aliquet, a tincidunt felis fermentum.
+                            Integer maximus, ex at pulvinar vehicula, arcu urna aliquam mi, vel ultricies neque quam in
+                            libero.
+                            <!-- Thêm nhiều nội dung để thử tính năng cuộn -->
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                            Proin volutpat massa non mi aliquet, a tincidunt felis fermentum.
+                            Integer maximus, ex at pulvinar vehicula, arcu urna aliquam mi, vel ultricies neque quam in
+                            libero Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                            Proin volutpat massa non mi aliquet, a tincidunt felis fermentum.
+                            Integer maximus, ex at pulvinar vehicula, arcu urna aliquam mi, vel ultricies neque quam in
+                            libero.
+
+                            <div class="msg-info-left">
+                                <div class="msg-info-name">Admin</div>
+                                <div class="msg-info-time">12:45</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="msg right-msg">
+                    <div class="msg-bubble">
+                        <div class="msg-text">Hi, how can I help you? asdasdasdas asda dawsdwa adsd asd qwd as Lorem
+                            ipsum dolor sit amet,
+                            <div class="msg-info-right">
+                                <div class="msg-info-name">Admin</div>
+                                <div class="msg-info-time">12:45</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="status">
+                        <img src="/resource/admin.jpg" alt="">
+                    </div>
+                </div>
+
+                <div class="msg right-msg">
+                    <div class="msg-bubble">
+                        <div class="msg-text">Hi, how can I help you? asdasdasdas asda dawsdwa adsd asd qwd as Lorem
+                            ipsum dolor sit amet,
+                            <div class="msg-info-right">
+                                <div class="msg-info-name">Admin</div>
+                                <div class="msg-info-time">12:45</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="status">
+                        <span class="material-icons">
+                            check_circle
+                        </span>
+                    </div>
+
+                </div>
+
+                <div class="msg right-msg">
+                    <div class="msg-bubble">
+                        <div class="msg-text">
+                            Hi, how can I help you? asdasdasdas asda dawsdwa adsd asd qwd as Lorem
+                            <span class="material-icons">favorite</span>
+                            ipsum dolor sit amet,
+                            <div class="msg-info-right">
+                                <div class="msg-info-name">Admin</div>
+                                <div class="msg-info-time">12:45</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="status">
+                        <div class="loader"></div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- Footer  -->
+            <div class="message-right-footer">
+                <button class="message-right-footer-action">
+                    <span class="material-icons">
+                        add_circle
+                    </span>
+                </button>
+                <input type="text" placeholder="Type a message..." id="message-input">
+                <button id="send-message"><i class="material-icons">send</i></button>
+            </div>
         </div>
-    </div>
-    <script>
-        function myFunction() {
-            alert("Item 1 clicked!");
-        }
-
-        function anotherFunction(element) {
-            console.log("Clicked element:", element.textContent);
-        }
-    </script>
+        <script src="./Message.js"></script>
 </body>
 
 </html>

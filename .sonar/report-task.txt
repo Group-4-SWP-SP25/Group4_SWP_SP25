@@ -1,0 +1,7 @@
+organization=group-4-swp-sp25
+projectKey=Group-4-SWP-SP25_Group4_SWP_SP25
+serverUrl=https://sonarcloud.io
+serverVersion=8.0.0.59757
+dashboardUrl=https://sonarcloud.io/dashboard?id=Group-4-SWP-SP25_Group4_SWP_SP25
+ceTaskId=AZUTvHgrRaRG30Tpj625
+ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AZUTvHgrRaRG30Tpj625

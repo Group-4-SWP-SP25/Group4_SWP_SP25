@@ -1,0 +1,26 @@
+{
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "sonarqube-scanner": "^4.2.6"
+  },
+  "jest": {
+    "collectCoverage": true,
+    "coverageReporters": [
+      "lcov",
+      "text-summary"
+    ],
+    "collectCoverageFrom": [
+      "back_end/**/*.js"
+    ],
+    "testMatch": [
+      "**/__tests__/**/*.[jt]s?(x)",
+      "**/?(*.)+(spec|test).[tj]s?(x)"
+    ],
+    "testPathIgnorePatterns": [
+      "/node_modules/"
+    ]
+  },
+  "scripts": {
+    "test": "jest"
+  }
+}
