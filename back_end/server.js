@@ -67,6 +67,9 @@ const {
   removeAllOrder,
 } = require("./myModule/controller/order/removeOrder.js");
 
+// message
+const { SendMessage, GetMessage, GetList } = require("./myModule/controller/message/message.js");
+
 // ----------------------------------------------------------
 
 // CREATE API
@@ -92,6 +95,9 @@ app.post(
   getTotalUserCount
 );
 app.post("/CustomerManager/getUserInfo", authenticateADMIN, GetUserInfo_Admin);
+app.post("/Message/SendMessage", authenticateADMIN, SendMessage);
+app.post("/Message/GetMessage", authenticateADMIN, GetMessage);
+app.post("/Message/GetList", authenticateADMIN, GetList);
 
 // app.post("/getServiceDetail", getServiceDetail);
 app.post("/getServiceTypeDetail", getServiceTypeDetail);

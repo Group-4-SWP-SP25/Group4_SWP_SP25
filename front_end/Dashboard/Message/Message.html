@@ -12,8 +12,6 @@
 </head>
 
 <body>
-
-
     <div class="header">
         <h1>Dashboard</h1>
         <div class="user-info">
@@ -45,7 +43,7 @@
         <div class="message-left">
             <div class="message-head">
                 <span>Messages</span>
-                <button class="message-head-action">
+                <button class="message-head-action" id="message-head-action">
                     <span class="material-icons md-light">
                         library_add
                     </span>
@@ -57,56 +55,8 @@
                 </span>
                 <input type="text" placeholder="Search..." id="searchString">
             </div>
-            <div class="message-item">
-                <div class="message-item-info">
-                    <img src="../../../resource/admin.jpg" alt="Admin">
-                    <div class="message-item-info-detail">
-                        <span class="message-item-username">Admin</span>
-                        <span class="last-message">Hi, how can I help you asdasdasdas asda dawsdwa adsd asd qwd as
-                        </span>
-                    </div>
-                </div>
-                <div class="message-item-action">
-                    <button id="message-item-action">
-                        <span class="material-icons">
-                            menu
-                        </span>
-                    </button>
-                </div>
-            </div>
-            <div class="message-item">
-                <div class="message-item-info">
-                    <img src="../../../resource/admin.jpg" alt="Admin">
-                    <div class="message-item-info-detail">
-                        <span class="message-item-username">Admin</span>
-                        <span class="last-message">Hi, how can I help you asdasdasdas asda dawsdwa adsd asd qwd as
-                        </span>
-                    </div>
-                </div>
-                <div class="message-item-action">
-                    <button id="message-item-action">
-                        <span class="material-icons">
-                            menu
-                        </span>
-                    </button>
-                </div>
-            </div>
-            <div class="message-item">
-                <div class="message-item-info">
-                    <img src="../../../resource/admin.jpg" alt="Admin">
-                    <div class="message-item-info-detail">
-                        <span class="message-item-username">Admin</span>
-                        <span class="last-message">Hi, how can I help you asdasdasdas asda dawsdwa adsd asd qwd as
-                        </span>
-                    </div>
-                </div>
-                <div class="message-item-action">
-                    <button id="message-item-action">
-                        <span class="material-icons">
-                            menu
-                        </span>
-                    </button>
-                </div>
+
+            <div class="message-item-list custom-scrollbar" id="message-item-list">
             </div>
 
 
@@ -116,7 +66,7 @@
             <div class="message-right-header">
                 <a href="#" class="message-right-header-user">
                     <img src="../../../resource/admin.jpg" alt="Admin">
-                    <span>Đoàn Minh Hiếu </span>
+                    <span id="header-username">Đoàn Minh Hiếu </span>
                 </a>
                 <div class="message-right-header-action">
                     <button id="message-right-header-action-btn">
@@ -127,7 +77,64 @@
                 </div>
             </div>
             <!-- Body  -->
-            <div class="message-right-body custom-scrollbar">
+
+            <div class="message-right-body custom-scrollbar" id="message-right-body">
+
+                <div class="msg left-msg">
+                    <div class="msg-img">
+                        <img src="../../../resource/admin.jpg" alt="Admin">
+                    </div>
+                    <div class="msg-bubble">
+                        <div class="msg-text">Hi, how can I help you? asdasdasdas asda dawsdwa adsd asd qwd as Lorem
+                            ipsum dolor sit amet, consectetur adipiscing elit.
+                            Proin volutpat massa non mi aliquet, a tincidunt felis fermentum.
+                            Integer maximus, ex at pulvinar vehicula, arcu urna aliquam mi, vel ultricies neque quam in
+                            libero.
+                            <!-- Thêm nhiều nội dung để thử tính năng cuộn -->
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                            Proin volutpat massa non mi aliquet, a tincidunt felis fermentum.
+                            Integer maximus, ex at pulvinar vehicula, arcu urna aliquam mi, vel ultricies neque quam in
+                            libero Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                            Proin volutpat massa non mi aliquet, a tincidunt felis fermentum.
+                            Integer maximus, ex at pulvinar vehicula, arcu urna aliquam mi, vel ultricies neque quam in
+                            libero.
+
+                            <div class="msg-info-left">
+                                <div class="msg-info-name">Admin</div>
+                                <div class="msg-info-time">12:45</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="msg left-msg">
+                    <div class="msg-img">
+                        <img src="../../../resource/admin.jpg" alt="Admin">
+                    </div>
+                    <div class="msg-bubble">
+                        <div class="msg-text">Hi, how can I help you? asdasdasdas asda dawsdwa adsd asd qwd as Lorem
+                            ipsum dolor sit amet, consectetur adipiscing elit.
+                            Proin volutpat massa non mi aliquet, a tincidunt felis fermentum.
+                            Integer maximus, ex at pulvinar vehicula, arcu urna aliquam mi, vel ultricies neque quam in
+                            libero.
+                            <!-- Thêm nhiều nội dung để thử tính năng cuộn -->
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                            Proin volutpat massa non mi aliquet, a tincidunt felis fermentum.
+                            Integer maximus, ex at pulvinar vehicula, arcu urna aliquam mi, vel ultricies neque quam in
+                            libero Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                            Proin volutpat massa non mi aliquet, a tincidunt felis fermentum.
+                            Integer maximus, ex at pulvinar vehicula, arcu urna aliquam mi, vel ultricies neque quam in
+                            libero.
+
+                            <div class="msg-info-left">
+                                <div class="msg-info-name">Admin</div>
+                                <div class="msg-info-time">12:45</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
 
                 <div class="msg left-msg">
                     <div class="msg-img">
@@ -192,6 +199,24 @@
 
                 <div class="msg right-msg">
                     <div class="msg-bubble">
+                        <div class="msg-text">Hi, how can I help you? asdasdasdas asda dawsdwa adsd asd qwd as Lorem
+                            ipsum dolor sit amet,
+                            <div class="msg-info-right">
+                                <div class="msg-info-name">Admin</div>
+                                <div class="msg-info-time">12:45</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="status">
+                        <span class="material-icons" style="color: orangered;">
+                            error
+                        </span>
+                    </div>
+
+                </div>
+
+                <div class="msg right-msg">
+                    <div class="msg-bubble">
                         <div class="msg-text">
                             Hi, how can I help you? asdasdasdas asda dawsdwa adsd asd qwd as Lorem
                             <span class="material-icons">favorite</span>
@@ -215,11 +240,164 @@
                         add_circle
                     </span>
                 </button>
-                <input type="text" placeholder="Type a message..." id="message-input">
+                <textarea rows="1" placeholder="Type a message..." id="message-input" oninput="autoResize(this)"
+                    class="custom-scrollbar"></textarea>
                 <button id="send-message"><i class="material-icons">send</i></button>
             </div>
         </div>
-        <script src="./Message.js"></script>
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+
+    <div class="popup-container">
+        <div class="popup" id="popup">
+            <div class="popup-header">
+                <span class="popup-header-TO">
+                    TO:
+                </span>
+                <div class="popup-header-list ">
+                    <div class="popup-header-item">
+                        <span class="popup-header-item-name">Doan Minh Hieu abcxyzasd</span>
+                        <button>
+                            <span class="material-icons">
+                                close
+                            </span>
+                        </button>
+                    </div>
+
+                    <div class="popup-header-item">
+                        <span class="popup-header-item-name">Doan Minh Hieu abcxyzasd</span>
+                        <button>
+                            <span class="material-icons">
+                                close
+                            </span>
+                        </button>
+                    </div>
+                    <div class="popup-header-item">
+                        <span class="popup-header-item-name">Doan Minh Hieu abcxyzasd</span>
+                        <button>
+                            <span class="material-icons">
+                                close
+                            </span>
+                        </button>
+                    </div>
+                    <div class="popup-header-item">
+                        <span class="popup-header-item-name">Doan Minh Hieu abcxyzasd</span>
+                        <button>
+                            <span class="material-icons">
+                                close
+                            </span>
+                        </button>
+                    </div>
+                    <div class="popup-header-item">
+                        <span class="popup-header-item-name">Doan Minh Hieu abcxyzasd</span>
+                        <button>
+                            <span class="material-icons">
+                                close
+                            </span>
+                        </button>
+                    </div>
+                    <div class="popup-header-item">
+                        <span class="popup-header-item-name">Doan Minh Hieu abcxyzasd</span>
+                        <button>
+                            <span class="material-icons">
+                                close
+                            </span>
+                        </button>
+                    </div>
+                    <div class="popup-header-item">
+                        <span class="popup-header-item-name">Doan Minh Hieu abcxyzasd</span>
+                        <button>
+                            <span class="material-icons">
+                                close
+                            </span>
+                        </button>
+                    </div>
+                    <div class="popup-header-item">
+                        <span class="popup-header-item-name">Doan Minh Hieu abcxyzasd</span>
+                        <button>
+                            <span class="material-icons">
+                                close
+                            </span>
+                        </button>
+                    </div>
+                    <div class="popup-header-item">
+                        <span class="popup-header-item-name">Doan Minh Hieu abcxyzasd</span>
+                        <button>
+                            <span class="material-icons">
+                                close
+                            </span>
+                        </button>
+                    </div>
+                    <div class="popup-header-item">
+                        <span class="popup-header-item-name">Doan Minh Hieu abcxyzasd</span>
+                        <button>
+                            <span class="material-icons">
+                                close
+                            </span>
+                        </button>
+                    </div>
+                    <div class="popup-header-item">
+                        <span class="popup-header-item-name">Doan Minh Hieu abcxyzasd</span>
+                        <button>
+                            <span class="material-icons">
+                                close
+                            </span>
+                        </button>
+                    </div>
+                    <div class="popup-header-item">
+                        <span class="popup-header-item-name">Doan Minh Hieu abcxyzasd</span>
+                        <button>
+                            <span class="material-icons">
+                                close
+                            </span>
+                        </button>
+                    </div>
+                    <div class="popup-header-item">
+                        <span class="popup-header-item-name">Doan Minh Hieu abcxyzasd</span>
+                        <button>
+                            <span class="material-icons">
+                                close
+                            </span>
+                        </button>
+                    </div>
+                    <div class="popup-header-item">
+                        <span class="popup-header-item-name">Doan Minh Hieu abcxyzasd</span>
+                        <button>
+                            <span class="material-icons">
+                                close
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="popup-search">
+                <span class="material-icons">
+                    search
+                </span>
+                <input type="text" placeholder="Search..." id="searchString">
+
+            </div>
+            <div class="popup-list"></div>
+
+            <div class="popup-submit">
+                <button class="popup-btn" id="popup-done">
+                    <span class="material-icons">
+                        done
+                    </span>
+                </button>
+                <button class="popup-btn" id="popup-cancel">
+                    <span class="material-icons">
+                        close
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="./Message.js"></script>
 </body>
 
 </html>
