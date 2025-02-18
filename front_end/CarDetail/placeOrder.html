@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    .form-required {
+      color: #dc2626;
+      margin-left: 4px;
+    }
+
+    :focus {
+      outline: 0;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .place-order {
+      display: flex;
+      flex-direction: column;
+      font-size: 16px;
+      font-family: Inter, sans-serif;
+      max-width: 758px;
+      color: #12458c;
+      border-radius: 20px;
+      background-color: #d6e7ff;
+      box-shadow: 0 4px 4px rgba(87, 100, 126, 0.21);
+      background-attachment: scroll;
+      background-position: center top;
+      background-repeat: repeat;
+    }
+
+    ul.page-section {
+      display: flex;
+      flex-wrap: wrap;
+      margin: 0;
+      padding: 0 38px;
+      list-style: none;
+    }
+
+    .form-input-wide {
+      width: 100%;
+    }
+
+    /* Header */
+
+    div.form-header-group.header-large {
+      padding: 40px 52px;
+      border-bottom: #12458c 1px solid;
+      margin: 0px -38px;
+    }
+
+    .form-subHeader {
+      word-break: break-word;
+      font-size: 1em;
+      font-weight: 500;
+      line-height: 1.6;
+    }
+
+    .form-line {
+      padding: 12px 10px;
+      margin: 12px 4px;
+      border-radius: 3px;
+      position: relative;
+      width: 100%;
+      transition: background-color 0.15s;
+      margin-top: 28px;
+      margin-bottom: 12px;
+    }
+
+    .form-label {
+      display: inline-block;
+      font-weight: 700;
+      word-break: break-word;
+    }
+
+    .form-label-top {
+      width: 100%;
+      margin-left: 2px;
+      margin-bottom: 14px;
+      font-size: 20px;
+    }
+
+    /* Car info */
+    .car-info .car-content {
+      display: flex;
+      width: 80%;
+
+      border-radius: 5px;
+      margin: auto;
+      border: #12458c 2px solid;
+
+      p {
+        padding: 10px 0;
+        border-bottom: 2px solid;
+
+        &:last-child {
+          border: none;
+        }
+      }
+
+      .header {
+        width: 50%;
+
+        p {
+          font-weight: bold;
+
+          span {
+            margin-left: 10px;
+          }
+        }
+      }
+
+      .separate {
+        width: 2px;
+        background-color: #12458c;
+      }
+
+      .content {
+        width: 50%;
+        text-align: end;
+
+        span {
+          margin-right: 10px;
+        }
+      }
+    }
+
+    .choose-service {
+      p {
+        margin-bottom: 5px;
+
+        span {
+          font-weight: bold;
+        }
+      }
+
+      select {
+        width: 50%;
+        color: #12458c;
+        font-size: 20px;
+        text-align: center;
+        border: 1px solid #12458c;
+        border-radius: 5px;
+        padding: 10px 0;
+
+        option {
+          background-color: #d6e7ff;
+        }
+      }
+    }
+
+    /* Next to online payment */
+    .form-pagebreak {
+      margin: 0 -38px;
+      padding: 28px 52px;
+      border-top: 1px solid;
+      display: flex;
+      color: #12458c;
+    }
+
+    .form-pagebreak>div {
+      display: flex;
+    }
+
+    .btn-space {
+      margin-right: auto;
+    }
+
+    .form-pagebreak .form-pagebreak-next {
+      background-color: #12458c;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 3em;
+      width: auto;
+      min-width: 128px;
+      font-size: 1em;
+      border-radius: 4px;
+      border: none;
+      cursor: pointer;
+      color: #fff;
+      padding: 0 0.75rem;
+
+      &:hover {
+        background-color: #2461b7;
+      }
+    }
+
+    .form-error-message {
+      color: #fff;
+      background-color: #DC2626;
+      background-image: url(https://cdn.jotfor.ms/images/exclamation-octagon.png);
+
+      font-size: .75em;
+      margin-top: 8px;
+      border-radius: 4px;
+      background-size: .875em;
+      background-position: .375em;
+      background-repeat: no-repeat;
+      display: inline-block;
+      width: auto;
+      padding: .25em .5em .25em 1.625em;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="place-order">
+    <ul class="order-section page-section">
+      <li class="form-input-wide">
+        <div class="form-header-group header-large">
+          <div>
+            <h1>Place An Order</h1>
+            <div class="form-subHeader">What are you interested in buying?</div>
+          </div>
+        </div>
+      </li>
+
+      <li class="form-line car-info">
+        <label class="form-label form-label-top">Car Info</label>
+        <div class="car-content">
+          <div class="header">
+            <p><span>Car</span></p>
+            <p><span>Brand</span></p>
+            <p><span>System</span></p>
+            <p><span>Part</span></p>
+          </div>
+          <div class="separate"></div>
+          <div class="content">
+            <p><span>aaa</span></p>
+            <p><span>aaa</span></p>
+            <p><span>aaa</span></p>
+            <p><span>aaa</span></p>
+          </div>
+        </div>
+      </li>
+
+      <!-- Choose a service -->
+      <li class="form-line choose-service">
+        <label class="form-label form-label-top">Choose service</label>
+        <p>Please choose a service for <span>aaa</span>: </p>
+        <div class="service-list">
+          <div>
+            <select>
+              <option disabled selected value="0">-- Choose a service --</option>
+              <option>aaa</option>
+            </select>
+          </div>
+          <div class="form-error-message hidden" role="alert">
+            <span class="error-navigation-message">This field is required.</span>
+          </div>
+        </div>
+      </li>
+
+      <li class="form-input-wide">
+        <div class="form-pagebreak">
+          <div class="btn-space"></div>
+          <div class="form-pagebreak-next-container"><button type="button" class="form-pagebreak-next  jf-form-buttons"
+              data-component="pagebreak-next">Place Order</button></div>
+        </div>
+      </li>
+    </ul>
+
+  </div>
+</body>
+
+</html>
