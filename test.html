@@ -1,90 +1,81 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-    <meta charset="UTF-8">
-    <title>Infinite Scroll</title>
+    <title>Popup Example</title>
     <style>
-        .content {
-            height: 800px;
-            overflow-y: auto;
-            border: 1px solid black;
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #121212;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            height: 50%;
+            width: 50%;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+            border-radius: 10px;
         }
 
-        .item {
+        .popup.active {
+            opacity: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .popup-header,
+        .popup-search,
+        .popup-submit {
+            width: 100%;
+            background-color: #1e1e1e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             padding: 10px;
-            border-bottom: 1px solid #ccc;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            flex: 0 0 60px;
+            /* Chiều cao cố định cho các phần */
+        }
+
+        .popup-header {
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+
+        .popup-submit {
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+
+        .popup-list {
+            flex: 1;
+            /* Phần còn lại chiếm không gian */
+            overflow-y: auto;
+            /* Thêm thanh cuộn dọc nếu cần */
+            background-color: #121212;
         }
     </style>
 </head>
 
 <body>
-    <div class="content" id="content">
-        <!-- Các nội dung ban đầu -->
-        <div class="item">Nội dung 1</div>
-        <div class="item">Nội dung 2</div>
-        <div class="item">Nội dung 3</div>
-        <div class="item">Nội dung 4</div>
-        <div class="item">Nội dung 5</div>
-        <div class="item">Nội dung 1</div>
-        <div class="item">Nội dung 2</div>
-        <div class="item">Nội dung 3</div>
-        <div class="item">Nội dung 4</div>
-        <div class="item">Nội dung 5</div>
-        <div class="item">Nội dung 1</div>
-        <div class="item">Nội dung 2</div>
-        <div class="item">Nội dung 3</div>
-        <div class="item">Nội dung 4</div>
-        <div class="item">Nội dung 5</div>
-        <div class="item">Nội dung 1</div>
-        <div class="item">Nội dung 2</div>
-        <div class="item">Nội dung 3</div>
-        <div class="item">Nội dung 4</div>
-        <div class="item">Nội dung 5</div>
-        <div class="item">Nội dung 1</div>
-        <div class="item">Nội dung 2</div>
-        <div class="item">Nội dung 3</div>
-        <div class="item">Nội dung 4</div>
-        <div class="item">Nội dung 5</div>
-        <div class="item">Nội dung 1</div>
-        <div class="item">Nội dung 2</div>
-        <div class="item">Nội dung 3</div>
-        <div class="item">Nội dung 4</div>
-        <div class="item">Nội dung 5</div>
-        <div class="item">Nội dung 1</div>
-        <div class="item">Nội dung 2</div>
-        <div class="item">Nội dung 3</div>
-        <div class="item">Nội dung 4</div>
-        <div class="item">Nội dung 5</div>
-        <div class="item">Nội dung 1</div>
-        <div class="item">Nội dung 2</div>
-        <div class="item">Nội dung 3</div>
-        <div class="item">Nội dung 4</div>
-        <div class="item">Nội dung 5</div>
-        <div class="item">Nội dung 1</div>
-        <div class="item">Nội dung 2</div>
-        <div class="item">Nội dung 3</div>
-        <div class="item">Nội dung 4</div>
-        <div class="item">Nội dung 5</div>
+    <button id="toggleButton">Toggle Popup</button>
+
+    <div class="popup" id="popup">
+        <div class="popup-header">Popup Header</div>
+        <div class="popup-search">Search Area</div>
+        <div class="popup-list">List Area - This is a long list content that may need scrolling.</div>
+        <div class="popup-submit">Submit Area</div>
     </div>
 
     <script>
-        const content = document.getElementById('content');
+        const toggleButton = document.getElementById('toggleButton');
+        const popup = document.getElementById('popup');
 
-        content.addEventListener('scroll', function () {
-            if (content.scrollTop + content.clientHeight >= content.scrollHeight) {
-                loadMoreContent();
-            }
+        toggleButton.addEventListener('click', function () {
+            popup.classList.toggle('active');
         });
-
-        function loadMoreContent() {
-            for (let i = 0; i < 5; i++) {
-                let newItem = document.createElement('div');
-                newItem.className = 'item';
-                newItem.textContent = 'Nội dung ' + (document.querySelectorAll('.item').length + 1);
-                content.appendChild(newItem);
-            }
-        }
     </script>
 </body>
 

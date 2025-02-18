@@ -112,13 +112,17 @@ CREATE TABLE [Order] (
 GO
 
 -- MESSAGE
-CREATE TABLE [Messages] (
-    MessageID INT IDENTITY(1, 1) PRIMARY KEY,
-    SenderID INT FOREIGN KEY REFERENCES [User](UserID),
-    ReceiverID INT FOREIGN KEY REFERENCES [User](UserID),
+CREATE TABLE Messages (
+    MessageID INT PRIMARY KEY IDENTITY,
+    SenderID INT NOT NULL,
+    ReceiverID INT NOT NULL,
     Content TEXT NOT NULL,
     SentAt DATETIME DEFAULT CURRENT_TIMESTAMP,
     IsRead BIT DEFAULT 0
+    SentAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    IsRead BIT DEFAULT 0,
+    FOREIGN KEY (SenderID) REFERENCES [User](UserID),
+    FOREIGN KEY (ReceiverID) REFERENCES [User](UserID),
 );
 GO
 
@@ -245,10 +249,10 @@ GO
 
 -- Sample data
 
---INSERT INTO [User](Username, Password, FirstName, LastName, Email, Phone, DOB)
---VALUES ('doanhieu18', 'doanhieu18@', 'Hieu', 'Doan', 'doanhieu180204@gmail.com', '0325413488', '2004-02-18');
+INSERT INTO [User](Username, Password, FirstName, LastName, Email, Phone, DOB)
+VALUES ('doanhieu18', 'doanhieu18@', 'Hieu', 'Doan', 'doanhieu180204@gmail.com', '0325413488', '2004-02-18');
 
-
+GO
 DECLARE @counter INT = 1
 WHILE @counter <= 100
 BEGIN
