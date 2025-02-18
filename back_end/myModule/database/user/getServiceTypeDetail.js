@@ -16,9 +16,9 @@ const getServiceDetailByName = async (req, res) => {
         }
 
         const query = `
-            SELECT st.ServiceTypeName, s.* 
+            SELECT st.ServiceTypeName, st.ServiceTypeDescription, s.*
             FROM [Service] s 
-            JOIN ServiceTypes st ON s.ServiceTypeID = st.ServiceTypeID 
+            JOIN ServiceType st ON s.ServiceTypeID = st.ServiceTypeID 
             WHERE st.ServiceTypeName = @serviceTypeName`;
         const result = await pool.request().input('serviceTypeName', sql.VarChar, serviceTypeName).query(query);
         // console.log(result.recordset);

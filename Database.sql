@@ -62,12 +62,14 @@ CREATE TABLE CarPart (
     InstallationDate DATETIME DEFAULT NULL,
     ExpiryDate DATETIME DEFAULT NULL,
     [Status] VARCHAR(10) DEFAULT NULL CHECK ([Status] IN ('Active', 'Broken', 'Expired')),
-    CONSTRAINT pk_CarPart PRIMARY KEY (CarID, PartID)
-);
+    CONSTRAINT pk_CarPart PRIMARY KEY (CarID, PartID),
+    [Image]  NVARCHAR(500)
+
+);      
 GO
 
 -- 5
-CREATE TABLE ServiceTypes (
+CREATE TABLE ServiceType (
 	ServiceTypeID INT IDENTITY(1, 1) NOT NULL PRIMARY KEY,
 	ServiceTypeName VARCHAR(200),
 	ServiceTypeDescription TEXT
@@ -77,10 +79,10 @@ GO
 -- 6
 CREATE TABLE [Service] (
 	ServiceID INT IDENTITY(1, 1) NOT NULL PRIMARY KEY,
-	ServiceTypeID INT FOREIGN KEY REFERENCES [ServiceTypes](ServiceTypeID) ON DELETE CASCADE,
+	ServiceTypeID INT FOREIGN KEY REFERENCES [ServiceType](ServiceTypeID) ON DELETE CASCADE,
 	ServiceName VARCHAR(200) NOT NULL,
 	ServiceDescription TEXT,
-	Price FLOAT NOT NULL
+	ServicePrice FLOAT NOT NULL
 );
 GO
 
@@ -108,12 +110,15 @@ CREATE TABLE [Order] (
     CONSTRAINT pk_Orders PRIMARY KEY (UserID, OrderID)
 );
 GO
+
 -- MESSAGE
 CREATE TABLE Messages (
     MessageID INT PRIMARY KEY IDENTITY,
     SenderID INT NOT NULL,
     ReceiverID INT NOT NULL,
     Content TEXT NOT NULL,
+    SentAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    IsRead BIT DEFAULT 0
     SentAt DATETIME DEFAULT CURRENT_TIMESTAMP,
     IsRead BIT DEFAULT 0,
     FOREIGN KEY (SenderID) REFERENCES [User](UserID),
@@ -132,51 +137,53 @@ BEGIN
 	-- Danh sách các bộ phận mặc định của xe
     DECLARE @DefaultParts TABLE (
         PartName VARCHAR(200),
-        CarSystemID INT
+        CarSystemID INT,
+		[Image] VARCHAR(500)
     );
 
     -- Thêm danh sách các bộ phận mặc định
-    INSERT INTO @DefaultParts (PartName, CarSystemID)
+    INSERT INTO @DefaultParts (PartName, CarSystemID, [Image])
     VALUES 
-        ('Engine Oil', 1),
-        ('Spark Plug', 1),
-        ('Injector', 1),
-        ('Cooling System', 1),
-        ('Brake Pad', 2),
-        ('Rotor', 2),
-        ('Fluid', 2),
-		('Bulb', 3),
-        ('Fuse', 3),
-        ('Electric System', 3),
-		('Wiring', 3),
-        ('Gas', 4),
-		('Condenser', 4),
-		('Filter', 4),
-        ('Pump', 5),
-        ('Filter', 5),
-		('Injection', 5),
-		('Charging', 6),
-		('Terminal', 6),
-        ('Shock', 7),
-        ('Control Arm', 7),
-        ('Tie Rod', 7),
-		('Suspension', 7),
-        ('Tire', 8),
-        ('Rim', 8),
-        ('Wheel Hub', 8);
+        ('Engine Oil', 1,'/resource/CarPark_image/Oil.webp'),
+        ('Spark Plug', 1,'/resource/CarPark_image/SparkPlug.webp'),
+        ('Injector', 1,'/resource/CarPark_image/InjectorE.webp'),
+        ('Cooling System', 1,'/resource/CarPark_image/CoolingSystem.webp'),
+        ('Brake Pad', 2,'/resource/CarPark_image/BrakePad.webp'),
+        ('Rotor', 2,'/resourc	e/CarPark_image/Rotor.webp'),
+        ('Fluid', 2,'/resource/CarPark_image/Fluids.webp'),
+		('Bulb', 3,'/resource/CarPark_image/Buld.webp'),
+        ('Fuse', 3,'/resource/CarPark_image/Fuse.webp'),
+        ('Electric System', 3,'/resource/CarPark_image/ElectricSystem.webp'),
+		('Wiring', 3,'/resource/CarPark_image/Wiring.webp'),
+        ('Gas', 4,'/resource/CarPark_image/Gas.webp'),
+		('Condenser', 4,'/resource/CarPark_image/Condenser.webp'),
+		('Filter', 4,'/resource/CarPark_image/FilterF.webp'),
+        ('Pump', 5,'/resource/CarPark_image/Pump.webp'),
+        ('Filter', 5,'/resource/CarPark_image/FilterA.webp'),
+		('Injection', 5,'/resource/CarPark_image/InjectorF.webp'),
+		('Charging', 6,'/resource/CarPark_image/Charging.webp'),
+		('Terminal', 6,'/resource/CarPark_image/Terminal.webp'),
+        ('Shock', 7,'/resource/CarPark_image/Shock.webp'),
+        ('Control Arm', 7,'/resource/CarPark_image/ControlArm.webp'),
+        ('Tie Rod', 7,'/resource/CarPark_image/TieRod.webp'),
+		('Suspension', 7,'/resource/CarPark_image/Suspension.webp'),
+        ('Tire', 8,'/resource/CarPark_image/Tire.webp'),
+        ('Rim', 8,'/resource/CarPark_image/Rim.webp'),
+        ('Wheel Hub', 8,'/resource/CarPark_image/WheelHub.webp')
 
-   INSERT INTO CarPart (CarID, PartID, PartName, CarSystemID)
+   INSERT INTO CarPart (CarID, PartID, PartName, CarSystemID, [Image])
     SELECT 
         i.CarID,
         ROW_NUMBER() OVER (PARTITION BY i.CarID ORDER BY d.CarSystemID) AS PartID,
         d.PartName,
-        d.CarSystemID
+        d.CarSystemID,
+		d.Image
     FROM inserted i
     CROSS JOIN @DefaultParts d;
 END;
 GO
 
-GO
+
 
 -- Trigger for Order
 CREATE TRIGGER InsertOrder
@@ -188,7 +195,7 @@ BEGIN
     -- Update existing order quantity and recalculate EstimatedCost
     UPDATE o
     SET o.QuantityUsed = o.QuantityUsed + i.QuantityUsed,
-        o.EstimatedCost = (o.QuantityUsed + i.QuantityUsed) * inv.UnitPrice + COALESCE(s.Price, 0)
+        o.EstimatedCost = (o.QuantityUsed + i.QuantityUsed) * inv.UnitPrice + COALESCE(s.ServicePrice, 0)
     FROM [Order] o
     INNER JOIN inserted i
         ON o.UserID = i.UserID
@@ -209,7 +216,7 @@ BEGIN
         i.PartID,
         i.ServiceID,
         i.QuantityUsed,
-        (i.QuantityUsed * inv.UnitPrice) + COALESCE(s.Price, 0)
+        (i.QuantityUsed * inv.UnitPrice) + COALESCE(s.ServicePrice, 0)
     FROM inserted i
     INNER JOIN Inventory inv ON i.PartID = inv.PartID
     LEFT JOIN [Service] s ON i.ServiceID = s.ServiceID
@@ -221,14 +228,24 @@ BEGIN
         AND o.PartID = i.PartID
         AND COALESCE(o.ServiceID, 0) = COALESCE(i.ServiceID, 0)
     );
-
-    -- Update inventory quantity
-    UPDATE ivt
-    SET ivt.Quantity = ivt.Quantity - i.QuantityUsed
-    FROM Inventory ivt
-    INNER JOIN inserted i ON i.PartID = ivt.PartID;
 END;
+GO
 
+CREATE TRIGGER DeleteOrder
+ON [Order]
+FOR DELETE
+AS
+BEGIN
+	SET NOCOUNT ON;
+	UPDATE ivt
+    SET ivt.Quantity = ivt.Quantity - d.QuantityUsed
+    FROM Inventory ivt
+    INNER JOIN deleted d ON d.PartID = ivt.PartID;
+END;
+GO
+
+DISABLE TRIGGER DeleteOrder ON [Order];
+GO
 
 -- Sample data
 
@@ -258,19 +275,19 @@ INSERT INTO [User](Username, Password, FirstName, LastName, Email, Phone, DOB, L
 VALUES ('q8edh12hi', '1234', 'qwe8dyrwfhief', 'qwgufcqbw', 'qwficqwfc', '0123456789', '01/01/2000', '01/01/2010');
 GO
 
-INSERT INTO [ServiceTypes](ServiceTypeName, ServiceTypeDescription) VALUES 
-('Wheel System', 'Including: Tires Patching, Tires Replacement, Tires Pressure Check, Wheel Balancing and Wheel Alignment.'),
-('Braking System', 'Including: Braking Pad Replacement, Braking Disc Replacement, Braking Fluid Change, Braking Maintenance and ABS System Check.'),
-('Engine System', 'Including: Engine Oil Change, Engine Sparkplug Inspection, Engine Injector Cleaning, Engine Cooling System check and Engine Repair.'),
-('Battery System', 'Including: Battery Health check, Battery Charging, Battery Replacement and Battery Terminal Cleaning.'),
-('Electrical System', 'Including: Bulb replacement, Fuse Replacement, Electrical system Diagnosis and Wiring Repair.'),
-('Air Conditioning System', 'Including: AC Gas Refill, AC Condenser Cleaning, AC Filter Replacement and AC System Repair.'),
-('Shock Absorbers System', 'Including: Shock Absorbers Replacement, Tie Rod Replacement, Control Arm Replacement and Suspension Alignment.'),
-('Fuel System', 'Including: Fuel Pump Cleaning, Fuel Filter Replacement and Fuel Injection Repair.'),
-('Cleaning and Maintenance', 'Including: Standard washes, Polishing, Interior Cleaning and Waterproof Coating.');
+INSERT INTO [ServiceType](ServiceTypeName, ServiceTypeDescription) VALUES 
+('Wheel System', 'Your wheels are more than just round things that keep you rolling. They''re the foundation of your vehicle''s performance, safety, and overall driving experience.<br><br>At AUTO247, we understand the critical role your wheels play, and that''s why we offer a comprehensive Wheel System Service designed to keep you cruising in confidence.'),
+('Braking System', 'Your brakes are arguably the most critical safety feature on your vehicle. They''re your first line of defense in preventing accidents and ensuring your safety on the road.<br><br>At AUTO247, we understand the importance of a reliable braking system, and that''s why we offer a comprehensive Braking System Service designed to keep you stopping safely and confidently.'),
+('Engine System', 'Your engine is the heart of your vehicle. It''s the powerhouse that propels you forward, delivering the performance and reliability you depend on.<br><br>At AUTO247, we understand the vital role your engine plays, and that''s why we offer a comprehensive Engine System Service designed to keep your engine running smoothly and efficiently.'),
+('Battery System', 'Your car battery is the unsung hero of your vehicle. It''s the source of electrical power that starts your engine, powers your lights, and keeps your accessories running.<br><br>At AUTO247, we understand the critical role your battery plays, and that''s why we offer a comprehensive Battery System Service designed to keep you powered up and on the go.'),
+('Electrical System', 'Your vehicle''s electrical system is like its nervous system, responsible for powering everything from your headlights and infotainment system to your engine''s ignition and vital safety features.<br><br>At AUTO247, we understand the intricate role your electrical system plays, and that''s why we offer a comprehensive Electrical System Service designed to keep your vehicle running smoothly and safely.'),
+('Air Conditioning System', 'Imagine driving on a hot summer day, stuck in traffic, and your air conditioning system suddenly stops working. Not a pleasant experience, right?<br><br>At AUTO247, we understand the importance of a reliable air conditioning system, and that''s why we offer a comprehensive Air Conditioning System Service designed to keep you cool and comfortable all year round.'),
+('Shock Absorbers System', 'Your shock absorbers are the unsung heroes of your vehicle''s suspension system. They''re responsible for keeping your ride smooth and comfortable, even on the bumpiest roads.<br><br>At AUTO247, we understand the vital role your shock absorbers play, and that''s why we offer a comprehensive Shock Absorbers System Service designed to keep you riding in comfort and control.'),
+('Fuel System', 'Your fuel system is the lifeline of your engine, responsible for delivering the precise amount of fuel needed for optimal performance.<br><br>At AUTO247, we understand the critical role your fuel system plays, and that''s why we offer a comprehensive Fuel System Service designed to keep your engine running strong and efficiently.'),
+('Cleaning and Maintenance', 'Your car is more than just a mode of transportation; it''s an extension of your personality and a reflection of your style.<br><br>At AUTO247, we understand the importance of keeping your car looking and feeling its best, and that''s why we offer a comprehensive range of Cleaning and Maintenance services designed to help you maintain your car''s appearance and preserve its value.');
 GO
 
-INSERT INTO [Service](ServiceTypeID, ServiceName, ServiceDescription, Price) VALUES 
+INSERT INTO [Service](ServiceTypeID, ServiceName, ServiceDescription, ServicePrice) VALUES 
 ('1', 'Tires Patching', 'Repair small punctures in tires to restore functionality.', ROUND(ROUND(RAND() * 500000 + 750000, 0) / 10000, 0) * 10000),
 ('1', 'Tires Replacement', 'Replace old or damaged tires with new ones for better safety and performance.', ROUND(ROUND(RAND() * 500000 + 750000, 0) / 10000, 0) * 10000),
 ('1', 'Tires Pressure Check', 'Check and adjust tire pressure to ensure optimal driving conditions.', ROUND(ROUND(RAND() * 500000 + 750000, 0) / 10000, 0) * 10000),
@@ -368,3 +385,13 @@ GO
 
 INSERT INTO [Order](UserID, CarID, PartID, ServiceID, QuantityUsed) VALUES
 (1, 1, 3, 1, 2)
+GO
+
+--ENABLE TRIGGER DeleteOrder ON [Order];
+--GO
+
+--DELETE FROM [Order];
+--GO
+
+--DISABLE TRIGGER DeleteOrder ON [Order]
+--GO

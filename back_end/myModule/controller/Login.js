@@ -15,7 +15,7 @@ const AuthGoogle = async (req, res) => {
         // Xác thực token với Google
         const ticket = await client.verifyIdToken({
             idToken: token,
-            audience: CLIENT_ID,
+            audience: CLIENT_ID
         });
         const payload = ticket.getPayload();
 
@@ -24,16 +24,20 @@ const AuthGoogle = async (req, res) => {
             google_id: payload.sub, // ID duy nhất từ Google
             email: payload.email,
             name: payload.name,
-            picture: payload.picture,
+            picture: payload.picture
         };
-        console.log('WELCOME ', userGG.name)
+        console.log('WELCOME ', userGG.name);
 
         // get user info
         const user = await checkUserName(userGG.email);
         if (user == null) {
-            res.json({ success: true, isExist: false, email: payload.email })
+            res.json({ success: true, isExist: false, email: payload.email });
         } else {
-            const token = generateToken({ id: user.UserID, name: user.FirstName, role: user.Role });
+            const token = generateToken({
+                id: user.UserID,
+                name: user.FirstName,
+                role: user.Role
+            });
             res.json({ success: true, isExist: true, token });
         }
     } catch (error) {
@@ -49,15 +53,13 @@ const Auth = async (req, res) => {
         res.status(404).json({ message: 'Account not found' });
     } else if (password == user.Password) {
         const token = generateToken({ id: user.UserID, name: user.FirstName, role: user.Role });
-        res.status(200).json({ token })
+        res.status(200).json({ token });
+    } else {
+        res.status(401).json({ message: 'Wrong password' });
     }
-    else {
-        res.status(401).json({ message: 'Wrong password' })
-    }
-
-}
+};
 
 module.exports = {
     AuthGoogle,
-    Auth,
+    Auth
 };
