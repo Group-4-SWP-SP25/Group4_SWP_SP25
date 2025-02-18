@@ -209,21 +209,31 @@ BEGIN
         AND o.PartID = i.PartID
         AND COALESCE(o.ServiceID, 0) = COALESCE(i.ServiceID, 0)
     );
-
-    -- Update inventory quantity
-    UPDATE ivt
-    SET ivt.Quantity = ivt.Quantity - i.QuantityUsed
-    FROM Inventory ivt
-    INNER JOIN inserted i ON i.PartID = ivt.PartID;
 END;
+GO
 
+CREATE TRIGGER DeleteOrder
+ON [Order]
+FOR DELETE
+AS
+BEGIN
+	SET NOCOUNT ON;
+	UPDATE ivt
+    SET ivt.Quantity = ivt.Quantity - d.QuantityUsed
+    FROM Inventory ivt
+    INNER JOIN deleted d ON d.PartID = ivt.PartID;
+END;
+GO
+
+DISABLE TRIGGER DeleteOrder ON [Order];
+GO
 
 -- Sample data
 
 --INSERT INTO [User](Username, Password, FirstName, LastName, Email, Phone, DOB)
 --VALUES ('doanhieu18', 'doanhieu18@', 'Hieu', 'Doan', 'doanhieu180204@gmail.com', '0325413488', '2004-02-18');
 
-GO
+
 DECLARE @counter INT = 1
 WHILE @counter <= 100
 BEGIN
@@ -356,3 +366,13 @@ GO
 
 INSERT INTO [Order](UserID, CarID, PartID, ServiceID, QuantityUsed) VALUES
 (1, 1, 3, 1, 2)
+GO
+
+--ENABLE TRIGGER DeleteOrder ON [Order];
+--GO
+
+--DELETE FROM [Order];
+--GO
+
+--DISABLE TRIGGER DeleteOrder ON [Order]
+--GO

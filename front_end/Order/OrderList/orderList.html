@@ -92,7 +92,7 @@
   </div>
 
   <!-- Window confirm to delete order -->
-  <div class="del-window text-center hidden">
+  <div class="hidden del-window text-center">
     <p class="display-6 container">Are you sure to delete this order?</p>
     <div class="btn-submit">
       <button class="btn btn-yes">Yes</button>
@@ -110,12 +110,12 @@
     integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script>
-    fetch("../header/header.html")
+    fetch("../../header/header.html")
       .then(response => response.text())
       .then(data => {
         document.getElementById("header-container").innerHTML = data;
         const script = document.createElement("script");
-        script.src = "../header/script.js";
+        script.src = "../../header/script.js";
         document.body.appendChild(script);
       });
   </script>

@@ -92,7 +92,7 @@ async function checkEmail(emailTag, errorTag) {
       const checkEmail = await fetch("http://localhost:3000/checkAccount", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ account: emailTag.value }),
+        body: JSON.stringify({ accountType: "Email", account: emailTag.value }),
       });
       if (checkEmail.status === 404) {
         errorStyle(emailTag);
@@ -117,7 +117,7 @@ async function checkPhone(phoneTag, errorTag) {
       const checkPhone = await fetch("http://localhost:3000/checkAccount", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ account: phoneTag.value }),
+        body: JSON.stringify({ accountType: "Phone", account: phoneTag.value }),
       });
       if (checkPhone.status === 404) {
         errorStyle(phoneTag);
@@ -141,7 +141,10 @@ async function checkUsername(usernameTag, errorTag) {
     const checkUsername = await fetch("http://localhost:3000/checkAccount", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ account: usernameTag.value }),
+      body: JSON.stringify({
+        accountType: "UserName",
+        account: usernameTag.value,
+      }),
     });
     if (checkUsername.status === 404) {
       errorStyle(usernameTag);

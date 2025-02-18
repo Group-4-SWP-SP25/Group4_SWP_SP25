@@ -1,8 +1,8 @@
-const checkUserName = require("../../database/user/checkUserName");
+const getAccount = require("../../database/user/getAccount.js");
 
 const checkAccount = async (req, res) => {
-  const { account } = req.body;
-  const userData = await checkUserName(account);
+  const { accountType, account } = req.body;
+  const userData = await getAccount(accountType, account);
   if (userData) {
     return res.status(404).json({ message: "Account not found" });
   } else {
