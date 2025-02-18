@@ -34,12 +34,12 @@
     text-align: center; /* Căn giữa chữ */
 }
 
-.info-desc{
-    margin: 0 10%;
+.info-desc {
+    margin: 0 15%;
 }
 
 .service-detail {
-    margin: 3% 10%;
+    margin: 2% 10%;
 
     position: relative;
     background-color: white;
@@ -47,6 +47,49 @@
     text-align: left;
 }
 
-.detail-title{
+.detail-title {
     text-align: center;
+    margin-bottom: 1%;
+}
+
+.detail {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    font-size: larger;
+}
+
+.detail-table {
+    border: 1px solid black;
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+
+    th,
+    td {
+        border: 1px solid black;
+        padding: 8px;
+    }
+}
+
+.button-reservation {
+    margin: 3% 0;
+    text-align: center;
+}
+
+.button-reservation button {
+    border-radius: 50px;
+    --border-color: green;
+    border: 2px solid var(--border-color);
+    background-color: transparent;
+    color: black;
+    padding: 10px 20px;
+    transition: background-color 0.3s ease;
+}
+
+.button-reservation button:hover {
+    background-color: var(--border-color);
+    color: white;
 }
