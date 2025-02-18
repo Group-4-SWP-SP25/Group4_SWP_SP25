@@ -62,8 +62,10 @@ CREATE TABLE CarPart (
     InstallationDate DATETIME DEFAULT NULL,
     ExpiryDate DATETIME DEFAULT NULL,
     [Status] VARCHAR(10) DEFAULT NULL CHECK ([Status] IN ('Active', 'Broken', 'Expired')),
-    CONSTRAINT pk_CarPart PRIMARY KEY (CarID, PartID)
-);
+    CONSTRAINT pk_CarPart PRIMARY KEY (CarID, PartID),
+    [Image]  NVARCHAR(500)
+
+);      
 GO
 
 -- 5
@@ -131,51 +133,53 @@ BEGIN
 	-- Danh sách các bộ phận mặc định của xe
     DECLARE @DefaultParts TABLE (
         PartName VARCHAR(200),
-        CarSystemID INT
+        CarSystemID INT,
+		[Image] VARCHAR(500)
     );
 
     -- Thêm danh sách các bộ phận mặc định
-    INSERT INTO @DefaultParts (PartName, CarSystemID)
+    INSERT INTO @DefaultParts (PartName, CarSystemID, [Image])
     VALUES 
-        ('Engine Oil', 1),
-        ('Spark Plug', 1),
-        ('Injector', 1),
-        ('Cooling System', 1),
-        ('Brake Pad', 2),
-        ('Rotor', 2),
-        ('Fluid', 2),
-		('Bulb', 3),
-        ('Fuse', 3),
-        ('Electric System', 3),
-		('Wiring', 3),
-        ('Gas', 4),
-		('Condenser', 4),
-		('Filter', 4),
-        ('Pump', 5),
-        ('Filter', 5),
-		('Injection', 5),
-		('Charging', 6),
-		('Terminal', 6),
-        ('Shock', 7),
-        ('Control Arm', 7),
-        ('Tie Rod', 7),
-		('Suspension', 7),
-        ('Tire', 8),
-        ('Rim', 8),
-        ('Wheel Hub', 8);
+        ('Engine Oil', 1,'/resource/CarPark_image/Oil.webp'),
+        ('Spark Plug', 1,'/resource/CarPark_image/SparkPlug.webp'),
+        ('Injector', 1,'/resource/CarPark_image/InjectorE.webp'),
+        ('Cooling System', 1,'/resource/CarPark_image/CoolingSystem.webp'),
+        ('Brake Pad', 2,'/resource/CarPark_image/BrakePad.webp'),
+        ('Rotor', 2,'/resourc	e/CarPark_image/Rotor.webp'),
+        ('Fluid', 2,'/resource/CarPark_image/Fluids.webp'),
+		('Bulb', 3,'/resource/CarPark_image/Buld.webp'),
+        ('Fuse', 3,'/resource/CarPark_image/Fuse.webp'),
+        ('Electric System', 3,'/resource/CarPark_image/ElectricSystem.webp'),
+		('Wiring', 3,'/resource/CarPark_image/Wiring.webp'),
+        ('Gas', 4,'/resource/CarPark_image/Gas.webp'),
+		('Condenser', 4,'/resource/CarPark_image/Condenser.webp'),
+		('Filter', 4,'/resource/CarPark_image/FilterF.webp'),
+        ('Pump', 5,'/resource/CarPark_image/Pump.webp'),
+        ('Filter', 5,'/resource/CarPark_image/FilterA.webp'),
+		('Injection', 5,'/resource/CarPark_image/InjectorF.webp'),
+		('Charging', 6,'/resource/CarPark_image/Charging.webp'),
+		('Terminal', 6,'/resource/CarPark_image/Terminal.webp'),
+        ('Shock', 7,'/resource/CarPark_image/Shock.webp'),
+        ('Control Arm', 7,'/resource/CarPark_image/ControlArm.webp'),
+        ('Tie Rod', 7,'/resource/CarPark_image/TieRod.webp'),
+		('Suspension', 7,'/resource/CarPark_image/Suspension.webp'),
+        ('Tire', 8,'/resource/CarPark_image/Tire.webp'),
+        ('Rim', 8,'/resource/CarPark_image/Rim.webp'),
+        ('Wheel Hub', 8,'/resource/CarPark_image/WheelHub.webp')
 
-   INSERT INTO CarPart (CarID, PartID, PartName, CarSystemID)
+   INSERT INTO CarPart (CarID, PartID, PartName, CarSystemID, [Image])
     SELECT 
         i.CarID,
         ROW_NUMBER() OVER (PARTITION BY i.CarID ORDER BY d.CarSystemID) AS PartID,
         d.PartName,
-        d.CarSystemID
+        d.CarSystemID,
+		d.Image
     FROM inserted i
     CROSS JOIN @DefaultParts d;
 END;
 GO
 
-GO
+
 
 -- Trigger for Order
 CREATE TRIGGER InsertOrder
