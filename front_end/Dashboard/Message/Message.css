@@ -685,19 +685,20 @@ body {
 
 .popup-container {
     opacity: 0;
-    transition: opacity 0.3s ease-in-out;
+    transition: opacity 0.3s ease-in-out, top 0.5s ease;
+    top: -25%;
+    left: 50%;
+    height: 50%;
+    width: 50%;
+    transform: translate(-50%, -50%);
+    position: fixed;
 }
 
 .popup {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     background-color: #121212;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    height: 50%;
-    width: 50%;
-
+    height: 100%;
+    width: 100%;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
@@ -705,7 +706,8 @@ body {
 
 .popup-container.active {
     opacity: 1;
-
+    top: 50%;
+    left: 50%;
 }
 
 .popup-header,
@@ -823,12 +825,55 @@ body {
 
 .popup-list {
     flex: 1;
-    overflow-y: auto;
-    /* Thêm thanh cuộn dọc nếu cần */
     background-color: #121212;
+    display: flex;
+    width: 100%;
+    padding-left: 5%;
+    padding-right: 5%;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    justify-content: start;
+    overflow-y: auto;
 }
 
-.popup-btn {
+.popup-list-item {
+    width: 33%;
+    height: 70px;
+    padding: 10px 10px;
+    border-radius: 7px;
+    display: flex;
+    align-items: center;
+}
+
+.popup-list-item.choose {
+    background-color: cadetblue;
+}
+
+.popup-list-item:hover {
+    background-color: #1e1e1e;
+}
+
+.popup-list-item.choose:hover {
+    background-color: cadetblue;
+}
+
+.popup-list-item img {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+}
+
+.popup-list-item span {
+    margin-left: 10px;
+    font-size: 20px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+
+.popup-btn-done,
+.popup-btn-cancel {
     background: none;
     /* Xóa màu nền */
     border: none;
@@ -841,6 +886,10 @@ body {
     width: 120px;
 }
 
-.popup-btn:hover {
-    background-color: #2c2c2c;
+.popup-btn-done:hover {
+    background-color: #007ed9;
+}
+
+.popup-btn-cancel:hover {
+    background-color: #d9534f;
 }

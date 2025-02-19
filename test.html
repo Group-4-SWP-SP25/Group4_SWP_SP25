@@ -1,82 +1,57 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <title>Popup Example</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flexbox Example</title>
+    <link rel="stylesheet" href="styles.css">
     <style>
-        .popup {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: #121212;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            height: 50%;
-            width: 50%;
-            opacity: 0;
-            transition: opacity 0.3s ease-in-out;
-            border-radius: 10px;
+        * {
+            box-sizing: border-box;
         }
 
-        .popup.active {
-            opacity: 1;
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
             display: flex;
-            flex-direction: column;
-        }
-
-        .popup-header,
-        .popup-search,
-        .popup-submit {
-            width: 100%;
-            background-color: #1e1e1e;
-            display: flex;
-            align-items: center;
             justify-content: center;
-            padding: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            flex: 0 0 60px;
-            /* Chiều cao cố định cho các phần */
+            align-items: center;
+            height: 100vh;
         }
 
-        .popup-header {
-            border-top-left-radius: 10px;
-            border-top-right-radius: 10px;
+        .flex-container {
+            display: flex;
+            flex-wrap: wrap;
+            width: 80%;
+            max-width: 800px;
+            margin: auto;
         }
 
-        .popup-submit {
-            border-bottom-left-radius: 10px;
-            border-bottom-right-radius: 10px;
-        }
-
-        .popup-list {
-            flex: 1;
-            /* Phần còn lại chiếm không gian */
-            overflow-y: auto;
-            /* Thêm thanh cuộn dọc nếu cần */
-            background-color: #121212;
+        .flex-item {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 5px;
+            font-size: 1.5rem;
+            flex: 1 1 calc(33.333% - 20px);
+            margin: 10px;
+            height: 150px;
+            /* Thiết lập chiều cao cố định */
         }
     </style>
 </head>
 
 <body>
-    <button id="toggleButton">Toggle Popup</button>
-
-    <div class="popup" id="popup">
-        <div class="popup-header">Popup Header</div>
-        <div class="popup-search">Search Area</div>
-        <div class="popup-list">List Area - This is a long list content that may need scrolling.</div>
-        <div class="popup-submit">Submit Area</div>
+    <div class="flex-container">
+        <div class="flex-item">1</div>
+        <div class="flex-item">2</div>
+        <div class="flex-item">3</div>
+        <div class="flex-item">4</div>
+        <div class="flex-item">5</div>
     </div>
-
-    <script>
-        const toggleButton = document.getElementById('toggleButton');
-        const popup = document.getElementById('popup');
-
-        toggleButton.addEventListener('click', function () {
-            popup.classList.toggle('active');
-        });
-    </script>
 </body>
 
 </html>
