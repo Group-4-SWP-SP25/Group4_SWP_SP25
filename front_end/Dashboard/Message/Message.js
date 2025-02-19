@@ -1,7 +1,7 @@
 const body = document.getElementById('message-right-body');
 const messageInput = document.getElementById('message-input');
 const userList = document.getElementById('message-item-list');
-const eaderUsername = document.getElementById('header-username');
+const headerUsername = document.getElementById('header-username');
 
 let ReceiverID = 0;
 let firstIndex = 0;
@@ -207,6 +207,16 @@ const GetList = async () => {
     }
 }
 
+// switch user
+const switchUser = (id, name) => {
+    ReceiverID = id;
+    count = 15;
+    body.innerHTML = "";
+    firstIndex = 0;
+    headerUsername.innerHTML = name;
+    loadMessages();
+}
+
 // add user 
 async function AddUser(id, name, lastMessage) {
     // add
@@ -231,12 +241,7 @@ async function AddUser(id, name, lastMessage) {
     `;
 
     user.addEventListener('click', () => {
-        ReceiverID = id;
-        count = 15;
-        body.innerHTML = "";
-        firstIndex = 0;
-        headerUsername.innerHTML = name;
-        loadMessages();
+        switchUser(id, name)
     })
     user.querySelector('.message-item-action-btn').addEventListener('click', () => {
         alert('click action button of ' + name);
@@ -246,41 +251,15 @@ async function AddUser(id, name, lastMessage) {
 }
 
 // move user to top 
-async function MoveUserToTop(content) {
+function MoveUserToTop(content) {
     const item = userList.querySelector(`[message-item-id="${ReceiverID}"]`);
     const user = item.cloneNode(true);
     user.querySelector('.last-message').innerHTML = content;
     user.addEventListener('click', () => {
-        ReceiverID = item.getAttribute('message-item-id');
-        count = 15;
-        body.innerHTML = "";
-        firstIndex = 0;
-        loadMessages();
+        let id = item.getAttribute('message-item-id');
+        let name = item.querySelector('.message-item-username').innerHTML;
+        switchUser(id, name)
     })
     item.remove();
     userList.prepend(user);
-}
-
-// new message to new user 
-document.getElementById('message-head-action').addEventListener('click', togglePopup)
-
-document.getElementById('overlay').addEventListener("click", togglePopup)
-
-function togglePopup() {
-    const popup = document.querySelector(".popup-container")
-    if (!popup.classList.contains('active')) {
-        popup.style.display = 'flex';
-        overlay.style.display = 'flex';
-        setTimeout(() => {
-            popup.classList.add('active');
-            overlay.classList.add('active');
-        }, 10); // Delay nhỏ để kích hoạt hiệu ứng
-    } else {
-        popup.classList.remove('active');
-        overlay.classList.remove('active');
-        setTimeout(() => {
-            popup.style.display = 'none';
-            overlay.style.display = 'none';
-        }, 300); // Thời gian khớp với hiệu ứng transition
-    }
 }

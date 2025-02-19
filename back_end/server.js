@@ -93,10 +93,7 @@ app.post("/getServiceTypeDetail", getServiceTypeDetail);
 
 // admin
 app.post("/CustomerManager/getUserList", authenticateADMIN, getUserList);
-app.post(
-  "/CustomerManager/getTotelUserCount",
-  authenticateADMIN,
-  getTotalUserCount
+app.post("/CustomerManager/getTotelUserCount", authenticateADMIN, getTotalUserCount
 );
 app.post("/CustomerManager/getUserInfo", authenticateADMIN, GetUserInfo_Admin);
 app.post("/Message/SendMessage", authenticateADMIN, SendMessage);
