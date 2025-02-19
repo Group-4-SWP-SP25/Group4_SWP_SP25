@@ -41,7 +41,7 @@ $(document).ready(async function () {
   });
 
   $("#my-orders").on("click", function () {
-    window.location.href = "../Order/OrderList/orderList.html";
+    window.location.href = "/front_end/Order/OrderList/orderList.html";
   });
 });
 

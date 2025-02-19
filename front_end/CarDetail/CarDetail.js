@@ -1,63 +1,81 @@
+$(document).ready(function () {
   async function getSystem() {
-    const carSystemJson = await fetch("http://localhost:3000/listCarSystem", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    const carSystems = await carSystemJson.json();
-    const systemList = document.querySelector(".system-list");
-
-    systemList.innerHTML = ""; // Xóa dữ liệu cũ nếu có
-
-    carSystems.forEach((carSystem) => {
-      const system = document.createElement("li");
-      system.innerHTML = `
-        <a href="#" class="system-item" data-id="${carSystem.CarSystemID}">${carSystem.CarSystemName}</a>
-      `;
-
-      systemList.appendChild(system);
-    });
-
-    // Gắn sự kiện click cho từng system-item
-    document.querySelectorAll(".system-item").forEach((item) => {
-      item.addEventListener("click", async function (event) {
-        event.preventDefault();
-        const carSystemID = this.getAttribute("data-id");
-        await getPart(carSystemID);
+    try {
+      const carSystems = await $.ajax({
+        url: "http://localhost:3000/listCarSystem",
+        method: "POST",
+        contentType: "application/json",
       });
-    });
+
+      const systemList = $(".system-list");
+      systemList.empty(); // Xóa dữ liệu cũ nếu có
+
+      carSystems.forEach((carSystem) => {
+        const system = $(`
+          <li>
+            <a href="#" class="system-item" data-id="${carSystem.CarSystemID}">${carSystem.CarSystemName}</a>
+          </li>
+        `);
+        systemList.append(system);
+      });
+
+      // Gắn sự kiện click cho từng system-item
+      $(".system-item").on("click", async function (event) {
+        event.preventDefault();
+        const carSystemID = $(this).data("id");
+        await togglePart(carSystemID);
+      });
+    } catch (error) {
+      console.error("Error fetching car systems:", error);
+    }
   }
 
-async function getPart(carSystemID) {
-  const carPartJson = await fetch("http://localhost:3000/listCarPartBySystem", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ carID: 1, carSystemID: carSystemID }),
-  });
+  async function togglePart(carSystemID) {
+    const carPartList = $(".CarPart1");
 
-  const carParts = await carPartJson.json();
-  const carPartList = document.querySelector(".CarPart1");
+    if (carPartList.data("visible")) {
+      // Nếu đang hiển thị, slide từ phải sang trái để ẩn
+      carPartList
+        .children(".CarPart")
+        .animate({ left: "100%", opacity: 0 }, 500, function () {
+          carPartList.empty().hide().data("visible", false);
+        });
+      return;
+    }
 
-  carPartList.innerHTML = ""; 
+    try {
+      const carParts = await $.ajax({
+        url: "http://localhost:3000/listCarPartBySystem",
+        method: "POST",
+        contentType: "application/json",
+        data: JSON.stringify({ carID: 1, carSystemID: carSystemID }),
+      });
 
-  carParts.forEach((carPart) => {
-    const part = document.createElement("div");
-    part.classList.add("CarPart");
-    part.innerHTML = `
-      <img src="../CarList/vin.png" id="CarPart_img">
-      <p>Part name: ${carPart.PartName}</p>
-      <p>Part Status: ${carPart.Status ? carPart.Status : "N/A"}</p>
-      <p>Installation date: ${carPart.InstallationDate ? carPart.InstallationDate : "N/A"}</p>
-      <p>Expired date: ${carPart.ExpiryDate ? carPart.ExpiryDate : "N/A"}</p>
-      <a href="#" class="ServiceButton">Service</a>
-    `;
-    carPartList.appendChild(part);
-  });
-}
+      carPartList.empty().show().data("visible", true);
 
-// Gọi hàm để tải danh sách hệ thống khi trang load
-getSystem();
+      carParts.forEach((carPart) => {
+        const part = $(`
+          <div class="CarPart" style="position: relative; left: -100%; opacity: 0;">
+            <img src="../CarList/vin.png" id="CarPart_img">
+            <p>Part name: ${carPart.PartName}</p>
+            <p>Part Status: ${carPart.Status ? carPart.Status : "N/A"}</p>
+            <p>Installation date: ${
+              carPart.InstallationDate ? carPart.InstallationDate : "N/A"
+            }</p>
+            <p>Expired date: ${
+              carPart.ExpiryDate ? carPart.ExpiryDate : "N/A"
+            }</p>
+            <a href="#" class="ServiceButton">Service</a>
+          </div>
+        `);
+        carPartList.append(part);
+        part.animate({ left: "0%", opacity: 1 }, 500);
+      });
+    } catch (error) {
+      console.error("Error fetching car parts:", error);
+    }
+  }
+
+  // Gọi hàm để tải danh sách hệ thống khi trang load
+  getSystem();
+});

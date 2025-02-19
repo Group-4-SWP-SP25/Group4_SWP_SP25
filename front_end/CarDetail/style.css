@@ -29,14 +29,14 @@ body {
   flex: 2;
 }
 
-.content {
+.wheel-works .content {
   display: flex;
   gap: 2%;
   width: 100%;
   align-items: center;
 }
 
-.content img {
+.wheel-works .content img {
   width: 100%;
   margin-right: 20px;
   border-radius: 5px;
@@ -73,7 +73,8 @@ ul {
   
 } */
 
-li {
+.system-list li,
+.other-services li {
   display: flex;
   align-items: center;
   font-weight: bold;
@@ -208,4 +209,14 @@ p {
   align-items: center; /* Căn giữa theo chiều dọc */
   max-width: 500px; /* Giới hạn độ rộng */
   margin: auto; /* Căn giữa cả khối */
+}
+
+/* Place Order */
+#place-order {
+  width: 758px;
+  z-index: 1000;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
