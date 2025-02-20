@@ -29,14 +29,14 @@ body {
   flex: 2;
 }
 
-.content {
+.wheel-works .content {
   display: flex;
   gap: 2%;
   width: 100%;
   align-items: center;
 }
 
-.content img {
+.wheel-works .content img {
   width: 100%;
   margin-right: 20px;
   border-radius: 5px;
@@ -73,7 +73,8 @@ ul {
   
 } */
 
-li {
+.system-list li,
+.other-services li {
   display: flex;
   align-items: center;
   font-weight: bold;
@@ -164,8 +165,7 @@ button {
 /* Car part */
 
 .CarPart {
-  width: 200px;
-  height: 230px;
+  width: 100%;
   background-color: gray;
   padding: 15px;
   border-radius: 10px;
@@ -185,7 +185,7 @@ p {
   font-weight: bold;
 }
 
-.ServiceButton {
+.show-service {
   display: inline-block;
   margin-top: 3px;
   padding: 8px 15px;
@@ -197,7 +197,7 @@ p {
   font-weight: bold;
 }
 
-.ServiceButton:hover {
+.show-service:hover {
   background-color: #676363;
 }
 
@@ -209,4 +209,24 @@ p {
   align-items: center; /* Căn giữa theo chiều dọc */
   max-width: 500px; /* Giới hạn độ rộng */
   margin: auto; /* Căn giữa cả khối */
+}
+
+/* Place Order */
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(1px);
+  z-index: 5;
+}
+#place-order {
+  width: 758px;
+  z-index: 1000;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
