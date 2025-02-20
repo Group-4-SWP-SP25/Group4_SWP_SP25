@@ -218,8 +218,17 @@
     }
 
     .price {
-      font-weight: bold;
+      display: flex;
+      gap: 14%;
       font-size: 18px;
+
+      .price-title {
+        font-weight: bold;
+      }
+
+      .price-value {
+        text-align: end;
+      }
     }
 
     /* Next to online payment */
@@ -338,15 +347,15 @@
 
         <div class="price">
           <div class="price-title">
-            <p class="component-unit">Component Unit Price: </p>
+            <p>Component Unit Price: </p>
             <p>Service Price: </p>
-            <p class="total">Total Price: </p>
+            <p>Total Price: </p>
           </div>
 
           <div class="price-value">
-            <p class="component-unit">333</p>
-            <p>333</p>
-            <p class="total">333</p>
+            <p class="component-unit hidden">3334</p>
+            <p class="service">333</p>
+            <p class="total hidden">333</p>
           </div>
         </div>
       </li>
@@ -373,11 +382,6 @@
   <script>
 
     $(document).ready(function () {
-      function showHideQuantity() {
-
-      }
-      showHideQuantity();
-
       $(document).on("click", ".btn-dec", function () {
         const qtyInput = $(this).siblings(".qty-val");
         let quantity = parseInt(qtyInput.val());
@@ -397,9 +401,7 @@
           console.log(quantity + 1);
         }
       });
-
     });
-
 
 
   </script>
