@@ -12,7 +12,7 @@ const AuthGoogle = async (req, res) => {
         return res.status(400).json({ success: false, message: 'Token is required' });
     }
 
-    try {
+    try {   
         // Xác thực token với Google
         const ticket = await client.verifyIdToken({
             idToken: token,

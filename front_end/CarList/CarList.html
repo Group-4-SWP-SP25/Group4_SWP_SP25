@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CarList</title>
-  <link rel="stylesheet" href="CarList.css">
+  <link rel="stylesheet" href="style.css">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
@@ -16,10 +16,10 @@
 
 <body>
    <!-- Header -->
-   <div id="header-container"></div>
+   <!-- <div id="header-container"></div> -->
    <!-- End header -->
 
-  <h1>My cars</h1>
+  <h1>My Cars</h1>
 
     <div class="container">
       
@@ -27,7 +27,7 @@
         <h2>Mazda Cx5</h2>
         <img src="ford.png" alt="Mazda Cx5">
         <p>Status: <span style="color: green;">✅ Active</span></p>
-        <a href="#">Car detail</a>
+        <a href="../CarDetail/CarDetail.html">Car detail</a>
     </div>
     
      
@@ -35,23 +35,57 @@
           <h2>Vinfast LuxA</h2>
           <img src="vin.png" alt="Mazda Cx5"> 
           <p>Status: <span style="color: red;">⚠️ Maintaining</span></p>
-          <a href="#">Car detail</a>
+          <a href="../CarDetail/CarDetail.html">Car detail</a>
         
       </div>
-      <div class="car">
+      <div class="car"> 
           <h2>Ford</h2>
           <img src="ford.png" alt="Mazda Cx5"> 
           <p>Status: <span style="color: green;">✅ Active</span></p>
-          <a href="">Car detail</a>
+          <a href="../CarDetail/CarDetail.html">Car detail</a>
       
       </div>
+
+      <section class="why-choose-us">
+     
+        <h1>Why Choose <span>Us</span></h1>
+        
+        <div class="why-container">
+            <div class="feature-box">
+                <img src="img1.png" alt="Eco-Friendly Washes">
+                <h2>Eco-Friendly Washes</h2>
+                <p>Whether you're looking for a brand-new model or a certified vehicle, we have a diverse.</p>
+            </div>
+    
+            <div class="feature-box">
+                <img src="img2.png" alt="Cleaning Technology">
+                <h2>Cleaning Technology</h2>
+                <p>Whether you're looking for a brand-new model or a certified vehicle, we have a diverse.</p>
+            </div>
+    
+            <div class="feature-box">
+                <img src="img3.png" alt="Competitive Pricing">
+                <h2>Competitive pricing</h2>
+                <p>Whether you're looking for a brand-new model or a certified vehicle, we have a diverse.</p>
+            </div>
+    
+            <div class="feature-box">
+                <img src="img4.png" alt="24/7 Support">
+                <h2>24/7 Support</h2>
+                <p>Whether you're looking for a brand-new model or a certified vehicle, we have a diverse.</p>
+            </div>
+        </div>
+    </section>
+    
   </div>
 
+
+
   <!-- Footer -->
-  <div id="footer-container"></div>
+  <!-- <div id="footer-container"></div> -->
   <!-- End footer -->
 
-  <script>
+  <!-- <script>
     fetch("../header/header.html")
         .then((response) => response.text())
         .then((data) => {
@@ -63,13 +97,7 @@
         .then((data) => {
             document.getElementById("footer-container").innerHTML = data;
         });
-</script>
-
-
- 
-
-  
- 
+</script> -->
 </body>
 
 </html>

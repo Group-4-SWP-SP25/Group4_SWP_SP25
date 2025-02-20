@@ -61,9 +61,14 @@
           </div>
           <div class="g_id_signin" data-type="standard"></div>
         </div>
-        <div class="social-button apple" id="auth-">
 
+        <div class="social-button facebook" id="auth-facebook">
+          <fb:login-button 
+            scope="public_profile,email" 
+            onlogin="checkLoginState();">
+          </fb:login-button>
         </div>
+        
       </div>
 
       <!-- Register -->
