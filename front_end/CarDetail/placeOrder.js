@@ -60,6 +60,7 @@ $(document).ready(function () {
           });
 
           const quantityContainer = $(".quantity");
+          $(".price-value .service").html(selectedService.Price);
           if (selectedService.AffectInventory === 1) {
             quantityContainer.slideDown(500);
             $(".qty-val").val(1);
@@ -81,4 +82,16 @@ function showHidePlaceOrder() {
   $("#place-order").slideToggle(1000);
   $(".overlay").toggleClass("hidden");
   $("body").toggleClass("no-scroll");
+}
+
+function calTotalPrice() {
+  function valueTag(tag) {
+    return parseInt(tag.text());
+  }
+  const componentPrice = valueTag($(".price-value .component-unit"));
+  const servicePrice = valueTag($(".price-value .service"));
+  const quantity = valueTag($(".qty-val"));
+
+  const totalPrice = servicePrice + quantity * componentPrice;
+  $(".price-value .total").html(totalPrice);
 }
