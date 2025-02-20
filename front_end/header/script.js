@@ -1,5 +1,3 @@
-
-
 $(document).ready(async function () {
   if (localStorage.getItem("token") == null) {
     $(".guest").removeClass("hidden");
@@ -10,17 +8,17 @@ $(document).ready(async function () {
     $(".user-login").removeClass("hidden");
   }
   //get user info
-  const response = await fetch('http://localhost:3000/getUserInfo', {
-    method: 'POST',
+  const response = await fetch("http://localhost:3000/getUserInfo", {
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${localStorage.getItem('token')}`,
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
-  })
+  });
 
   const result = await response.json();
-  // set name 
-  document.getElementById('name').innerHTML = result.name
+  // set name
+  document.getElementById("name").innerHTML = result.name;
 
   switch (result.role) {
     case "Admin":
@@ -32,18 +30,18 @@ $(document).ready(async function () {
       break;
   }
 
-
   $("#sign-out").on("click", function () {
     localStorage.removeItem("token");
     window.location.href = "../HomePage/HomePage.html";
   });
 
   $("#dashboard").on("click", function () {
-    window.location.href = "http://127.0.0.1:5500/front_end/Dashboard/DashBoard/dashboard.html";
+    window.location.href =
+      "http://127.0.0.1:5500/front_end/Dashboard/DashBoard/dashboard.html";
   });
 
   $("#my-orders").on("click", function () {
-    window.location.href = "../ViewListOrder/ListOrder.html";
+    window.location.href = "/front_end/Order/OrderList/orderList.html";
   });
 });
 

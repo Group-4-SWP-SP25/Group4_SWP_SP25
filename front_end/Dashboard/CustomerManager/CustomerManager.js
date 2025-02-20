@@ -1,8 +1,8 @@
 const table = document.getElementById('UserList');
 
-var pageCount;
-var firstIndex;
-var currentPage = 1;
+let pageCount;
+let firstIndex;
+let currentPage = 1;
 const numRowPerTable = 10;
 
 const searchInput = document.getElementById('searchString');
@@ -27,7 +27,7 @@ let sortColumn = '';
 let sortOrder = 'ASC';
 
 function addRow(user) {
-    var newRow = table.insertRow();
+    let newRow = table.insertRow();
     newRow.innerHTML = `
         <td class="ID">${user.UserID}</td>
         <td class="Name">${user.FirstName + ' ' + user.LastName}</td>
@@ -136,8 +136,8 @@ async function setPagination(index) {
     }
 
     // set active class
-    for (var i = 0; i < buttons.length; i++) {
-        buttons[i].classList.remove("active");
+    for (let button of buttons) {
+        button.classList.remove("active");
     }
     switch (currentPage) {
         case 1:
@@ -221,12 +221,10 @@ window.onload = () => {
     Next.addEventListener('click', () => {
         setPagination(currentPage + 1)
     });
-    for (var i = 0; i < buttons.length; i++) {
-        (function (button) {
-            button.addEventListener('click', function () {
-                setPagination(parseInt(button.innerHTML))
-            });
-        })(buttons[i]);
+    for (let button of buttons) {
+        button.addEventListener('click', function () {
+            setPagination(parseInt(button.innerHTML))
+        });
     }
 
     // Add event listener for search input

@@ -8,7 +8,6 @@ const UserList = async (firstIndex, count, searchString, sortColumn = 'UserID', 
         const pool = global.pool;
         const searchResult = await search(searchString);
         const userIds = searchResult.map(user => user.UserID).join(",");
-
         if (!userIds) {
             return []; // Trả về mảng rỗng nếu không có user nào khớp với searchString
         }
@@ -22,7 +21,7 @@ const UserList = async (firstIndex, count, searchString, sortColumn = 'UserID', 
         }
 
         const query = `
-        SELECT *
+        SELECT UserID, FirstName, LastName, Email, Address, Role, Phone, DateCreated, DOB, LastActivity
         FROM [User]
         WHERE UserID IN (${userIds})
         ORDER BY ${sortColumn} ${sortOrder}
@@ -38,6 +37,7 @@ const UserList = async (firstIndex, count, searchString, sortColumn = 'UserID', 
         const userData = result.recordset;
         return userData;
     } catch (err) {
+        console.log(err);
         throw err;
     }
 }
@@ -65,6 +65,7 @@ const TotalUserCount = async (searchString) => {
         const totalUserCount = result.recordset[0].TotalUserCount;
         return totalUserCount;
     } catch (err) {
+        console.log(err);
         throw err;
     }
 };
@@ -89,6 +90,7 @@ const search = async (searchString) => {
         const userData = result.recordset;
         return userData;
     } catch (err) {
+        console.log(err);
         throw err;
     }
 };
