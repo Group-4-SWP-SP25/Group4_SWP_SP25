@@ -59,7 +59,6 @@ async function fetchUserOrders() {
           contentType: "application/json",
           data: JSON.stringify({ partID: order.PartID }),
         });
-
         const orderElement = $(
           `<div class="order-row">
             <div class="order-product">

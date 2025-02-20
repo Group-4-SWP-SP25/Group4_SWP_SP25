@@ -46,6 +46,7 @@ function authenticateADMIN(req, res, next) {
         const user = jwt.verify(token, SECRET_KEY); // Giải mã token
         if (user.role != 'Admin')
             return res.status(403).json({ message: 'Access denied' })
+        req.user = user; // Gắn thông tin người dùng vào req
         next();
     } catch (error) {
         return res.status(401).json({ success: false, message: 'Invalid token' });

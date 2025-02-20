@@ -62,8 +62,10 @@ CREATE TABLE CarPart (
     InstallationDate DATETIME DEFAULT NULL,
     ExpiryDate DATETIME DEFAULT NULL,
     [Status] VARCHAR(10) DEFAULT NULL CHECK ([Status] IN ('Active', 'Broken', 'Expired')),
-    CONSTRAINT pk_CarPart PRIMARY KEY (CarID, PartID)
-);
+    CONSTRAINT pk_CarPart PRIMARY KEY (CarID, PartID),
+    [Image]  NVARCHAR(500)
+
+);      
 GO
 
 -- 5
@@ -78,9 +80,12 @@ GO
 CREATE TABLE [Service] (
 	ServiceID INT IDENTITY(1, 1) NOT NULL PRIMARY KEY,
 	ServiceTypeID INT FOREIGN KEY REFERENCES [ServiceType](ServiceTypeID) ON DELETE CASCADE,
+	PartID INT,
 	ServiceName VARCHAR(200) NOT NULL,
+	AffectInventory TINYINT NOT NULL,
 	ServiceDescription TEXT,
-	ServicePrice FLOAT NOT NULL
+	ServicePrice FLOAT NOT NULL,
+	Checking TINYINT DEFAULT 0
 );
 GO
 
@@ -110,13 +115,15 @@ CREATE TABLE [Order] (
 GO
 
 -- MESSAGE
-CREATE TABLE [Messages] (
-    MessageID INT IDENTITY(1, 1) PRIMARY KEY,
-    SenderID INT FOREIGN KEY REFERENCES [User](UserID),
-    ReceiverID INT FOREIGN KEY REFERENCES [User](UserID),
+CREATE TABLE Messages (
+    MessageID INT PRIMARY KEY IDENTITY,
+    SenderID INT NOT NULL,
+    ReceiverID INT NOT NULL,
     Content TEXT NOT NULL,
     SentAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-    IsRead BIT DEFAULT 0
+    IsRead BIT DEFAULT 0,
+    FOREIGN KEY (SenderID) REFERENCES [User](UserID),
+    FOREIGN KEY (ReceiverID) REFERENCES [User](UserID),
 );
 GO
 
@@ -131,51 +138,53 @@ BEGIN
 	-- Danh sách các bộ phận mặc định của xe
     DECLARE @DefaultParts TABLE (
         PartName VARCHAR(200),
-        CarSystemID INT
+        CarSystemID INT,
+		[Image] VARCHAR(500)
     );
 
     -- Thêm danh sách các bộ phận mặc định
-    INSERT INTO @DefaultParts (PartName, CarSystemID)
+    INSERT INTO @DefaultParts (PartName, CarSystemID, [Image])
     VALUES 
-        ('Engine Oil', 1),
-        ('Spark Plug', 1),
-        ('Injector', 1),
-        ('Cooling System', 1),
-        ('Brake Pad', 2),
-        ('Rotor', 2),
-        ('Fluid', 2),
-		('Bulb', 3),
-        ('Fuse', 3),
-        ('Electric System', 3),
-		('Wiring', 3),
-        ('Gas', 4),
-		('Condenser', 4),
-		('Filter', 4),
-        ('Pump', 5),
-        ('Filter', 5),
-		('Injection', 5),
-		('Charging', 6),
-		('Terminal', 6),
-        ('Shock', 7),
-        ('Control Arm', 7),
-        ('Tie Rod', 7),
-		('Suspension', 7),
-        ('Tire', 8),
-        ('Rim', 8),
-        ('Wheel Hub', 8);
+        ('Engine Oil', 1,'/resource/CarPark_image/Oil.webp'),
+        ('Spark Plug', 1,'/resource/CarPark_image/SparkPlug.webp'),
+        ('Injector', 1,'/resource/CarPark_image/InjectorE.webp'),
+        ('Cooling System', 1,'/resource/CarPark_image/CoolingSystem.webp'),
+        ('Brake Pad', 2,'/resource/CarPark_image/BrakePad.webp'),
+        ('Rotor', 2,'/resourc	e/CarPark_image/Rotor.webp'),
+        ('Fluid', 2,'/resource/CarPark_image/Fluids.webp'),
+		('Bulb', 3,'/resource/CarPark_image/Buld.webp'),
+        ('Fuse', 3,'/resource/CarPark_image/Fuse.webp'),
+        ('Electric System', 3,'/resource/CarPark_image/ElectricSystem.webp'),
+		('Wiring', 3,'/resource/CarPark_image/Wiring.webp'),
+        ('Gas', 4,'/resource/CarPark_image/Gas.webp'),
+		('Condenser', 4,'/resource/CarPark_image/Condenser.webp'),
+		('Filter', 4,'/resource/CarPark_image/FilterF.webp'),
+        ('Pump', 5,'/resource/CarPark_image/Pump.webp'),
+        ('Filter', 5,'/resource/CarPark_image/FilterA.webp'),
+		('Injection', 5,'/resource/CarPark_image/InjectorF.webp'),
+		('Charging', 6,'/resource/CarPark_image/Charging.webp'),
+		('Terminal', 6,'/resource/CarPark_image/Terminal.webp'),
+        ('Shock', 7,'/resource/CarPark_image/Shock.webp'),
+        ('Control Arm', 7,'/resource/CarPark_image/ControlArm.webp'),
+        ('Tie Rod', 7,'/resource/CarPark_image/TieRod.webp'),
+		('Suspension', 7,'/resource/CarPark_image/Suspension.webp'),
+        ('Tire', 8,'/resource/CarPark_image/Tire.webp'),
+        ('Rim', 8,'/resource/CarPark_image/Rim.webp'),
+        ('Wheel Hub', 8,'/resource/CarPark_image/WheelHub.webp')
 
-   INSERT INTO CarPart (CarID, PartID, PartName, CarSystemID)
+   INSERT INTO CarPart (CarID, PartID, PartName, CarSystemID, [Image])
     SELECT 
         i.CarID,
         ROW_NUMBER() OVER (PARTITION BY i.CarID ORDER BY d.CarSystemID) AS PartID,
         d.PartName,
-        d.CarSystemID
+        d.CarSystemID,
+		d.Image
     FROM inserted i
     CROSS JOIN @DefaultParts d;
 END;
 GO
 
-GO
+
 
 -- Trigger for Order
 CREATE TRIGGER InsertOrder
@@ -241,10 +250,10 @@ GO
 
 -- Sample data
 
---INSERT INTO [User](Username, Password, FirstName, LastName, Email, Phone, DOB)
---VALUES ('doanhieu18', 'doanhieu18@', 'Hieu', 'Doan', 'doanhieu180204@gmail.com', '0325413488', '2004-02-18');
+INSERT INTO [User](Username, Password, FirstName, LastName, Email, Phone, DOB)
+VALUES ('doanhieu18', 'doanhieu18@', 'Hieu', 'Doan', 'doanhieu180204@gmail.com', '0325413488', '2004-02-18');
 
-
+GO
 DECLARE @counter INT = 1
 WHILE @counter <= 100
 BEGIN
@@ -268,64 +277,157 @@ VALUES ('q8edh12hi', '1234', 'qwe8dyrwfhief', 'qwgufcqbw', 'qwficqwfc', '0123456
 GO
 
 INSERT INTO [ServiceType](ServiceTypeName, ServiceTypeDescription) VALUES 
-('Wheel System', 'This service is to ensure your vehicle''s wheels are in perfect condition. It provides: Tires Patching, Tires Replacement, Tires Pressure Check, Wheel Balancing, and Wheel Alignment.'),
-('Braking System', 'This service is to maintain the safety and efficiency of your vehicle''s braking system. It provides: Braking Pad Replacement, Braking Disc Replacement, Braking Fluid Change, Braking Maintenance, and ABS System Check.'),
-('Engine System', 'This service is to keep your engine running smoothly and efficiently. It provides: Engine Oil Change, Engine Sparkplug Inspection, Engine Injector Cleaning, Engine Cooling System check, and Engine Repair.'),
-('Battery System', 'This service is to ensure your vehicle''s battery is reliable and fully functional. It provides: Battery Health Check, Battery Charging, Battery Replacement, and Battery Terminal Cleaning.'),
-('Electrical System', 'This service is to address all electrical issues in your vehicle. It provides: Bulb Replacement, Fuse Replacement, Electrical System Diagnosis, and Wiring Repair.'),
-('Air Conditioning System', 'This service is to ensure your vehicle''s air conditioning system works efficiently. It provides: AC Gas Refill, AC Condenser Cleaning, AC Filter Replacement, and AC System Repair.'),
-('Shock Absorbers System', 'This service is to maintain your vehicle''s suspension and ride comfort. It provides: Shock Absorber Replacement, Tie Rod Replacement, Control Arm Replacement, and Suspension Alignment.'),
-('Fuel System', 'This service is to ensure your vehicle''s fuel system is clean and efficient. It provides: Fuel Pump Cleaning, Fuel Filter Replacement, and Fuel Injection Repair.'),
-('Cleaning and Maintenance', 'This service is to keep your vehicle clean and well-maintained. It provides: Standard Washes, Polishing, Interior Cleaning, and Waterproof Coating.');
+('Wheel System', 'Your wheels are more than just round things that keep you rolling. They''re the foundation of your vehicle''s performance, safety, and overall driving experience.<br><br>At AUTO247, we understand the critical role your wheels play, and that''s why we offer a comprehensive Wheel System Service designed to keep you cruising in confidence.'),
+('Braking System', 'Your brakes are arguably the most critical safety feature on your vehicle. They''re your first line of defense in preventing accidents and ensuring your safety on the road.<br><br>At AUTO247, we understand the importance of a reliable braking system, and that''s why we offer a comprehensive Braking System Service designed to keep you stopping safely and confidently.'),
+('Engine System', 'Your engine is the heart of your vehicle. It''s the powerhouse that propels you forward, delivering the performance and reliability you depend on.<br><br>At AUTO247, we understand the vital role your engine plays, and that''s why we offer a comprehensive Engine System Service designed to keep your engine running smoothly and efficiently.'),
+('Battery System', 'Your car battery is the unsung hero of your vehicle. It''s the source of electrical power that starts your engine, powers your lights, and keeps your accessories running.<br><br>At AUTO247, we understand the critical role your battery plays, and that''s why we offer a comprehensive Battery System Service designed to keep you powered up and on the go.'),
+('Electrical System', 'Your vehicle''s electrical system is like its nervous system, responsible for powering everything from your headlights and infotainment system to your engine''s ignition and vital safety features.<br><br>At AUTO247, we understand the intricate role your electrical system plays, and that''s why we offer a comprehensive Electrical System Service designed to keep your vehicle running smoothly and safely.'),
+('Air Conditioning System', 'Imagine driving on a hot summer day, stuck in traffic, and your air conditioning system suddenly stops working. Not a pleasant experience, right?<br><br>At AUTO247, we understand the importance of a reliable air conditioning system, and that''s why we offer a comprehensive Air Conditioning System Service designed to keep you cool and comfortable all year round.'),
+('Shock Absorbers System', 'Your shock absorbers are the unsung heroes of your vehicle''s suspension system. They''re responsible for keeping your ride smooth and comfortable, even on the bumpiest roads.<br><br>At AUTO247, we understand the vital role your shock absorbers play, and that''s why we offer a comprehensive Shock Absorbers System Service designed to keep you riding in comfort and control.'),
+('Fuel System', 'Your fuel system is the lifeline of your engine, responsible for delivering the precise amount of fuel needed for optimal performance.<br><br>At AUTO247, we understand the critical role your fuel system plays, and that''s why we offer a comprehensive Fuel System Service designed to keep your engine running strong and efficiently.'),
+('Cleaning and Maintenance', 'Your car is more than just a mode of transportation; it''s an extension of your personality and a reflection of your style.<br><br>At AUTO247, we understand the importance of keeping your car looking and feeling its best, and that''s why we offer a comprehensive range of Cleaning and Maintenance services designed to help you maintain your car''s appearance and preserve its value.');
 GO
 
-INSERT INTO [Service](ServiceTypeID, ServiceName, ServiceDescription, ServicePrice) VALUES 
-('1', 'Tires Patching', 'Repair small punctures in tires to restore functionality.', ROUND(ROUND(RAND() * 500000 + 750000, 0) / 10000, 0) * 10000),
-('1', 'Tires Replacement', 'Replace old or damaged tires with new ones for better safety and performance.', ROUND(ROUND(RAND() * 500000 + 750000, 0) / 10000, 0) * 10000),
-('1', 'Tires Pressure Check', 'Check and adjust tire pressure to ensure optimal driving conditions.', ROUND(ROUND(RAND() * 500000 + 750000, 0) / 10000, 0) * 10000),
-('1', 'Wheel Balancing', 'Balance wheels to prevent vibrations and ensure a smooth ride.', ROUND(ROUND(RAND() * 500000 + 750000, 0) / 10000, 0) * 10000),
-('1', 'Wheel Alignment', 'Adjust wheel angles to ensure proper alignment and even tire wear.', ROUND(ROUND(RAND() * 500000 + 750000, 0) / 10000, 0) * 10000),
-
-('2', 'Braking Pad Replacement', 'Replace worn-out brake pads to maintain effective braking performance.', ROUND(ROUND(RAND() * 500000 + 750000, 0) / 10000, 0) * 10000),
-('2', 'Braking Disc Replacement', 'Replace damaged or worn brake discs for better braking efficiency.', ROUND(ROUND(RAND() * 500000 + 750000, 0) / 10000, 0) * 10000),
-('2', 'Braking Fluid Change', 'Replace old brake fluid to ensure proper brake system function.', ROUND(ROUND(RAND() * 500000 + 750000, 0) / 10000, 0) * 10000),
-('2', 'Braking Maintenance', 'Inspect and maintain the braking system for optimal performance and safety.', ROUND(ROUND(RAND() * 500000 + 750000, 0) / 10000, 0) * 10000),
-('2', 'ABS System Check', 'Inspect and diagnose the ABS system to ensure it functions correctly.', ROUND(ROUND(RAND() * 500000 + 750000, 0) / 10000, 0) * 10000),
-
-('3', 'Engine Oil Change', 'Replace old engine oil to keep the engine running smoothly.', ROUND(ROUND(RAND() * 500000 + 750000, 0) / 10000, 0) * 10000),
-('3', 'Engine Sparkplug Inspection', 'Inspect and clean or replace spark plugs for better engine performance.', ROUND(ROUND(RAND() * 500000 + 750000, 0) / 10000, 0) * 10000),
-('3', 'Engine Injector Cleaning', 'Clean fuel injectors to improve fuel efficiency and engine performance.', ROUND(ROUND(RAND() * 500000 + 750000, 0) / 10000, 0) * 10000),
-('3', 'Engine Cooling system', 'Inspect and maintain the engine cooling system to prevent overheating.', ROUND(ROUND(RAND() * 500000 + 750000, 0) / 10000, 0) * 10000),
-('3', 'Engine Repair', 'Diagnose and repair engine issues to restore functionality.', ROUND(ROUND(RAND() * 500000 + 750000, 0) / 10000, 0) * 10000),
-
-('4', 'Battery Health Check', 'Check battery health and performance to ensure reliability.', ROUND(ROUND(RAND() * 500000 + 750000, 0) / 10000, 0) * 10000),
-('4', 'Battery Charging', 'Recharge the vehicle battery to restore power.', ROUND(ROUND(RAND() * 500000 + 750000, 0) / 10000, 0) * 10000),
-('4', 'Battery Replacement', 'Replace old or faulty batteries with new ones.', ROUND(ROUND(RAND() * 500000 + 750000, 0) / 10000, 0) * 10000),
-('4', 'Battery Terminal Cleaning', 'Clean battery terminals to ensure proper electrical connections.', ROUND(ROUND(RAND() * 500000 + 750000, 0) / 10000, 0) * 10000),
-
-('5', 'Bulb Replacement', 'Replace faulty or burnt-out bulbs for proper lighting.', ROUND(ROUND(RAND() * 500000 + 750000, 0) / 10000, 0) * 10000),
-('5', 'Fuse Replacement', 'Replace blown fuses to restore electrical functionality.', ROUND(ROUND(RAND() * 500000 + 750000, 0) / 10000, 0) * 10000),
-('5', 'Electrical System Diagnosis', 'Diagnose and troubleshoot electrical system issues.', ROUND(ROUND(RAND() * 500000 + 750000, 0) / 10000, 0) * 10000),
-('5', 'Wiring Repair', 'Repair or replace damaged wiring to restore electrical function.', ROUND(ROUND(RAND() * 500000 + 750000, 0) / 10000, 0) * 10000),
-
-('6', 'AC Gas Refill', 'Refill AC gas to restore cooling efficiency.', ROUND(ROUND(RAND() * 500000 + 750000, 0) / 10000, 0) * 10000),
-('6', 'AC Condenser Cleaning', 'Clean the AC condenser to improve cooling performance.', ROUND(ROUND(RAND() * 500000 + 750000, 0) / 10000, 0) * 10000),
-('6', 'AC Filter Replacement', 'Replace old AC filters for better air quality and cooling.', ROUND(ROUND(RAND() * 500000 + 750000, 0) / 10000, 0) * 10000),
-('6', 'AC System Repair', 'Diagnose and repair issues in the AC system.', ROUND(ROUND(RAND() * 500000 + 750000, 0) / 10000, 0) * 10000),
-
-('7', 'Shock Absorber Replacement', 'Replace worn-out shock absorbers for a smoother ride.', ROUND(ROUND(RAND() * 500000 + 750000, 0) / 10000, 0) * 10000),
-('7', 'Tie Rod Replacement', 'Replace damaged tie rods to ensure proper steering control.', ROUND(ROUND(RAND() * 500000 + 750000, 0) / 10000, 0) * 10000),
-('7', 'Control Arm Replacement', 'Replace worn control arms to maintain suspension stability.', ROUND(ROUND(RAND() * 500000 + 750000, 0) / 10000, 0) * 10000),
-('7', 'Suspension Alignment', 'Align suspension components for better handling and comfort.', ROUND(ROUND(RAND() * 500000 + 750000, 0) / 10000, 0) * 10000),
-
-('8', 'Fuel Pump Cleaning', 'Clean the fuel pump to ensure proper fuel delivery.', ROUND(ROUND(RAND() * 500000 + 750000, 0) / 10000, 0) * 10000),
-('8', 'Fuel Filter Replacement', 'Replace old fuel filters to maintain engine performance.', ROUND(ROUND(RAND() * 500000 + 750000, 0) / 10000, 0) * 10000),
-('8', 'Fuel Injection Repair', 'Repair or clean fuel injectors for optimal fuel efficiency.', ROUND(ROUND(RAND() * 500000 + 750000, 0) / 10000, 0) * 10000),
-
-('9', 'Standard Washes', 'Basic exterior cleaning to keep your car looking fresh.', ROUND(ROUND(RAND() * 500000 + 750000, 0) / 10000, 0) * 10000),
-('9', 'Polishing', 'Polish the exterior to restore shine and protect the paint.', ROUND(ROUND(RAND() * 500000 + 750000, 0) / 10000, 0) * 10000),
-('9', 'Interior Cleaning', 'Thorough cleaning of the car interior for a fresh and tidy look.', ROUND(ROUND(RAND() * 500000 + 750000, 0) / 10000, 0) * 10000),
-('9', 'Waterproof Coating', 'Apply a waterproof coating to protect the exterior from water damage.', ROUND(ROUND(RAND() * 500000 + 750000, 0) / 10000, 0) * 10000);
+INSERT INTO Service (ServiceName, PartID, ServiceDescription, ServicePrice, AffectInventory, ServiceTypeID) VALUES
+('Engine Oil Change', 1, 'Replacing old engine oil with fresh oil', 1200000, 1, 1),
+('Engine Oil Flush', 1, 'Cleaning the engine oil system thoroughly', 1680000, 0, 1),
+('Engine Oil Leak Check', 1, 'Inspecting and fixing engine oil leaks', 960000, 0, 1),
+('Engine Oil Filter Replacement', 1, 'Replacing clogged oil filter for better flow', 720000, 1, 1),
+('Spark Plug Inspection', 2, 'Checking spark plug condition for wear', 600000, 0, 1),
+('Spark Plug Cleaning', 2, 'Cleaning deposits from spark plugs', 480000, 0, 1),
+('Spark Plug Replacement', 2, 'Installing new spark plugs for better ignition', 840000, 1, 1),
+('Ignition System Check', 2, 'Diagnosing and repairing ignition issues', 1440000, 0, 1),
+('Fuel Injector Cleaning', 3, 'Cleaning fuel injectors to improve efficiency', 1920000, 0, 1),
+('Fuel Injector Repair', 3, 'Fixing faulty fuel injectors', 2880000, 0, 1),
+('Fuel Injector Calibration', 3, 'Adjusting injector spray pattern', 2400000, 0, 1),
+('Cooling System Flush', 4, 'Draining and refilling coolant system', 2160000, 1, 1),
+('Cooling System Leak Check', 4, 'Identifying leaks in the cooling system', 1440000, 0, 1),
+('Radiator Cleaning', 4, 'Removing debris and buildup from radiator', 1680000, 0, 1),
+('Coolant Replacement', 4, 'Replacing old coolant for optimal performance', 1200000, 1, 1),
+('Brake Pad Inspection', 5, 'Checking brake pad thickness and wear', 600000, 0, 2),
+('Brake Pad Replacement', 5, 'Installing new brake pads', 1920000, 1, 2),
+('Brake Pad Adjustment', 5, 'Adjusting brake pads for optimal contact', 1200000, 0, 2),
+('Brake Rotor Resurfacing', 6, 'Smoothing brake rotors for better performance', 2400000, 0, 2),
+('Brake Rotor Replacement', 6, 'Installing new brake rotors', 3600000, 1, 2),
+('Brake Rotor Cleaning', 6, 'Removing rust and debris from rotors', 1440000, 0, 2),
+('Brake Fluid Top-Up', 7, 'Adding brake fluid to maintain levels', 720000, 1, 2),
+('Brake Fluid Replacement', 7, 'Flushing old brake fluid and refilling', 1920000, 1, 2),
+('Brake Fluid Leak Repair', 7, 'Fixing leaks in the brake fluid system', 2400000, 0, 2),
+('Headlight Bulb Replacement', 8, 'Changing old headlight bulbs', 960000, 1, 3),
+('Tail Light Bulb Replacement', 8, 'Replacing faulty tail light bulbs', 840000, 1, 3),
+('Interior Light Bulb Replacement', 8, 'Installing new interior light bulbs', 600000, 1, 3),
+('Fuse Check', 9, 'Inspecting fuses for electrical issues', 480000, 0, 3),
+('Fuse Replacement', 9, 'Replacing blown fuses', 360000, 1, 3),
+('Fuse Box Cleaning', 9, 'Cleaning corrosion from fuse box', 720000, 0, 3),
+('Electrical System Diagnosis', 10, 'Checking car’s electrical components', 2400000, 0, 3),
+('Alternator Check', 10, 'Testing alternator for proper charging', 1200000, 0, 3),
+('Battery Voltage Test', 10, 'Measuring battery voltage performance', 600000, 0, 3),
+('Wiring Check', 11, 'Inspecting electrical wiring for damage', 1440000, 0, 3),
+('Wiring Harness Replacement', 11, 'Installing new wiring harness', 2880000, 1, 3),
+('Wiring Short Circuit Fix', 11, 'Repairing short circuits in wiring', 2160000, 0, 3),
+('AC Gas Refill', 12, 'Refilling air conditioning refrigerant', 1920000, 1, 4),
+('AC Compressor Check', 12, 'Diagnosing AC compressor performance', 1680000, 0, 4),
+('AC Gas Leak Detection', 12, 'Identifying leaks in AC refrigerant system', 1200000, 0, 4),
+('AC Condenser Cleaning', 13, 'Removing dust and debris from AC condenser', 1440000, 0, 4),
+('AC Condenser Repair', 13, 'Fixing leaks or clogs in AC condenser', 2880000, 0, 4),
+('AC Condenser Replacement', 13, 'Installing new AC condenser', 4320000, 1, 4),
+('Air Filter Cleaning', 14, 'Removing dust from air filter', 600000, 0, 4),
+('Air Filter Replacement', 14, 'Installing new air filter', 960000, 1, 4),
+('Fuel Filter Replacement', 16, 'Replacing clogged fuel filter', 1200000, 1, 5),
+('Fuel Pump Cleaning', 15, 'Cleaning fuel pump for better efficiency', 1680000, 0, 5),
+('Fuel Pump Repair', 15, 'Fixing fuel pump issues', 2400000, 0, 5),
+('Fuel Pump Replacement', 15, 'Installing new fuel pump', 3600000, 1, 5),
+('Tire Replacement', 24, 'Installing new tires', 3600000, 1, 7),
+('Tire Rotation', 24, 'Rotating tires for even wear', 960000, 0, 8),
+('Wheel Balancing', 26, 'Ensuring even weight distribution on wheels', 1200000, 0, 8),
+('Wheel Alignment', 26, 'Adjusting angles for proper wheel alignment', 1920000, 0, 8),
+('Rim Polishing', 25, 'Cleaning and restoring rim finish', 1680000, 0, 8),
+('Shock Absorber Check', 20, 'Inspecting shock absorbers for leaks', 1200000, 0, 7),
+('Shock Absorber Replacement', 20, 'Installing new shock absorbers', 4320000, 1, 7),
+('Suspension Inspection', 23, 'Checking suspension system components', 1440000, 0, 7),
+('Suspension Repair', 23, 'Fixing worn suspension components', 4800000, 1, 7),
+('Tie Rod End Replacement', 22, 'Installing new tie rod ends', 2880000, 1, 7),
+('Tie Rod Alignment', 22, 'Adjusting tie rods for proper steering', 1680000, 0, 7),
+('Control Arm Inspection', 21, 'Checking control arms for wear and damage', 1200000, 0, 7),
+('Control Arm Replacement', 21, 'Installing new control arms', 4320000, 1, 7),
+('Suspension Lubrication', 23, 'Lubricating suspension components', 960000, 0, 7),
+('Suspension Bushing Replacement', 23, 'Replacing worn-out suspension bushings', 2880000, 1, 7),
+('Charging System Check', 18, 'Testing battery and alternator performance', 1200000, 0, 6),
+('Battery Charging Service', 18, 'Recharging car battery for optimal power', 720000, 0, 6),
+('Battery Terminal Cleaning', 19, 'Cleaning corrosion from battery terminals', 600000, 0, 6),
+('Battery Terminal Replacement', 19, 'Installing new battery terminals', 960000, 1, 6),
+('Wheel Bearing Replacement', 26, 'Replacing worn-out wheel bearings', 3360000, 1, 8),
+('Wheel Hub Greasing', 26, 'Lubricating wheel hub for smooth rotation', 1200000, 0, 8),
+('Rim Refinishing', 25, 'Restoring rim surface for a polished look', 2400000, 0, 8),
+('Rim Replacement', 25, 'Installing new rims', 4800000, 1, 8),
+('Gas Leak Detection', 12, 'Identifying leaks in the fuel system', 2160000, 0, 4),
+('Gas Tank Cleaning', 12, 'Removing debris and dirt from the gas tank', 1920000, 0, 4),
+('Fuel Injection Tuning', 17, 'Adjusting fuel injection for better efficiency', 2880000, 0, 5),
+('Fuel Injection Cleaning', 17, 'Cleaning deposits from injectors', 2400000, 0, 5),
+('AC Filter Replacement', 14, 'Installing a new air conditioning filter', 1200000, 1, 4),
+('AC System Diagnostics', 13, 'Checking AC performance and detecting issues', 2160000, 0, 4),
+('AC Vent Cleaning', 13, 'Removing dust from AC vents for better airflow', 1440000, 0, 4),
+('Advanced Engine Diagnostics', 1, 'Full engine health scan with detailed report', 1500000, 0, 1),
+('Engine Mount Replacement', 1, 'Replacing worn-out engine mounts', 2000000, 1, 1),
+('Engine Tuning', 1, 'Adjusting engine parameters for performance', 1800000, 0, 1),
+('Turbocharger Inspection', 1, 'Checking turbo performance & efficiency', 1200000, 0, 1),
+('Supercharger Installation', 1, 'Installing a supercharger for more power', 5000000, 1, 1),
+('High-Performance Spark Plug Install', 2, 'Upgrading to high-performance spark plugs', 900000, 1, 1),
+('Ignition Coil Replacement', 2, 'Installing new ignition coils', 1300000, 1, 1),
+('Injector Leak Test', 3, 'Testing for fuel injector leaks', 700000, 0, 1),
+('Injector Calibration', 3, 'Fine-tuning injectors for optimal performance', 1100000, 0, 1),
+('Engine Cooling Fan Replacement', 4, 'Replacing the engine cooling fan', 1400000, 1, 1),
+('Radiator Flush', 4, 'Cleaning the radiator for better cooling', 900000, 0, 1),
+('Brake Line Replacement', 5, 'Installing new brake lines', 1800000, 1, 2),
+('ABS Module Repair', 6, 'Repairing the ABS system', 2500000, 0, 2),
+('Brake Rotor Resurfacing', 6, 'Smoothing the rotor surface', 1000000, 0, 2),
+('Brake Pedal Adjustment', 6, 'Adjusting pedal sensitivity', 600000, 0, 2),
+('Brake System Bleeding', 7, 'Removing air from brake lines', 500000, 0, 2),
+('Adaptive Lighting Calibration', 8, 'Calibrating advanced car lighting', 1200000, 0, 3),
+('HID/LED Headlight Conversion', 8, 'Upgrading halogen to HID/LED headlights', 2000000, 1, 3),
+('Electrical Short Detection', 10, 'Identifying wiring shorts', 900000, 0, 3),
+('ECU Reprogramming', 10, 'Updating ECU software', 2500000, 0, 3),
+('Hybrid Battery Balancing', 10, 'Rebalancing hybrid battery cells', 3000000, 0, 3),
+('Complete Wiring Harness Replacement', 11, 'Replacing all car wiring', 6000000, 1, 3),
+('Fuse Box Upgrade', 9, 'Installing an upgraded fuse box', 900000, 1, 3),
+('Gas Pressure Sensor Repair', 12, 'Fixing pressure sensor in the fuel system', 1100000, 0, 4),
+('Fuel Line Replacement', 12, 'Installing new fuel lines', 1500000, 1, 4),
+('Fuel Rail Cleaning', 15, 'Removing dirt from fuel rails', 900000, 0, 5),
+('Throttle Body Cleaning', 17, 'Cleaning throttle body for smooth air intake', 800000, 0, 5),
+('High-Flow Fuel Injector Install', 17, 'Installing performance fuel injectors', 3000000, 1, 5),
+('AC Compressor Repair', 13, 'Repairing AC compressor', 2000000, 0, 4),
+('AC Evaporator Cleaning', 13, 'Cleaning evaporator for better cooling', 1000000, 0, 4),
+('AC Expansion Valve Replacement', 14, 'Installing new expansion valve', 1400000, 1, 4),
+('Battery Load Test', 18, 'Testing battery under load', 400000, 0, 6),
+('Battery Management System Update', 18, 'Updating BMS software', 900000, 0, 6),
+('Ground Cable Replacement', 19, 'Replacing battery ground cables', 700000, 1, 6),
+('Heavy-Duty Suspension Upgrade', 23, 'Installing reinforced suspension parts', 4000000, 1, 7),
+('Air Suspension System Repair', 23, 'Fixing air suspension leaks', 2500000, 0, 7),
+('Wheel Alignment Correction', 26, 'Adjusting wheel angles for proper alignment', 800000, 0, 8),
+('Alloy Wheel Crack Repair', 25, 'Fixing cracks in alloy wheels', 1500000, 0, 8),
+('Wheel Weight Balancing', 25, 'Balancing wheels for smooth rotation', 500000, 0, 8),
+('Run-Flat Tire Repair', 24, 'Fixing damage on run-flat tires', 1200000, 0, 8),
+('Performance Tire Upgrade', 24, 'Installing high-performance tires', 5000000, 1, 8),
+('Off-Road Tire Installation', 24, 'Mounting off-road tires', 4500000, 1, 8),
+('4x4 Drivetrain Service', 26, 'Servicing drivetrain for 4WD vehicles', 3000000, 0, 8),
+('Differential Fluid Change', 26, 'Replacing fluid in differential', 1000000, 1, 8),
+('Underbody Rust Prevention', 23, 'Applying rust-proof coating', 1800000, 0, 7),
+('Steering Rack Adjustment', 22, 'Fine-tuning steering rack', 900000, 0, 7),
+('Tie Rod End Replacement', 22, 'Installing new tie rod ends', 1300000, 1, 7),
+('Performance Control Arm Upgrade', 21, 'Upgrading to reinforced control arms', 2500000, 1, 7),
+('Hydraulic Power Steering Service', 21, 'Maintaining hydraulic steering system', 1400000, 0, 7),
+('Air Filter Cleaning', 14, 'Cleaning engine air filter', 400000, 0, 4),
+('Cabin Air Filter Replacement', 14, 'Installing new cabin air filter', 600000, 1, 4),
+('Windshield Wiper Motor Replacement', 10, 'Replacing wiper motor', 1500000, 1, 3),
+('Adaptive Cruise Control Repair', 10, 'Fixing adaptive cruise system', 2500000, 0, 3),
+('Door Lock Mechanism Fix', 10, 'Repairing electronic door locks', 1200000, 0, 3),
+('Smart Key Programming', 10, 'Programming new smart key', 1800000, 0, 3),
+('Heated Seat Repair', 10, 'Fixing heating elements in seats', 1400000, 0, 3),
+('Dashboard Digital Display Fix', 10, 'Repairing digital dashboard screens', 2000000, 0, 3),
+('Sunroof Leak Repair', 23, 'Sealing sunroof leaks', 1200000, 0, 7),
+('Engine Block Crack Inspection', 1, 'Checking for cracks in engine block', 3000000, 0, 1),
+('Turbo Intercooler Upgrade', 1, 'Installing performance intercooler', 5000000, 1, 1),
+('Exhaust System Cleaning', 1, 'Cleaning exhaust for better airflow', 1200000, 0, 1);
 GO
 
 INSERT INTO CarSystem(CarSystemName) VALUES 

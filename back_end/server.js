@@ -11,7 +11,9 @@ app.use(
       "http://127.0.0.1:3000",
       "http://localhost:3000",
       "http://127.0.0.1:5501",
-      "http://localhost:5501"
+      "http://localhost:5501",
+      "http://127.0.0.1:3001",
+      "http://localhost:3001",
     ], // Chỉ định origin được phép truy cập
     credentials: true, // Cho phép gửi cookie hoặc session
   })
@@ -48,6 +50,7 @@ const getServiceTypeDetail = require("./myModule/database/user/getServiceTypeDet
 
 // service
 const serviceInfo = require("./myModule/controller/service/serviceInfo.js");
+const serviceListPerPart = require("./myModule/controller/service/listServicePerPart.js");
 
 // car
 const carInfo = require("./myModule/controller/car/carInfo.js");
@@ -57,6 +60,7 @@ const listCarPartBySystem = require("./myModule/controller/carPart/listCarPartBy
 const carPartInfoInCar = require("./myModule/controller/carPart/carPartInfoInCar.js");
 
 // car system
+const carSystemInfo = require("./myModule/controller/carSystem/carSystemInfo.js");
 const listCarSystem = require("./myModule/database/carSystem/listCarSystem.js");
 
 // inventory
@@ -68,6 +72,13 @@ const {
   removeAnOrder,
   removeAllOrder,
 } = require("./myModule/controller/order/removeOrder.js");
+
+// message
+const {
+  SendMessage,
+  GetMessage,
+  GetList,
+} = require("./myModule/controller/message/message.js");
 
 // ----------------------------------------------------------
 
@@ -94,17 +105,22 @@ app.post(
   getTotalUserCount
 );
 app.post("/CustomerManager/getUserInfo", authenticateADMIN, GetUserInfo_Admin);
+app.post("/Message/SendMessage", authenticateADMIN, SendMessage);
+app.post("/Message/GetMessage", authenticateADMIN, GetMessage);
+app.post("/Message/GetList", authenticateADMIN, GetList);
 
 // app.post("/getServiceDetail", getServiceDetail);
 app.post("/getServiceTypeDetail", getServiceTypeDetail);
 
 // service
 app.post("/serviceInfo", serviceInfo);
+app.post("/serviceListPerPart", serviceListPerPart);
 
 // car
 app.post("/carInfo", carInfo);
 
 // car system
+app.post("/carSystemInfo", carSystemInfo);
 app.post("/listCarSystem", listCarSystem);
 
 // car part
