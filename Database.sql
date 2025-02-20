@@ -160,36 +160,36 @@ GO
 --		[Image] VARCHAR(500)
 --    );
 
-<<<<<<< HEAD
+
 --    -- Thêm danh sách các bộ phận mặc định
---    INSERT INTO @DefaultParts (PartName, CarSystemID, [Image])
---    VALUES 
---        ('Engine Oil', 1,'/resource/CarPark_image/Oil.webp'),
---        ('Spark Plug', 1,'/resource/CarPark_image/SparkPlug.webp'),
---        ('Injector', 1,'/resource/CarPark_image/InjectorE.webp'),
---        ('Cooling System', 1,'/resource/CarPark_image/CoolingSystem.webp'),
---        ('Brake Pad', 2,'/resource/CarPark_image/BrakePad.webp'),
---        ('Rotor', 2,'/resourc	e/CarPark_image/Rotor.webp'),
---        ('Fluid', 2,'/resource/CarPark_image/Fluids.webp'),
---		('Bulb', 3,'/resource/CarPark_image/Buld.webp'),
---        ('Fuse', 3,'/resource/CarPark_image/Fuse.webp'),
---        ('Electric System', 3,'/resource/CarPark_image/ElectricSystem.webp'),
---		('Wiring', 3,'/resource/CarPark_image/Wiring.webp'),
---        ('Gas', 4,'/resource/CarPark_image/Gas.webp'),
---		('Condenser', 4,'/resource/CarPark_image/Condenser.webp'),
---		('Filter', 4,'/resource/CarPark_image/FilterF.webp'),
---        ('Pump', 5,'/resource/CarPark_image/Pump.webp'),
---        ('Filter', 5,'/resource/CarPark_image/FilterA.webp'),
---		('Injection', 5,'/resource/CarPark_image/InjectorF.webp'),
---		('Charging', 6,'/resource/CarPark_image/Charging.webp'),
---		('Terminal', 6,'/resource/CarPark_image/Terminal.webp'),
---        ('Shock', 7,'/resource/CarPark_image/Shock.webp'),
---        ('Control Arm', 7,'/resource/CarPark_image/ControlArm.webp'),
---        ('Tie Rod', 7,'/resource/CarPark_image/TieRod.webp'),
---		('Suspension', 7,'/resource/CarPark_image/Suspension.webp'),
---        ('Tire', 8,'/resource/CarPark_image/Tire.webp'),
---        ('Rim', 8,'/resource/CarPark_image/Rim.webp'),
---        ('Wheel Hub', 8,'/resource/CarPark_image/WheelHub.webp')
+   INSERT INTO @DefaultParts (PartName, CarSystemID, [Image])
+   VALUES 
+       ('Engine Oil', 1,'/resource/CarPark_image/Oil.webp'),
+       ('Spark Plug', 1,'/resource/CarPark_image/SparkPlug.webp'),
+       ('Injector', 1,'/resource/CarPark_image/InjectorE.webp'),
+       ('Cooling System', 1,'/resource/CarPark_image/CoolingSystem.webp'),
+       ('Brake Pad', 2,'/resource/CarPark_image/BrakePad.webp'),
+       ('Rotor', 2,'/resourc	e/CarPark_image/Rotor.webp'),
+       ('Fluid', 2,'/resource/CarPark_image/Fluids.webp'),
+		('Bulb', 3,'/resource/CarPark_image/Buld.webp'),
+       ('Fuse', 3,'/resource/CarPark_image/Fuse.webp'),
+       ('Electric System', 3,'/resource/CarPark_image/ElectricSystem.webp'),
+		('Wiring', 3,'/resource/CarPark_image/Wiring.webp'),
+       ('Gas', 4,'/resource/CarPark_image/Gas.webp'),
+		('Condenser', 4,'/resource/CarPark_image/Condenser.webp'),
+		('Filter', 4,'/resource/CarPark_image/FilterF.webp'),
+       ('Pump', 5,'/resource/CarPark_image/Pump.webp'),
+       ('Filter', 5,'/resource/CarPark_image/FilterA.webp'),
+		('Injection', 5,'/resource/CarPark_image/InjectorF.webp'),
+		('Charging', 6,'/resource/CarPark_image/Charging.webp'),
+		('Terminal', 6,'/resource/CarPark_image/Terminal.webp'),
+       ('Shock', 7,'/resource/CarPark_image/Shock.webp'),
+       ('Control Arm', 7,'/resource/CarPark_image/ControlArm.webp'),
+       ('Tie Rod', 7,'/resource/CarPark_image/TieRod.webp'),
+		('Suspension', 7,'/resource/CarPark_image/Suspension.webp'),
+       ('Tire', 8,'/resource/CarPark_image/Tire.webp'),
+       ('Rim', 8,'/resource/CarPark_image/Rim.webp'),
+       ('Wheel Hub', 8,'/resource/CarPark_image/WheelHub.webp')
 =======
     -- Thêm danh sách các bộ phận mặc định
     INSERT INTO @DefaultParts (PartName, CarSystemID, [Image]) VALUES 
