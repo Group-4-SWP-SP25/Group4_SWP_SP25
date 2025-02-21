@@ -46,7 +46,8 @@
             <h3>Car information</h3>
             <ul>
 
-                <li id="sub1">Name<span>Mazda</span></li>
+                <li id="sub1">
+                    Name<span>Mazda</span></li>
 
                 <li id="sub1">Manufacturer <span>Toyota</span></li>
 
@@ -64,6 +65,9 @@
     <div id="place-order" class="hidden"></div>
     <!-- End place order window -->
 
+    <!-- Notify -->
+    <div id="notificationContainer"></div>
+    <!-- End notify -->
     <div class="overlay hidden"></div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
@@ -71,6 +75,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <script src="data.js"></script>
+    <script src="placeOrder.js"></script>
     <script>
         $.ajax({
             url: "./placeOrder.html",
@@ -80,7 +85,7 @@
             },
         });
     </script>
-    <script src="placeOrder.js"></script>
+
 </body>
 
 </html>
