@@ -8,12 +8,10 @@ app.use(
     origin: [
       "http://127.0.0.1:5500",
       "http://localhost:5500",
-      "http://127.0.0.1:3000",
-      "http://localhost:3000",
       "http://127.0.0.1:5501",
       "http://localhost:5501",
-      "http://127.0.0.1:3001",
-      "http://localhost:3001",
+      /http:\/\/127\.0\.0\.1:300\d/,
+      /http:\/\/localhost:\d/
     ], // Chỉ định origin được phép truy cập
     credentials: true, // Cho phép gửi cookie hoặc session
   })
@@ -45,12 +43,11 @@ const {
 } = require("./myModule/controller/resetpassword.js");
 const register = require("./myModule/controller/register.js");
 const { AuthGoogle, Auth } = require("./myModule/controller/Login.js");
-// const getServiceDetail = require("./myModule/database/user/getServiceDetail.js");
-const getServiceTypeDetail = require("./myModule/database/user/getServiceTypeDetail.js");
 
 // service
 const serviceInfo = require("./myModule/controller/service/serviceInfo.js");
 const serviceListPerPart = require("./myModule/controller/service/listServicePerPart.js");
+const getServiceTypeDetail = require("./myModule/database/service/getServiceTypeDetail.js");
 
 // car
 const carInfo = require("./myModule/controller/car/carInfo.js");
@@ -109,12 +106,11 @@ app.post("/Message/SendMessage", authenticateADMIN, SendMessage);
 app.post("/Message/GetMessage", authenticateADMIN, GetMessage);
 app.post("/Message/GetList", authenticateADMIN, GetList);
 
-// app.post("/getServiceDetail", getServiceDetail);
-app.post("/getServiceTypeDetail", getServiceTypeDetail);
 
 // service
 app.post("/serviceInfo", serviceInfo);
 app.post("/serviceListPerPart", serviceListPerPart);
+app.post("/getServiceTypeDetail", getServiceTypeDetail);
 
 // car
 app.post("/carInfo", carInfo);

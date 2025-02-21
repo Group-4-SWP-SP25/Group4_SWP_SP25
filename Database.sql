@@ -170,7 +170,7 @@ BEGIN
     ('Rim', 8,'/resource/CarPark_image/Rim.webp'),
     ('Wheel Hub', 8,'/resource/CarPark_image/WheelHub.webp')
 
-   INSERT INTO CarPart (CarID, PartID, PartName, CarSystemID, [Image])
+   INSERT INTO [CarPart](CarID, PartID, PartName, CarSystemID, [Image])
     SELECT 
         i.CarID,
         ROW_NUMBER() OVER (PARTITION BY i.CarID ORDER BY d.CarSystemID) AS PartID,
@@ -245,7 +245,6 @@ DISABLE TRIGGER DeleteOrder ON [Order];
 GO
 
 -- Sample data
-
 INSERT INTO [User](Username, Password, FirstName, LastName, Email, Phone, DOB)
 VALUES ('doanhieu18', 'doanhieu18@', 'Hieu', 'Doan', 'doanhieu180204@gmail.com', '0325413488', '2004-02-18');
 
@@ -293,7 +292,7 @@ INSERT INTO [ServiceType](ServiceTypeName, ServiceTypeDescription) VALUES
 ('Cleaning and Maintenance', 'Your car is more than just a mode of transportation; it''s an extension of your personality and a reflection of your style.<br><br>At AUTO247, we understand the importance of keeping your car looking and feeling its best, and that''s why we offer a comprehensive range of Cleaning and Maintenance services designed to help you maintain your car''s appearance and preserve its value.');
 GO
 
-INSERT INTO Service (ServiceTypeID, PartID, ServiceName, AffectInventory, ServiceDescription, ServicePrice) VALUES
+INSERT INTO [Service](ServiceTypeID, PartID, ServiceName, AffectInventory, ServiceDescription, ServicePrice) VALUES
 (1, 24, 'Tire Replacement', 1, 'Installing new tires', 3600000),
 (1, 24, 'Tire Rotation', 0, 'Rotating tires for even wear', 960000),
 (1, 24, 'Run-Flat Tire Repair', 0, 'Fixing damage on run-flat tires', 1200000),
@@ -418,7 +417,7 @@ INSERT INTO Service (ServiceTypeID, PartID, ServiceName, AffectInventory, Servic
 (8, 17, 'Throttle Body Cleaning', 0, 'Cleaning throttle body for smooth air intake', 800000);
 GO
 
-INSERT INTO CarSystem(CarSystemName) VALUES 
+INSERT INTO [CarSystem](CarSystemName) VALUES 
 ('Engine System'),
 ('Braking System'),
 ('Electrical System'),
@@ -429,14 +428,14 @@ INSERT INTO CarSystem(CarSystemName) VALUES
 ('Wheel System');
 GO
 
-INSERT INTO Car(UserID, CarName, Brand, RegistrationNumber, [Year]) VALUES 
+INSERT INTO [Car](UserID, CarName, Brand, RegistrationNumber, [Year]) VALUES 
 (1, 'Car 1', 'Toyota', '123456', 2010),
 (1, 'Car 2', 'Honda', '654321', 2015),
 (1, 'Car 3', 'Ford', '987654', 2018),
 (1, 'Car 4', 'BMW', '125478', 2020);
 GO
 
-INSERT INTO Inventory (PartName, CarSystemID, [Description], Quantity, UnitPrice) VALUES 
+INSERT INTO [Inventory](PartName, CarSystemID, [Description], Quantity, UnitPrice) VALUES 
 ('Engine Oil', 1, 'Engine oil for lubrication and cooling.', 100, 50000),
 ('Spark Plug', 1, 'Spark plugs for ignition.', 50, 20000),
 ('Injector', 1, 'Fuel injectors for fuel delivery.', 30, 30000),
