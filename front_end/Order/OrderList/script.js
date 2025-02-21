@@ -68,7 +68,7 @@ async function fetchUserOrders() {
             <div class="order-product">
               <input type="hidden" class="order-id" value="${order.OrderID}"/>
               <div class="order-info">
-                <div class="grid order-id">${index + 1}</div> 
+                <div class="grid order-index">${index + 1}</div> 
                 <div class="grid">${car.CarName}</div>
                 <div class="grid">${carPart.PartName}</div>
                 <div class="grid">${service.ServiceName}</div>
