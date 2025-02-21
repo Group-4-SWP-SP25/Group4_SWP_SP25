@@ -3,14 +3,12 @@ async function fetchUserOrders() {
   try {
     const promises = [];
     // Lấy thông tin người dùng
-    const accountResponse = await $.ajax({
+    const user = await $.ajax({
       url: "http://localhost:3000/getUserInfo",
       method: "POST",
       contentType: "application/json",
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
     });
-
-    const user = accountResponse;
 
     // Lấy danh sách đơn hàng
     const orders = await $.ajax({

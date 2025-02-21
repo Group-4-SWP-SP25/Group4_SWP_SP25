@@ -44,11 +44,16 @@ $(document).ready(function () {
           data: JSON.stringify({ partID: partID }),
         });
 
+        let serviceOption = `<option disabled selected value="0">-- Choose a service --</option>
+        `;
+
         serviceList.forEach((service) => {
-          const serviceOption = `<option value="${service.ServiceID}">${service.ServiceName}</option>`;
-          listServiceBody.append(serviceOption);
+          serviceOption += `<option value="${service.ServiceID}">${service.ServiceName}</option>
+          `;
         });
 
+        listServiceBody.html(serviceOption);
+        const quantityContainer = $(".quantity");
         listServiceBody.change(async function () {
           const selectedService = await $.ajax({
             url: "http://localhost:3000/serviceInfo",
@@ -59,14 +64,34 @@ $(document).ready(function () {
             }),
           });
 
-          const quantityContainer = $(".quantity");
-          $(".price-value .service").html(selectedService.Price);
+          const inventory = await $.ajax({
+            url: "http://localhost:3000/componentInStockInfo",
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({
+              partID: partID,
+            }),
+          });
+
+          $(".price-title .service").removeClass("hidden");
+          $(".price-value .service").removeClass("hidden");
+
+          $(".price-value .service").html(selectedService.ServicePrice);
           if (selectedService.AffectInventory === 1) {
             quantityContainer.slideDown(500);
             $(".qty-val").val(1);
+            $(".price-title .component-unit").removeClass("hidden");
+            $(".price-value .component-unit")
+              .removeClass("hidden")
+              .html(inventory.UnitPrice);
+            calTotalPrice();
           } else {
             $(".qty-val").val(0);
             quantityContainer.slideUp(500);
+            $(".price-title .component-unit").addClass("hidden");
+            $(".price-title .total").addClass("hidden");
+            $(".price-value .component-unit").addClass("hidden");
+            $(".price-value .total").addClass("hidden");
           }
         });
       } catch (err) {
@@ -75,13 +100,32 @@ $(document).ready(function () {
     }
 
     getCarPartInfo();
+
+    async function placeOrder() {
+      $(".order-btn").click(async function () {
+        const user = await $.ajax({
+          url: "http://localhost:3000/getUserInfo",
+          method: "POST",
+          contentType: "application/json",
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        });
+      });
+    }
   });
 });
 
 function showHidePlaceOrder() {
-  $("#place-order").slideToggle(1000);
+  $("#place-order").slideToggle(500);
   $(".overlay").toggleClass("hidden");
   $("body").toggleClass("no-scroll");
+
+  $(".quantity").slideUp();
+  $(".price-title .component-unit").addClass("hidden");
+  $(".price-title .service").addClass("hidden");
+  $(".price-title .total").addClass("hidden");
+  $(".price-value .component-unit").addClass("hidden");
+  $(".price-value .service").addClass("hidden");
+  $(".price-value .total").addClass("hidden");
 }
 
 function calTotalPrice() {
@@ -90,8 +134,9 @@ function calTotalPrice() {
   }
   const componentPrice = valueTag($(".price-value .component-unit"));
   const servicePrice = valueTag($(".price-value .service"));
-  const quantity = valueTag($(".qty-val"));
+  const quantity = $(".qty-val").val();
 
   const totalPrice = servicePrice + quantity * componentPrice;
-  $(".price-value .total").html(totalPrice);
+  $(".price-title .total").removeClass("hidden");
+  $(".price-value .total").removeClass("hidden").html(totalPrice);
 }
