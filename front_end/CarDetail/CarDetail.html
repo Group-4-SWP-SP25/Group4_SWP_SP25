@@ -1,86 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0" />
+        <title>Car Details</title>
+        <link
+            rel="stylesheet"
+            href="style.css" />
+        <style></style>
+    </head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Car Details</title>
-    <link rel="stylesheet" href="style.css">
-    <style>
+    <body>
+        <div class="container">
+            <div class="wheel-works">
+                <div class="content">
+                    <div class="image-container">
+                        <a href="#">
+                            <img
+                                src="/resource/logo.jpg"
+                                style="width: 130px"
+                                class="logo"
+                                alt="Logo" />
+                        </a>
+                        <img
+                            src="../CarList/vin.png"
+                            class="car-image"
+                            style="width: 200px; height: 170px"
+                            alt="Wheel Works" />
+                    </div>
 
-    </style>
-</head>
+                    <div
+                        class="text"
+                        style="flex-grow: 1">
+                        <!-- <h3>Component detail</h3> -->
 
-<body>
-
-    <div class="container">
-        <div class="wheel-works">
-
-
-            <div class="content">
-
-                <div class="image-container">
-                    <a href="#">
-                        <img src="/resource/logo.jpg" style="width: 130px;" class="logo" alt="Logo">
-                    </a>
-                    <img src="../CarList/vin.png" class="car-image" style="width: 200px; height: 170px;"
-                        alt="Wheel Works">
-                </div>
-
-
-
-
-                <div class="text" style="flex-grow: 1;">
-                    <!-- <h3>Component detail</h3> -->
-
-                    <ul class="system-list">
-
-                    </ul>
-                    <div class="CarPart1">
+                        <ul class="system-list"></ul>
+                        <div class="CarPart1"></div>
                     </div>
                 </div>
             </div>
+            <div class="other-services">
+                <h3>Car information</h3>
+                <ul>
+                    <li id="sub1">Name<span>Mazda</span></li>
 
+                    <li id="sub1">Manufacturer <span>Toyota</span></li>
+
+                    <li id="sub1">Current Mileage<span>1000km</span></li>
+
+                    <li id="sub1">Fuel Type<span>Diesel</span></li>
+
+                    <li id="sub1">Average Consumption <span>4.5 liters per 100 kilometers</span></li>
+                </ul>
+            </div>
         </div>
-        <div class="other-services">
-            <h3>Car information</h3>
-            <ul>
 
-                <li id="sub1">Name<span>Mazda</span></li>
+        <!-- Place Order Window -->
+        <div
+            id="place-order"
+            class="hidden"></div>
+        <!-- End place order window -->
 
-                <li id="sub1">Manufacturer <span>Toyota</span></li>
+        <div class="overlay hidden"></div>
 
-                <li id="sub1"> Current Mileage<span>1000km</span></li>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+            integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"></script>
 
-                <li id="sub1">Fuel Type<span>Diesel</span></li>
-
-                <li id="sub1">Average Consumption <span>4.5 liters per 100 kilometers</span></li>
-
-            </ul>
-        </div>
-    </div>
-
-    <!-- Place Order Window -->
-    <div id="place-order" class="hidden"></div>
-    <!-- End place order window -->
-
-    <div class="overlay hidden"></div>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
-        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-    <script src="data.js"></script>
-    <script>
-        $.ajax({
-            url: "./placeOrder.html",
-            method: "GET",
-            success: function (data) {
-                $("#place-order").html(data);
-            },
-        });
-    </script>
-    <script src="placeOrder.js"></script>
-</body>
-
+        <script src="data.js"></script>
+        <script>
+            $.ajax({
+                url: './placeOrder.html',
+                method: 'GET',
+                success: function (data) {
+                    $('#place-order').html(data);
+                }
+            });
+        </script>
+        <script src="placeOrder.js"></script>
+    </body>
 </html>
