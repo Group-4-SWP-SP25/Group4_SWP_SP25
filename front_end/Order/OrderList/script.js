@@ -1,7 +1,6 @@
 let totalPrice = 0;
 async function fetchUserOrders() {
   try {
-    const promises = [];
     // Lấy thông tin người dùng
     const user = await $.ajax({
       url: "http://localhost:3000/getUserInfo",
@@ -28,41 +27,48 @@ async function fetchUserOrders() {
       orderEmpty.addClass("hidden");
     }
 
-    orders.forEach(async (order, index) => {
-      const promise = (async () => {
-        const car = await $.ajax({
-          url: "http://localhost:3000/carInfo",
-          method: "POST",
-          contentType: "application/json",
-          data: JSON.stringify({ carID: order.CarID }),
-        });
+    const promises = orders.map(async (order, index) => {
+      const car = await $.ajax({
+        url: "http://localhost:3000/carInfo",
+        method: "POST",
+        contentType: "application/json",
+        data: JSON.stringify({ carID: order.CarID }),
+      });
 
-        const service = await $.ajax({
-          url: "http://localhost:3000/serviceInfo",
-          method: "POST",
-          contentType: "application/json",
-          data: JSON.stringify({ serviceID: order.ServiceID }),
-        });
+      const service = await $.ajax({
+        url: "http://localhost:3000/serviceInfo",
+        method: "POST",
+        contentType: "application/json",
+        data: JSON.stringify({ serviceID: order.ServiceID }),
+      });
 
-        const carPart = await $.ajax({
-          url: "http://localhost:3000/carPartInfoInCar",
-          method: "POST",
-          contentType: "application/json",
-          data: JSON.stringify({ carID: order.CarID, partID: order.PartID }),
-        });
+      const carPart = await $.ajax({
+        url: "http://localhost:3000/carPartInfoInCar",
+        method: "POST",
+        contentType: "application/json",
+        data: JSON.stringify({ carID: order.CarID, partID: order.PartID }),
+      });
 
-        const part = await $.ajax({
-          url: "http://localhost:3000/componentInfo",
-          method: "POST",
-          contentType: "application/json",
-          data: JSON.stringify({ partID: order.PartID }),
-        });
-        const orderElement = $(
-          `<div class="order-row">
+      const part = await $.ajax({
+        url: "http://localhost:3000/componentInStockInfo",
+        method: "POST",
+        contentType: "application/json",
+        data: JSON.stringify({ partID: order.PartID }),
+      });
+
+      return { order, car, service, carPart, part, index };
+    });
+
+    Promise.all(promises).then((results) => {
+      results.sort((a, b) => a.index - b.index); // Đảm bảo đúng thứ tự
+
+      results.forEach(({ order, car, service, carPart, part, index }) => {
+        const orderElement = $(`
+          <div class="order-row">
             <div class="order-product">
               <input type="hidden" class="order-id" value="${order.OrderID}"/>
               <div class="order-info">
-                <div class="grid order-id">${index + 1}</div> 
+                <div class="grid order-index">${index + 1}</div> 
                 <div class="grid">${car.CarName}</div>
                 <div class="grid">${carPart.PartName}</div>
                 <div class="grid">${service.ServiceName}</div>
@@ -94,16 +100,19 @@ async function fetchUserOrders() {
                 </div>
               </div>
             </div>
-          </div>`
-        );
-        totalPrice += order.EstimatedCost;
-        orderBody.append(orderElement);
-      })();
-      promises.push(promise);
-    });
+          </div>
+        `);
 
-    await Promise.all(promises);
-    $(".total-price").text(totalPrice);
+        orderBody.append(orderElement);
+      });
+
+      // Tính tổng lại đúng cách
+      totalPrice = results.reduce(
+        (sum, { order }) => sum + order.EstimatedCost,
+        0
+      );
+      $(".total-price").text(totalPrice);
+    });
   } catch (error) {
     console.error("Error:", error);
   }

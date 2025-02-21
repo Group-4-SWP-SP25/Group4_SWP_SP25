@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thẻ a trên div trong suốt</title>
+  <style>
+    .container {
+      position: relative;
+      width: 300px;
+      height: 200px;
+      background-color: rgba(0, 0, 255, 0.5);
+      /* Màu xanh trong suốt */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      /* Làm mờ nền phía sau */
+    }
+
+    .overlay-link {
+      position: absolute;
+      color: white;
+      font-size: 20px;
+      text-decoration: none;
+      backdrop-filter: blur(5px);
+      background-color: rgba(255, 255, 255, 0.3);
+      /* Màu trắng trong suốt */
+      padding: 10px 20px;
+      border-radius: 5px;
+    }
+
+    .overlay-link:hover {
+      background-color: rgba(255, 255, 255, 0.6);
+      /* Hover sáng hơn */
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <a href="#" class="overlay-link">Nhấn vào đây</a>
+  </div>
+
+</body>
+
+</html>
