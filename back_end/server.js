@@ -64,7 +64,7 @@ const carSystemInfo = require("./myModule/controller/carSystem/carSystemInfo.js"
 const listCarSystem = require("./myModule/database/carSystem/listCarSystem.js");
 
 // inventory
-const componentInfo = require("./myModule/controller/inventory/componentInfo.js");
+const componentInStockInfo = require("./myModule/controller/inventory/componentInStockInfo.js");
 
 // order
 const listOrder = require("./myModule/controller/order/listOrder.js");
@@ -99,7 +99,10 @@ app.post("/getServiceTypeDetail", getServiceTypeDetail);
 
 // admin
 app.post("/CustomerManager/getUserList", authenticateADMIN, getUserList);
-app.post("/CustomerManager/getTotelUserCount", authenticateADMIN, getTotalUserCount
+app.post(
+  "/CustomerManager/getTotelUserCount",
+  authenticateADMIN,
+  getTotalUserCount
 );
 app.post("/CustomerManager/getUserInfo", authenticateADMIN, GetUserInfo_Admin);
 app.post("/Message/SendMessage", authenticateADMIN, SendMessage);
@@ -125,7 +128,7 @@ app.post("/listCarPartBySystem", listCarPartBySystem);
 app.post("/carPartInfoInCar", carPartInfoInCar);
 
 // inventory
-app.post("/componentInfo", componentInfo);
+app.post("/componentInStockInfo", componentInStockInfo);
 
 // order
 app.post("/listOrder", listOrder);
