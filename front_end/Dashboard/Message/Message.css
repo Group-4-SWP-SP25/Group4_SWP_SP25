@@ -176,6 +176,43 @@ body {
     margin-right: 10px;
 }
 
+
+/* -----------------------------------scrolbar---------------------------- */
+.custom-scrollbar {
+    overflow-y: auto;
+    overflow-x: auto;
+    /* Bật tính năng cuộn dọc */
+    height: 100%;
+    /* Chiều cao của container */
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+    /* Độ rộng của thanh cuộn */
+    transition: width 0.3s, height 0.3s;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: #333;
+    /* Màu nền của track */
+    border-radius: 10px;
+    /* Bo tròn track */
+
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #555;
+    /* Màu của thanh cuộn */
+    border-radius: 10px;
+    /* Bo tròn thanh cuộn */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #888;
+    /* Màu của thanh cuộn khi hover */
+}
+
+
 /* --------------------content---------------- */
 
 .message-left {
@@ -315,7 +352,12 @@ body {
     width: 100%;
     font-size: 15px;
     color: #a0a0a0;
+}
 
+.unread {
+    font-weight: 900;
+    font-size: 60px;
+    background-color: #333;
 }
 
 .message-item img {
@@ -368,6 +410,7 @@ body {
     gap: 10px;
     overflow-y: auto;
     height: auto;
+    overflow-x: hidden;
 }
 
 .message-right-footer {
@@ -544,6 +587,7 @@ body {
     cursor: pointer;
     margin: 5px;
     font-size: 20px;
+    word-break: break-all;
 }
 
 .msg-info-left {
@@ -608,41 +652,6 @@ body {
 
 .status span {
     font-size: 20px;
-}
-
-/* -----------------------------------scrolbar---------------------------- */
-.custom-scrollbar {
-    overflow-y: auto;
-    overflow-x: auto;
-    /* Bật tính năng cuộn dọc */
-    height: 100%;
-    /* Chiều cao của container */
-}
-
-.custom-scrollbar::-webkit-scrollbar {
-    width: 8px;
-    /* Độ rộng của thanh cuộn */
-    transition: width 0.3s, height 0.3s;
-}
-
-.custom-scrollbar::-webkit-scrollbar-track {
-    background: #333;
-    /* Màu nền của track */
-    border-radius: 10px;
-    /* Bo tròn track */
-
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb {
-    background: #555;
-    /* Màu của thanh cuộn */
-    border-radius: 10px;
-    /* Bo tròn thanh cuộn */
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: #888;
-    /* Màu của thanh cuộn khi hover */
 }
 
 /* loader */

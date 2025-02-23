@@ -118,13 +118,44 @@ CREATE TABLE Messages (
     ReceiverID INT NOT NULL,
     Content TEXT NOT NULL,
     SentAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-    IsRead BIT DEFAULT 0
-    SentAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-    IsRead BIT DEFAULT 0,
     FOREIGN KEY (SenderID) REFERENCES [User](UserID),
     FOREIGN KEY (ReceiverID) REFERENCES [User](UserID),
 );
 GO
+
+CREATE TABLE MessageReads (
+    ReadID INT NOT NULL,
+    UserID INT NOT NULL,
+    MessageID INT NOT NULL,
+    FOREIGN KEY (UserID) REFERENCES [User](UserID),
+    FOREIGN KEY (MessageID) REFERENCES Messages(MessageID)
+);
+GO
+
+-- mesage 
+CREATE PROCEDURE UpsertMessageRead
+    @UserID INT,
+    @ReadID INT,
+    @MessageID INT
+AS
+BEGIN
+    IF EXISTS (SELECT 1 FROM MessageReads WHERE UserID = @UserID AND ReadID = @ReadID)
+    BEGIN
+        -- Nếu bản ghi đã tồn tại, thực hiện cập nhật
+        UPDATE MessageReads
+        SET MessageID = @MessageID
+        WHERE UserID = @userId and ReadID = @ReadID
+    END
+    ELSE
+    BEGIN
+        -- Nếu bản ghi chưa tồn tại, thực hiện chèn mới
+        INSERT INTO MessageReads (UserID, ReadID, MessageID)
+        VALUES (@UserID, @ReadID, @MessageID);
+    END
+END;
+GO
+
+
 
 -- Trigger for Car Parts
 CREATE TRIGGER InsertCar
@@ -249,8 +280,8 @@ GO
 
 -- Sample data
 
-INSERT INTO [User](Username, Password, FirstName, LastName, Email, Phone, DOB)
-VALUES ('doanhieu18', 'doanhieu18@', 'Hieu', 'Doan', 'doanhieu180204@gmail.com', '0325413488', '2004-02-18');
+INSERT INTO [User](Username, Password, FirstName, LastName, Email, Phone, DOB, Role)
+VALUES ('doanhieu18', 'doanhieu18@', 'Hieu', 'Doan', 'doanhieu180204@gmail.com', '0325413488', '2004-02-18', 'Admin');
 
 GO
 DECLARE @counter INT = 1
@@ -269,10 +300,6 @@ BEGIN
     )
     SET @counter = @counter + 1
 END;
-GO
-
-INSERT INTO [User](Username, Password, FirstName, LastName, Email, Phone, DOB, LastActivity)
-VALUES ('q8edh12hi', '1234', 'qwe8dyrwfhief', 'qwgufcqbw', 'qwficqwfc', '0123456789', '01/01/2000', '01/01/2010');
 GO
 
 INSERT INTO [ServiceType](ServiceTypeName, ServiceTypeDescription) VALUES 
