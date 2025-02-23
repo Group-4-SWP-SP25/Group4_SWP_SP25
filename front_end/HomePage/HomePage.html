@@ -13,6 +13,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <link href="https://fonts.googleapis.com/css2?family=Bentham&display=swap" rel="stylesheet">
 </head>
@@ -153,11 +154,142 @@
     <div id="footer-container"></div>
     <!-- End footer -->
 
+    <!-- Message icon -->
+    <div class="fixed-message-icon">
+        <img src="/resource/message-icon.png" alt="Tin nhắn">
+        <div class="unread-count hide"></div>
+    </div>
+    <!-- End message -->
+
     <!-- Notification icon -->
     <div class="fixed-notification-icon">
-        <img src="/resource/information-icon.png" width="80" height="80" alt="Thông báo">
+        <img src="/resource/information-icon.png" alt="Thông báo">
     </div>
     <!-- End notification -->
+
+    <!-- Message panel -->
+    <div class="message-container">
+        <!-- message header -->
+        <div class="message-header">
+            <div class="message-header-info">
+                <img src="/resource/logo.jpg" alt="">
+                <Span>Auto Care 247</Span>
+            </div>
+            <div class="message-close">
+                <span class="material-icons">
+                    close
+                </span>
+            </div>
+
+        </div>
+
+        <!-- message body -->
+        <div class="message-body custom-scrollbar">
+            <div class="msg left-msg">
+                <div class="msg-img">
+                    <img src="../../../resource/admin.jpg" alt="Admin">
+                </div>
+                <div class="msg-bubble">
+                    <div class="msg-text">
+                        asd asd asd as dsad asdad asdad asda asdasda
+                        <div class="msg-info-left">
+                            <div class="msg-info-name">${name}</div>
+                            <div class="msg-info-time">${time}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="msg right-msg">
+                <div class="msg-bubble">
+                    <div class="msg-text">
+                        asd asd asd as dsad asdad asdad asda asdasda
+                        <div class="msg-info-right">
+                            <div class="msg-info-name">${name}</div>
+                            <div class="msg-info-time">${time}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="status">
+                    <span class="material-icons">check_circle</span>
+                </div>
+            </div>
+            <div class="msg right-msg">
+                <div class="msg-bubble">
+                    <div class="msg-text">
+                        ${content}
+                        <div class="msg-info-right">
+                            <div class="msg-info-name">${name}</div>
+                            <div class="msg-info-time">${time}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="status">
+                    <div class="loader"></div>
+                </div>
+            </div>
+            <div class="msg left-msg">
+                <div class="msg-img">
+                    <img src="../../../resource/admin.jpg" alt="Admin">
+                </div>
+                <div class="msg-bubble">
+                    <div class="msg-text">
+                        asd asd asd as dsad asdad asdad asda asdasda
+                        <div class="msg-info-left">
+                            <div class="msg-info-name">${name}</div>
+                            <div class="msg-info-time">${time}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="msg right-msg">
+                <div class="msg-bubble">
+                    <div class="msg-text">
+                        asd asd asd as dsad asdad asdad asda asdasda
+                        <div class="msg-info-right">
+                            <div class="msg-info-name">${name}</div>
+                            <div class="msg-info-time">${time}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="status">
+                    <span class="material-icons">check_circle</span>
+                </div>
+            </div>
+            <div class="msg right-msg">
+                <div class="msg-bubble">
+                    <div class="msg-text">
+                        ${content}
+                        <div class="msg-info-right">
+                            <div class="msg-info-name">${name}</div>
+                            <div class="msg-info-time">${time}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="status">
+                    <div class="loader"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- message footer -->
+        <div class="message-footer">
+            <div class="message-footer-action">
+                <span class="material-icons">
+                    add_circle
+                </span>
+            </div>
+            <div class="message-footer-input">
+                <textarea rows="1" placeholder="Type a message..." id="message-input"
+                    class="custom-scrollbar"></textarea>
+            </div>
+            <div class="message-footer-send">
+                <span class="material-icons">
+                    send
+                </span>
+            </div>
+        </div>
+    </div>
+    <!-- End Message panel -->
     <script>
         fetch("../header/header.html")
             .then(response => response.text())
@@ -174,7 +306,7 @@
                 document.getElementById("footer-container").innerHTML = data;
             });
     </script>
-
+    <script src="./HomePage.js"></script>
 </body>
 
 </html>

@@ -76,10 +76,10 @@ const search = async (searchString) => {
         const query = `
             SELECT *
             FROM [User]
-            WHERE firstname LIKE @searchString
-            OR lastname LIKE @searchString
-            OR email LIKE @searchString
-            OR phone LIKE @searchString
+            WHERE FirstName LIKE @searchString
+            OR LastName LIKE @searchString
+            OR Email LIKE @searchString
+            OR Phone LIKE @searchString
         `;
 
         const result = await pool

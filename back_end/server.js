@@ -72,11 +72,7 @@ const {
 } = require("./myModule/controller/order/removeOrder.js");
 
 // message
-const {
-  SendMessage,
-  GetMessage,
-  GetList,
-} = require("./myModule/controller/message/message.js");
+const { SendMessage, GetMessage, GetList, CheckMessage } = require("./myModule/controller/message/message.js");
 
 // ----------------------------------------------------------
 
@@ -103,10 +99,13 @@ app.post(
   getTotalUserCount
 );
 app.post("/CustomerManager/getUserInfo", authenticateADMIN, GetUserInfo_Admin);
-app.post("/Message/SendMessage", authenticateADMIN, SendMessage);
-app.post("/Message/GetMessage", authenticateADMIN, GetMessage);
-app.post("/Message/GetList", authenticateADMIN, GetList);
+app.post("/Message/SendMessage", authenticateJWT, SendMessage);
+app.post("/Message/GetMessage", authenticateJWT, GetMessage);
+app.post("/Message/GetList", authenticateJWT, GetList);
+app.post("/Message/CheckMessage", authenticateJWT, CheckMessage);
 
+// app.post("/getServiceDetail", getServiceDetail);
+app.post("/getServiceTypeDetail", getServiceTypeDetail);
 
 // service
 app.post("/serviceInfo", serviceInfo);
