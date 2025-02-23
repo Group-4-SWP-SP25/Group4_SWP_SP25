@@ -54,7 +54,7 @@ const serviceListPerPart = require("./myModule/controller/service/listServicePer
 
 // car
 const carInfo = require("./myModule/controller/car/carInfo.js");
-
+const CarList = require("./myModule/controller/car/CarList.js");
 // car part
 const listCarPartBySystem = require("./myModule/controller/carPart/listCarPartBySystem.js");
 const carPartInfoInCar = require("./myModule/controller/carPart/carPartInfoInCar.js");
@@ -115,6 +115,7 @@ app.post("/serviceListPerPart", serviceListPerPart);
 
 // car
 app.post("/carInfo", carInfo);
+app.post("/CarList",CarList);
 
 // car system
 app.post("/carSystemInfo", carSystemInfo);

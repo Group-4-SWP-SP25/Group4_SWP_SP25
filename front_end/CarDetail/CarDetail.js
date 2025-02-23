@@ -44,7 +44,7 @@ async function getPart(carSystemID) {
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ carID: 1, carSystemID: carSystemID }),
+    
   });
 
   const carParts = await carPartJson.json();
