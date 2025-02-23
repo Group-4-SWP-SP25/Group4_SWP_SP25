@@ -1,6 +1,6 @@
 const getInventoryByPartId = require("../../database/inventory/getInventoryByPartId");
 
-const componentInfo = async (req, res) => {
+const componentInStockInfo = async (req, res) => {
   try {
     const { partID } = req.body;
     const inventory = await getInventoryByPartId(partID);
@@ -10,4 +10,4 @@ const componentInfo = async (req, res) => {
   }
 };
 
-module.exports = componentInfo;
+module.exports = componentInStockInfo;

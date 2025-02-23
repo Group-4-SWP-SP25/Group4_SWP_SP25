@@ -3,7 +3,7 @@ const carInfo = async (req, res) => {
   try {
     const { carID } = req.body;
     const car = await getCarByID(carID);
-    res.status(200).json(car);
+    res.status(200).send(car);
   } catch (err) {
     res.status(500).json({ message: "Internal server error" });
   }
