@@ -1,6 +1,6 @@
 const sql = require("mssql");
 
-const serviceListByPartID = async (partID) => {
+const getServiceListByPartID = async (partID) => {
   const pool = global.pool;
 
   const query = `SELECT * FROM Service WHERE PartID = @partID`;
@@ -13,4 +13,4 @@ const serviceListByPartID = async (partID) => {
   return result.recordset;
 };
 
-module.exports = serviceListByPartID;
+module.exports = getServiceListByPartID;

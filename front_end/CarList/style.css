@@ -1,36 +1,63 @@
-h1{
+.body {
+    background-color: lightgray;
+}
+
+.car-list{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    height: auto;
+    margin-top: 7%;
+    margin-left: 3%;
+    margin-right: 3%;
+    margin-bottom: 5%;
+}
+
+.car{
+    position: relative;
+    overflow: hidden;
+}
+
+.car img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.car-overlay{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    transition: background-color 0.3s ease;
+    flex-direction: column;
+}
+
+.car:hover .car-overlay{
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.button-detail {
+    border-radius: 50px;
+    --border-color: green;
+    border: 2px solid var(--border-color);
+    background-color: transparent;
+    color: white;
+    padding: 10px 20px;
     text-align: center;
-    padding-bottom:40px;
-    }
-    .container {
-        display: flex;
-        gap: 40px;
-        justify-content: center; 
-        flex-wrap: wrap; 
-    }
-    
-    .car {
-        border: 1px solid #ccc;
-        padding: 10px;
-        border-radius: 10px;
-        text-align: center;
-        width: 300px; 
-    }
-    
-    .car img {
-        width: 260px;
-        height: 168px;
-        border-radius: 5px;
-        object-fit: fill;
-    }
-    
-    .car a {
-        display: block;
-        margin-top: 10px;
-        text-decoration: none;
-        background: rgb(108, 108, 223);
-        color: white;
-        padding: 5px;
-        border-radius: 5px;
-    }
-    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.button-detail:hover {
+    background-color: var(--border-color);
+}
