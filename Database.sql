@@ -44,6 +44,7 @@ CREATE TABLE Car(
 	Brand TEXT,
 	RegistrationNumber VARCHAR(50) NOT NULL,
 	[Year] INT,
+	  [Status] VARCHAR(50) DEFAULT NULL CHECK ([Status] IN ('Active', 'Maintaining'))
 );
 GO
 
@@ -458,11 +459,19 @@ INSERT INTO [CarSystem](CarSystemName) VALUES
 ('Wheel System');
 GO
 
+<<<<<<< HEAD
+INSERT INTO Car(UserID, CarName, Brand, RegistrationNumber, [Year], [Status]) VALUES 
+(1, 'Car 1', 'Toyota', '123456', 2010,'Active'),
+(1, 'Car 2', 'Honda', '654321', 2015,'Maintaining'),
+(1, 'Car 3', 'Ford', '987654', 2018,'Active'),
+
+=======
 INSERT INTO [Car](UserID, CarName, Brand, RegistrationNumber, [Year]) VALUES 
 (1, 'Car 1', 'Toyota', '123456', 2010),
 (1, 'Car 2', 'Honda', '654321', 2015),
 (1, 'Car 3', 'Ford', '987654', 2018),
 (1, 'Car 4', 'BMW', '125478', 2020);
+>>>>>>> e55c03863ed7b97d9a7b74630d0ea6a5a1c902be
 GO
 
 INSERT INTO [Inventory](PartName, CarSystemID, [Description], Quantity, UnitPrice) VALUES 
