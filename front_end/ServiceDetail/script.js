@@ -5,8 +5,8 @@ const infoDiv = document.querySelector('.info');
 const detailDiv = document.querySelector('.detail');
 const detailTable = document.querySelector('.detail-table');
 
-async function getServiceTypeDetail() {
-    const response = await fetch('http://localhost:3000/getServiceTypeDetail', {
+async function getServiceDetailByName() {
+    const response = await fetch('http://localhost:3000/getServiceDetailByName', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -52,4 +52,4 @@ async function getServiceTypeDetail() {
         detailTable.appendChild(detailItemRow);
     }
 }
-getServiceTypeDetail();
+getServiceDetailByName();

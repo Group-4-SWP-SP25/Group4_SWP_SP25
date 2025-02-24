@@ -44,7 +44,9 @@ CREATE TABLE Car(
 	Brand TEXT,
 	RegistrationNumber VARCHAR(50) NOT NULL,
 	[Year] INT,
-	  [Status] VARCHAR(50) DEFAULT NULL CHECK ([Status] IN ('Active', 'Maintaining'))
+  MaintenanceResgistrationDate DATE DEFAULT CURRENT_TIMESTAMP,
+  CarImage TEXT,
+	[Status] VARCHAR(50) DEFAULT NULL CHECK ([Status] IN ('Active', 'Maintaining'))
 );
 GO
 
@@ -459,20 +461,12 @@ INSERT INTO [CarSystem](CarSystemName) VALUES
 ('Wheel System');
 GO
 
-<<<<<<< HEAD
-INSERT INTO Car(UserID, CarName, Brand, RegistrationNumber, [Year], [Status]) VALUES 
-(1, 'Car 1', 'Toyota', '123456', 2010,'Active'),
-(1, 'Car 2', 'Honda', '654321', 2015,'Maintaining'),
-(1, 'Car 3', 'Ford', '987654', 2018,'Active'),
+INSERT INTO [Car](UserID, CarName, Brand, RegistrationNumber, [Year], CarImage, [Status]) VALUES 
+(1, 'Car 1', 'Toyota', '123456', 2010, 'https://vov.vn/sites/default/files/styles/large/public/2022-08/289624929_453408263095020_5408162982360432160_n.png', 'Active'),
+(1, 'Car 2', 'Honda', '654321', 2015, 'https://akm-img-a-in.tosshub.com/indiatoday/styles/medium_crop_simple/public/2024-11/1_4.jpg', 'Maintaining'),
+(1, 'Car 3', 'Ford', '987654', 2018, 'https://images.dealer.com/autodata/us/640/2020/USD00FOS372A0/USC80FOS371A01300.jpg', 'Active'),
+(1, 'Car 4', 'BMW', '125478', 2020, '', 'Active');
 
-=======
-INSERT INTO [Car](UserID, CarName, Brand, RegistrationNumber, [Year]) VALUES 
-(1, 'Car 1', 'Toyota', '123456', 2010),
-(1, 'Car 2', 'Honda', '654321', 2015),
-(1, 'Car 3', 'Ford', '987654', 2018),
-(1, 'Car 4', 'BMW', '125478', 2020);
->>>>>>> e55c03863ed7b97d9a7b74630d0ea6a5a1c902be
-GO
 
 INSERT INTO [Inventory](PartName, CarSystemID, [Description], Quantity, UnitPrice) VALUES 
 ('Engine Oil', 1, 'Engine oil for lubrication and cooling.', 100, 50000),
