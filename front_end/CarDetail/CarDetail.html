@@ -1,55 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0" />
+        <title>Car Details</title>
+        <link
+            rel="stylesheet"
+            href="style.css" />
+        <style></style>
+    </head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Car Details</title>
-    <link rel="stylesheet" href="style.css">
-    <style>
+    <body>
+        <div class="container">
+            <div class="wheel-works">
+                <div class="content">
+                    <div class="image-container">
+                        <a href="#">
+                            <img
+                                src="/resource/logo.jpg"
+                                style="width: 130px"
+                                class="logo"
+                                alt="Logo" />
+                        </a>
+                        <img
+                            src="../CarList/vin.png"
+                            class="car-image"
+                            style="width: 200px; height: 170px"
+                            alt="Wheel Works" />
+                    </div>
 
-    </style>
-</head>
+                    <div
+                        class="text"
+                        style="flex-grow: 1">
+                        <!-- <h3>Component detail</h3> -->
 
-<body>
-
-    <div class="container">
-        <div class="wheel-works">
-
-
-            <div class="content">
-
-                <div class="image-container">
-                    <a href="#">
-                        <img src="/resource/logo.jpg" style="width: 130px;" class="logo" alt="Logo">
-                    </a>
-                    <img src="../CarList/vin.png" class="car-image" style="width: 200px; height: 170px;"
-                        alt="Wheel Works">
-                </div>
-
-
-
-
-                <div class="text" style="flex-grow: 1;">
-                    <!-- <h3>Component detail</h3> -->
-
-                    <ul class="system-list">
-
-                    </ul>
-                    <div class="CarPart1">
+                        <ul class="system-list"></ul>
+                        <div class="CarPart1"></div>
                     </div>
                 </div>
             </div>
+            <div class="other-services">
+                <h3>Car information</h3>
+                <ul>
+                    <li id="sub1">Name<span>Mazda</span></li>
 
-        </div>
-        <div class="other-services">
-            <h3>Car information</h3>
-            <ul>
+                    <li id="sub1">Manufacturer <span>Toyota</span></li>
 
-                <li id="sub1">Name<span>Mazda</span></li>
+                    <li id="sub1">Current Mileage<span>1000km</span></li>
 
-                <li id="sub1">Manufacturer <span>Toyota</span></li>
+                    <li id="sub1">Fuel Type<span>Diesel</span></li>
 
+<<<<<<< HEAD
                 <li id="sub1"> Current Mileage<span>1000km</span></li>
 
 
@@ -59,12 +62,21 @@
                 <li id="sub1">Year<span>2010</span></li>
                 
             </ul>
+=======
+                    <li id="sub1">Average Consumption <span>4.5 liters per 100 kilometers</span></li>
+                </ul>
+            </div>
+>>>>>>> e55c03863ed7b97d9a7b74630d0ea6a5a1c902be
         </div>
     </div>
 
     <!-- Place Order Window -->
     <div id="place-order" class="hidden"></div>
     <!-- End place order window -->
+
+    <!-- Notify -->
+    <div id="notificationContainer"></div>
+    <!-- End notify -->
 
     <div class="overlay hidden"></div>
 
@@ -73,6 +85,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <script src="data.js"></script>
+
     <script>
         $.ajax({
             url: "./placeOrder.html",
@@ -83,6 +96,7 @@
         });
     </script>
     <script src="placeOrder.js"></script>
+
 </body>
 
 </html>

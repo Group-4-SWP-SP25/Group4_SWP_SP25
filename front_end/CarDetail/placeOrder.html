@@ -29,6 +29,7 @@
       display: flex;
       flex-direction: column;
       font-size: 16px;
+      position: relative;
       font-family: Inter, sans-serif;
       max-width: 758px;
       color: #12458c;
@@ -38,6 +39,18 @@
       background-attachment: scroll;
       background-position: center top;
       background-repeat: repeat;
+    }
+
+    .close-window {
+      position: absolute;
+      top: 1.2rem;
+      right: 2rem;
+      font-size: 3rem;
+      color: #12458c;
+      cursor: pointer;
+      border: none;
+      background: none;
+      font-weight: normal;
     }
 
     ul.page-section {
@@ -77,6 +90,7 @@
       margin-top: 28px;
       margin-bottom: 12px;
     }
+
 
     .form-label {
       display: inline-block;
@@ -168,6 +182,7 @@
     .quantity-component {
       display: flex;
       gap: 20px;
+
       align-items: center;
 
       p {
@@ -218,16 +233,25 @@
     }
 
     .price {
+      margin-top: 20px;
       display: flex;
-      gap: 14%;
-      font-size: 18px;
+      gap: 10%;
+
+      p {
+        font-size: 18px;
+      }
 
       .price-title {
+        width: 30%;
         font-weight: bold;
       }
 
       .price-value {
         text-align: end;
+
+        p {
+          font-weight: 400;
+        }
       }
     }
 
@@ -292,6 +316,7 @@
 
 <body>
   <div class="place-order">
+    <button class="close-window">×</button>
     <ul class="order-section page-section">
       <li class="form-input-wide">
         <div class="form-header-group header-large">
@@ -325,12 +350,12 @@
         <div class="service-list">
           <div>
             <select class="select-service">
-              <option disabled selected value="0">-- Choose a service --</option>
+
 
             </select>
           </div>
-          <div class="form-error-message hidden">
-            <span class="error-navigation-message">This field is required.</span>
+          <div class="form-error-message error-service hidden">
+            <span class="error-navigation-message">Please choose a service!</span>
           </div>
         </div>
 
@@ -343,18 +368,21 @@
               <button class="qty-btn btn-inc">+</button>
             </div>
           </div>
+          <div class="form-error-message error-quantity hidden">
+            <span class="error-navigation-message">Quantity is invalid!</span>
+          </div>
         </div>
 
         <div class="price">
           <div class="price-title">
-            <p>Component Unit Price: </p>
-            <p>Service Price: </p>
-            <p>Total Price: </p>
+            <p class="component-unit hidden">Component Unit Price: </p>
+            <p class="service hidden">Service Price: </p>
+            <p class="total hidden">Total Price: </p>
           </div>
 
           <div class="price-value">
             <p class="component-unit hidden">3334</p>
-            <p class="service">333</p>
+            <p class="service hidden">333</p>
             <p class="total hidden">333</p>
           </div>
         </div>
@@ -364,8 +392,8 @@
       <li class="form-input-wide">
         <div class="form-pagebreak">
           <div class="btn-space"></div>
-          <div class="form-pagebreak-next-container"><button type="button" class="form-pagebreak-next"
-              data-component="pagebreak-next">Place Order</button></div>
+          <div class="form-pagebreak-next-container"><button type="button" class="form-pagebreak-next order-btn">Place
+              Order</button></div>
         </div>
       </li>
 
@@ -382,28 +410,76 @@
   <script>
 
     $(document).ready(function () {
+      function validQuantity() {
+        $(".error-quantity").addClass("hidden");
+        $(".price").removeClass("hidden");
+      }
       $(document).on("click", ".btn-dec", function () {
+        validQuantity();
         const qtyInput = $(this).siblings(".qty-val");
         let quantity = parseInt(qtyInput.val());
 
         if (!isNaN(quantity) && quantity > 1) {
           qtyInput.val(quantity - 1);
-          console.log(quantity - 1);
+        } else {
+          qtyInput.val(1)
         }
+
+        calTotalPrice();
       });
 
       $(document).on("click", ".btn-inc", function () {
+        validQuantity();
         const qtyInput = $(this).siblings(".qty-val");
         let quantity = parseInt(qtyInput.val());
+        if (isNaN(quantity) || qtyInput < 1) {
+          qtyInput.val(1)
+        }
 
         if (!isNaN(quantity)) {
           qtyInput.val(quantity + 1);
-          console.log(quantity + 1);
         }
+
+        calTotalPrice();
+      });
+
+
+      $(".overlay").click(function () {
+        showHidePlaceOrder();
+      });
+
+      $(".qty-val").on("input", function () {
+        $(".error-quantity").addClass("hidden");
+        const quantity = parseInt($(this).val());
+        if (isNaN(quantity) || quantity <= 0) {
+          $(".error-quantity").removeClass("hidden");
+          $(".price").addClass("hidden");
+        }
+        calTotalPrice();
+      });
+
+      // Press keydown
+      $(document).on("keydown", async function (e) {
+
+        if (!$(".overlay").hasClass("hidden")) {
+
+          if (e.key === "Enter") {
+            e.preventDefault();
+            placeOrder();
+          }
+          if (e.key === "Escape") {
+            e.preventDefault();
+            showHidePlaceOrder();
+          }
+        }
+
+
+      });
+
+      $(".close-window").click(function () {
+        showHidePlaceOrder();
       });
     });
-
-
   </script>
 </body>
 

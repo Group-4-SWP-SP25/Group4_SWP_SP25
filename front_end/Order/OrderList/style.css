@@ -280,6 +280,7 @@ a {
 
 .order-page .order-body .grid {
   width: 15%;
+  text-align: center;
   display: flex;
   align-items: center;
   justify-content: center;

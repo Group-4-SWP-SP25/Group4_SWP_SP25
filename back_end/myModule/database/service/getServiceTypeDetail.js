@@ -1,9 +1,7 @@
 const sql = require('mssql');
 const getServiceDetailByName = async (req, res) => {
     try {
-        // console.log(req.body);
         const { serviceTypeName } = req.body;
-        // console.log(serviceTypeName);
 
         if (!serviceTypeName) {
             return res.status(400).json({ error: 'Service type name is required' });
@@ -21,7 +19,6 @@ const getServiceDetailByName = async (req, res) => {
             JOIN ServiceType st ON s.ServiceTypeID = st.ServiceTypeID 
             WHERE st.ServiceTypeName = @serviceTypeName`;
         const result = await pool.request().input('serviceTypeName', sql.VarChar, serviceTypeName).query(query);
-        // console.log(result.recordset);
         res.json(result.recordset);
     } catch (err) {
         console.log(err);

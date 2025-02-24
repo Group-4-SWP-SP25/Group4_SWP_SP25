@@ -5,7 +5,9 @@ const register = async (req, res) => {
     // Add user
     await addUser(req.body);
     res.status(200).send({ message: "Register successfully" });
-  } catch {}
+  } catch {
+    res.status(500).json({ message: "Internal server error" });
+  }
 };
 
 module.exports = register;

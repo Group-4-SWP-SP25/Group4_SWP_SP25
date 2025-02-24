@@ -8,12 +8,10 @@ app.use(
     origin: [
       "http://127.0.0.1:5500",
       "http://localhost:5500",
-      "http://127.0.0.1:3000",
-      "http://localhost:3000",
       "http://127.0.0.1:5501",
       "http://localhost:5501",
-      "http://127.0.0.1:3001",
-      "http://localhost:3001",
+      /http:\/\/127\.0\.0\.1:300\d/,
+      /http:\/\/localhost:\d/
     ], // Chỉ định origin được phép truy cập
     credentials: true, // Cho phép gửi cookie hoặc session
   })
@@ -45,12 +43,11 @@ const {
 } = require("./myModule/controller/resetpassword.js");
 const register = require("./myModule/controller/register.js");
 const { AuthGoogle, Auth } = require("./myModule/controller/Login.js");
-// const getServiceDetail = require("./myModule/database/user/getServiceDetail.js");
-const getServiceTypeDetail = require("./myModule/database/user/getServiceTypeDetail.js");
 
 // service
 const serviceInfo = require("./myModule/controller/service/serviceInfo.js");
 const serviceListPerPart = require("./myModule/controller/service/listServicePerPart.js");
+const getServiceTypeDetail = require("./myModule/database/service/getServiceTypeDetail.js");
 
 // car
 const carInfo = require("./myModule/controller/car/carInfo.js");
@@ -64,9 +61,10 @@ const carSystemInfo = require("./myModule/controller/carSystem/carSystemInfo.js"
 const listCarSystem = require("./myModule/database/carSystem/listCarSystem.js");
 
 // inventory
-const componentInfo = require("./myModule/controller/inventory/componentInfo.js");
+const componentInStockInfo = require("./myModule/controller/inventory/componentInStockInfo.js");
 
 // order
+const placeOrder = require("./myModule/controller/order/placeOrder.js");
 const listOrder = require("./myModule/controller/order/listOrder.js");
 const {
   removeAnOrder,
@@ -99,19 +97,21 @@ app.post("/getServiceTypeDetail", getServiceTypeDetail);
 
 // admin
 app.post("/CustomerManager/getUserList", authenticateADMIN, getUserList);
-app.post("/CustomerManager/getTotelUserCount", authenticateADMIN, getTotalUserCount
+app.post(
+  "/CustomerManager/getTotelUserCount",
+  authenticateADMIN,
+  getTotalUserCount
 );
 app.post("/CustomerManager/getUserInfo", authenticateADMIN, GetUserInfo_Admin);
 app.post("/Message/SendMessage", authenticateADMIN, SendMessage);
 app.post("/Message/GetMessage", authenticateADMIN, GetMessage);
 app.post("/Message/GetList", authenticateADMIN, GetList);
 
-// app.post("/getServiceDetail", getServiceDetail);
-app.post("/getServiceTypeDetail", getServiceTypeDetail);
 
 // service
 app.post("/serviceInfo", serviceInfo);
 app.post("/serviceListPerPart", serviceListPerPart);
+app.post("/getServiceTypeDetail", getServiceTypeDetail);
 
 // car
 app.post("/carInfo", carInfo);
@@ -126,9 +126,10 @@ app.post("/listCarPartBySystem", listCarPartBySystem);
 app.post("/carPartInfoInCar", carPartInfoInCar);
 
 // inventory
-app.post("/componentInfo", componentInfo);
+app.post("/componentInStockInfo", componentInStockInfo);
 
 // order
+app.post("/placeOrder", placeOrder);
 app.post("/listOrder", listOrder);
 app.post("/removeAnOrder", removeAnOrder);
 app.post("/removeAllOrder", removeAllOrder);

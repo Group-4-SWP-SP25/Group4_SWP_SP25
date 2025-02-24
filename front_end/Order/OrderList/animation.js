@@ -109,6 +109,12 @@ async function deleteAnOrder() {
     // Sau khi request thành công, mới fadeOut rồi remove()
     selectedRow.fadeOut(300, function () {
       $(this).remove();
+
+      $(".order-row").each((index, row) => {
+        $(row)
+          .find(".order-index")
+          .text(index + 1);
+      });
     });
 
     showNotification();
