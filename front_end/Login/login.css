@@ -112,8 +112,6 @@ input:focus {
 
 /* Social Login */
 .social-login {
-  display: flex;
-  justify-content: space-between;
   margin-bottom: 20px;
 }
 

@@ -49,20 +49,20 @@ async function fetchUserOrders() {
         data: JSON.stringify({ carID: order.CarID, partID: order.PartID }),
       });
 
-      const part = await $.ajax({
+      const accessory = await $.ajax({
         url: "http://localhost:3000/componentInStockInfo",
         method: "POST",
         contentType: "application/json",
-        data: JSON.stringify({ partID: order.PartID }),
+        data: JSON.stringify({ serviceID: order.ServiceID }),
       });
 
-      return { order, car, service, carPart, part, index };
+      return { order, car, service, carPart, accessory, index };
     });
 
     Promise.all(promises).then((results) => {
       results.sort((a, b) => a.index - b.index); // Đảm bảo đúng thứ tự
 
-      results.forEach(({ order, car, service, carPart, part, index }) => {
+      results.forEach(({ order, car, service, carPart, accessory, index }) => {
         const orderElement = $(`
           <div class="order-row">
             <div class="order-product">
@@ -73,7 +73,9 @@ async function fetchUserOrders() {
                 <div class="grid">${carPart.PartName}</div>
                 <div class="grid">${service.ServiceName}</div>
                 <div class="grid">${formatDate(order.OrderDate)}</div>
-                <div class="grid">${order.EstimatedCost}</div>
+                <div class="grid">${
+                  order.EstimatedCost.toLocaleString("vi-VN") + "₫"
+                }</div>
                 <div class="order-action">
                   <span class="btn-del">Delete <i class="fa-solid fa-trash-can"></i></span>
                   <span class="btn-detail">See detail <i class="fas fa-chevron-down fa-sm fa-see"></i></span>
@@ -87,16 +89,35 @@ async function fetchUserOrders() {
                   <div><span>Car: </span><a href="#">${car.CarName}</a></div>
                   <div><span>Component: </span>${carPart.PartName}</div>
                   <div><span>Service name: </span>${service.ServiceName}</div>
-                  <div><span>Quantity: </span>${order.QuantityUsed}</div>
+                  ${
+                    service.AffectInventory === 1
+                      ? `<div><span>Quantity: </span>${order.QuantityUsed}</div>`
+                      : ""
+                  }
                   <div><span>Order date: </span>${formatDate(
                     order.OrderDate
                   )}</div>
                 </div>
                 <div>
                   <div><span>Maintance at: </span>qưiqiw</div>
-                  <div><span>Component price: </span>${part.UnitPrice}</div>
-                  <div><span>Service price: </span>${service.Price}</div>
-                  <div><span>Total price: </span>${order.EstimatedCost}</div>
+                  ${
+                    service.AffectInventory === 1
+                      ? `<div><span>Component price: </span>${
+                          accessory.UnitPrice.toLocaleString("vi-VN") + "₫"
+                        }</div>`
+                      : ""
+                  }
+                  <div><span>Service price: </span>${
+                    service.ServicePrice.toLocaleString("vi-VN") + "₫"
+                  }</div>
+                  ${
+                    service.AffectInventory === 1
+                      ? `<div><span>Total price: </span>${
+                          order.EstimatedCost.toLocaleString("vi-VN") + "₫"
+                        }</div>`
+                      : ""
+                  }
+                 
                 </div>
               </div>
             </div>
@@ -111,7 +132,7 @@ async function fetchUserOrders() {
         (sum, { order }) => sum + order.EstimatedCost,
         0
       );
-      $(".total-price").text(totalPrice);
+      $(".total-price").text(totalPrice.toLocaleString("vi-VN") + "₫");
     });
   } catch (error) {
     console.error("Error:", error);

@@ -1,15 +1,15 @@
 const sql = require("mssql");
-const getInventoryByPartId = async (partID) => {
+const getInventoryByPartId = async (serviceID) => {
   try {
     const pool = global.pool;
     const query = `
       SELECT * FROM Inventory
-      WHERE PartID = @partId
+      WHERE ServiceID = @serviceID
     `;
 
     const result = await pool
       .request()
-      .input("partId", sql.Int, partID)
+      .input("serviceID", sql.Int, serviceID)
       .query(query);
     return result.recordset[0];
   } catch (err) {

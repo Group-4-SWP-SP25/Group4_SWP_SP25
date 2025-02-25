@@ -2,9 +2,9 @@ const getInventoryByPartId = require("../../database/inventory/getInventoryByPar
 
 const componentInStockInfo = async (req, res) => {
   try {
-    const { partID } = req.body;
-    const inventory = await getInventoryByPartId(partID);
-    res.status(200).json(inventory);
+    const { serviceID } = req.body;
+    const inventory = await getInventoryByPartId(serviceID);
+    res.status(200).send(inventory);
   } catch (err) {
     res.status(500).json({ message: "Internal server error" });
   }

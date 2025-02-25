@@ -118,10 +118,14 @@ ul {
   margin: 5px 0;
   cursor: pointer;
   display: flex;
-  justify-content: space-between;
   border-radius: 5px;
   color: white;
   font-weight: bold;
+}
+
+.other-services li span {
+  flex: auto;
+  text-align: end;
 }
 
 #system-list {
