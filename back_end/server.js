@@ -43,7 +43,9 @@ const {
   verification,
 } = require("./myModule/controller/resetpassword.js");
 const { AuthGoogle, Auth } = require("./myModule/controller/Login.js");
-
+const getUserProfile = require("./myModule/database/user/getUserProfile.js");
+const userInfo = require("./myModule/controller/user/userInfo.js");
+const updateUserProfile = require("./myModule/controller/user/updateUserProfile.js");
 // service
 const serviceInfo = require("./myModule/controller/service/serviceInfo.js");
 const serviceListPerPart = require("./myModule/controller/service/listServicePerPart.js");
@@ -106,7 +108,9 @@ app.post("/verification", verification);
 app.post("/register", register);
 app.post("/auth/google/login", AuthGoogle);
 app.post("/auth/login", Auth);
-
+app.post("/getUserProfile", getUserProfile);
+app.post("/userInfo", userInfo);
+app.post("/updateUserProfile", updateUserProfile);
 // service
 app.post("/serviceInfo", serviceInfo);
 app.post("/serviceListPerPart", serviceListPerPart);
