@@ -39,6 +39,10 @@ $(document).ready(async function () {
     window.location.href = "/front_end/Dashboard/DashBoard/dashboard.html";
   });
 
+  $("#my-cars").on("click", function () {
+    window.location.href = "/front_end/CarList/CarList.html";
+  });
+
   $("#my-orders").on("click", function () {
     window.location.href = "/front_end/Order/OrderList/orderList.html";
   });
