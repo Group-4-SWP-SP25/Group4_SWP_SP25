@@ -90,12 +90,12 @@ GO
 
 -- 7
 CREATE TABLE Inventory (
-	PartID INT IDENTITY(1, 1) NOT NULL PRIMARY KEY,
-	PartName VARCHAR(200) NOT NULL,
-	CarSystemID INT FOREIGN KEY REFERENCES CarSystem(CarSystemID) ON DELETE CASCADE,
-	[Description] TEXT NOT NULL,
+	AccessoryID INT IDENTITY (1, 1) NOT NULL PRIMARY KEY,
+	AccessoryName VARCHAR(200) NOT NULL,
+	ServiceID INT FOREIGN KEY REFERENCES Service(ServiceID),
 	Quantity INT NOT NULL,
-	UnitPrice FLOAT NOT NULL
+	UnitPrice FLOAT NOT NULL,
+	[Description] TEXT NOT NULL
 );
 GO
  
@@ -189,34 +189,34 @@ INSTEAD OF INSERT
 AS
 BEGIN
     SET NOCOUNT ON;
-    -- Update existing order quantity and recalculate EstimatedCost
+
+    -- Cập nhật đơn hàng nếu đã tồn tại
     UPDATE o
     SET o.QuantityUsed = o.QuantityUsed + i.QuantityUsed,
-        o.EstimatedCost = (o.QuantityUsed + i.QuantityUsed) * inv.UnitPrice + COALESCE(s.ServicePrice, 0)
+        o.EstimatedCost = (o.QuantityUsed + i.QuantityUsed) * COALESCE(inv.UnitPrice, 0) + COALESCE(s.ServicePrice, 0)
     FROM [Order] o
     INNER JOIN inserted i
         ON o.UserID = i.UserID
         AND o.CarID = i.CarID 
         AND o.PartID = i.PartID 
         AND COALESCE(o.ServiceID, 0) = COALESCE(i.ServiceID, 0)
-    INNER JOIN Inventory inv ON o.PartID = inv.PartID
-    LEFT JOIN [Service] s ON o.ServiceID = s.ServiceID;
+    LEFT JOIN Inventory inv ON COALESCE(o.ServiceID, 0) = COALESCE(inv.ServiceID, 0)
+    LEFT JOIN [Service] s ON COALESCE(o.ServiceID, 0) = COALESCE(s.ServiceID, 0)
+    WHERE i.QuantityUsed >= 0; -- Cho phép QuantityUsed = 0
 
-    -- Insert new order if it does not exist
+    -- Chèn đơn hàng mới nếu chưa tồn tại
     INSERT INTO [Order](UserID, OrderID, CarID, PartID, ServiceID, QuantityUsed, EstimatedCost)
     SELECT
         i.UserID,
-        ISNULL(
-        (SELECT MAX(OrderID) FROM [Order] o WHERE o.UserID = i.UserID), 0
-        ) + 1,
+        COALESCE((SELECT MAX(o.OrderID) FROM [Order] o WHERE o.UserID = i.UserID), 0) + 1,
         i.CarID,
         i.PartID,
         i.ServiceID,
         i.QuantityUsed,
-    (i.QuantityUsed * inv.UnitPrice) + COALESCE(s.ServicePrice, 0)
+        (i.QuantityUsed * COALESCE(inv.UnitPrice, 0)) + COALESCE(s.ServicePrice, 0)
     FROM inserted i
-    INNER JOIN Inventory inv ON i.PartID = inv.PartID
-    LEFT JOIN [Service] s ON i.ServiceID = s.ServiceID
+    LEFT JOIN Inventory inv ON COALESCE(i.ServiceID, 0) = COALESCE(inv.ServiceID, 0)
+    LEFT JOIN [Service] s ON COALESCE(i.ServiceID, 0) = COALESCE(s.ServiceID, 0)
     WHERE NOT EXISTS (
         SELECT 1
         FROM [Order] o
@@ -224,9 +224,12 @@ BEGIN
         AND o.CarID = i.CarID 
         AND o.PartID = i.PartID
         AND COALESCE(o.ServiceID, 0) = COALESCE(i.ServiceID, 0)
-    );
+    )
+    AND i.QuantityUsed >= 0; -- Cho phép QuantityUsed = 0
 END;
 GO
+
+
 
 CREATE TRIGGER DeleteOrder
 ON [Order]
@@ -237,7 +240,7 @@ BEGIN
 	UPDATE ivt
     SET ivt.Quantity = ivt.Quantity - d.QuantityUsed
     FROM Inventory ivt
-    INNER JOIN deleted d ON d.PartID = ivt.PartID;
+    INNER JOIN deleted d ON d.ServiceID = ivt.ServiceID;
 END;
 GO
 
@@ -436,38 +439,56 @@ INSERT INTO Car(UserID, CarName, Brand, RegistrationNumber, [Year]) VALUES
 (1, 'Car 4', 'BMW', '125478', 2020);
 GO
 
-INSERT INTO Inventory (PartName, CarSystemID, [Description], Quantity, UnitPrice) VALUES 
-('Engine Oil', 1, 'Engine oil for lubrication and cooling.', 100, 50000),
-('Spark Plug', 1, 'Spark plugs for ignition.', 50, 20000),
-('Injector', 1, 'Fuel injectors for fuel delivery.', 30, 30000),
-('Cooling System', 1, 'Cooling system components.', 20, 40000),
-('Brake Pad', 2, 'Brake pads for stopping power.', 40, 60000),
-('Rotor', 2, 'Brake rotors for braking force.', 30, 80000),
-('Fluid', 2, 'Brake fluid for hydraulic system.', 50, 10000),
-('Bulb', 3, 'Light bulbs for illumination.', 60, 5000),
-('Fuse', 3, 'Fuses for electrical protection.', 40, 1000),
-('Electric System', 3, 'Electrical system components.', 30, 20000),
-('Wiring', 3, 'Wiring harness for electrical connections.', 20, 30000),
-('Gas', 4, 'AC gas for cooling.', 50, 20000),
-('Condenser', 4, 'AC condenser for heat exchange.', 30, 40000),
-('Filter', 4, 'AC filters for air quality.', 40, 10000),
-('Pump', 5, 'Fuel pump for fuel delivery.', 30, 30000),
-('Filter', 5, 'Fuel filters for fuel quality.', 40, 20000),
-('Injection', 5, 'Fuel injectors for fuel delivery.', 20, 40000),
-('Charging', 6, 'Battery charging service.', 50, 10000),
-('Terminal', 6, 'Battery terminals for electrical connections.', 40, 5000),
-('Shock', 7, 'Shock absorbers for suspension.', 30, 60000),
-('Control Arm', 7, 'Control arms for suspension.', 20, 80000),
-('Tie Rod', 7, 'Tie rods for steering.', 40, 10000),
-('Suspension', 7, 'Suspension components.', 50, 20000),
-('Tire', 8, 'Tires for wheel system.', 100, 500000),
-('Rim', 8, 'Rims for wheel system.', 50, 800000),
-('Wheel Hub', 8, 'Wheel hubs for wheel system.', 30, 100000);
+INSERT INTO Inventory (ServiceID, AccessoryName, Quantity, UnitPrice, Description)
+VALUES
+(1, 'Tire Set', 4, 1800000, 'Replace with new tires'),
+(4, 'High Performance Tires', 4, 2500000, 'Upgrade to high-performance tires'),
+(5, 'Off-road Tires', 4, 2250000, 'Specialized tires for off-road use'),
+(10, 'Wheel Rims', 4, 2400000, 'Replace with new wheel rims'),
+(14, 'Differential Oil', 1, 500000, 'Oil for differential replacement'),
+(15, 'Wheel Bearing', 2, 840000, 'Replace wheel bearings'),
+(18, 'Brake Pads', 2, 480000, 'New brake pads replacement'),
+(20, 'Brake Fluid Hose', 2, 450000, 'New brake fluid hoses'),
+(22, 'Brake Discs', 2, 900000, 'Replace with new brake discs'),
+(27, 'Brake Fluid', 1, 360000, 'Brake fluid refill'),
+(28, 'Brake Fluid', 1, 960000, 'Complete brake fluid replacement'),
+(33, 'Engine Oil Filter', 1, 360000, 'New engine oil filter'),
+(38, 'Supercharger Kit', 1, 10000000, 'Install supercharger kit'),
+(39, 'Intercooler', 1, 5000000, 'High-performance intercooler'),
+(43, 'Spark Plugs', 4, 105000, 'Replace spark plugs'),
+(44, 'High Performance Spark Plugs', 4, 112500, 'Upgrade to high-performance spark plugs'),
+(46, 'Ignition Coil', 4, 162500, 'Replace ignition coils'),
+(47, 'Coolant Flush', 1, 1080000, 'Flush cooling system'),
+(49, 'Coolant', 1, 600000, 'Replace with new coolant'),
+(52, 'Engine Cooling Fan', 1, 700000, 'Replace engine cooling fan'),
+(58, 'Battery Ground Cable', 1, 350000, 'Replace battery ground cable'),
+(60, 'Battery Terminals', 2, 240000, 'Replace battery terminals'),
+(61, 'Headlight Bulbs', 2, 240000, 'Replace headlight bulbs'),
+(62, 'Tail Light Bulbs', 2, 210000, 'Replace tail light bulbs'),
+(63, 'Interior Light Bulbs', 2, 150000, 'Replace interior light bulbs'),
+(65, 'HID/LED Headlights', 2, 500000, 'Upgrade to HID/LED headlights'),
+(67, 'Fuse', 1, 180000, 'Replace fuse'),
+(69, 'Fuse Box', 1, 450000, 'Replace fuse box'),
+(74, 'Wiring Harness', 1, 1440000, 'Replace vehicle wiring harness'),
+(76, 'Wiper Motor', 1, 750000, 'Replace windshield wiper motor'),
+(77, 'AC Refrigerant', 1, 960000, 'Refill air conditioning refrigerant'),
+(82, 'AC Condenser', 1, 2160000, 'Replace air conditioning condenser'),
+(86, 'Engine Air Filter', 1, 480000, 'Replace engine air filter'),
+(87, 'Cabin Air Filter', 1, 600000, 'Replace cabin air filter'),
+(88, 'AC Expansion Valve', 1, 700000, 'Replace air conditioning expansion valve'),
+(90, 'Shock Absorbers', 2, 1080000, 'Replace with new shock absorbers'),
+(92, 'Control Arms', 2, 1080000, 'Replace control arms'),
+(93, 'High Performance Control Arms', 2, 1250000, 'Upgrade to high-performance control arms'),
+(95, 'Tie Rod Ends', 2, 720000, 'Replace tie rod ends'),
+(99, 'Suspension Struts', 2, 1200000, 'Replace suspension struts'),
+(101, 'Suspension Bushings', 4, 360000, 'Replace suspension bushings'),
+(106, 'Fuel Pump', 1, 1800000, 'Replace fuel pump'),
+(108, 'Fuel Filter', 1, 600000, 'Replace fuel filter'),
+(114, 'High Performance Fuel Injectors', 4, 375000, 'Upgrade to high-performance fuel injectors');
 GO
 
-INSERT INTO [Order](UserID, CarID, PartID, ServiceID, QuantityUsed) VALUES
-(1, 1, 3, 1, 2)
-GO
+INSERT INTO [Order] (UserID, CarID, PartID, ServiceID, QuantityUsed)
+VALUES (2, 1, 8, 114, 3);
 
 --ENABLE TRIGGER DeleteOrder ON [Order];
 --GO

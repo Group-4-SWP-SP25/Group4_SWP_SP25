@@ -38,7 +38,7 @@ const {
   getUserList,
   getTotalUserCount,
 } = require("./myModule/controller/UserListControl.js");
-const getUserInfo = require("./myModule/database/user/getUserInfo.js");
+
 const {
   resetPassword,
   verification,

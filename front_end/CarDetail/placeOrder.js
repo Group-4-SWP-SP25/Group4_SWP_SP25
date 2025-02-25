@@ -58,6 +58,7 @@ $(document).ready(function () {
 
         const quantityContainer = $(".quantity");
         listServiceBody.change(async function () {
+          const serviceID = parseInt(listServiceBody.val());
           $(".error-service").addClass("hidden");
           $("error-quantity").addClass("hidden");
           const selectedService = await $.ajax({
@@ -65,30 +66,31 @@ $(document).ready(function () {
             method: "POST",
             contentType: "application/json",
             data: JSON.stringify({
-              serviceID: parseInt(listServiceBody.val()),
-            }),
-          });
-
-          const inventory = await $.ajax({
-            url: "http://localhost:3000/componentInStockInfo",
-            method: "POST",
-            contentType: "application/json",
-            data: JSON.stringify({
-              partID: partID,
+              serviceID: serviceID,
             }),
           });
 
           $(".price-title .service").removeClass("hidden");
           $(".price-value .service").removeClass("hidden");
 
-          $(".price-value .service").html(selectedService.ServicePrice);
+          $(".price-value .service").html(
+            selectedService.ServicePrice.toLocaleString("vi-VN") + "₫"
+          );
           if (selectedService.AffectInventory === 1) {
+            const accessory = await $.ajax({
+              url: "http://localhost:3000/componentInStockInfo",
+              method: "POST",
+              contentType: "application/json",
+              data: JSON.stringify({
+                serviceID: serviceID,
+              }),
+            });
             quantityContainer.slideDown(500);
             $(".qty-val").val(1);
             $(".price-title .component-unit").removeClass("hidden");
             $(".price-value .component-unit")
               .removeClass("hidden")
-              .html(inventory.UnitPrice);
+              .html(accessory.UnitPrice.toLocaleString("vi-VN") + "₫");
             calTotalPrice();
           } else {
             $(".qty-val").val(0);
@@ -192,17 +194,34 @@ function showHidePlaceOrder() {
   $(".price").removeClass("hidden");
 }
 
-function calTotalPrice() {
-  function valueTag(tag) {
-    return parseInt(tag.text());
-  }
-  const componentPrice = valueTag($(".price-value .component-unit"));
-  const servicePrice = valueTag($(".price-value .service"));
+async function calTotalPrice() {
+  const serviceID = parseInt($(".select-service").val());
+  const selectedService = await $.ajax({
+    url: "http://localhost:3000/serviceInfo",
+    method: "POST",
+    contentType: "application/json",
+    data: JSON.stringify({
+      serviceID: serviceID,
+    }),
+  });
+
+  const accessory = await $.ajax({
+    url: "http://localhost:3000/componentInStockInfo",
+    method: "POST",
+    contentType: "application/json",
+    data: JSON.stringify({
+      serviceID: serviceID,
+    }),
+  });
+  const componentPrice = accessory.UnitPrice;
+  const servicePrice = selectedService.ServicePrice;
   const quantity = $(".qty-val").val();
 
   const totalPrice = servicePrice + quantity * componentPrice;
   $(".price-title .total").removeClass("hidden");
-  $(".price-value .total").removeClass("hidden").html(totalPrice);
+  $(".price-value .total")
+    .removeClass("hidden")
+    .html(totalPrice.toLocaleString("vi-VN") + "₫");
 }
 
 function showNotification() {
@@ -224,13 +243,6 @@ function showNotification() {
   setTimeout(() => {
     $(".progress-bar", notification).css("width", "0%");
   }, 50);
-
-  setTimeout(() => {
-    console.log(
-      "Nút order-detail có tồn tại?",
-      notification.find(".order-detail").length
-    );
-  }, 100);
 
   setTimeout(function () {
     notification.css("animation", "slideOut 0.5s ease-in-out forwards");

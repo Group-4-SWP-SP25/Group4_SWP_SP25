@@ -32,12 +32,11 @@ $(document).ready(async function () {
 
   $("#sign-out").on("click", function () {
     localStorage.removeItem("token");
-    window.location.href = "../HomePage/HomePage.html";
+    window.location.href = "/front_end/HomePage/HomePage.html";
   });
 
   $("#dashboard").on("click", function () {
-    window.location.href =
-      "http://127.0.0.1:5500/front_end/Dashboard/DashBoard/dashboard.html";
+    window.location.href = "/front_end/Dashboard/DashBoard/dashboard.html";
   });
 
   $("#my-orders").on("click", function () {
