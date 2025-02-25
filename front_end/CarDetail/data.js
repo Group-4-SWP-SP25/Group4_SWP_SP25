@@ -1,4 +1,28 @@
 $(document).ready(function () {
+  const urlParams = new URLSearchParams(window.location.search);
+  const carID = parseInt(urlParams.get("carID"));
+  async function getCarInfo() {
+    try {
+      const car = await $.ajax({
+        url: "http://localhost:3000/carInfo",
+        method: "POST",
+        contentType: "application/json",
+        data: JSON.stringify({ carID: carID }),
+      });
+      console.log(car);
+      $(".car-name").html(car.CarName);
+      $(".car-brand").html(car.Brand);
+      $(".registration-number").html(car.RegistrationNumber);
+      $(".purchased-year").html(car.Year);
+      $(".maintenance-reg-date").html(
+        customFormatDate(car.MaintenanceResgistrationDate)
+      );
+    } catch (err) {
+      console.error("Cannot get car info!");
+    }
+  }
+  getCarInfo();
+
   async function getSystem() {
     try {
       const carSystems = await $.ajax({
@@ -48,7 +72,7 @@ $(document).ready(function () {
         url: "http://localhost:3000/listCarPartBySystem",
         method: "POST",
         contentType: "application/json",
-        data: JSON.stringify({ carID: 1, carSystemID: carSystemID }),
+        data: JSON.stringify({ carID: carID, carSystemID: carSystemID }),
       });
 
       carPartList.empty().show().data("visible", true);
@@ -84,3 +108,13 @@ $(document).ready(function () {
   // Gọi hàm để tải danh sách hệ thống khi trang load
   getSystem();
 });
+
+function customFormatDate(dateTimeString) {
+  const date = new Date(dateTimeString);
+  const options = {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  };
+  return date.toLocaleDateString("en-GB", options).replace(/ /g, "-");
+}

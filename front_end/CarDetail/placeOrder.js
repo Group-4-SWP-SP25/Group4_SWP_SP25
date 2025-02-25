@@ -1,4 +1,6 @@
 $(document).ready(function () {
+  const urlParams = new URLSearchParams(window.location.search);
+  const carID = parseInt(urlParams.get("carID"));
   $(document).on("click", ".show-service", function (event) {
     event.preventDefault();
     showHidePlaceOrder();
@@ -11,14 +13,14 @@ $(document).ready(function () {
           url: "http://localhost:3000/carInfo",
           method: "POST",
           contentType: "application/json",
-          data: JSON.stringify({ carID: 1 }),
+          data: JSON.stringify({ carID: carID }),
         });
 
         const carPart = await $.ajax({
           url: "http://localhost:3000/carPartInfoInCar",
           method: "POST",
           contentType: "application/json",
-          data: JSON.stringify({ carID: 1, partID: partID }),
+          data: JSON.stringify({ carID: carID, partID: partID }),
         });
 
         const carSystem = await $.ajax({
@@ -119,6 +121,8 @@ $(document).ready(function () {
 
 async function placeOrder() {
   try {
+    const urlParams = new URLSearchParams(window.location.search);
+    const carID = parseInt(urlParams.get("carID"));
     const user = await $.ajax({
       url: "http://localhost:3000/getUserInfo",
       method: "POST",
@@ -160,7 +164,7 @@ async function placeOrder() {
       contentType: "application/json",
       data: JSON.stringify({
         userID: user.id,
-        carID: 1,
+        carID: carID,
         partID: partID,
         serviceID: serviceID,
         quantityUsed: quantityUsed,

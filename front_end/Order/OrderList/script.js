@@ -86,7 +86,9 @@ async function fetchUserOrders() {
               <div class="separate"></div>
               <div class="detail-content">
                 <div>
-                  <div><span>Car: </span><a href="#">${car.CarName}</a></div>
+                  <div><span>Car: </span><a href="/front_end/CarDetail/CarDetail.html?carID=${
+                    car.CarID
+                  }">${car.CarName}</a></div>
                   <div><span>Component: </span>${carPart.PartName}</div>
                   <div><span>Service name: </span>${service.ServiceName}</div>
                   ${
