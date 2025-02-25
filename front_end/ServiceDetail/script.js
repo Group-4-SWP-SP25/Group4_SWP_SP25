@@ -14,8 +14,6 @@ async function getServiceDetailByName() {
         })
     });
     const result = await response.json();
-    // console.log(typeof result);
-    // console.log(result);
 
     document.querySelector('.info-name').innerHTML = result[0].ServiceTypeName + ' Service';
     document.querySelector('.info-desc').innerHTML = result[0].ServiceTypeDescription;
@@ -35,19 +33,9 @@ async function getServiceDetailByName() {
         detailServicePrice.textContent = item.ServicePrice + ' ₫';
         detailServicePrice.style.textAlign = 'center';
 
-        // const detailServiceCheck = document.createElement('td');
-        // const detailServiceCheckInput = document.createElement('input');
-        // detailServiceCheckInput.type = 'checkbox';
-        // detailServiceCheckInput.style.border = '1px solid green';
-        // detailServiceCheckInput.checked = false;
-        // detailServiceCheckInput.id = (item.ServiceName.toLowerCase().replace(/\s/g, '_'));
-        // detailServiceCheck.appendChild(detailServiceCheckInput);
-        // detailServiceCheck.style.textAlign = 'center';
-
         detailItemRow.appendChild(detailServiceName);
         detailItemRow.appendChild(detailServiceDescription);
         detailItemRow.appendChild(detailServicePrice);
-        // detailItemRow.appendChild(detailServiceCheck);
 
         detailTable.appendChild(detailItemRow);
     }

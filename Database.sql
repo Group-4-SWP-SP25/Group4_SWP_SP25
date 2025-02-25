@@ -470,7 +470,6 @@ INSERT INTO [Car](UserID, CarName, Brand, RegistrationNumber, [Year], CarImage, 
 (1, 'Car 3', 'Ford', '987654', 2018, 'https://images.dealer.com/autodata/us/640/2020/USD00FOS372A0/USC80FOS371A01300.jpg', 'Active'),
 (1, 'Car 4', 'BMW', '125478', 2020, '', 'Active');
 
-<<<<<<< HEAD
 INSERT INTO Inventory (ServiceID, AccessoryName, Quantity, UnitPrice, Description)
 VALUES
 (1, 'Tire Set', 4, 1800000, 'Replace with new tires'),
@@ -517,36 +516,6 @@ VALUES
 (106, 'Fuel Pump', 1, 1800000, 'Replace fuel pump'),
 (108, 'Fuel Filter', 1, 600000, 'Replace fuel filter'),
 (114, 'High Performance Fuel Injectors', 4, 375000, 'Upgrade to high-performance fuel injectors');
-=======
-
-INSERT INTO [Inventory](PartName, CarSystemID, [Description], Quantity, UnitPrice) VALUES 
-('Engine Oil', 1, 'Engine oil for lubrication and cooling.', 100, 50000),
-('Spark Plug', 1, 'Spark plugs for ignition.', 50, 20000),
-('Injector', 1, 'Fuel injectors for fuel delivery.', 30, 30000),
-('Cooling System', 1, 'Cooling system components.', 20, 40000),
-('Brake Pad', 2, 'Brake pads for stopping power.', 40, 60000),
-('Rotor', 2, 'Brake rotors for braking force.', 30, 80000),
-('Fluid', 2, 'Brake fluid for hydraulic system.', 50, 10000),
-('Bulb', 3, 'Light bulbs for illumination.', 60, 5000),
-('Fuse', 3, 'Fuses for electrical protection.', 40, 1000),
-('Electric System', 3, 'Electrical system components.', 30, 20000),
-('Wiring', 3, 'Wiring harness for electrical connections.', 20, 30000),
-('Gas', 4, 'AC gas for cooling.', 50, 20000),
-('Condenser', 4, 'AC condenser for heat exchange.', 30, 40000),
-('Filter', 4, 'AC filters for air quality.', 40, 10000),
-('Pump', 5, 'Fuel pump for fuel delivery.', 30, 30000),
-('Filter', 5, 'Fuel filters for fuel quality.', 40, 20000),
-('Injection', 5, 'Fuel injectors for fuel delivery.', 20, 40000),
-('Charging', 6, 'Battery charging service.', 50, 10000),
-('Terminal', 6, 'Battery terminals for electrical connections.', 40, 5000),
-('Shock', 7, 'Shock absorbers for suspension.', 30, 60000),
-('Control Arm', 7, 'Control arms for suspension.', 20, 80000),
-('Tie Rod', 7, 'Tie rods for steering.', 40, 10000),
-('Suspension', 7, 'Suspension components.', 50, 20000),
-('Tire', 8, 'Tires for wheel system.', 100, 500000),
-('Rim', 8, 'Rims for wheel system.', 50, 800000),
-('Wheel Hub', 8, 'Wheel hubs for wheel system.', 30, 100000);
->>>>>>> 12c2811fac17a1b65e4812e7155dc32d62344a1d
 GO
 
 INSERT INTO [Order] (UserID, CarID, PartID, ServiceID, QuantityUsed)

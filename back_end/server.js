@@ -6,12 +6,10 @@ app.use(express.json());
 app.use(
   cors({
     origin: [
-      "http://127.0.0.1:5500",
-      "http://localhost:5500",
-      "http://127.0.0.1:5501",
-      "http://localhost:5501",
       /http:\/\/127\.0\.0\.1:300\d/,
       /http:\/\/localhost:300\d/,
+      /http:\/\/127\.0\.0\.1:500\d/,
+      /http:\/\/localhost:500\d/,
     ], // Chỉ định origin được phép truy cập
     credentials: true, // Cho phép gửi cookie hoặc session
   })
