@@ -8,28 +8,23 @@ app.use(
     origin: [
       "http://127.0.0.1:5500",
       "http://localhost:5500",
-      "http://127.0.0.1:3000",
-      "http://localhost:3000",
       "http://127.0.0.1:5501",
       "http://localhost:5501",
-      "http://127.0.0.1:3001",
-      "http://localhost:3001",
+      /http:\/\/127\.0\.0\.1:300\d/,
+      /http:\/\/localhost:300\d/,
     ], // Chỉ định origin được phép truy cập
     credentials: true, // Cho phép gửi cookie hoặc session
   })
 );
 
+// ----------------------------------------------------------
+// IMPORT MODULE
+// admin
 const connectDB = require("./myModule/database/connectDB.js");
 const {
   authenticateJWT,
   authenticateADMIN,
 } = require("./myModule/Utils/JWT.js");
-
-// IMPORT MODULE
-const getPassword = require("./myModule/controller/user/getPassword.js");
-const changePassword = require("./myModule/database/user/changePassword.js");
-const checkAccount = require("./myModule/controller/user/checkAccount.js");
-const checkUserName = require("./myModule/database/user/checkUserName.js");
 const {
   GetUserInfo,
   GetUserInfo_Admin,
@@ -39,21 +34,26 @@ const {
   getTotalUserCount,
 } = require("./myModule/controller/UserListControl.js");
 
+// user
+const register = require("./myModule/controller/register.js");
+const getPassword = require("./myModule/controller/user/getPassword.js");
+const changePassword = require("./myModule/database/user/changePassword.js");
+const checkAccount = require("./myModule/controller/user/checkAccount.js");
+const checkUserName = require("./myModule/database/user/checkUserName.js");
 const {
   resetPassword,
   verification,
 } = require("./myModule/controller/resetpassword.js");
-const register = require("./myModule/controller/register.js");
 const { AuthGoogle, Auth } = require("./myModule/controller/Login.js");
-// const getServiceDetail = require("./myModule/database/user/getServiceDetail.js");
-const getServiceTypeDetail = require("./myModule/database/user/getServiceTypeDetail.js");
 
 // service
 const serviceInfo = require("./myModule/controller/service/serviceInfo.js");
 const serviceListPerPart = require("./myModule/controller/service/listServicePerPart.js");
+const getServiceDetailByName = require("./myModule/database/service/getServiceDetailByName.js");
 
 // car
 const carInfo = require("./myModule/controller/car/carInfo.js");
+const getCarList = require("./myModule/database/car/getCarList.js");
 
 // car part
 const listCarPartBySystem = require("./myModule/controller/carPart/listCarPartBySystem.js");
@@ -79,11 +79,23 @@ const {
   SendMessage,
   GetMessage,
   GetList,
+  CheckMessage,
 } = require("./myModule/controller/message/message.js");
 
 // ----------------------------------------------------------
-
 // CREATE API
+// admin
+app.post("/CustomerManager/getUserList", authenticateADMIN, getUserList);
+app.post(
+  "/CustomerManager/getTotelUserCount",
+  authenticateADMIN,
+  getTotalUserCount
+);
+app.post("/CustomerManager/getUserInfo", authenticateADMIN, GetUserInfo_Admin);
+app.post("/Message/SendMessage", authenticateJWT, SendMessage);
+app.post("/Message/GetMessage", authenticateJWT, GetMessage);
+app.post("/Message/GetList", authenticateJWT, GetList);
+app.post("/Message/CheckMessage", authenticateJWT, CheckMessage);
 
 // user
 app.post("/getPassword", getPassword);
@@ -96,29 +108,15 @@ app.post("/verification", verification);
 app.post("/register", register);
 app.post("/auth/google/login", AuthGoogle);
 app.post("/auth/login", Auth);
-app.post("/getServiceTypeDetail", getServiceTypeDetail);
-
-// admin
-app.post("/CustomerManager/getUserList", authenticateADMIN, getUserList);
-app.post(
-  "/CustomerManager/getTotelUserCount",
-  authenticateADMIN,
-  getTotalUserCount
-);
-app.post("/CustomerManager/getUserInfo", authenticateADMIN, GetUserInfo_Admin);
-app.post("/Message/SendMessage", authenticateADMIN, SendMessage);
-app.post("/Message/GetMessage", authenticateADMIN, GetMessage);
-app.post("/Message/GetList", authenticateADMIN, GetList);
-
-// app.post("/getServiceDetail", getServiceDetail);
-app.post("/getServiceTypeDetail", getServiceTypeDetail);
 
 // service
 app.post("/serviceInfo", serviceInfo);
 app.post("/serviceListPerPart", serviceListPerPart);
+app.post("/getServiceDetailByName", getServiceDetailByName);
 
 // car
 app.post("/carInfo", carInfo);
+app.post("/getCarList", getCarList);
 
 // car system
 app.post("/carSystemInfo", carSystemInfo);
@@ -138,7 +136,7 @@ app.post("/removeAnOrder", removeAnOrder);
 app.post("/removeAllOrder", removeAllOrder);
 
 // ----------------------------------------------------------
-
+// START SERVER
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
   (async () => {

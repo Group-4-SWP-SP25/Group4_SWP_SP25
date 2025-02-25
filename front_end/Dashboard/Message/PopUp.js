@@ -19,6 +19,8 @@ function togglePopup() {
         overlay.style.display = 'flex';
         Popuplist.innerHTML = '';
         PopupHeaderList.innerHTML = '';
+        PopupSearch.value = '';
+        PopupSearchString = '';
         GetListPopupItem()
         setTimeout(() => {
             popup.classList.add('active');
@@ -40,8 +42,10 @@ function togglePopup() {
 
 // remove header item
 const RemovePopupHeaderItem = (id) => {
-    Popuplist.querySelector(`div[item-id="${id}"]`).classList.remove('choose');
-    let item = PopupHeaderList.querySelector(`div[header-item-id="${id}"]`)
+    let item = Popuplist.querySelector(`div[item-id="${id}"]`);
+    if (item != null)
+        item.classList.remove('choose');
+    item = PopupHeaderList.querySelector(`div[header-item-id="${id}"]`)
     item.remove();
     for (let value of ListHeader) {
         if (value[0] === id) {
@@ -163,11 +167,12 @@ doneButton.addEventListener('click', () => {
             AddUser(id, name, '')
             switchUser(id, name)
             togglePopup()
-            MoveUserToTop(null);
+            MoveUserToTop(id, null);
         } else {
             // exist
             switchUser(id, name)
-            MoveUserToTop(null);
+            MoveUserToTop(id, null);
+            togglePopup()
         }
     } else {
         // mutil message

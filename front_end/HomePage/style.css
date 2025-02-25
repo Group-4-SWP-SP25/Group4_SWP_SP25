@@ -3,6 +3,7 @@
   padding: 0;
   box-sizing: border-box;
 }
+
 body {
   margin: 0;
   background-color: black;
@@ -14,10 +15,12 @@ body {
 .background-video {
   position: relative;
   height: 50vw;
+
   body {
     margin: 0;
     background-color: black;
   }
+
   width: 100vw;
   overflow: hidden;
   z-index: -1;
@@ -42,13 +45,11 @@ body {
   text-align: center;
   font-size: 10em;
   padding: 40px;
-  background: linear-gradient(
-    to right,
-    rgba(0, 0, 0, 1),
-    rgba(0, 0, 0, 0.9),
-    rgba(0, 0, 0, 0.6),
-    rgba(0, 0, 0, 0)
-  );
+  background: linear-gradient(to right,
+      rgba(0, 0, 0, 1),
+      rgba(0, 0, 0, 0.9),
+      rgba(0, 0, 0, 0.6),
+      rgba(0, 0, 0, 0));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -112,6 +113,7 @@ body {
     flex-direction: column;
     text-align: center;
   }
+
   .about-us .left,
   .about-us .right {
     width: 100%;
@@ -277,13 +279,368 @@ body {
   background-color: #555;
 }
 
+/* scroll bar */
+.custom-scrollbar {
+  overflow-y: auto;
+  overflow-x: auto;
+  /* Bật tính năng cuộn dọc */
+  height: 100%;
+  /* Chiều cao của container */
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+  /* Độ rộng của thanh cuộn */
+  transition: width 0.3s, height 0.3s;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #333;
+  /* Màu nền của track */
+  border-radius: 10px;
+  /* Bo tròn track */
+
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #555;
+  /* Màu của thanh cuộn */
+  border-radius: 10px;
+  /* Bo tròn thanh cuộn */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #888;
+  /* Màu của thanh cuộn khi hover */
+}
+
+
+/* ----------------------------------fixed button */
 .fixed-notification-icon {
   position: fixed;
   bottom: 20px;
   right: 20px;
   z-index: 1000;
+  border-radius: 50%;
 }
 
-.fixed-notification-icon img {
+.fixed-notification-icon:hover {
+  cursor: pointer;
+}
+
+.fixed-notification-icon img,
+.fixed-message-icon img {
   border-radius: 50%;
+  width: 80px;
+  height: 80px;
+}
+
+.fixed-message-icon {
+  position: fixed;
+  bottom: 120px;
+  right: 20px;
+  z-index: 1000;
+  border-radius: 50%;
+}
+
+.fixed-message-icon img {
+  transform: scaleX(-1);
+}
+
+.fixed-message-icon:hover {
+  cursor: pointer;
+}
+
+.unread-count {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+}
+
+.hide {
+  display: none;
+}
+
+/* ----------------Messages--------------------- */
+.message-container.active {
+  position: fixed;
+  bottom: 20px;
+  right: 120px;
+  background-color: #1e1e1e;
+  height: 600px;
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  z-index: 1000;
+}
+
+.message-container {
+  display: none;
+}
+
+.message-container .message-header {
+  box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.2);
+  height: 10%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  flex: 0 0 auto;
+}
+
+.message-body {
+  display: flex;
+  flex-direction: column-reverse;
+  padding: 10px;
+  height: auto;
+  gap: 10px;
+  overflow-y: auto;
+  flex: 1;
+  overflow-x: hidden;
+}
+
+.message-footer {
+  display: flex;
+  align-items: end;
+  padding: 10px;
+  height: auto;
+  min-height: 10%;
+  flex: 0 0 auto;
+  background-color: #1e1e1e;
+  width: 100%;
+}
+
+/* --------------------------msg header */
+.message-header-info {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.message-close {
+  height: 100%;
+  width: 40px;
+}
+
+.message-close:hover {
+  background-color: #444;
+  cursor: pointer;
+}
+
+.message-close span {
+  height: 100%;
+  width: 40px;
+  color: #ddd;
+  font-size: 40px;
+}
+
+.message-header-info span {
+  font-size: 30px;
+  height: 100%;
+  margin-left: 20px;
+  color: #ddd;
+}
+
+.message-header-info img {
+  height: 100%;
+  border-radius: 50%;
+}
+
+/* ----------------------- msg body */
+
+.msg {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+.left-msg {
+  justify-content: flex-start;
+  padding: 10px;
+}
+
+.right-msg {
+  justify-content: flex-end;
+  align-items: end;
+  padding: 10px;
+}
+
+.left-msg .msg-bubble {
+  background-color: #333;
+  padding: 10px;
+  border-radius: 15px;
+  max-width: 70%;
+  margin-left: 10px;
+}
+
+.right-msg .msg-bubble {
+  background-color: #333;
+  padding: 10px;
+  border-radius: 15px;
+  max-width: 70%;
+}
+
+.msg-img img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+
+.msg-text,
+.msg-text span {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  margin: 5px;
+  font-size: 20px;
+  color: #fff;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-all;
+}
+
+.msg-info-left {
+  visibility: hidden;
+  width: 120px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 20px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  /* Đặt tooltip ở giữa theo chiều dọc */
+  left: 100%;
+  margin-left: 10px;
+  /* Đặt tooltip sang phải của phần tử */
+  transform: translateY(-50%);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.msg-text:hover .msg-info-left {
+  visibility: visible;
+  opacity: 1;
+}
+
+.msg-info-right {
+  visibility: hidden;
+  width: 120px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 20px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  /* Đặt tooltip ở giữa theo chiều dọc */
+  right: 100%;
+  margin-right: 10px;
+  /* Đặt tooltip sang phải của phần tử */
+  transform: translateY(-50%);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.msg-text:hover .msg-info-right {
+  visibility: visible;
+  opacity: 1;
+}
+
+.status {
+  height: 20px;
+  width: 20px;
+}
+
+.status img {
+  height: 100%;
+  border-radius: 50%;
+}
+
+.status span {
+  font-size: 20px;
+  color: #fff;
+}
+
+
+.loader {
+  border: 2px solid #5e5e5e;
+  border-top: 2px solid #3498db;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: spin 0.5s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* -------------------------------------------- msg footer */
+.message-footer-action,
+.message-footer-send {
+  height: 40px;
+  flex: 0 0 auto;
+  width: 40px;
+  padding: 5px;
+}
+
+.message-footer-action:hover,
+.message-footer-send:hover {
+  cursor: pointer;
+}
+
+.message-footer-action span,
+.message-footer-send span {
+  color: wheat;
+  font-size: 30px;
+}
+
+.message-footer-input {
+  flex: 1;
+  height: auto;
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.message-footer-input textarea {
+  flex: 1;
+  height: 30px;
+  max-height: 90px;
+  width: 100%;
+  border: 1px solid #333;
+  border-radius: 20px;
+  background: #2c2c2c;
+  color: #e0e0e0;
+  resize: none;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  vertical-align: middle;
+  overflow-y: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.message-footer-input textarea::placeholder {
+  text-align: center;
 }

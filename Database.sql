@@ -44,6 +44,9 @@ CREATE TABLE Car(
 	Brand TEXT,
 	RegistrationNumber VARCHAR(50) NOT NULL,
 	[Year] INT,
+  MaintenanceResgistrationDate DATE DEFAULT CURRENT_TIMESTAMP,
+  CarImage TEXT,
+	[Status] VARCHAR(50) DEFAULT NULL CHECK ([Status] IN ('Active', 'Maintaining'))
 );
 GO
 
@@ -120,11 +123,44 @@ CREATE TABLE Messages (
     ReceiverID INT NOT NULL,
     Content TEXT NOT NULL,
     SentAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-    IsRead BIT DEFAULT 0,
     FOREIGN KEY (SenderID) REFERENCES [User](UserID),
     FOREIGN KEY (ReceiverID) REFERENCES [User](UserID),
 );
 GO
+
+CREATE TABLE MessageReads (
+    ReadID INT NOT NULL,
+    UserID INT NOT NULL,
+    MessageID INT NOT NULL,
+    FOREIGN KEY (UserID) REFERENCES [User](UserID),
+    FOREIGN KEY (MessageID) REFERENCES Messages(MessageID)
+);
+GO
+
+-- mesage 
+CREATE PROCEDURE UpsertMessageRead
+    @UserID INT,
+    @ReadID INT,
+    @MessageID INT
+AS
+BEGIN
+    IF EXISTS (SELECT 1 FROM MessageReads WHERE UserID = @UserID AND ReadID = @ReadID)
+    BEGIN
+        -- Nếu bản ghi đã tồn tại, thực hiện cập nhật
+        UPDATE MessageReads
+        SET MessageID = @MessageID
+        WHERE UserID = @userId and ReadID = @ReadID
+    END
+    ELSE
+    BEGIN
+        -- Nếu bản ghi chưa tồn tại, thực hiện chèn mới
+        INSERT INTO MessageReads (UserID, ReadID, MessageID)
+        VALUES (@UserID, @ReadID, @MessageID);
+    END
+END;
+GO
+
+
 
 -- Trigger for Car Parts
 CREATE TRIGGER InsertCar
@@ -170,7 +206,7 @@ BEGIN
     ('Rim', 8,'/resource/CarPark_image/Rim.webp'),
     ('Wheel Hub', 8,'/resource/CarPark_image/WheelHub.webp')
 
-   INSERT INTO CarPart (CarID, PartID, PartName, CarSystemID, [Image])
+   INSERT INTO [CarPart](CarID, PartID, PartName, CarSystemID, [Image])
     SELECT 
         i.CarID,
         ROW_NUMBER() OVER (PARTITION BY i.CarID ORDER BY d.CarSystemID) AS PartID,
@@ -249,8 +285,8 @@ GO
 
 -- Sample data
 
-INSERT INTO [User](Username, Password, FirstName, LastName, Email, Phone, DOB)
-VALUES ('doanhieu18', 'doanhieu18@', 'Hieu', 'Doan', 'doanhieu180204@gmail.com', '0325413488', '2004-02-18');
+INSERT INTO [User](Username, Password, FirstName, LastName, Email, Phone, DOB, Role)
+VALUES ('doanhieu18', 'doanhieu18@', 'Hieu', 'Doan', 'doanhieu180204@gmail.com', '0325413488', '2004-02-18', 'Admin');
 
 GO
 DECLARE @counter INT = 1
@@ -269,10 +305,6 @@ BEGIN
     )
     SET @counter = @counter + 1
 END;
-GO
-
-INSERT INTO [User](Username, Password, FirstName, LastName, Email, Phone, DOB, LastActivity) VALUES 
-('q8edh12hi', '1234', 'qwe8dyrwfhief', 'qwgufcqbw', 'qwficqwfc', '0123456789', '01/01/2000', '01/01/2010');
 GO
 
 INSERT INTO [ServiceType](ServiceTypeName, ServiceTypeDescription) VALUES 
@@ -296,7 +328,7 @@ INSERT INTO [ServiceType](ServiceTypeName, ServiceTypeDescription) VALUES
 ('Cleaning and Maintenance', 'Your car is more than just a mode of transportation; it''s an extension of your personality and a reflection of your style.<br><br>At AUTO247, we understand the importance of keeping your car looking and feeling its best, and that''s why we offer a comprehensive range of Cleaning and Maintenance services designed to help you maintain your car''s appearance and preserve its value.');
 GO
 
-INSERT INTO Service (ServiceTypeID, PartID, ServiceName, AffectInventory, ServiceDescription, ServicePrice) VALUES
+INSERT INTO [Service](ServiceTypeID, PartID, ServiceName, AffectInventory, ServiceDescription, ServicePrice) VALUES
 (1, 24, 'Tire Replacement', 1, 'Installing new tires', 3600000),
 (1, 24, 'Tire Rotation', 0, 'Rotating tires for even wear', 960000),
 (1, 24, 'Run-Flat Tire Repair', 0, 'Fixing damage on run-flat tires', 1200000),
@@ -421,7 +453,7 @@ INSERT INTO Service (ServiceTypeID, PartID, ServiceName, AffectInventory, Servic
 (8, 17, 'Throttle Body Cleaning', 0, 'Cleaning throttle body for smooth air intake', 800000);
 GO
 
-INSERT INTO CarSystem(CarSystemName) VALUES 
+INSERT INTO [CarSystem](CarSystemName) VALUES 
 ('Engine System'),
 ('Braking System'),
 ('Electrical System'),
@@ -432,13 +464,13 @@ INSERT INTO CarSystem(CarSystemName) VALUES
 ('Wheel System');
 GO
 
-INSERT INTO Car(UserID, CarName, Brand, RegistrationNumber, [Year]) VALUES 
-(1, 'Car 1', 'Toyota', '123456', 2010),
-(1, 'Car 2', 'Honda', '654321', 2015),
-(1, 'Car 3', 'Ford', '987654', 2018),
-(1, 'Car 4', 'BMW', '125478', 2020);
-GO
+INSERT INTO [Car](UserID, CarName, Brand, RegistrationNumber, [Year], CarImage, [Status]) VALUES 
+(1, 'Car 1', 'Toyota', '123456', 2010, 'https://vov.vn/sites/default/files/styles/large/public/2022-08/289624929_453408263095020_5408162982360432160_n.png', 'Active'),
+(1, 'Car 2', 'Honda', '654321', 2015, 'https://akm-img-a-in.tosshub.com/indiatoday/styles/medium_crop_simple/public/2024-11/1_4.jpg', 'Maintaining'),
+(1, 'Car 3', 'Ford', '987654', 2018, 'https://images.dealer.com/autodata/us/640/2020/USD00FOS372A0/USC80FOS371A01300.jpg', 'Active'),
+(1, 'Car 4', 'BMW', '125478', 2020, '', 'Active');
 
+<<<<<<< HEAD
 INSERT INTO Inventory (ServiceID, AccessoryName, Quantity, UnitPrice, Description)
 VALUES
 (1, 'Tire Set', 4, 1800000, 'Replace with new tires'),
@@ -485,6 +517,36 @@ VALUES
 (106, 'Fuel Pump', 1, 1800000, 'Replace fuel pump'),
 (108, 'Fuel Filter', 1, 600000, 'Replace fuel filter'),
 (114, 'High Performance Fuel Injectors', 4, 375000, 'Upgrade to high-performance fuel injectors');
+=======
+
+INSERT INTO [Inventory](PartName, CarSystemID, [Description], Quantity, UnitPrice) VALUES 
+('Engine Oil', 1, 'Engine oil for lubrication and cooling.', 100, 50000),
+('Spark Plug', 1, 'Spark plugs for ignition.', 50, 20000),
+('Injector', 1, 'Fuel injectors for fuel delivery.', 30, 30000),
+('Cooling System', 1, 'Cooling system components.', 20, 40000),
+('Brake Pad', 2, 'Brake pads for stopping power.', 40, 60000),
+('Rotor', 2, 'Brake rotors for braking force.', 30, 80000),
+('Fluid', 2, 'Brake fluid for hydraulic system.', 50, 10000),
+('Bulb', 3, 'Light bulbs for illumination.', 60, 5000),
+('Fuse', 3, 'Fuses for electrical protection.', 40, 1000),
+('Electric System', 3, 'Electrical system components.', 30, 20000),
+('Wiring', 3, 'Wiring harness for electrical connections.', 20, 30000),
+('Gas', 4, 'AC gas for cooling.', 50, 20000),
+('Condenser', 4, 'AC condenser for heat exchange.', 30, 40000),
+('Filter', 4, 'AC filters for air quality.', 40, 10000),
+('Pump', 5, 'Fuel pump for fuel delivery.', 30, 30000),
+('Filter', 5, 'Fuel filters for fuel quality.', 40, 20000),
+('Injection', 5, 'Fuel injectors for fuel delivery.', 20, 40000),
+('Charging', 6, 'Battery charging service.', 50, 10000),
+('Terminal', 6, 'Battery terminals for electrical connections.', 40, 5000),
+('Shock', 7, 'Shock absorbers for suspension.', 30, 60000),
+('Control Arm', 7, 'Control arms for suspension.', 20, 80000),
+('Tie Rod', 7, 'Tie rods for steering.', 40, 10000),
+('Suspension', 7, 'Suspension components.', 50, 20000),
+('Tire', 8, 'Tires for wheel system.', 100, 500000),
+('Rim', 8, 'Rims for wheel system.', 50, 800000),
+('Wheel Hub', 8, 'Wheel hubs for wheel system.', 30, 100000);
+>>>>>>> 12c2811fac17a1b65e4812e7155dc32d62344a1d
 GO
 
 INSERT INTO [Order] (UserID, CarID, PartID, ServiceID, QuantityUsed)

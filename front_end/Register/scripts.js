@@ -243,7 +243,7 @@ async function checkSubmit() {
     if (!(firstName && lastName && email && phone && username && password && repassword)) {
         return;
     } else {
-        response = await fetch('http://localhost:3000/register', {
+        await fetch('http://localhost:3000/register', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
