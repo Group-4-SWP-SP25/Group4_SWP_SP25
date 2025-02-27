@@ -56,6 +56,18 @@ async function getCarList() {
 
         carListDiv.innerHTML = carListItems;
     } catch (err) {
+        let carListItems = `
+                            <div class="car" style="grid-column: 2;">
+                                <img 
+                                    src="car_not_found.jpg" 
+                                    alt="car_not_found" />
+                                <div class="car-overlay">
+                                    <h2 style="margin: 0 1%">This user has not added any cars to the system yet.</h2>
+                                </div>
+                            </div>
+                            `;
+        carListDiv.innerHTML = carListItems;
+
         console.log(err);
     }
 }
