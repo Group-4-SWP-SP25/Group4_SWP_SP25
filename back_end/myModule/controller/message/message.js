@@ -1,4 +1,3 @@
-const e = require("express");
 const sql = require("mssql");
 
 // update read status
@@ -49,7 +48,7 @@ const SendMessage = async (req, res) => {
 // get message 
 const GetMessage = async (req, res) => {
     // get data from request
-    const { ReceiverID, firstIndex, count } = req.body;
+    const { ReceiverID, firstIndex, count, isRead } = req.body;
     const SenderID = req.user.id;
     try {
         // get the connection pool
@@ -69,7 +68,7 @@ const GetMessage = async (req, res) => {
             .input("count", sql.Int, count)
             .query(query);
 
-        if (firstIndex == 0 && result.recordset[0] != null)
+        if (firstIndex == 0 && result.recordset[0] != null && isRead)
             ReadMessage(SenderID, ReceiverID, result.recordset[0].MessageID)
         res.status(200).json({ result: result.recordset });
     } catch (error) {
