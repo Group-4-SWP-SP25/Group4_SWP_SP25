@@ -1,5 +1,5 @@
 const sql = require('mssql');
-const getServiceDetailByName = async (req, res) => {
+const getServiceTypeDetailByName = async (req, res) => {
     try {
         const { serviceTypeName } = req.body;
 
@@ -25,4 +25,4 @@ const getServiceDetailByName = async (req, res) => {
     }
 };
 
-module.exports = getServiceDetailByName;
+module.exports = getServiceTypeDetailByName;
