@@ -6,10 +6,10 @@ app.use(express.json());
 app.use(
   cors({
     origin: [
-      /http:\/\/127\.0\.0\.1:300\d/,
-      /http:\/\/localhost:300\d/,
-      /http:\/\/127\.0\.0\.1:500\d/,
-      /http:\/\/localhost:500\d/,
+      `http://127.0.0.1:3000`,
+      `http://localhost:3000`,
+      `http://127.0.0.1:5500`,
+      `http://localhost:5500`,
     ], // Chỉ định origin được phép truy cập
     credentials: true, // Cho phép gửi cookie hoặc session
   })
@@ -101,7 +101,6 @@ app.post("/Message/CheckMessage", authenticateJWT, CheckMessage);
 app.post("/getPassword", getPassword);
 app.post("/changePassword", changePassword);
 app.post("/checkAccount", checkAccount);
-app.post("/checkUserName", checkUserName);
 app.post("/getUserInfo", authenticateJWT, GetUserInfo);
 app.post("/resetPassword", resetPassword);
 app.post("/verification", verification);
