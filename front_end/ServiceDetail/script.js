@@ -1,16 +1,14 @@
 const urlParams = new URLSearchParams(window.location.search);
-const service = urlParams.get('serviceTypeName');
+const serviceTypes = urlParams.get('serviceTypeName');
 
-const infoDiv = document.querySelector('.info');
-const detailDiv = document.querySelector('.detail');
 const detailTable = document.querySelector('.detail-table');
 
-async function getServiceDetailByName() {
-    const response = await fetch('http://localhost:3000/getServiceDetailByName', {
+async function getServiceTypeDetailByName() {
+    const response = await fetch('http://localhost:3000/getServiceTypeDetailByName', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-            serviceTypeName: service
+            serviceTypeName: serviceTypes
         })
     });
     const result = await response.json();
@@ -18,26 +16,22 @@ async function getServiceDetailByName() {
     document.querySelector('.info-name').innerHTML = result[0].ServiceTypeName + ' Service';
     document.querySelector('.info-desc').innerHTML = result[0].ServiceTypeDescription;
 
+    let typeDetails = '';
     for (const key in result) {
         const item = result[key];
 
-        const detailItemRow = document.createElement('tr');
+        const typeDetail = `
+                        <tr>
+                            <td>${item.ServiceName}</td>
+                            <td>${item.ServiceDescription}</td>
+                            <td style="text-align: center">${item.ServicePrice} ₫</td>
+                        </tr>
+                        `;
 
-        const detailServiceName = document.createElement('td');
-        detailServiceName.textContent = item.ServiceName;
-
-        const detailServiceDescription = document.createElement('td');
-        detailServiceDescription.textContent = item.ServiceDescription;
-
-        const detailServicePrice = document.createElement('td');
-        detailServicePrice.textContent = item.ServicePrice + ' ₫';
-        detailServicePrice.style.textAlign = 'center';
-
-        detailItemRow.appendChild(detailServiceName);
-        detailItemRow.appendChild(detailServiceDescription);
-        detailItemRow.appendChild(detailServicePrice);
-
-        detailTable.appendChild(detailItemRow);
+        typeDetails += typeDetail;
     }
+
+    detailTable.innerHTML = typeDetails;
 }
-getServiceDetailByName();
+
+getServiceTypeDetailByName();
