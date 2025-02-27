@@ -26,7 +26,7 @@ async function login() {
       case 200:
         const result = await response.json();
         localStorage.setItem('token', result.token);
-        window.location.href = window.location.href = 'http://127.0.0.1:5500/front_end/HomePage/HomePage.html'
+        window.location.href = window.location.href = '/front_end/HomePage/HomePage.html'
         break;
       case 404:
         alert('Account not found');

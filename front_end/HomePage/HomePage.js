@@ -61,7 +61,7 @@ const checkRead = () => {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${localStorage.getItem("token")}`,
             },
-            body: JSON.stringify({ ReceiverID: ReceiverID, firstIndex: 0, count: 1 }),
+            body: JSON.stringify({ ReceiverID: ReceiverID, firstIndex: 0, count: 1, isRead: true }),
         })
     }
 }
@@ -176,7 +176,7 @@ async function loadMessages() {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${localStorage.getItem("token")}`,
         },
-        body: JSON.stringify({ ReceiverID: ReceiverID, firstIndex: firstIndex, count: count }),
+        body: JSON.stringify({ ReceiverID: ReceiverID, firstIndex: firstIndex, count: count, isRead: false }),
     })
         .then((response) => { return response.json(); })
         .then((data) => {

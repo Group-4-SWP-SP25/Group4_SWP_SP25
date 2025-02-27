@@ -18,6 +18,10 @@
     ],
     "testPathIgnorePatterns": [
       "/node_modules/"
+    ],
+    "moduleDirectories": [
+      "node_modules",
+      "./back_end/node_modules"
     ]
   },
   "scripts": {
