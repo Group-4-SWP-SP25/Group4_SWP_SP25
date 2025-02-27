@@ -78,24 +78,39 @@ async function getUserProfile() {
         $(this).addClass("hidden");
     });
 
-    // modify
     document.querySelector(".btn-save").addEventListener("click", async function () {
       try {
-          
           const user = await $.ajax({
-            url: "http://localhost:3000/getUserInfo",
-            method: "POST",
-            contentType: "application/json",
-            headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+              url: "http://localhost:3000/getUserInfo",
+              method: "POST",
+              contentType: "application/json",
+              headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
           });
   
+          let firstNameInput = document.querySelector("input[placeholder='First name']");
+          let lastNameInput = document.querySelector("input[placeholder='Last name']");
+          let phoneInput = document.querySelector("input[placeholder='Enter phone']");
+          let emailInput = document.querySelector("input[placeholder='email']");
+          let addressInput = document.querySelector("input[placeholder='Somewhere']");
+          
+        
+        let first_name = firstNameInput.value.trim();
+          let last_name = lastNameInput.value.trim();
+          let phone = phoneInput.value.trim();
+          let email = emailInput.value.trim();
+          let address = addressInput.value.trim();
+  
+          const regexEmail = /^\w+@\w+(\.\w+)+$/;
+          const regexPhone = /^0\d{9}$/;
+          
+       
           let userData = {
               id: user.id,
-              first_name: document.querySelector("input[placeholder='First name']").value,
-              last_name: document.querySelector("input[placeholder='Last name']").value,
-              phone: document.querySelector("input[placeholder='Enter phone']").value,
-              email: document.querySelector("input[placeholder='email']").value,
-              address: document.querySelector("input[placeholder='Somewhere']").value
+              first_name: first_name,
+              last_name: last_name,
+              phone: phone,
+              email: email,
+              address: address
           };
   
           let response = await fetch("http://localhost:3000/updateUserProfile", {
@@ -108,9 +123,76 @@ async function getUserProfile() {
   
           if (!response.ok) throw new Error("Error when saving data!");
   
-          document.querySelector(".btn-modify").classList.remove("hidden");  
+          document.querySelector(".btn-modify").classList.remove("hidden");
       } catch (error) {
-          alert(error.message); 
+          alert(error.message);
       }
   });
-  
+
+
+  function checkName(nameTag, errorTag) {
+    if (nameTag.value.trim().length === 0) {
+        errorStyle(nameTag);
+        contentError(errorTag, 'This box cannot be empty!');
+        return false;
+    } else {
+      contentError(errorTag, '');
+    }
+    return true;
+}
+
+
+async function checkEmail(emailTag, errorTag) {
+  if (emailTag.value.trim().length === 0) {
+      errorStyle(emailTag);
+      contentError(errorTag, 'Email cannot be empty!');
+      return false;
+  } else {
+      if (!regexEmail.test(emailTag.value.trim())) {
+          errorStyle(emailTag);
+          contentError(errorTag, 'Invalid email!');
+          return false;
+      } else {
+          const checkEmail = await fetch('http://localhost:3000/checkAccount', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ accountType: 'Email', account: emailTag.value })
+          });
+          if (checkEmail.status === 404) {
+              errorStyle(emailTag);
+              contentError(errorTag, 'Email is already taken!');
+              return false;
+          } else {
+              successStyle(emailTag);
+              contentError(errorTag, '');
+          }
+      }
+      return true;
+  }
+}
+
+
+async function checkPhone(phoneTag, errorTag) {
+  if (phoneTag.value.trim().length > 0) {
+      if (!regexPhone.test(phoneTag.value.trim())) {
+          errorStyle(phoneTag);
+          contentError(errorTag, 'Invalid phone number!');
+          return false;
+      } else {
+          const checkPhone = await fetch('http://localhost:3000/checkAccount', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ accountType: 'Phone', account: phoneTag.value })
+          });
+          if (checkPhone.status === 404) {
+              errorStyle(phoneTag);
+              contentError(errorTag, 'Phone number is already taken!');
+              return false;
+          } else {
+              successStyle(phoneTag);
+              contentError(errorTag, '');
+          }
+      }
+  }
+  return true;
+}
