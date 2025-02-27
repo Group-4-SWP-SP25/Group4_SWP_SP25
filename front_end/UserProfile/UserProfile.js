@@ -89,15 +89,64 @@ async function getUserProfile() {
   
           let firstNameInput = document.querySelector("input[placeholder='First name']");
           let lastNameInput = document.querySelector("input[placeholder='Last name']");
+
           let phoneInput = document.querySelector("input[placeholder='Enter phone']");
-          let emailInput = document.querySelector("input[placeholder='email']");
+              async function validatePhone() {
+              let isPhoneValid = await checkPhone(phoneInput);
+              if (isPhoneValid) {
+                  let phone = phoneInput.value.trim();
+                  console.log("Valid phone:", phone);
+                  return phone; // Trả về số điện thoại nếu hợp lệ
+              }
+              return null; // Trả về null nếu không hợp lệ
+          }
+          
+             let emailInput = document.querySelector("input[placeholder='email']");
+
+            async function validateEmail() {
+               let isEmailValid = await checkEmail(emailInput);
+                 if (isEmailValid) {
+                  let email = emailInput.value.trim();
+                  console.log("Valid email:", email);
+                   return email; 
+    return null; 
+}
+
           let addressInput = document.querySelector("input[placeholder='Somewhere']");
           
         
-        let first_name = firstNameInput.value.trim();
-          let last_name = lastNameInput.value.trim();
-          let phone = phoneInput.value.trim();
-          let email = emailInput.value.trim();
+          let first_name = checkName(firstNameInput, "First name");
+          let last_name = checkName(lastNameInput, "Last name");
+        
+        // save name
+        document.querySelector(".btn-save").addEventListener("click", function () {
+          let isFirstNameValid = checkName(firstNameInput, "First Name");
+          let isLastNameValid = checkName(lastNameInput, "Last Name");
+      
+          if (!isFirstNameValid || !isLastNameValid) {
+              return; 
+          }
+      
+          alert("Data is valid! Proceeding to save...");
+      });
+      // save email
+          document.querySelector(".btn-save").addEventListener("click", async function () {
+            let isEmailValid = await checkEmail(emailInput);
+        
+            if (!isEmailValid) {
+                return; 
+            }
+        
+            alert("Email is valid! Proceeding to save...");
+        });
+        // save phone
+        document.querySelector(".btn-save").addEventListener("click", async function () {
+          let phone = await validatePhone();
+          if (!phone) return; // Dừng nếu phone không hợp lệ
+      
+          alert("Phone number is valid! Proceeding to save...");
+      });
+      
           let address = addressInput.value.trim();
   
           const regexEmail = /^\w+@\w+(\.\w+)+$/;
@@ -130,69 +179,92 @@ async function getUserProfile() {
   });
 
 
-  function checkName(nameTag, errorTag) {
-    if (nameTag.value.trim().length === 0) {
-        errorStyle(nameTag);
-        contentError(errorTag, 'This box cannot be empty!');
-        return false;
-    } else {
-      contentError(errorTag, '');
-    }
-    return true;
-}
 
 
-async function checkEmail(emailTag, errorTag) {
-  if (emailTag.value.trim().length === 0) {
-      errorStyle(emailTag);
-      contentError(errorTag, 'Email cannot be empty!');
+  const regexEmail = /^\w+@\w+(\.\w+)+$/;
+  const regexPhone = /^0\d{9}$/;
+  
+
+ function checkName(nameTag, fieldName) {
+  let nameValue = nameTag.value.trim();
+  
+  if (nameValue.length === 0) {
+      alert(fieldName + " cannot be empty!");
+      nameTag.focus(); 
       return false;
-  } else {
-      if (!regexEmail.test(emailTag.value.trim())) {
-          errorStyle(emailTag);
-          contentError(errorTag, 'Invalid email!');
-          return false;
-      } else {
-          const checkEmail = await fetch('http://localhost:3000/checkAccount', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ accountType: 'Email', account: emailTag.value })
-          });
-          if (checkEmail.status === 404) {
-              errorStyle(emailTag);
-              contentError(errorTag, 'Email is already taken!');
-              return false;
-          } else {
-              successStyle(emailTag);
-              contentError(errorTag, '');
-          }
-      }
-      return true;
-  }
-}
-
-
-async function checkPhone(phoneTag, errorTag) {
-  if (phoneTag.value.trim().length > 0) {
-      if (!regexPhone.test(phoneTag.value.trim())) {
-          errorStyle(phoneTag);
-          contentError(errorTag, 'Invalid phone number!');
-          return false;
-      } else {
-          const checkPhone = await fetch('http://localhost:3000/checkAccount', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ accountType: 'Phone', account: phoneTag.value })
-          });
-          if (checkPhone.status === 404) {
-              errorStyle(phoneTag);
-              contentError(errorTag, 'Phone number is already taken!');
-              return false;
-          } else {
-              successStyle(phoneTag);
-              contentError(errorTag, '');
-          }
-      }
   }
   return true;
 }
+
+
+
+async function checkEmail(emailTag) {
+  let email = emailTag.value.trim();
+  if (email.length === 0) {
+      alert("Email cannot be empty!");
+      emailTag.focus();
+      return false;
+  }
+ if (!regexEmail.test(email)) {
+      alert("Invalid email format!");
+      emailTag.focus();
+      return false;
+  }
+
+  try {
+      let response = await fetch("http://localhost:3000/checkAccount", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ accountType: "Email", account: email })
+      });
+
+      if (response.status === 404) {
+          alert("Email is already taken!");
+          emailTag.focus();
+          return false;
+      }
+  } catch (error) {
+      alert("Error check email. Please try again !");
+      return false;
+  }
+
+  return true;
+}
+
+
+
+async function checkPhone(phoneTag) {
+  let phone = phoneTag.value.trim();
+  if (phone.length === 0) {
+      alert("Phone number cannot be empty!");
+      phoneTag.focus();
+      return false;
+  }
+
+    if (!regexPhone.test(phone)) {
+      alert("Invalid phone number!");
+      phoneTag.focus();
+      return false;
+  }
+
+  try {
+
+      let response = await fetch("http://localhost:3000/checkAccount", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ accountType: "Phone", account: phone })
+      });
+
+      if (response.status === 404) {
+          alert("Phone number is already taken!");
+          phoneTag.focus();
+          return false;
+      }
+  } catch (error) {
+      alert("Error check phone number. Please try again !");
+      return false;
+  }
+
+  return true;
+}
+
