@@ -9,6 +9,7 @@ class User {
     this.address = userData.Address;
     this.role = userData.Role;
     this.phone = userData.Phone;
+    this.dob = userData.DOB;
   }
   userInfo() {
     let data = {
@@ -21,6 +22,7 @@ class User {
       address: this.address,
       role: this.role,
       phone: this.phone,
+      dob: this.dob,
     };
     return data;
   }
