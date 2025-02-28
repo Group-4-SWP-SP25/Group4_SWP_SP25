@@ -63,7 +63,7 @@ async function loadMessages() {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${localStorage.getItem("token")}`,
         },
-        body: JSON.stringify({ ReceiverID: ReceiverID, firstIndex: firstIndex, count: count }),
+        body: JSON.stringify({ ReceiverID: ReceiverID, firstIndex: firstIndex, count: count, isRead: true }),
     })
         .then((response) => { return response.json(); })
         .then((data) => {
@@ -308,7 +308,7 @@ const check = async (id) => {
                             "Content-Type": "application/json",
                             "Authorization": `Bearer ${localStorage.getItem("token")}`,
                         },
-                        body: JSON.stringify({ ReceiverID: id, firstIndex: 0, count: 1 }),
+                        body: JSON.stringify({ ReceiverID: id, firstIndex: 0, count: 1, isRead: true }),
                     })
                     MoveUserToTop(element.SenderID, element.Content)
                 }

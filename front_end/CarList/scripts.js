@@ -1,91 +1,75 @@
 const urlParams = new URLSearchParams(window.location.search);
 
-const carListDiv = document.querySelector(".car-list");
+const carListDiv = document.querySelector('.car-list');
 
 function customFormatDate(dateTimeString) {
-  const date = new Date(dateTimeString);
-  const options = {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-  };
-  return date.toLocaleDateString("en-GB", options).replace(/ /g, "/");
+    const date = new Date(dateTimeString);
+    const options = {
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric'
+    };
+    return date.toLocaleDateString('en-GB', options).replace(/ /g, '/');
 }
 
 async function getCarList() {
-  try {
-    const user = await $.ajax({
-      url: "http://localhost:3000/getUserInfo",
-      method: "POST",
-      contentType: "application/json",
-      headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-    });
+    try {
+        const user = await $.ajax({
+            url: 'http://localhost:3000/getUserInfo',
+            method: 'POST',
+            contentType: 'application/json',
+            headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+        });
 
-    const carList = await $.ajax({
-      url: "http://localhost:3000/carList",
-      method: "POST",
-      contentType: "application/json",
-      data: JSON.stringify({ userID: user.id }),
-    });
-    // console.log(carList);
+        const carList = await $.ajax({
+            url: 'http://localhost:3000/carList',
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({ userID: user.id })
+        });
 
-    carList.forEach((car) => {
-      // car class
-      const carDiv = document.createElement("div");
-      carDiv.classList.add("car");
+        let carListItems = '';
+        carList.forEach((car) => {
+            const carListItem = `
+                                <div class="car">
+                                    <img 
+                                        src="${car.CarImage ? car.CarImage : 'car_not_found.jpg'}" 
+                                        alt="car${car.CarID}" />
+                                    <div class="car-overlay">
+                                        <h2>Name: ${car.CarName}</h2>
+                                        <h3>Brand: ${car.Brand}</h3>
+                                        <h3>Registration Number: ${car.RegistrationNumber}</h3>
+                                        <h3>Purchase year: ${car.Year}</h3>
+                                        <h3>Maintainance Reg. Date: ${customFormatDate(car.MaintenanceResgistrationDate)}</h3>
+                                        <br />
+                                        <a
+                                            href="/front_end/CarDetail/CarDetail.html?carID=${car.CarID}"
+                                            class="button-detail">
+                                            <h5>Choose this car</h5>
+                                        </a>
+                                    </div>
+                                </div>
+                                `;
 
-      // background image
-      const carImg = document.createElement("img");
-      if (!car.CarImage) {
-        carImg.src = "car_not_found.jpg";
-      } else {
-        carImg.src = car.CarImage;
-      }
+            carListItems += carListItem;
+        });
 
-      // overlay
-      const carOverlay = document.createElement("div");
-      carOverlay.classList.add("car-overlay");
+        carListDiv.innerHTML = carListItems;
+    } catch (err) {
+        let carListItems = `
+                            <div class="car" style="grid-column: 2;">
+                                <img 
+                                    src="car_not_found.jpg" 
+                                    alt="car_not_found" />
+                                <div class="car-overlay">
+                                    <h2 style="margin: 0 1%">This user has not added any cars to the system yet.</h2>
+                                </div>
+                            </div>
+                            `;
+        carListDiv.innerHTML = carListItems;
 
-      const carName = document.createElement("h2"); // car name
-      carName.textContent = `Name: ${car.CarName}`;
-
-      const carBrand = document.createElement("h3"); // car brand
-      carBrand.textContent = `Brand: ${car.Brand}`;
-
-      const carRegNum = document.createElement("h3"); // car registration number
-      carRegNum.textContent = `Registration Number: ${car.RegistrationNumber}`;
-
-      const carYear = document.createElement("h3"); // car year
-      carYear.textContent = `Purchase date: ${car.Year}`;
-
-      const carMaintRegDate = document.createElement("h3"); // car maintenance registration date
-      carMaintRegDate.textContent = `Maintainance Reg. Date: ${customFormatDate(
-        car.MaintenanceResgistrationDate
-      )}`;
-
-      const buttonChoose = document.createElement("a"); // choose button
-      buttonChoose.href = `/front_end/CarDetail/CarDetail.html?carID=${car.CarID}`;
-      buttonChoose.classList.add("button-detail");
-      const buttonChooseLabel = document.createElement("h5");
-      buttonChooseLabel.textContent = "Choose this car";
-      buttonChoose.appendChild(buttonChooseLabel);
-
-      carOverlay.appendChild(carName);
-      carOverlay.appendChild(carBrand);
-      carOverlay.appendChild(carRegNum);
-      carOverlay.appendChild(carYear);
-      carOverlay.appendChild(carMaintRegDate);
-      carOverlay.appendChild(document.createElement("br"));
-      carOverlay.appendChild(buttonChoose);
-
-      carDiv.appendChild(carImg);
-      carDiv.appendChild(carOverlay);
-
-      carListDiv.appendChild(carDiv);
-    });
-  } catch (err) {
-    console.log(err);
-  }
+        console.log(err);
+    }
 }
 
 getCarList();

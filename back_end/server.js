@@ -6,12 +6,10 @@ app.use(express.json());
 app.use(
   cors({
     origin: [
-      "http://127.0.0.1:5500",
-      "http://localhost:5500",
-      "http://127.0.0.1:5501",
-      "http://localhost:5501",
-      /http:\/\/127\.0\.0\.1:300\d/,
-      /http:\/\/localhost:300\d/,
+      `http://127.0.0.1:3000`,
+      `http://localhost:3000`,
+      `http://127.0.0.1:5500`,
+      `http://localhost:5500`,
     ], // Chỉ định origin được phép truy cập
     credentials: true, // Cho phép gửi cookie hoặc session
   })
@@ -45,11 +43,15 @@ const {
   verification,
 } = require("./myModule/controller/resetpassword.js");
 const { AuthGoogle, Auth } = require("./myModule/controller/Login.js");
+const getUserProfile = require("./myModule/database/user/getUserProfile.js");
+const userInfo = require("./myModule/controller/user/userInfo.js");
+const updateUserProfile = require("./myModule/controller/user/updateUserProfile.js");
 
 // service
 const serviceInfo = require("./myModule/controller/service/serviceInfo.js");
 const serviceListPerPart = require("./myModule/controller/service/listServicePerPart.js");
-const getServiceDetailByName = require("./myModule/database/service/getServiceDetailByName.js");
+const getServiceTypeDetailByName = require("./myModule/database/service/getServiceTypeDetailByName.js");
+const getServiceTypeList = require("./myModule/database/service/getServiceTypeList.js")
 
 // car
 const carInfo = require("./myModule/controller/car/carInfo.js");
@@ -105,18 +107,21 @@ app.post("/Message/CheckMessage", authenticateJWT, CheckMessage);
 app.post("/getPassword", getPassword);
 app.post("/changePassword", changePassword);
 app.post("/checkAccount", checkAccount);
-app.post("/checkUserName", checkUserName);
 app.post("/getUserInfo", authenticateJWT, GetUserInfo);
 app.post("/resetPassword", resetPassword);
 app.post("/verification", verification);
 app.post("/register", register);
 app.post("/auth/google/login", AuthGoogle);
 app.post("/auth/login", Auth);
+app.post("/getUserProfile", getUserProfile);
+app.post("/userInfo", userInfo);
+app.post("/updateUserProfile", updateUserProfile);
 
 // service
 app.post("/serviceInfo", serviceInfo);
 app.post("/serviceListPerPart", serviceListPerPart);
-app.post("/getServiceDetailByName", getServiceDetailByName);
+app.post("/getServiceTypeDetailByName", getServiceTypeDetailByName);
+app.post("/getServiceTypeList", getServiceTypeList)
 
 // car
 app.post("/carInfo", carInfo);

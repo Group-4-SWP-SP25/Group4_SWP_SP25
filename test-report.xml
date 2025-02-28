@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testExecutions version="1">
+  <file path="C:\Users\doanh\OneDrive\Documents\SE\_2025_SPRING\SWP\Group_Project\Project\__tests__\checkUserName.test.js">
+    <testCase name="checkUserName should return user data if user exists" duration="40">
+      <failure message="Error: expect(received).toEqual(expected) // deep equality"><![CDATA[Error: expect(received).toEqual(expected) // deep equality
+
+Expected: {"Email": "doanhieu180204@gmail.com", "Phone": "0325413488", "UserName": "doanhieu18"}
+Received: undefined
+    at Object.toEqual (C:\Users\doanh\OneDrive\Documents\SE\_2025_SPRING\SWP\Group_Project\Project\__tests__\checkUserName.test.js:37:22)
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)]]></failure>
+    </testCase>
+    <testCase name="checkUserName should return undefined if user does not exist" duration="1">
+      <failure message="TypeError: Cannot read properties of undefined (reading &apos;request&apos;)"><![CDATA[TypeError: Cannot read properties of undefined (reading 'request')
+    at Object.request (C:\Users\doanh\OneDrive\Documents\SE\_2025_SPRING\SWP\Group_Project\Project\__tests__\checkUserName.test.js:43:18)
+    at Promise.then.completed (C:\Users\doanh\OneDrive\Documents\SE\_2025_SPRING\SWP\Group_Project\Project\node_modules\jest-circus\build\utils.js:298:28)
+    at new Promise (<anonymous>)
+    at callAsyncCircusFn (C:\Users\doanh\OneDrive\Documents\SE\_2025_SPRING\SWP\Group_Project\Project\node_modules\jest-circus\build\utils.js:231:10)
+    at _callCircusTest (C:\Users\doanh\OneDrive\Documents\SE\_2025_SPRING\SWP\Group_Project\Project\node_modules\jest-circus\build\run.js:316:40)
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at _runTest (C:\Users\doanh\OneDrive\Documents\SE\_2025_SPRING\SWP\Group_Project\Project\node_modules\jest-circus\build\run.js:252:3)
+    at _runTestsForDescribeBlock (C:\Users\doanh\OneDrive\Documents\SE\_2025_SPRING\SWP\Group_Project\Project\node_modules\jest-circus\build\run.js:126:9)
+    at _runTestsForDescribeBlock (C:\Users\doanh\OneDrive\Documents\SE\_2025_SPRING\SWP\Group_Project\Project\node_modules\jest-circus\build\run.js:121:9)
+    at run (C:\Users\doanh\OneDrive\Documents\SE\_2025_SPRING\SWP\Group_Project\Project\node_modules\jest-circus\build\run.js:71:3)
+    at runAndTransformResultsToJestFormat (C:\Users\doanh\OneDrive\Documents\SE\_2025_SPRING\SWP\Group_Project\Project\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapterInit.js:122:21)
+    at jestAdapter (C:\Users\doanh\OneDrive\Documents\SE\_2025_SPRING\SWP\Group_Project\Project\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapter.js:79:19)
+    at runTestInternal (C:\Users\doanh\OneDrive\Documents\SE\_2025_SPRING\SWP\Group_Project\Project\node_modules\jest-runner\build\runTest.js:367:16)
+    at runTest (C:\Users\doanh\OneDrive\Documents\SE\_2025_SPRING\SWP\Group_Project\Project\node_modules\jest-runner\build\runTest.js:444:34)]]></failure>
+    </testCase>
+    <testCase name="checkUserName should handle errors gracefully" duration="0">
+      <failure message="TypeError: Cannot read properties of undefined (reading &apos;request&apos;)"><![CDATA[TypeError: Cannot read properties of undefined (reading 'request')
+    at Object.request (C:\Users\doanh\OneDrive\Documents\SE\_2025_SPRING\SWP\Group_Project\Project\__tests__\checkUserName.test.js:53:18)
+    at Promise.then.completed (C:\Users\doanh\OneDrive\Documents\SE\_2025_SPRING\SWP\Group_Project\Project\node_modules\jest-circus\build\utils.js:298:28)
+    at new Promise (<anonymous>)
+    at callAsyncCircusFn (C:\Users\doanh\OneDrive\Documents\SE\_2025_SPRING\SWP\Group_Project\Project\node_modules\jest-circus\build\utils.js:231:10)
+    at _callCircusTest (C:\Users\doanh\OneDrive\Documents\SE\_2025_SPRING\SWP\Group_Project\Project\node_modules\jest-circus\build\run.js:316:40)
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at _runTest (C:\Users\doanh\OneDrive\Documents\SE\_2025_SPRING\SWP\Group_Project\Project\node_modules\jest-circus\build\run.js:252:3)
+    at _runTestsForDescribeBlock (C:\Users\doanh\OneDrive\Documents\SE\_2025_SPRING\SWP\Group_Project\Project\node_modules\jest-circus\build\run.js:126:9)
+    at _runTestsForDescribeBlock (C:\Users\doanh\OneDrive\Documents\SE\_2025_SPRING\SWP\Group_Project\Project\node_modules\jest-circus\build\run.js:121:9)
+    at run (C:\Users\doanh\OneDrive\Documents\SE\_2025_SPRING\SWP\Group_Project\Project\node_modules\jest-circus\build\run.js:71:3)
+    at runAndTransformResultsToJestFormat (C:\Users\doanh\OneDrive\Documents\SE\_2025_SPRING\SWP\Group_Project\Project\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapterInit.js:122:21)
+    at jestAdapter (C:\Users\doanh\OneDrive\Documents\SE\_2025_SPRING\SWP\Group_Project\Project\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapter.js:79:19)
+    at runTestInternal (C:\Users\doanh\OneDrive\Documents\SE\_2025_SPRING\SWP\Group_Project\Project\node_modules\jest-runner\build\runTest.js:367:16)
+    at runTest (C:\Users\doanh\OneDrive\Documents\SE\_2025_SPRING\SWP\Group_Project\Project\node_modules\jest-runner\build\runTest.js:444:34)]]></failure>
+    </testCase>
+    <testCase name="checkUserName should handle special characters in account name" duration="1">
+      <failure message="TypeError: Cannot read properties of undefined (reading &apos;request&apos;)"><![CDATA[TypeError: Cannot read properties of undefined (reading 'request')
+    at Object.request (C:\Users\doanh\OneDrive\Documents\SE\_2025_SPRING\SWP\Group_Project\Project\__tests__\checkUserName.test.js:63:18)
+    at Promise.then.completed (C:\Users\doanh\OneDrive\Documents\SE\_2025_SPRING\SWP\Group_Project\Project\node_modules\jest-circus\build\utils.js:298:28)
+    at new Promise (<anonymous>)
+    at callAsyncCircusFn (C:\Users\doanh\OneDrive\Documents\SE\_2025_SPRING\SWP\Group_Project\Project\node_modules\jest-circus\build\utils.js:231:10)
+    at _callCircusTest (C:\Users\doanh\OneDrive\Documents\SE\_2025_SPRING\SWP\Group_Project\Project\node_modules\jest-circus\build\run.js:316:40)
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at _runTest (C:\Users\doanh\OneDrive\Documents\SE\_2025_SPRING\SWP\Group_Project\Project\node_modules\jest-circus\build\run.js:252:3)
+    at _runTestsForDescribeBlock (C:\Users\doanh\OneDrive\Documents\SE\_2025_SPRING\SWP\Group_Project\Project\node_modules\jest-circus\build\run.js:126:9)
+    at _runTestsForDescribeBlock (C:\Users\doanh\OneDrive\Documents\SE\_2025_SPRING\SWP\Group_Project\Project\node_modules\jest-circus\build\run.js:121:9)
+    at run (C:\Users\doanh\OneDrive\Documents\SE\_2025_SPRING\SWP\Group_Project\Project\node_modules\jest-circus\build\run.js:71:3)
+    at runAndTransformResultsToJestFormat (C:\Users\doanh\OneDrive\Documents\SE\_2025_SPRING\SWP\Group_Project\Project\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapterInit.js:122:21)
+    at jestAdapter (C:\Users\doanh\OneDrive\Documents\SE\_2025_SPRING\SWP\Group_Project\Project\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapter.js:79:19)
+    at runTestInternal (C:\Users\doanh\OneDrive\Documents\SE\_2025_SPRING\SWP\Group_Project\Project\node_modules\jest-runner\build\runTest.js:367:16)
+    at runTest (C:\Users\doanh\OneDrive\Documents\SE\_2025_SPRING\SWP\Group_Project\Project\node_modules\jest-runner\build\runTest.js:444:34)]]></failure>
+    </testCase>
+  </file>
+</testExecutions>
