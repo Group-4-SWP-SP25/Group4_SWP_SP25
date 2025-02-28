@@ -10,13 +10,10 @@ app.use(
       `http://localhost:3000`,
       `http://127.0.0.1:5500`,
       `http://localhost:5500`,
-<<<<<<< HEAD
       `http://127.0.0.1:5501`,
       `http://localhost:5501`,
-=======
       /http:\/\/127\.0\.0\.1:300\d/, // please do not change
       /http:\/\/localhost:300\d/ // please do not change
->>>>>>> 1de9fe4bd90e3b6d3ac28c6f1c647c26685c5333
     ], // Chỉ định origin được phép truy cập
     credentials: true, // Cho phép gửi cookie hoặc session
   })
