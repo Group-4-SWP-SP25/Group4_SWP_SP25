@@ -1,4 +1,5 @@
 $(document).ready(function () {
+  let currentSystemID = 0;
   const urlParams = new URLSearchParams(window.location.search);
   const carID = parseInt(urlParams.get("carID"));
   async function getCarInfo() {
@@ -59,12 +60,54 @@ $(document).ready(function () {
 
     if (carPartList.data("visible")) {
       // Nếu đang hiển thị, slide từ phải sang trái để ẩn
-      carPartList
-        .children(".CarPart")
-        .animate({ left: "100%", opacity: 0 }, 500, function () {
-          carPartList.empty().hide().data("visible", false);
-        });
-      return;
+      if (currentSystemID === carSystemID) {
+        carPartList
+          .children(".CarPart")
+          .animate({ left: "100%", opacity: 0 }, 500, function () {
+            carPartList.empty().hide().data("visible", false);
+          });
+        return;
+      } else {
+        try {
+          const carParts = await $.ajax({
+            url: "http://localhost:3000/listCarPartBySystem",
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({ carID: carID, carSystemID: carSystemID }),
+          });
+
+          carPartList.empty().show().data("visible", true);
+
+          carParts.forEach((carPart) => {
+            const part = $(`
+              <div class="CarPart" style="position: relative; left: -100%; opacity: 0;">
+              
+                <img src="${carPart.Image}" id="CarPart_img" alt="${
+              carPart.PartName
+            }"/>
+                <p>Part name: ${carPart.PartName}</p>
+                <p>Part Status: ${carPart.Status ? carPart.Status : "N/A"}</p>
+                <p>Installation date: ${
+                  carPart.InstallationDate ? carPart.InstallationDate : "N/A"
+                }</p>
+                <p>Expired date: ${
+                  carPart.ExpiryDate ? carPart.ExpiryDate : "N/A"
+                }</p>
+                <a href="#" class="show-service" data-id="${
+                  carPart.PartID
+                }">Service</a>
+              </div>
+            `);
+            carPartList.append(part);
+
+            part.animate({ left: "0%", opacity: 1 }, 500);
+          });
+        } catch (error) {
+          console.error("Error fetching car parts:", error);
+        }
+        currentSystemID = carSystemID;
+        return;
+      }
     }
 
     try {
@@ -94,7 +137,9 @@ $(document).ready(function () {
           </div>
         `);
         carPartList.append(part);
+
         part.animate({ left: "0%", opacity: 1 }, 500);
+        currentSystemID = carSystemID;
       });
     } catch (error) {
       console.error("Error fetching car parts:", error);
