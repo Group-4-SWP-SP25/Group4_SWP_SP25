@@ -26,5 +26,8 @@
   },
   "scripts": {
     "test": "jest"
+  },
+  "dependencies": {
+    "vnpay": "^1.6.1"
   }
 }
