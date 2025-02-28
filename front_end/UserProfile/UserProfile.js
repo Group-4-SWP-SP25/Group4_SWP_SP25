@@ -78,39 +78,132 @@ async function getUserProfile() {
         $(this).addClass("hidden");
     });
 
-    // modify
-    document.querySelector(".btn-save").addEventListener("click", async function () {
+   $(document).ready(function () {
+    $(".btn-modify").click(function () {
+        $("input").removeAttr("readonly");
+        $(".btn-save, .btn-danger").removeClass("hidden");
+        $(this).addClass("hidden");
+    });
+
+    $(".btn-danger").click(function () {
+        $("input").attr("readonly", true);
+        $(".btn-save").addClass("hidden");
+        $(".btn-modify").removeClass("hidden");
+        $(this).addClass("hidden");
+    });
+
+
+// modify
+$(document).ready(function () {
+  let originalData = {}; 
+
+  $(".btn-modify").click(function () {
+      
+      $("input").each(function () {
+          originalData[$(this).attr("placeholder")] = $(this).val();
+      });
+
+      $("input").removeAttr("readonly");
+      $(".btn-save, .btn-danger").removeClass("hidden");
+      $(this).addClass("hidden");
+  });
+
+  $(".btn-danger").click(function () {
+      // take back old data
+      $("input").each(function () {
+          let placeholder = $(this).attr("placeholder");
+          if (originalData[placeholder] !== undefined) {
+              $(this).val(originalData[placeholder]);
+          }
+      });
+
+      $("input").attr("readonly", true);
+      $(".btn-save, .btn-danger").addClass("hidden");
+      $(".btn-modify").removeClass("hidden");
+  });
+
+  $(".btn-save").click(async function () {
       try {
-          
           const user = await $.ajax({
-            url: "http://localhost:3000/getUserInfo",
-            method: "POST",
-            contentType: "application/json",
-            headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+              url: "http://localhost:3000/getUserInfo",
+              method: "POST",
+              contentType: "application/json",
+              headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
           });
-  
+
+          // get input tags
+          let firstNameInput = document.querySelector("input[placeholder='First name']");
+          let lastNameInput = document.querySelector("input[placeholder='Last name']");
+          let phoneInput = document.querySelector("input[placeholder='Enter phone']");
+          let emailInput = document.querySelector("input[placeholder='email']");
+          let addressInput = document.querySelector("input[placeholder='Somewhere']");
+
+          let first_name = checkName(firstNameInput, "First Name");
+          let last_name = checkName(lastNameInput, "Last Name");
+
+          if (!first_name || !last_name) return;
+
+          let phone = phoneInput.value.trim();
+          let email = emailInput.value.trim();
+          let address = addressInput.value.trim();
+
+          if (!validateFormat(phone, regexPhone, "Phone number")) return;
+          if (!validateFormat(email, regexEmail, "Email")) return;
+
           let userData = {
               id: user.id,
-              first_name: document.querySelector("input[placeholder='First name']").value,
-              last_name: document.querySelector("input[placeholder='Last name']").value,
-              phone: document.querySelector("input[placeholder='Enter phone']").value,
-              email: document.querySelector("input[placeholder='email']").value,
-              address: document.querySelector("input[placeholder='Somewhere']").value
+              first_name,
+              last_name,
+              phone,
+              email,
+              address
           };
-  
+
           let response = await fetch("http://localhost:3000/updateUserProfile", {
               method: "POST",
-              headers: {
-                  "Content-Type": "application/json"
-              },
+              headers: { "Content-Type": "application/json" },
               body: JSON.stringify(userData)
           });
-  
+
           if (!response.ok) throw new Error("Error when saving data!");
-  
-          document.querySelector(".btn-modify").classList.remove("hidden");  
+
+          alert("Profile updated successfully!");
+          $(".btn-modify").removeClass("hidden");
+          $(".btn-save, .btn-danger").addClass("hidden");
+          $("input").attr("readonly", true);
       } catch (error) {
-          alert(error.message); 
+          alert("Failed to update profile: " + error.message);
       }
   });
-  
+});
+
+const regexEmail = /^\w+@\w+(\.\w+)+$/;
+const regexPhone = /^0\d{9}$/;
+const regexName = /^[a-zA-Z0-9]{2,}$/;
+
+function checkName(nameTag, fieldName) {
+  let nameValue = nameTag.value.trim();
+  if (nameValue.length === 0) {
+      alert(fieldName + " cannot be empty!");
+      nameTag.focus();
+      return false;
+  }
+  if (!regexName.test(nameValue)) {
+      alert(fieldName + " cannot contain special characters and 2 character limit!");
+      nameTag.focus();
+      return false;
+  }
+  return nameValue;
+}
+
+function validateFormat(value, regex, fieldName) {
+  if (value.length === 0) {
+      alert(`${fieldName} cannot be empty!`);
+      return false;
+  }
+  if (!regex.test(value)) {
+      alert(`Invalid ${fieldName.toLowerCase()} format!`);
+      return false;
+  }
+  return true;
+}});
