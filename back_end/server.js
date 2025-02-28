@@ -67,8 +67,12 @@ const listCarSystem = require("./myModule/database/carSystem/listCarSystem.js");
 const componentInStockInfo = require("./myModule/controller/inventory/componentInStockInfo.js");
 
 // order
+const orderInfo = require("./myModule/controller/order/orderInfo.js");
 const placeOrder = require("./myModule/controller/order/placeOrder.js");
 const listOrder = require("./myModule/controller/order/listOrder.js");
+
+// payment
+const payment = require("./myModule/controller/payment/payment.js");
 const {
   removeAnOrder,
   removeAllOrder,
@@ -130,10 +134,14 @@ app.post("/carPartInfoInCar", carPartInfoInCar);
 app.post("/componentInStockInfo", componentInStockInfo);
 
 // order
+app.post("/orderInfo", orderInfo);
 app.post("/placeOrder", placeOrder);
 app.post("/listOrder", listOrder);
 app.post("/removeAnOrder", removeAnOrder);
 app.post("/removeAllOrder", removeAllOrder);
+
+// payment
+app.post("/payment", payment);
 
 // ----------------------------------------------------------
 // START SERVER
