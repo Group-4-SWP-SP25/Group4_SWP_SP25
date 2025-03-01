@@ -51,7 +51,7 @@ const updateUserProfile = require("./myModule/controller/user/updateUserProfile.
 const serviceInfo = require("./myModule/controller/service/serviceInfo.js");
 const serviceListPerPart = require("./myModule/controller/service/listServicePerPart.js");
 const getServiceTypeDetailByName = require("./myModule/database/service/getServiceTypeDetailByName.js");
-const getServiceTypeList = require("./myModule/database/service/getServiceTypeList.js")
+const getServiceTypeList = require("./myModule/database/service/getServiceTypeList.js");
 
 // car
 const carInfo = require("./myModule/controller/car/carInfo.js");
@@ -72,13 +72,14 @@ const componentInStockInfo = require("./myModule/controller/inventory/componentI
 const orderInfo = require("./myModule/controller/order/orderInfo.js");
 const placeOrder = require("./myModule/controller/order/placeOrder.js");
 const listOrder = require("./myModule/controller/order/listOrder.js");
-
-// payment
-const payment = require("./myModule/controller/payment/payment.js");
 const {
   removeAnOrder,
   removeAllOrder,
 } = require("./myModule/controller/order/removeOrder.js");
+
+// payment
+const payment = require("./myModule/controller/payment/payment.js");
+const paymentCallback = require("./myModule/controller/payment/callback.js");
 
 // message
 const {
@@ -121,7 +122,7 @@ app.post("/updateUserProfile", updateUserProfile);
 app.post("/serviceInfo", serviceInfo);
 app.post("/serviceListPerPart", serviceListPerPart);
 app.post("/getServiceTypeDetailByName", getServiceTypeDetailByName);
-app.post("/getServiceTypeList", getServiceTypeList)
+app.post("/getServiceTypeList", getServiceTypeList);
 
 // car
 app.post("/carInfo", carInfo);
@@ -147,6 +148,7 @@ app.post("/removeAllOrder", removeAllOrder);
 
 // payment
 app.post("/payment", payment);
+app.get("/payment/callback", paymentCallback);
 
 // ----------------------------------------------------------
 // START SERVER

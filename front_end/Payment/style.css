@@ -51,13 +51,6 @@ div.form-header-group.header-large {
   margin: 0px -38px;
 }
 
-.form-subHeader {
-  word-break: break-word;
-  font-size: 1em;
-  font-weight: 500;
-  line-height: 1.6;
-}
-
 .form-line {
   padding: 12px 10px;
   margin: 12px 4px;
@@ -72,9 +65,10 @@ div.form-header-group.header-large {
 }
 
 .form-label {
-  display: inline-block;
-  font-weight: 700;
-  word-break: break-word;
+  font-size: 16px;
+  font-weight: 600;
+  color: #12458c;
+  margin-bottom: 8px;
 }
 
 .form-label-top {
@@ -224,23 +218,23 @@ div.form-header-group.header-large {
   padding: 4px 0;
 }
 
-.form-product-item .form-product-container .form-product-description {
+.order-info {
   padding-top: 2px;
-  display: block;
-  font-size: 14px;
-  opacity: 0.8;
-}
+  display: flex;
+  width: 100%;
 
-.list-service
-  .form-product-item.new_ui.show_image
-  .form-product-container
-  .form-product-description {
-  padding-right: 0 !important;
-}
+  .title > * {
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
 
-.form-product-item .form-product-container .form-product-details {
-  right: 0;
-  font-size: 14px;
+  .content {
+    flex: auto;
+    text-align: end;
+    > * {
+      margin-bottom: 5px;
+    }
+  }
 }
 
 .list-service .form-product-item.new_ui .form-product-details {
@@ -250,44 +244,6 @@ div.form-header-group.header-large {
   top: 6px;
   right: 5px;
   margin-left: 0;
-}
-
-.form-product-item .form-product-container .form-sub-label-container {
-  display: block;
-  float: left;
-  padding-top: 0;
-  margin-left: 0;
-  width: auto;
-}
-
-.list-service
-  .form-product-item.new_ui.show_image
-  .form-product-container
-  .form-sub-label-container {
-  margin-right: 10px;
-  margin-top: 2px;
-}
-
-.list-service
-  .form-product-item
-  .form-product-container
-  .form-sub-label-container
-  label.form-sub-label {
-  white-space: normal !important;
-  height: auto !important;
-  min-height: auto !important;
-  line-height: 16px !important;
-  padding: 10px 0 6px;
-}
-
-.form-sub-label {
-  margin-top: 11px;
-  margin-left: 2px;
-  word-break: break-word;
-}
-
-.form-product-item span > span {
-  margin-left: 1px;
 }
 
 .form-product-item
@@ -462,7 +418,6 @@ div.form-header-group.header-large {
 
 li.form-line:not([data-payment="true"]) [data-wrapper-react="true"] {
   display: -ms-flexbox;
-  display: flex;
   -ms-flex-align: start;
   align-items: stretch;
 }
