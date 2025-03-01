@@ -85,31 +85,37 @@ async function deleteAnOrder() {
 
   try {
     // Get account info
-    const accountResponse = await fetch("http://localhost:3000/getUserInfo", {
+    const accountResponse = await $.ajax({
+      url: "http://localhost:3000/getUserInfo",
       method: "POST",
+      contentType: "application/json",
       headers: {
-        "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
 
-    const user = await accountResponse.json();
+    const user = accountResponse;
     const orderID = selectedRow.find(".order-id").val().trim();
-    console.log(orderID);
+
+    const orderDeleted = await $.ajax({
+      url: "http://localhost:3000/orderInfo",
+      method: "POST",
+      contentType: "application/json",
+      data: JSON.stringify({ userID: user.id, orderID: orderID }),
+    });
+    totalPrice -= orderDeleted.EstimatedCost;
 
     // Request to delete an order
-    await fetch("http://localhost:3000/removeAnOrder", {
+    await $.ajax({
+      url: "http://localhost:3000/removeAnOrder",
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ userID: user.id, orderID: orderID }),
+      contentType: "application/json",
+      data: JSON.stringify({ userID: user.id, orderID: orderID }),
     });
 
     // Sau khi request thành công, mới fadeOut rồi remove()
     selectedRow.fadeOut(300, function () {
       $(this).remove();
-
       $(".order-row").each((index, row) => {
         $(row)
           .find(".order-index")
@@ -117,26 +123,27 @@ async function deleteAnOrder() {
       });
     });
 
+    $(".total-price").text(totalPrice.toLocaleString("vi-VN") + "₫");
+
     showNotification();
 
-    const orderResponse = await fetch("http://localhost:3000/listOrder", {
+    const orderResponse = await $.ajax({
+      url: "http://localhost:3000/listOrder",
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ userID: user.id }),
+      contentType: "application/json",
+      data: JSON.stringify({ userID: user.id }),
     });
 
-    const orders = await orderResponse.json();
-
-    const orderEmpty = document.querySelector(".order-empty");
+    const orders = orderResponse;
+    const orderEmpty = $(".order-empty");
+    const mainOrderPage = $(".main-order-page");
 
     if (orders.length !== 0) {
-      document.querySelector(".main-order-page").classList.remove("hidden");
-      orderEmpty.classList.add("hidden");
+      mainOrderPage.removeClass("hidden");
+      orderEmpty.addClass("hidden");
     } else {
-      document.querySelector(".main-order-page").classList.add("hidden");
-      orderEmpty.classList.remove("hidden");
+      mainOrderPage.addClass("hidden");
+      orderEmpty.removeClass("hidden");
     }
   } catch (error) {
     console.error("Lỗi khi xóa đơn hàng:", error);
