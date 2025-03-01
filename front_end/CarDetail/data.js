@@ -124,20 +124,16 @@ $(document).ready(function () {
         const part = $(`
           <div class="CarPart" style="position: relative; left: -100%; opacity: 0;">
           
-            <img src="${carPart.Image}" id="CarPart_img" alt="${
-          carPart.PartName
-        }"/>
+            <img src="${carPart.Image}" id="CarPart_img" alt="${carPart.PartName
+          }"/>
             <p>Part name: ${carPart.PartName}</p>
             <p>Part Status: ${carPart.Status ? carPart.Status : "N/A"}</p>
-            <p>Installation date: ${
-              carPart.InstallationDate ? carPart.InstallationDate : "N/A"
-            }</p>
-            <p>Expired date: ${
-              carPart.ExpiryDate ? carPart.ExpiryDate : "N/A"
-            }</p>
-            <a href="#" class="show-service" data-id="${
-              carPart.PartID
-            }">Service</a>
+            <p>Installation date: ${carPart.InstallationDate ? carPart.InstallationDate : "N/A"
+          }</p>
+            <p>Expired date: ${carPart.ExpiryDate ? carPart.ExpiryDate : "N/A"
+          }</p>
+            <a href="#" class="show-service" data-id="${carPart.PartID
+          }">Service</a>
           </div>
         `);
         carPartList.append(part);

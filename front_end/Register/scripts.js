@@ -11,48 +11,50 @@ const regexPhone = /^0\d{9}$/; // Start with 0, follow by exact 9 digits
 const regexPassword = /^(?=.*[A-Za-z])(?=.*\d).{6,}$/; // Have at least 6 chars, include a-z, A-Z and 0-9
 const regexUsername = /^[a-zA-Z0-9]{4,}$/; // Start with a-z, A-Z, 0-9, have at least 6 chars
 
-// Tag: Input field
+// Tags
+// Input field
 const firstNameInput = document.querySelector('#firstName');
 const lastNameInput = document.querySelector('#lastName');
 const emailInput = document.querySelector('#email');
 const phoneInput = document.querySelector('#phone');
 const addressInput = document.querySelector('#address');
+const dobInput = document.querySelector('#dob');
 const usernameInput = document.querySelector('#username');
 const passwordInput = document.querySelector('#password');
 const repasswordInput = document.querySelector('#repassword');
-
-// Tag: Error
+// Error field
 const firstNameError = document.querySelector('.e_firstName');
 const lastNameError = document.querySelector('.e_lastName');
 const emailError = document.querySelector('.e_email');
 const phoneError = document.querySelector('.e_phone');
 const addressError = document.querySelector('.e_address');
+const dobError = document.querySelector('.e_dob');
 const usernameError = document.querySelector('.e_username');
 const passwordError = document.querySelector('.e_password');
 const repasswordError = document.querySelector('.e_repassword');
 
-// Style errors in tags
+// Support functions
 const errorStyle = function (tag) {
+    // Style errors in tags
     tag.style.borderColor = 'red';
     tag.style.boxShadow = '0 0 5px red';
 };
 
-// Style success in tags
 const successStyle = function (tag) {
+    // Style success in tags
     tag.style.borderColor = 'green';
     tag.style.boxShadow = '0 0 5px green';
 };
 
-// Content errors in tags
 const contentError = function (tag, err) {
+    // Content errors in tags
     tag.textContent = err;
 };
 
-// Show success window
 const successWindow = document.querySelector('.success');
 const overlay = document.querySelector('.overlay');
-
 const showSuccessWindow = function () {
+    // Show success window
     successWindow.classList.remove('hidden');
     overlay.classList.remove('hidden');
     document.body.classList.toggle('no-scroll');
@@ -60,14 +62,45 @@ const showSuccessWindow = function () {
         successWindow.classList.add('show');
     }, 10);
 };
-// Close success window
+
 const closeSuccessWindow = function () {
+    // Close success window
     successWindow.classList.add('hidden');
     overlay.classList.add('hidden');
 };
 
-// Function
+function showHidePass(icon, passField) {
+    // Toggle password visibility
+    icon.classList.toggle('fa-eye');
+    icon.classList.toggle('fa-eye-slash');
+
+    const type = passField.getAttribute('type') === 'password' ? 'text' : 'password';
+    passField.setAttribute('type', type);
+}
+document.querySelector('.show-pwd').addEventListener('click', function () {
+    showHidePass(this, passwordInput);
+});
+document.querySelector('.show-repwd').addEventListener('click', function () {
+    showHidePass(this, repasswordInput);
+});
+
+// const calculateAge = (dob, today) => {
+//     // Calculate age
+//     const getFullYears = (dob, today) => {
+//         let age = today.getFullYear() - dob.getFullYear();
+//         const monthDiff = today.getMonth() - dob.getMonth();
+
+//         if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
+//             age--;
+//         }
+//         return age;
+//     };
+//     return getFullYears(dob, today);
+// };
+
+// Check functions
 function checkName(nameTag, errorTag) {
+    // Check name
     if (nameTag.value.trim().length === 0) {
         errorStyle(nameTag);
         contentError(errorTag, 'Name cannot be empty!');
@@ -80,6 +113,7 @@ function checkName(nameTag, errorTag) {
 }
 
 async function checkEmail(emailTag, errorTag) {
+    // Check email
     if (emailTag.value.trim().length === 0) {
         errorStyle(emailTag);
         contentError(errorTag, 'Email cannot be empty!');
@@ -109,6 +143,7 @@ async function checkEmail(emailTag, errorTag) {
 }
 
 async function checkPhone(phoneTag, errorTag) {
+    // Check phone
     if (phoneTag.value.trim().length > 0) {
         if (!regexPhone.test(phoneTag.value.trim())) {
             errorStyle(phoneTag);
@@ -133,7 +168,46 @@ async function checkPhone(phoneTag, errorTag) {
     return true;
 }
 
+function checkDOB(dobTag, errorTag) {
+    // Check date of birth
+    if (!dobTag.value) {
+        errorStyle(dobTag);
+        contentError(errorTag, 'Date of Birth cannot be empty!');
+        return false;
+    }
+
+    const dob = new Date(dobTag.value);
+    const today = new Date();
+
+    // Calculate age directly within checkDOB
+    const calculateAge = (dob, today) => {
+        const getFullYears = (dob, today) => {
+            let age = today.getFullYear() - dob.getFullYear();
+            const monthDiff = today.getMonth() - dob.getMonth();
+
+            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
+                age--;
+            }
+            return age;
+        };
+        return getFullYears(dob, today);
+    };
+
+    const age = calculateAge(dob, today);
+
+    if (age < 18 || age > 75) {
+        errorStyle(dobTag);
+        contentError(errorTag, 'Age must be between 18 and 75.'); //Sửa lại message cho hợp lý
+        return false;
+    } else {
+        successStyle(dobTag); //Sửa phoneTag thành dobTag
+        contentError(errorTag, '');
+        return true;
+    }
+}
+
 async function checkUsername(usernameTag, errorTag) {
+    // Check username
     if (usernameTag.value.trim().length === 0) {
         errorStyle(usernameTag);
         contentError(errorTag, 'Username cannot be empty!');
@@ -172,6 +246,7 @@ async function checkUsername(usernameTag, errorTag) {
 }
 
 function checkPassword(passwordTag, errorTag) {
+    // Check password
     if (passwordTag.value.trim().length === 0) {
         errorStyle(passwordTag);
         if (passwordTag === passwordInput) {
@@ -210,58 +285,38 @@ function checkPassword(passwordTag, errorTag) {
     return true;
 }
 
-function hidePassword(hideTag, toggleTag) {
-    if (toggleTag.checked === true) {
-        hideTag.type = 'text';
-    } else {
-        hideTag.type = 'password';
-    }
-}
-
-function showHidePass(icon, passField) {
-    icon.classList.toggle('fa-eye');
-    icon.classList.toggle('fa-eye-slash');
-
-    const type = passField.getAttribute('type') === 'password' ? 'text' : 'password';
-    passField.setAttribute('type', type);
-}
-document.querySelector('.show-pwd').addEventListener('click', function () {
-    showHidePass(this, passwordInput);
-});
-document.querySelector('.show-repwd').addEventListener('click', function () {
-    showHidePass(this, repasswordInput);
-});
-
 async function checkSubmit() {
     const firstName = checkName(firstNameInput, firstNameError);
     const lastName = checkName(lastNameInput, lastNameError);
     const email = await checkEmail(emailInput, emailError);
     const phone = await checkPhone(phoneInput, phoneError);
+    const dob = checkDOB(dobInput, dobError);
     const username = await checkUsername(usernameInput, usernameError);
     const password = checkPassword(passwordInput, passwordError);
     const repassword = checkPassword(repasswordInput, repasswordError);
-    if (!(firstName && lastName && email && phone && username && password && repassword)) {
+    if (!(firstName && lastName && email && phone && dob && username && password && repassword)) {
         return;
     } else {
         await fetch('http://localhost:3000/register', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
+                username: usernameInput.value,
+                password: passwordInput.value,
                 firstName: firstNameInput.value,
                 lastName: lastNameInput.value,
                 email: emailInput.value,
-                phone: phoneInput.value,
                 address: addressInput.value,
-                username: usernameInput.value,
-                password: passwordInput.value
+                phone: phoneInput.value,
+                dob: dobInput.value
             })
         });
         showSuccessWindow();
     }
 }
 
+// Submit button
 document.getElementById('register-button').addEventListener('click', checkSubmit);
-
 document.addEventListener('keydown', function (e) {
     if (e.key === 'Enter' && successWindow.classList.contains('hidden')) {
         checkSubmit();

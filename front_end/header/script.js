@@ -29,7 +29,10 @@ $(document).ready(async function () {
       $("#dashboard").addClass("hidden");
       break;
   }
-
+  $("#profile").on("click", function () {
+    
+    window.location.href = "/front_end/UserProfile/UserProfile.html";
+  });
   $("#sign-out").on("click", function () {
     localStorage.removeItem("token");
     window.location.href = "/front_end/HomePage/HomePage.html";
