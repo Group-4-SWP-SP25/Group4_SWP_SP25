@@ -13,7 +13,7 @@ app.use(
       `http://127.0.0.1:5501`,
       `http://localhost:5501`,
       /http:\/\/127\.0\.0\.1:300\d/, // please do not change
-      /http:\/\/localhost:300\d/ // please do not change
+      /http:\/\/localhost:300\d/, // please do not change
     ], // Chỉ định origin được phép truy cập
     credentials: true, // Cho phép gửi cookie hoặc session
   })
@@ -62,8 +62,11 @@ const carInfo = require("./myModule/controller/car/carInfo.js");
 const carList = require("./myModule/controller/car/carList.js");
 
 // car part
-const listCarPartBySystem = require("./myModule/controller/carPart/listCarPartBySystem.js");
 const carPartInfoInCar = require("./myModule/controller/carPart/carPartInfoInCar.js");
+
+// part info
+const listPartBySystem = require("./myModule/controller/partInfo/listPartBySystem.js");
+const partInfo = require("./myModule/controller/partInfo/partInfo.js");
 
 // car system
 const carSystemInfo = require("./myModule/controller/carSystem/carSystemInfo.js");
@@ -137,8 +140,11 @@ app.post("/carSystemInfo", carSystemInfo);
 app.post("/listCarSystem", listCarSystem);
 
 // car part
-app.post("/listCarPartBySystem", listCarPartBySystem);
 app.post("/carPartInfoInCar", carPartInfoInCar);
+
+// part info
+app.post("/listPartBySystem", listPartBySystem);
+app.post("/partInfo", partInfo);
 
 // inventory
 app.post("/componentInStockInfo", componentInStockInfo);

@@ -69,23 +69,37 @@ $(document).ready(function () {
         return;
       } else {
         try {
-          const carParts = await $.ajax({
-            url: "http://localhost:3000/listCarPartBySystem",
+          const parts = await $.ajax({
+            url: "http://localhost:3000/listPartBySystem",
             method: "POST",
             contentType: "application/json",
-            data: JSON.stringify({ carID: carID, carSystemID: carSystemID }),
+            data: JSON.stringify({ carSystemID: carSystemID }),
           });
 
           carPartList.empty().show().data("visible", true);
 
-          carParts.forEach((carPart) => {
-            const part = $(`
+          parts.forEach(async (part) => {
+            const carPart = await $.ajax({
+              url: "http://localhost:3000/carPartInfoInCar",
+              method: "POST",
+              contentType: "application/json",
+              data: JSON.stringify({ carID: carID, partID: part.PartID }),
+            });
+
+            const partInfo = await $.ajax({
+              url: "http://localhost:3000/partInfo",
+              method: "POST",
+              contentType: "application/json",
+              data: JSON.stringify({ partID: part.PartID }),
+            });
+
+            const partHtml = $(`
               <div class="CarPart" style="position: relative; left: -100%; opacity: 0;">
               
-                <img src="${carPart.Image}" id="CarPart_img" alt="${
+                <img src="${partInfo.Image}" id="CarPart_img" alt="${
               carPart.PartName
             }"/>
-                <p>Part name: ${carPart.PartName}</p>
+                <p>Part name: ${partInfo.PartName}</p>
                 <p>Part Status: ${carPart.Status ? carPart.Status : "N/A"}</p>
                 <p>Installation date: ${
                   carPart.InstallationDate ? carPart.InstallationDate : "N/A"
@@ -98,9 +112,9 @@ $(document).ready(function () {
                 }">Service</a>
               </div>
             `);
-            carPartList.append(part);
+            carPartList.append(partHtml);
 
-            part.animate({ left: "0%", opacity: 1 }, 500);
+            partHtml.animate({ left: "0%", opacity: 1 }, 500);
           });
         } catch (error) {
           console.error("Error fetching car parts:", error);
@@ -111,34 +125,51 @@ $(document).ready(function () {
     }
 
     try {
-      const carParts = await $.ajax({
-        url: "http://localhost:3000/listCarPartBySystem",
+      const parts = await $.ajax({
+        url: "http://localhost:3000/listPartBySystem",
         method: "POST",
         contentType: "application/json",
-        data: JSON.stringify({ carID: carID, carSystemID: carSystemID }),
+        data: JSON.stringify({ carSystemID: carSystemID }),
       });
 
       carPartList.empty().show().data("visible", true);
 
-      carParts.forEach((carPart) => {
-        const part = $(`
+      parts.forEach(async (part) => {
+        const carPart = await $.ajax({
+          url: "http://localhost:3000/carPartInfoInCar",
+          method: "POST",
+          contentType: "application/json",
+          data: JSON.stringify({ carID: carID, partID: part.PartID }),
+        });
+        const partInfo = await $.ajax({
+          url: "http://localhost:3000/partInfo",
+          method: "POST",
+          contentType: "application/json",
+          data: JSON.stringify({ partID: part.PartID }),
+        });
+
+        const partHtml = $(`
           <div class="CarPart" style="position: relative; left: -100%; opacity: 0;">
           
-            <img src="${carPart.Image}" id="CarPart_img" alt="${carPart.PartName
-          }"/>
-            <p>Part name: ${carPart.PartName}</p>
+            <img src="${partInfo.Image}" id="CarPart_img" alt="${
+          carPart.PartName
+        }"/>
+            <p>Part name: ${partInfo.PartName}</p>
             <p>Part Status: ${carPart.Status ? carPart.Status : "N/A"}</p>
-            <p>Installation date: ${carPart.InstallationDate ? carPart.InstallationDate : "N/A"
-          }</p>
-            <p>Expired date: ${carPart.ExpiryDate ? carPart.ExpiryDate : "N/A"
-          }</p>
-            <a href="#" class="show-service" data-id="${carPart.PartID
-          }">Service</a>
+            <p>Installation date: ${
+              carPart.InstallationDate ? carPart.InstallationDate : "N/A"
+            }</p>
+            <p>Expired date: ${
+              carPart.ExpiryDate ? carPart.ExpiryDate : "N/A"
+            }</p>
+            <a href="#" class="show-service" data-id="${
+              carPart.PartID
+            }">Service</a>
           </div>
         `);
-        carPartList.append(part);
+        carPartList.append(partHtml);
 
-        part.animate({ left: "0%", opacity: 1 }, 500);
+        partHtml.animate({ left: "0%", opacity: 1 }, 500);
         currentSystemID = carSystemID;
       });
     } catch (error) {
