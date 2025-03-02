@@ -55,7 +55,7 @@ const updateUserProfile = require("./myModule/controller/user/updateUserProfile.
 const serviceInfo = require("./myModule/controller/service/serviceInfo.js");
 const serviceListPerPart = require("./myModule/controller/service/listServicePerPart.js");
 const getServiceTypeDetailByName = require("./myModule/database/service/getServiceTypeDetailByName.js");
-const getServiceTypeList = require("./myModule/database/service/getServiceTypeList.js")
+const getServiceTypeList = require("./myModule/database/service/getServiceTypeList.js");
 
 // car
 const carInfo = require("./myModule/controller/car/carInfo.js");
@@ -73,12 +73,17 @@ const listCarSystem = require("./myModule/database/carSystem/listCarSystem.js");
 const componentInStockInfo = require("./myModule/controller/inventory/componentInStockInfo.js");
 
 // order
+const orderInfo = require("./myModule/controller/order/orderInfo.js");
 const placeOrder = require("./myModule/controller/order/placeOrder.js");
 const listOrder = require("./myModule/controller/order/listOrder.js");
 const {
   removeAnOrder,
   removeAllOrder,
 } = require("./myModule/controller/order/removeOrder.js");
+
+// payment
+const payment = require("./myModule/controller/payment/payment.js");
+const paymentCallback = require("./myModule/controller/payment/callback.js");
 
 // message
 const {
@@ -121,7 +126,7 @@ app.post("/updateUserProfile", updateUserProfile);
 app.post("/serviceInfo", serviceInfo);
 app.post("/serviceListPerPart", serviceListPerPart);
 app.post("/getServiceTypeDetailByName", getServiceTypeDetailByName);
-app.post("/getServiceTypeList", getServiceTypeList)
+app.post("/getServiceTypeList", getServiceTypeList);
 
 // car
 app.post("/carInfo", carInfo);
@@ -139,10 +144,15 @@ app.post("/carPartInfoInCar", carPartInfoInCar);
 app.post("/componentInStockInfo", componentInStockInfo);
 
 // order
+app.post("/orderInfo", orderInfo);
 app.post("/placeOrder", placeOrder);
 app.post("/listOrder", listOrder);
 app.post("/removeAnOrder", removeAnOrder);
 app.post("/removeAllOrder", removeAllOrder);
+
+// payment
+app.post("/payment", payment);
+app.get("/payment/callback", paymentCallback);
 
 // ----------------------------------------------------------
 // START SERVER
