@@ -16,18 +16,18 @@ $(document).ready(function () {
           data: JSON.stringify({ carID: carID }),
         });
 
-        const carPart = await $.ajax({
-          url: "http://localhost:3000/carPartInfoInCar",
+        const partInfo = await $.ajax({
+          url: "http://localhost:3000/partInfo",
           method: "POST",
           contentType: "application/json",
-          data: JSON.stringify({ carID: carID, partID: partID }),
+          data: JSON.stringify({ partID: partID }),
         });
 
         const carSystem = await $.ajax({
           url: "http://localhost:3000/carSystemInfo",
           method: "POST",
           contentType: "application/json",
-          data: JSON.stringify({ carSystemID: carPart.CarSystemID }),
+          data: JSON.stringify({ carSystemID: partInfo.CarSystemID }),
         });
 
         const carContent = $(".car-content .content");
@@ -35,10 +35,10 @@ $(document).ready(function () {
           <p><span>${car.CarName}</span></p>
           <p><span>${car.Brand}</span></p>
           <p><span>${carSystem.CarSystemName}</span></p>
-          <p><span>${carPart.PartName}</span></p>
+          <p><span>${partInfo.PartName}</span></p>
           `);
         const componentName = $(".component-name");
-        componentName.html(`${carPart.PartName}`);
+        componentName.html(`${partInfo.PartName}`);
 
         const serviceList = await $.ajax({
           url: "http://localhost:3000/serviceListPerPart",

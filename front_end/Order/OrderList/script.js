@@ -42,11 +42,11 @@ async function fetchUserOrders() {
         data: JSON.stringify({ serviceID: order.ServiceID }),
       });
 
-      const carPart = await $.ajax({
-        url: "http://localhost:3000/carPartInfoInCar",
+      const partInfo = await $.ajax({
+        url: "http://localhost:3000/partInfo",
         method: "POST",
         contentType: "application/json",
-        data: JSON.stringify({ carID: order.CarID, partID: order.PartID }),
+        data: JSON.stringify({ partID: order.PartID }),
       });
 
       const accessory = await $.ajax({
@@ -56,13 +56,13 @@ async function fetchUserOrders() {
         data: JSON.stringify({ serviceID: order.ServiceID }),
       });
 
-      return { order, car, service, carPart, accessory, index };
+      return { order, car, service, partInfo, accessory, index };
     });
 
     Promise.all(promises).then((results) => {
       results.sort((a, b) => a.index - b.index); // Đảm bảo đúng thứ tự
 
-      results.forEach(({ order, car, service, carPart, accessory, index }) => {
+      results.forEach(({ order, car, service, partInfo, accessory, index }) => {
         const orderElement = $(`
           <div class="order-row">
             <div class="order-product">
@@ -70,7 +70,7 @@ async function fetchUserOrders() {
               <div class="order-info">
                 <div class="grid order-index">${index + 1}</div> 
                 <div class="grid">${car.CarName}</div>
-                <div class="grid">${carPart.PartName}</div>
+                <div class="grid">${partInfo.PartName}</div>
                 <div class="grid">${service.ServiceName}</div>
                 <div class="grid">${formatDate(order.OrderDate)}</div>
                 <div class="grid">${
@@ -89,7 +89,7 @@ async function fetchUserOrders() {
                   <div><span>Car: </span><a href="/front_end/CarDetail/CarDetail.html?carID=${
                     car.CarID
                   }">${car.CarName}</a></div>
-                  <div><span>Component: </span>${carPart.PartName}</div>
+                  <div><span>Component: </span>${partInfo.PartName}</div>
                   <div><span>Service name: </span>${service.ServiceName}</div>
                   ${
                     service.AffectInventory === 1
