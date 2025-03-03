@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Layout</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #181A1E;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: auto auto auto;
+            gap: 15px;
+            width: 90%;
+            max-width: 1200px;
+        }
+        .box {
+            background: #24272D;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .box.large {
+            grid-column: span 2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="box large">Today's Sales</div>
+        <div class="box">Level</div>
+        <div class="box large">Top Products</div>
+        <div class="box">Customer Fulfillment</div>
+        <div class="box">Earnings</div>
+        <div class="box large">Visitor Insights</div>
+    </div>
+</body>
+</html>

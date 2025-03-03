@@ -172,3 +172,139 @@ body {
     border-radius: 50%;
     margin-right: 10px;
 }
+
+
+
+/* Content chart */
+/* .chart-container {
+    background-color:black;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    height: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+.tab-content {
+    width: 100%;
+    height: 100%;
+}
+.CSS1 {
+    width: 100%;
+    height: 80%; 
+    justify-content: center;
+    align-items: center;
+}
+
+.CSS1 canvas {
+    width: 100% !important;
+    height: 100% !important;
+  
+}
+
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.chart-btn {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.chart-btn:hover {
+    background-color: #0056b3;
+} */
+.container {
+    display: flex;
+    flex-direction: column; /* Xếp các phần tử theo chiều dọc */
+    align-items: stretch; /* Đảm bảo các phần tử con chiếm hết chiều rộng */
+    width: 100%;
+    gap: 10px; /* Khoảng cách giữa các ô */
+}
+
+.box, .CSS1 {
+    width: 100%;
+    padding: 20px;
+    background-color: #33334d;
+    color: white;
+    text-align: center;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.CSS1 {
+    height: 400px; /* Điều chỉnh kích thước canvas */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+/* Today sale */
+.Today_sale {
+    background-color: #1e1e2f;
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+.Today_sale h2 {
+    font-size: 24px;
+    margin-bottom: 15px;
+    color: white;
+}
+
+.sales-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.sales-box {
+    background-color: #24243e;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    flex: 1;
+}
+
+.sales-box img {
+    width: 30px;
+    height: 30px;
+    margin-bottom: 10px;
+}
+
+.amount {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.label {
+    font-size: 14px;
+    color: #bbb;
+}
+
+.change {
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.positive {
+    color: #4CAF50;
+}
+.sales-box img{
+    width: 70px;
+    height: 70px;
+    margin-bottom: 10px;
+ 
+}
