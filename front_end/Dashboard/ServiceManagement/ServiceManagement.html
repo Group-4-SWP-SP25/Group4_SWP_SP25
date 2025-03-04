@@ -36,18 +36,56 @@
 
             <div class="services-table">
                 <div class="table-header">
-                    <h1>Services</h1>
+                    <h1>Service Management</h1>
                     <div class="buttons">
-                        <button class="filter">Filter</button>
+                        <!-- <button class="filter">Filter</button> -->
                         <button class="add">+ Add Service</button>
                     </div>
                 </div>
 
                 <div class="search">
                     <input
-                        id="searchString"
+                        class="search-input"
                         type="text"
                         placeholder="Search..." />
+                </div>
+                <div class="search-filter">
+                    <label>
+                        <input
+                            type="checkbox"
+                            data-column="ServiceTypeID" />
+                        Type ID
+                    </label>
+                    <label>
+                        <input
+                            type="checkbox"
+                            data-column="PartID" />
+                        Part ID
+                    </label>
+                    <label>
+                        <input
+                            type="checkbox"
+                            data-column="AffectInventory" />
+                        Affect Inventory
+                    </label>
+                    <label>
+                        <input
+                            type="checkbox"
+                            data-column="ServiceName" />
+                        Service Name
+                    </label>
+                    <label>
+                        <input
+                            type="checkbox"
+                            data-column="ServiceDescription" />
+                        Description
+                    </label>
+                    <label>
+                        <input
+                            type="checkbox"
+                            data-column="ServicePrice" />
+                        Price
+                    </label>
                 </div>
             </div>
 

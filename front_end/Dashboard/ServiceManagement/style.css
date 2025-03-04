@@ -235,6 +235,14 @@ body {
     }
 }
 
+.search-filter{
+    text-align: center;
+
+    label{
+        padding: 0 5px;
+    }
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
