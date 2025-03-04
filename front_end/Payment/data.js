@@ -1,73 +1,117 @@
-$(document).ready(function () {
-  let totalPrice = 0;
-  async function getOrderList() {
-    try {
-      const user = await $.ajax({
-        url: "http://localhost:3000/getUserInfo",
+let totalPrice = 0;
+async function getOrderList() {
+  try {
+    const user = await $.ajax({
+      url: "http://localhost:3000/getUserInfo",
+      method: "POST",
+      contentType: "application/json",
+      headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+    });
+
+    // Lấy danh sách đơn hàng
+    const orders = await $.ajax({
+      url: "http://localhost:3000/listOrder",
+      method: "POST",
+      contentType: "application/json",
+      data: JSON.stringify({ userID: user.id }),
+    });
+
+    const promises = orders.map(async (order) => {
+      const car = await $.ajax({
+        url: "http://localhost:3000/carInfo",
         method: "POST",
         contentType: "application/json",
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        data: JSON.stringify({ carID: order.CarID }),
       });
 
-      // Lấy danh sách đơn hàng
-      const orders = await $.ajax({
-        url: "http://localhost:3000/listOrder",
+      const branch = await $.ajax({
+        url: "http://localhost:3000/branchInfo",
         method: "POST",
         contentType: "application/json",
-        data: JSON.stringify({ userID: user.id }),
+        data: JSON.stringify({ branchID: order.BranchID }),
       });
 
-      const promises = orders.map(async (order) => {
-        const car = await $.ajax({
-          url: "http://localhost:3000/carInfo",
-          method: "POST",
-          contentType: "application/json",
-          data: JSON.stringify({ carID: order.CarID }),
-        });
-
-        const service = await $.ajax({
-          url: "http://localhost:3000/serviceInfo",
-          method: "POST",
-          contentType: "application/json",
-          data: JSON.stringify({ serviceID: order.ServiceID }),
-        });
-
-        const carPart = await $.ajax({
-          url: "http://localhost:3000/carPartInfoInCar",
-          method: "POST",
-          contentType: "application/json",
-          data: JSON.stringify({ carID: order.CarID, partID: order.PartID }),
-        });
-
-        const accessory = await $.ajax({
-          url: "http://localhost:3000/componentInStockInfo",
-          method: "POST",
-          contentType: "application/json",
-          data: JSON.stringify({ serviceID: order.ServiceID }),
-        });
-
-        return { order, car, service, carPart, accessory, index };
+      const service = await $.ajax({
+        url: "http://localhost:3000/serviceInfo",
+        method: "POST",
+        contentType: "application/json",
+        data: JSON.stringify({ serviceID: order.ServiceID }),
       });
 
-      Promise.all(promises).then((results) => {
-        results.forEach(({ order, car, service, carPart, accessory }) => {
-          const orderElement = $(`
-            
+      const partInfo = await $.ajax({
+        url: "http://localhost:3000/partInfo",
+        method: "POST",
+        contentType: "application/json",
+        data: JSON.stringify({ partID: order.PartID }),
+      });
+
+      return { order, car, branch, service, partInfo };
+    });
+
+    Promise.all(promises).then((results) => {
+      results.forEach(({ order, car, branch, service, partInfo }) => {
+        const orderElement = $(`
+            <span class="form-product-item show_image show_desc new_ui">
+              <div data-wrapper-react="true" class="form-product-item-detail new_ui">
+                <div class="p_image">
+                  <div class="image_area">
+                    <div style="position:absolute;width:100%;height:100%"><img
+                        style="width:100%;height:100%;object-fit:contain"
+                        src="${partInfo.Image}" /></div>
+                  </div>
+                </div>
+                <div class="form-product-container">
+                  <span data-wrapper-react="true">
+                    <div class="title_description">
+                      <span class="form-product-name">${
+                        partInfo.PartName
+                      }</span>
+                      <div class="order-info">      
+                          <p class="title">Car </p>
+                          <p class="content">${car.CarName}</p>
+                          <p class="title">Service </p>
+                          <p class="content">${service.ServiceName}</p>
+                          <p class="title">Branch</p>
+                          <p class="content">${
+                            branch.BranchName
+                          }</p>               
+                      </div>
+                    </div>
+                    <span class="form-product-details">
+                      <b>
+                        <span ata-wrapper-react="true">
+                          ${order.EstimatedCost.toLocaleString("vi-VN")}₫
+                        </span>
+                      </b>
+                    </span>
+                  </span>
+                  ${
+                    service.AffectInventory === 1
+                      ? `<div class="quantity-detail ">
+                    <span class="form-sub-label">Quantity</span>
+                    <input value="${order.QuantityUsed}" readonly />
+                  </div>`
+                      : ""
+                  }
+                </div>
+              </div>
+            </span>
           `);
 
-          orderBody.append(orderElement);
-        });
-
-        // Tính tổng lại đúng cách
-        totalPrice = results.reduce(
-          (sum, { order }) => sum + order.EstimatedCost,
-          0
-        );
-        $(".total-price").text(totalPrice.toLocaleString("vi-VN") + "₫");
+        $(".list-order").append(orderElement);
       });
-    } catch (error) {
-      console.error("Lỗi khi lấy danh sách đơn hàng:", error);
-      alert("Có lỗi xảy ra khi lấy danh sách đơn hàng!");
-    }
+
+      // Tính tổng lại đúng cách
+      totalPrice = results.reduce(
+        (sum, { order }) => sum + order.EstimatedCost,
+        0
+      );
+      $(".total-price").text(totalPrice.toLocaleString("vi-VN") + "₫");
+    });
+  } catch (error) {
+    console.error("Error get order list", error);
   }
+}
+$(document).ready(function () {
+  getOrderList();
 });

@@ -220,6 +220,7 @@ p {
   backdrop-filter: blur(1px);
   z-index: 5;
 }
+
 #place-order {
   width: 758px;
   z-index: 1000;

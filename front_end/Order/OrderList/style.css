@@ -189,6 +189,25 @@ a {
   width: 80%;
   margin: auto;
   padding: auto;
+  position: relative;
+}
+
+.main-order-page .choose-car {
+  position: absolute;
+  right: 0;
+  top: -60px;
+
+  button {
+    color: #fff;
+    background-color: rgb(51, 48, 48);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+
+    &:hover {
+      background-color: gray;
+    }
+  }
 }
 
 .order-page .order-header-info {
