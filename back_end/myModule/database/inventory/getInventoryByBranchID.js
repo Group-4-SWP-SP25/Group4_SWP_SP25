@@ -1,20 +1,20 @@
 const sql = require("mssql");
-const getInventoryByPartId = async (serviceID) => {
+const getInventoryByBranchID = async (branchID) => {
   try {
     const pool = global.pool;
     const query = `
       SELECT * FROM Inventory
-      WHERE ServiceID = @serviceID
+      WHERE BranchID = @branchID
     `;
 
     const result = await pool
       .request()
-      .input("serviceID", sql.Int, serviceID)
+      .input("branchID", sql.Int, branchID)
       .query(query);
-    return result.recordset[0];
+    return result.recordset;
   } catch (err) {
     throw err;
   }
 };
 
-module.exports = getInventoryByPartId;
+module.exports = getInventoryByBranchID;
