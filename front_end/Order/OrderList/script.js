@@ -35,6 +35,13 @@ async function fetchUserOrders() {
         data: JSON.stringify({ carID: order.CarID }),
       });
 
+      const branch = await $.ajax({
+        url: "http://localhost:3000/branchInfo",
+        method: "POST",
+        contentType: "application/json",
+        data: JSON.stringify({ branchID: order.BranchID }),
+      });
+
       const service = await $.ajax({
         url: "http://localhost:3000/serviceInfo",
         method: "POST",
@@ -42,35 +49,43 @@ async function fetchUserOrders() {
         data: JSON.stringify({ serviceID: order.ServiceID }),
       });
 
-      const carPart = await $.ajax({
-        url: "http://localhost:3000/carPartInfoInCar",
+      const partInfo = await $.ajax({
+        url: "http://localhost:3000/partInfo",
         method: "POST",
         contentType: "application/json",
-        data: JSON.stringify({ carID: order.CarID, partID: order.PartID }),
+        data: JSON.stringify({ partID: order.PartID }),
       });
 
-      const accessory = await $.ajax({
-        url: "http://localhost:3000/componentInStockInfo",
+      const accessoryInfo = await $.ajax({
+        url: "http://localhost:3000/accessoryInfo",
         method: "POST",
         contentType: "application/json",
         data: JSON.stringify({ serviceID: order.ServiceID }),
       });
 
-      return { order, car, service, carPart, accessory, index };
+      const inventory = await $.ajax({
+        url: "http://localhost:3000/componentInStockInfo",
+        method: "POST",
+        contentType: "application/json",
+        data: JSON.stringify({
+          branchID: order.BranchID,
+          accessoryID: accessoryInfo.AccessoryID,
+        }),
+      });
+      return { order, car, branch, service, partInfo, inventory, index };
     });
 
     Promise.all(promises).then((results) => {
-      results.sort((a, b) => a.index - b.index); // Đảm bảo đúng thứ tự
-
-      results.forEach(({ order, car, service, carPart, accessory, index }) => {
-        const orderElement = $(`
+      results.forEach(
+        ({ order, branch, car, service, partInfo, inventory, index }) => {
+          const orderElement = $(`
           <div class="order-row">
             <div class="order-product">
               <input type="hidden" class="order-id" value="${order.OrderID}"/>
               <div class="order-info">
                 <div class="grid order-index">${index + 1}</div> 
                 <div class="grid">${car.CarName}</div>
-                <div class="grid">${carPart.PartName}</div>
+                <div class="grid">${partInfo.PartName}</div>
                 <div class="grid">${service.ServiceName}</div>
                 <div class="grid">${formatDate(order.OrderDate)}</div>
                 <div class="grid">${
@@ -89,7 +104,7 @@ async function fetchUserOrders() {
                   <div><span>Car: </span><a href="/front_end/CarDetail/CarDetail.html?carID=${
                     car.CarID
                   }">${car.CarName}</a></div>
-                  <div><span>Component: </span>${carPart.PartName}</div>
+                  <div><span>Component: </span>${partInfo.PartName}</div>
                   <div><span>Service name: </span>${service.ServiceName}</div>
                   ${
                     service.AffectInventory === 1
@@ -101,11 +116,11 @@ async function fetchUserOrders() {
                   )}</div>
                 </div>
                 <div>
-                  <div><span>Maintance at: </span>qưiqiw</div>
+                  <div><span>Maintance at: </span>${branch.BranchName}</div>
                   ${
                     service.AffectInventory === 1
                       ? `<div><span>Component price: </span>${
-                          accessory.UnitPrice.toLocaleString("vi-VN") + "₫"
+                          inventory.UnitPrice.toLocaleString("vi-VN") + "₫"
                         }</div>`
                       : ""
                   }
@@ -126,10 +141,10 @@ async function fetchUserOrders() {
           </div>
         `);
 
-        orderBody.append(orderElement);
-      });
+          orderBody.append(orderElement);
+        }
+      );
 
-      // Tính tổng lại đúng cách
       totalPrice = results.reduce(
         (sum, { order }) => sum + order.EstimatedCost,
         0

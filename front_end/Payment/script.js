@@ -5,6 +5,7 @@ $(document).ready(function () {
         url: "http://localhost:3000/payment",
         method: "POST",
         contentType: "application/json",
+        data: JSON.stringify({ money: totalPrice }),
       });
 
       // Chuyển hướng trình duyệt đến trang thanh toán của VNPay

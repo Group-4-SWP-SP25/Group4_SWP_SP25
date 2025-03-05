@@ -1,0 +1,365 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    display: flex;
+    height: 100vh;
+    background-color: #121212;
+    color: #e0e0e0;
+    overflow: hidden;
+}
+
+body.no-scroll {
+    overflow: hidden;
+}
+
+.hidden {
+    display: none;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #1e1e2f;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    /* padding: 20px; */
+    position: fixed;
+    height: 100%;
+    overflow-y: auto;
+    margin-top: 60px;
+}
+
+.option {
+    display: block;
+    /* Để các mục trong sidebar xếp dọc */
+    position: relative;
+    /* Giúp ::before căn chỉnh theo phần tử này */
+    text-decoration: none;
+    color: white;
+    padding: 10px 20px;
+    /* transition: color 0.2s ease; */
+    overflow: hidden;
+    /* Đảm bảo hiệu ứng không tràn ra ngoài */
+}
+
+.option::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #33334d;
+    transform: scaleX(0);
+    /* Ban đầu thu nhỏ lại */
+    transform-origin: left;
+    /* Xuất phát từ giữa */
+    transition: transform 0.3s ease-in-out;
+    z-index: -1;
+}
+
+/* Khi hover, mở rộng từ giữa ra hai bên */
+.option:hover::before {
+    transform: scaleX(1);
+}
+
+.homepath {
+    text-decoration: none;
+    color: white;
+    transition: color 0.3s ease;
+}
+
+.homepath:hover {
+    color: #007bff;
+}
+
+.currentpath {
+    text-decoration: none;
+    color: #007bff;
+}
+
+#HomePage {
+    font-size: 20px;
+    padding: 30px 10px;
+    color: yellowgreen;
+}
+
+.sidebar a {
+    color: white;
+    text-decoration: none;
+    padding: 30px 30px;
+    display: block;
+    font-size: 14px;
+}
+
+.content {
+    flex: 1;
+    padding: 20px;
+    margin-left: 250px;
+    overflow-y: auto;
+    margin-top: 60px;
+}
+
+.admin {
+    display: flex;
+    align-items: center;
+    padding: 30px 10px;
+    background-color: #33334d;
+}
+
+.admin img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.admin span {
+    font-size: 14px;
+}
+
+/* ------------------- */
+
+.path {
+    width: 90%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.container {
+    width: 90%;
+    margin: 20px auto;
+    background: #1e1e1e;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    overflow-x: auto;
+}
+
+.header {
+    background-color: #1e1e2f;
+}
+
+.header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 60px;
+    background-color: #1e1e2f;
+    color: #e0e0e0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.header h1 {
+    font-size: 18px;
+}
+
+.header .user-info {
+    display: flex;
+    align-items: center;
+}
+
+.header .user-info img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+/* content */
+.services-table {
+    width: 90%;
+    margin: 0 auto 20px;
+    background: #1e1e1e;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    overflow-x: auto;
+}
+
+.table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+
+    h1 {
+        font-size: 1.5rem;
+    }
+}
+
+.buttons button {
+    padding: 10px 15px;
+    margin-left: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    color: white;
+}
+
+/* .filter {
+    background-color: dodgerblue;
+    transition: background-color 0.3s ease;
+}
+.filter:hover {
+    background-color: mediumblue;
+} */
+
+.btn-add {
+    background-color: forestgreen;
+    transition: background-color 0.3s ease;
+}
+.btn-add:hover {
+    background-color: darkgreen;
+}
+
+.search {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    transition: width 0.4s ease-in-out;
+
+    input {
+        width: 20%;
+        padding: 8px;
+        border: 1px solid #333;
+        border-radius: 4px;
+        background: #2c2c2c;
+        transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s ease;
+        color: #e0e0e0;
+    }
+    input:focus {
+        width: 60%;
+    }
+}
+
+.search-filter {
+    text-align: center;
+
+    label {
+        padding: 0 5px;
+    }
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+
+    th {
+        padding: 15px 10px;
+        border: 1px solid #333;
+        background-color: #2c2c2c;
+        text-align: center;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    td {
+        padding: 15px 10px;
+        border: 1px solid #333;
+        background-color: #1e1e1e;
+        text-align: center;
+    }
+}
+
+.btn-delete {
+    background-color: red;
+    transition: background-color 0.3s ease;
+}
+
+.btn-delete:hover {
+    background-color: darkred;
+}
+
+.btn-update {
+    background-color: chocolate;
+    transition: background-color 0.3s ease;
+}
+
+.btn-update:hover {
+    background-color: brown;
+}
+
+/* delete popup */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(1px);
+    z-index: 5;
+}
+
+.delete-service {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.5);
+    width: 35%;
+    padding: 1.5rem 0;
+    background-color: #1e1e1e;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(255, 255, 255, 0.1);
+    z-index: 10;
+    color: #f9f9f9;
+    text-align: center;
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+
+    .container {
+        box-shadow: none !important;
+    }
+}
+
+.delete-service .btn-submit {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 1rem;
+}
+
+.delete-service .btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.delete-service .btn-yes {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.delete-service .btn-yes:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+.delete-service .btn-cancel {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.delete-service .btn-cancel:hover {
+    background-color: #a71d2a;
+    transform: scale(1.05);
+}
+
+.delete-service.show {
+    transform: translate(-50%, -50%) scale(1);
+}
