@@ -97,6 +97,8 @@ body {
     margin-left: 250px;
     overflow-y: auto;
     margin-top: 60px;
+    display: flex;
+    flex-direction: column;
 }
 
 
@@ -171,4 +173,10 @@ body {
     height: 40px;
     border-radius: 50%;
     margin-right: 10px;
+}
+
+.product-overview,
+.stock,
+.product-list {
+    margin: 20px;
 }
