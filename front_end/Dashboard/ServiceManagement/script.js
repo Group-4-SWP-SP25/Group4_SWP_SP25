@@ -7,24 +7,25 @@ const searchBar = document.querySelector('.search-input');
 const filterCheckboxes = document.querySelectorAll('.search-filter input[type="checkbox"]');
 
 // Support functions
+// Render table out
 function renderTable(result) {
     serviceTableBody.innerHTML = '';
 
     let dataRows = '';
     result.forEach((service) => {
-        const affInv = service.AffectInventory === 0 ? 'No' : 'Yes';
-
         const dataRow = `
                         <tr>
+
                             <td style="width: 4%">${service.ServiceTypeID}</td>
                             <td style="width: 4%">${service.PartID}</td>
-                            <td style="width: 4%">${affInv}</td>
                             <td style="width: 10%; text-align: left">${service.ServiceName}</td>
                             <td style="width: 18%; text-align: left"">${service.ServiceDescription}</td>
                             <td style="width: 6%">${service.ServicePrice} ₫</td>
-                            <td style="width: 10%" class="buttons">
-                                <button class="delete">Delete</button>
-                                <button class="update">Update</button>
+                            <td
+                                style="width: 10%"
+                                class="buttons">
+                                <button class="btn-delete">Delete</button>
+                                <button class="btn-update">Update</button>
                             </td>
                         </tr>
                         `;
@@ -32,8 +33,30 @@ function renderTable(result) {
         dataRows += dataRow;
     });
 
-    serviceTableBody.innerHTML = dataRows;
+    serviceTableBody.innerHTML += dataRows;
 }
+
+// Delete service
+// Confirm popup
+// function showHideConfimationDialog() {
+//     $('.delete-service').fadeToggle(200).toggleClass('hidden show');
+//     $('.overlay').toggleClass('hidden');
+//     $('body').toggleClass('no-scroll');
+// }
+
+// $(document).on('click', '.btn-delete', function () {
+//     if ($(this).text().trim() === 'Yes') {
+//         deleteService();
+//     }
+
+//     showHideConfimationDialog();
+// });
+
+// $(document).on('click', '.btn-submit button', async function () {
+//     showHideConfimationDialog();
+// });
+
+// async function deleteService() {}
 
 // Main functions
 async function getServiceListAll() {
@@ -46,82 +69,42 @@ async function getServiceListAll() {
     // console.log(result);
     // console.log(typeof result[0].ServiceTypeID);
 
-    let dataRows = '';
-    result.forEach((service) => {
-        const affInv = service.AffectInventory === 0 ? 'No' : 'Yes';
-
-        const dataRow = `
-                        <tr>
-                            <td style="width: 4%">${String(service.ServiceTypeID)}</td>
-                            <td style="width: 4%">${String(service.PartID)}</td>
-                            <td style="width: 4%">${affInv}</td>
-                            <td style="width: 10%; text-align: left">${service.ServiceName}</td>
-                            <td style="width: 18%; text-align: left"">${service.ServiceDescription}</td>
-                            <td style="width: 6%">${String(service.ServicePrice)} ₫</td>
-                            <td style="width: 10%" class="buttons">
-                                <button class="delete">Delete</button>
-                                <button class="update">Update</button>
-                            </td>
-                        </tr>
-                        `;
-
-        dataRows += dataRow;
-    });
-
-    serviceTableBody.innerHTML = dataRows;
+    renderTable(result);
 
     // Search
-    // searchBar.addEventListener('input', () => {
-    //     const searchTerm = searchBar.value.toLowerCase();
-    //     const filteredData = result.filter((row) => {
-    //         return Object.values(row).some((value) => {
-    //             if (typeof value === 'string') {
-    //                 return value.toLowerCase().includes(searchTerm);
-    //             }
-    //             return String(value).toLowerCase().includes(searchTerm);
-    //         });
-    //     });
-    //     renderTable(filteredData);
-    // });
-
     function applyFilters() {
         const searchTerm = searchBar.value.toLowerCase();
+
         const checkedColumns = Array.from(filterCheckboxes)
+
             .filter((checkbox) => checkbox.checked)
+
             .map((checkbox) => checkbox.dataset.column);
 
         let filteredData = result.filter((row) => {
             let searchMatch = true;
+
             if (searchTerm) {
-                searchMatch = Object.values(row).some((value, index) => {
-                    let searchValue = value;
-
-                    // handle AffectInventory
-                    if (Object.keys(row)[index] === 'AffectInventory') {
-                        searchValue = value === 0 ? 'No' : 'Yes';
+                searchMatch = Object.values(row).some((value) => {
+                    if (typeof value === 'string') {
+                        return value.toLowerCase().includes(searchTerm);
                     }
 
-                    if (typeof searchValue === 'string') {
-                        return searchValue.toLowerCase().includes(searchTerm);
-                    }
-                    return String(searchValue).toLowerCase().includes(searchTerm);
+                    return String(value).toLowerCase().includes(searchTerm);
                 });
             }
 
             let columnMatch = true;
+
             if (checkedColumns.length > 0) {
                 columnMatch = checkedColumns.some((column) => {
-                    let searchValue = row[column];
+                    const value = row[column];
 
-                    // handle AffectInventory
-                    if (column === 'AffectInventory') {
-                        searchValue = row[column] === 0 ? 'No' : 'Yes';
+                    if (typeof value === 'string') {
+                        return value.toLowerCase().includes(searchTerm);
                     }
 
-                    if (typeof searchValue === 'string') {
-                        return searchValue.toLowerCase().includes(searchTerm);
-                    }
-                    return String(searchValue).toLowerCase().includes(searchTerm);
+                    return String(value).toLowerCase().includes(searchTerm);
                 });
             }
 
