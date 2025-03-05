@@ -25,7 +25,7 @@ async function getServiceTypeList() {
                         </div>
                     </div>                    
                     `;
-        
+
         types += type;
     }
 

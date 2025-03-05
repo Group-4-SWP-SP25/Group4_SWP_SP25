@@ -177,5 +177,6 @@ doneButton.addEventListener('click', () => {
     } else {
         // mutil message
         alert('funtion not done yet!')
+        console.log(ListHeader)
     }
 })

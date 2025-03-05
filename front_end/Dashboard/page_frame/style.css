@@ -127,4 +127,3 @@ body {
 .option:hover::before {
     transform: scaleX(1);
 }
-
