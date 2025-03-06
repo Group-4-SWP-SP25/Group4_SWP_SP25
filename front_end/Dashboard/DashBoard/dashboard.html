@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0" />
+        <title>Dashboard</title>
+        <link
+            rel="stylesheet"
+            href="./style.css" />
+    </head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    <link rel="stylesheet" href="./style.css">
-</head>
-
-<body>
-
-
-    <div class="header">
+    <body>
+        <!-- <div class="header">
         <h1>Dashboard</h1>
         <div class="user-info">
             <span>Welcome, Admin</span>
@@ -35,41 +36,74 @@
         <a class="option" href="http://127.0.0.1:5500/front_end/Dashboard/Message/Message.html">Messages</a>
         <a class="option" href="#">Settings</a>
         <a class="option" href="#">Sign Out</a>
-    </div>
+    </div> -->
 
-    <div class="content">
-        <div class="path">
-            <a href="./dashboard.html" class="currentpath">Home</a>
-        </div>
+        <!-- Header -->
+        <header>
+            <div class="page-frame"></div>
+        </header>
+        <!-- End header -->
 
-        <div class="summary">
-            <h3>Today's Sales</h3>
-            <div class="sales-container">
-                <div class="sales-item">
-                    <h4>Total Sales</h4>
-                    <p>$1k</p>
-                    <span>+8% from yesterday</span>
-                </div>
-                <div class="sales-item">
-                    <h4>Total Orders</h4>
-                    <p>300</p>
-                    <span>+5% from yesterday</span>
-                </div>
-                <div class="sales-item">
-                    <h4>Products Sold</h4>
-                    <p>5</p>
-                    <span>+1.2% from yesterday</span>
-                </div>
-                <div class="sales-item">
-                    <h4>New Customers</h4>
-                    <p>8</p>
-                    <span>0.5% from yesterday</span>
+        <div class="content">
+            <div class="path">
+                <a
+                    href="./dashboard.html"
+                    class="currentpath">
+                    Home
+                </a>
+            </div>
+
+            <div class="summary">
+                <h3>Today's Sales</h3>
+                <div class="sales-container">
+                    <div class="sales-item">
+                        <h4>Total Sales</h4>
+                        <p>$1k</p>
+                        <span>+8% from yesterday</span>
+                    </div>
+                    <div class="sales-item">
+                        <h4>Total Orders</h4>
+                        <p>300</p>
+                        <span>+5% from yesterday</span>
+                    </div>
+                    <div class="sales-item">
+                        <h4>Products Sold</h4>
+                        <p>5</p>
+                        <span>+1.2% from yesterday</span>
+                    </div>
+                    <div class="sales-item">
+                        <h4>New Customers</h4>
+                        <p>8</p>
+                        <span>0.5% from yesterday</span>
+                    </div>
                 </div>
             </div>
         </div>
 
+        <!-- Scripts -->
+        <script>
+            fetch('../page_frame/page_frame.html')
+                .then((response) => response.text())
+                .then((data) => {
+                    document.querySelector('.page-frame').innerHTML = data;
+                    const css = document.createElement('link');
+                    css.rel = 'stylesheet';
+                    css.href = '../page_frame/style.css';
+                    document.head.appendChild(css);
 
-    </div>
-</body>
-
+                    // current page indicator
+                    const currentPageFile = window.location.pathname.split('/').pop();
+                    document
+                        .querySelector('.page-frame')
+                        .querySelectorAll('.option')
+                        .forEach((option) => {
+                            const anchorHref = option.getAttribute('href');
+                            if (anchorHref.includes(currentPageFile)) {
+                                option.style.backgroundColor = '#33334d';
+                            }
+                        });
+                });
+        </script>
+        <!-- End scripts -->
+    </body>
 </html>
