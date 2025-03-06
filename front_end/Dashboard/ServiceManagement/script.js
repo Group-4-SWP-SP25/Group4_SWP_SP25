@@ -5,39 +5,15 @@ const serviceTableBody = document.querySelector('tbody');
 // const sortButtons = document.querySelectorAll('.sort');
 const searchBar = document.querySelector('.search-input');
 const filterCheckboxes = document.querySelectorAll('.search-filter input[type="checkbox"]');
-const popup = document.querySelector('.popup');
 const overlay = document.querySelector('.overlay');
+const popupDelete = document.querySelector('.popup-delete');
+const popupModify = document.querySelector('.popup-modify');
+
+// Global variables
+let chosenServiceID = null; // store chosen ID
+let oldServiceData = []; // store old render table
 
 // Support functions
-// Render table out
-function renderTable(result) {
-    serviceTableBody.innerHTML = ''; // clear old content
-
-    let dataRows = '';
-    result.forEach((service) => {
-        const dataRow = `
-                        <tr>
-                            <td style="width: 4%">${service.ServiceTypeID}</td>
-                            <td style="width: 4%">${service.PartID}</td>
-                            <td style="width: 10%; text-align: left">${service.ServiceName}</td>
-                            <td style="width: 18%; text-align: left"">${service.ServiceDescription}</td>
-                            <td style="width: 6%">${service.ServicePrice} ₫</td>
-                            <td style="width: 10%" class="buttons">
-                                <button class="btn-delete" data-serviceid="${service.ServiceID}" 
-                                        onclick="showPopup(this);">
-                                    Delete
-                                </button>
-                                <button class="btn-update">Update</button>
-                            </td>
-                        </tr>
-                        `;
-
-        dataRows += dataRow;
-    });
-
-    serviceTableBody.innerHTML += dataRows;
-}
-
 // Search service
 function searchService(result) {
     const filterFunction = () => {
@@ -47,9 +23,12 @@ function searchService(result) {
             .map((checkbox) => checkbox.dataset.column);
 
         const isSearchMatch = (row) => {
-            return !searchTerm || Object.values(row)
-                .filter((value) => typeof value === 'string')
-                .some((value) => value.toLowerCase().includes(searchTerm));
+            return (
+                !searchTerm ||
+                Object.values(row)
+                    .filter((value) => typeof value === 'string')
+                    .some((value) => value.toLowerCase().includes(searchTerm))
+            );
         };
 
         const isColumnMatch = (row) => {
@@ -84,7 +63,7 @@ function searchService(result) {
             } else {
                 clearTimeout(lastFunc);
                 lastFunc = setTimeout(function () {
-                    if ((Date.now() - lastRan) >= limit) {
+                    if (Date.now() - lastRan >= limit) {
                         func.apply(this, args);
                         lastRan = Date.now();
                     }
@@ -103,28 +82,25 @@ function searchService(result) {
 }
 
 // Delete service
-let chosenServiceID = null; // store chosen ID
-let oldServiceData = []; // store old render table
-
-function showPopup(element) {
+function showDeletePopup(element) {
     chosenServiceID = +element.dataset.serviceid; // get dataset from self
     console.log(chosenServiceID);
-    popup.classList.remove('hidden');
+    popupDelete.classList.remove('hidden');
     overlay.classList.remove('hidden');
 }
 
-function hidePopup() {
-    popup.classList.add('hidden');
+function hideDeletePopup() {
+    popupDelete.classList.add('hidden');
     overlay.classList.add('hidden');
 }
 
-function confirmedPopup() {
+function confirmDeletePopup() {
     if (chosenServiceID) {
         deleteService(chosenServiceID);
     }
-    popup.classList.add('hidden');
-    overlay.classList.add('hidden');
     chosenServiceID = null; // reset storage variable
+    popupDelete.classList.add('hidden');
+    overlay.classList.add('hidden');
 }
 
 async function deleteService(serviceID) {
@@ -137,6 +113,61 @@ async function deleteService(serviceID) {
     } catch (err) {
         console.error('Error deleting service:', err);
     }
+}
+
+// Update function
+function showModifyPopup(element) {
+    chosenServiceID = +element.dataset.serviceid; // get dataset from self
+    console.log(chosenServiceID);
+    popupModify.classList.remove('hidden');
+    overlay.classList.remove('hidden');
+}
+
+function hideModifyPopup() {
+    popupModify.classList.add('hidden');
+    overlay.classList.add('hidden');
+}
+
+function confirmModifyPopup() {
+    popupModify.classList.add('hidden');
+    overlay.classList.add('hidden');
+}
+
+// Render table out
+function renderTable(result) {
+    serviceTableBody.innerHTML = ''; // clear old content
+
+    let dataRows = '';
+    result.forEach((service) => {
+        const dataRow = `
+                        <tr>
+                            <td style="width: 4%">${service.ServiceTypeID}</td>
+                            <td style="width: 4%">${service.PartID}</td>
+                            <td style="width: 10%; text-align: left">${service.ServiceName}</td>
+                            <td style="width: 18%; text-align: left"">${service.ServiceDescription}</td>
+                            <td style="width: 6%">${service.ServicePrice} ₫</td>
+                            <td style="width: 10%" class="buttons">
+                                <button class="btn-delete" data-serviceid="${service.ServiceID}" 
+                                        onclick="showDeletePopup(this);">
+                                    Delete
+                                </button>
+                                <button class="btn-update" data-serviceid="${service.ServiceID}"
+                                        onclick="showModifyPopup(this);">
+                                    Update
+                                </button>
+                            </td>
+                        </tr>
+                        `;
+
+        dataRows += dataRow;
+    });
+
+    serviceTableBody.innerHTML += dataRows;
+}
+
+// Set refresh interval
+function scheduleNextUpdate(delay) {
+    setTimeout(getServiceListAll, delay);
 }
 
 // Main functions
@@ -153,19 +184,14 @@ async function getServiceListAll() {
             renderTable(result);
             searchService(result);
             oldServiceData = result;
-            scheduleNextUpdate(500); // short delay if changed
+            scheduleNextUpdate(1000);
         } else {
-            scheduleNextUpdate(10000); // long delay if unchanged
+            scheduleNextUpdate(3000);
         }
     } catch (error) {
         console.error('Error fetching service list:', error);
         scheduleNextUpdate(5000); // retry if error
     }
-}
-
-// set refresh interval
-function scheduleNextUpdate(delay) {
-    setTimeout(getServiceListAll, delay);
 }
 
 getServiceListAll();
