@@ -39,7 +39,11 @@
       background-attachment: scroll;
       background-position: center top;
       background-repeat: repeat;
+      max-height: 80vh;
+      /* Ẩn cuộn ngoài */
+      overflow: hidden;
     }
+
 
     .close-window {
       position: absolute;
@@ -51,24 +55,58 @@
       border: none;
       background: none;
       font-weight: normal;
+      z-index: 9999;
     }
 
     ul.page-section {
-      display: flex;
-      flex-wrap: wrap;
+      display: block;
       margin: 0;
-      padding: 0 38px;
+      padding: 20px;
       list-style: none;
+      /* Chiều cao tối đa của danh sách */
+      overflow-y: auto;
+      /* Bật cuộn dọc */
+      overflow-x: hidden;
+      /* Ẩn cuộn ngang */
+
+      box-sizing: border-box;
+      /* Màu nền nhẹ để dễ thấy */
+      border-radius: 10px;
+    }
+
+    /* Style thanh cuộn nhỏ */
+    .order-section.page-section::-webkit-scrollbar {
+      width: 6px;
+      /* Độ rộng thanh cuộn */
+    }
+
+    .order-section.page-section::-webkit-scrollbar-track {
+      background: #f0f0f0;
+      /* Màu nền */
+      border-radius: 10px;
+    }
+
+    .order-section.page-section::-webkit-scrollbar-thumb {
+      background: #a0a0a0;
+      /* Màu thanh cuộn */
+      border-radius: 10px;
+    }
+
+    .order-section.page-section::-webkit-scrollbar-thumb:hover {
+      background: #888;
+      /* Màu khi hover */
     }
 
     .form-input-wide {
       width: 100%;
     }
 
+
+
     /* Header */
 
     div.form-header-group.header-large {
-      padding: 40px 52px;
+      padding: 20px 0 40px 60px;
       border-bottom: #12458c 1px solid;
       margin: 0px -38px;
     }
@@ -150,7 +188,7 @@
       }
     }
 
-    .choose-service {
+    .choose {
       p.top-title {
         margin-bottom: 10px;
         font-weight: 400;
@@ -338,20 +376,31 @@
           </div>
           <div class="separate"></div>
           <div class="content">
-
           </div>
         </div>
       </li>
 
+      <!-- Choose branch -->
+      <li class="form-line choose choose-branch">
+        <label class="form-label form-label-top">Choose branch</label>
+        <p class="top-title">Please choose branch to maintain: </p>
+        <div class="branch-list">
+          <div>
+            <select class="select-branch">
+            </select>
+          </div>
+          <div class="form-error-message error-branch hidden">
+            <span class="error-navigation-message">Please choose a branch!</span>
+          </div>
+      </li>
+
       <!-- Choose a service -->
-      <li class="form-line choose-service">
+      <li class="form-line choose choose-service hidden">
         <label class="form-label form-label-top">Choose service</label>
         <p class="top-title">Please choose a service for <span class="component-name"></span>: </p>
         <div class="service-list">
           <div>
             <select class="select-service">
-
-
             </select>
           </div>
           <div class="form-error-message error-service hidden">
@@ -388,7 +437,6 @@
         </div>
       </li>
 
-
       <li class="form-input-wide">
         <div class="form-pagebreak">
           <div class="btn-space"></div>
@@ -396,8 +444,6 @@
               Order</button></div>
         </div>
       </li>
-
-
     </ul>
 
 

@@ -1,7 +1,7 @@
 const serviceType = document.querySelector('.svc-types');
 
 async function getServiceTypeList() {
-    const response = await fetch('http://localhost:3000/getServiceTypeList', {
+    const response = await fetch('http://localhost:3000/getServiceTypeListAll', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' }
     });
@@ -25,7 +25,7 @@ async function getServiceTypeList() {
                         </div>
                     </div>                    
                     `;
-        
+
         types += type;
     }
 

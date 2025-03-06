@@ -1,6 +1,7 @@
 $(document).ready(function () {
   const urlParams = new URLSearchParams(window.location.search);
   const carID = parseInt(urlParams.get("carID"));
+
   $(document).on("click", ".show-service", function (event) {
     event.preventDefault();
     showHidePlaceOrder();
@@ -40,6 +41,27 @@ $(document).ready(function () {
         const componentName = $(".component-name");
         componentName.html(`${partInfo.PartName}`);
 
+        const branchList = await $.ajax({
+          url: "http://localhost:3000/branchList",
+          method: "POST",
+          contentType: "application/json",
+        });
+        const branchBody = $(".select-branch");
+        let branchOption = `<option disabled selected value="0">-- Choose a branch --</option>
+        `;
+
+        branchList.forEach((branch) => {
+          branchOption += `<option value="${branch.BranchID}">${branch.BranchName}</option>
+          `;
+        });
+
+        branchBody.html(branchOption);
+
+        branchBody.change(async function () {
+          $(".error-branch").addClass("hidden");
+          $(".choose-service").slideDown(500);
+        });
+
         const serviceList = await $.ajax({
           url: "http://localhost:3000/serviceListPerPart",
           method: "POST",
@@ -60,6 +82,7 @@ $(document).ready(function () {
 
         const quantityContainer = $(".quantity");
         listServiceBody.change(async function () {
+          const branchID = parseInt(branchBody.val());
           const serviceID = parseInt(listServiceBody.val());
           $(".error-service").addClass("hidden");
           $("error-quantity").addClass("hidden");
@@ -80,11 +103,21 @@ $(document).ready(function () {
           );
           if (selectedService.AffectInventory === 1) {
             const accessory = await $.ajax({
-              url: "http://localhost:3000/componentInStockInfo",
+              url: "http://localhost:3000/accessoryInfo",
               method: "POST",
               contentType: "application/json",
               data: JSON.stringify({
                 serviceID: serviceID,
+              }),
+            });
+
+            const componentInStock = await $.ajax({
+              url: "http://localhost:3000/componentInStockInfo",
+              method: "POST",
+              contentType: "application/json",
+              data: JSON.stringify({
+                branchID: branchID,
+                accessoryID: accessory.AccessoryID,
               }),
             });
             quantityContainer.slideDown(500);
@@ -92,7 +125,7 @@ $(document).ready(function () {
             $(".price-title .component-unit").removeClass("hidden");
             $(".price-value .component-unit")
               .removeClass("hidden")
-              .html(accessory.UnitPrice.toLocaleString("vi-VN") + "₫");
+              .html(componentInStock.UnitPrice.toLocaleString("vi-VN") + "₫");
             calTotalPrice();
           } else {
             $(".qty-val").val(0);
@@ -134,6 +167,12 @@ async function placeOrder() {
 
     const partID = $(".show-service").data("id");
 
+    const branchID = parseInt($(".select-branch").val());
+    if (isNaN(branchID)) {
+      $(".error-branch").removeClass("hidden");
+      return;
+    }
+
     const serviceID = parseInt($(".select-service").val());
 
     if (isNaN(serviceID)) {
@@ -167,6 +206,7 @@ async function placeOrder() {
         carID: carID,
         partID: partID,
         serviceID: serviceID,
+        branchID: branchID,
         quantityUsed: quantityUsed,
       }),
     });
@@ -188,6 +228,8 @@ function showHidePlaceOrder() {
   $(".overlay").toggleClass("hidden");
   $("body").toggleClass("no-scroll");
 
+  $(".choose-service").slideUp();
+
   $(".quantity").slideUp();
   $(".price-title .component-unit").addClass("hidden");
   $(".price-title .service").addClass("hidden");
@@ -200,6 +242,7 @@ function showHidePlaceOrder() {
 
 async function calTotalPrice() {
   const serviceID = parseInt($(".select-service").val());
+  const branchID = parseInt($(".select-branch").val());
   const selectedService = await $.ajax({
     url: "http://localhost:3000/serviceInfo",
     method: "POST",
@@ -210,14 +253,24 @@ async function calTotalPrice() {
   });
 
   const accessory = await $.ajax({
-    url: "http://localhost:3000/componentInStockInfo",
+    url: "http://localhost:3000/accessoryInfo",
     method: "POST",
     contentType: "application/json",
     data: JSON.stringify({
       serviceID: serviceID,
     }),
   });
-  const componentPrice = accessory.UnitPrice;
+
+  const componentInStock = await $.ajax({
+    url: "http://localhost:3000/componentInStockInfo",
+    method: "POST",
+    contentType: "application/json",
+    data: JSON.stringify({
+      branchID: branchID,
+      accessoryID: accessory.AccessoryID,
+    }),
+  });
+  const componentPrice = componentInStock.UnitPrice;
   const servicePrice = selectedService.ServicePrice;
   const quantity = $(".qty-val").val();
 

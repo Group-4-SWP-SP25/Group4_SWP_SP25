@@ -4,7 +4,7 @@ const serviceTypes = urlParams.get('serviceTypeName');
 const detailTable = document.querySelector('.detail-table');
 
 async function getServiceTypeDetailByName() {
-    const response = await fetch('http://localhost:3000/getServiceTypeDetailByName', {
+    const response = await fetch('http://localhost:3000/getServiceTypeListByServiceTypeName', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

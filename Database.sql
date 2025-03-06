@@ -631,7 +631,7 @@ INSERT INTO [Car](UserID, CarName, Brand, RegistrationNumber, [Year], CarImage, 
 
 
 INSERT INTO [Order] (UserID, CarID, BranchID, PartID, ServiceID, QuantityUsed)
-VALUES (2, 1, 1, 8, 114, 3);
+VALUES (2, 1, 1, 8, 114, 2);
 
 --ENABLE TRIGGER DeleteOrder ON [Order];
 --GO

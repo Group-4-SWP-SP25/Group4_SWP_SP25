@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0" />
+        <title>Popup Example</title>
+        <style>
+            .popup {
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background-color: rgba(255, 255, 255, 0.1);
+                padding: 20px;
+                border-radius: 10px;
+                z-index: 10;
+                text-align: center;
+            }
+
+            .popup h2 {
+                font-size: 24px;
+                margin-bottom: 20px;
+            }
+
+            .popup-buttons button {
+                padding: 10px 20px;
+                margin: 0 10px;
+                cursor: pointer;
+            }
+
+            .overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.6);
+                backdrop-filter: blur(1px);
+                z-index: 5;
+            }
+
+            .hidden {
+                display: none;
+            }
+        </style>
+    </head>
+    <body>
+        <button id="showPopup">Show Popup</button>
+
+        <div
+            id="myPopup"
+            class="popup hidden">
+            <h2>Confirm?</h2>
+            <div class="popup-buttons">
+                <button id="acceptButton">Accept</button>
+                <button id="cancelButton">Cancel</button>
+            </div>
+        </div>
+        <div
+            id="overlay"
+            class="overlay hidden"></div>
+
+        <script src="script.js"></script>
+
+        <script>
+            const showPopupButton = document.getElementById('showPopup');
+            const popup = document.getElementById('myPopup');
+            const overlay = document.getElementById('overlay');
+            const acceptButton = document.getElementById('acceptButton');
+            const cancelButton = document.getElementById('cancelButton');
+
+            showPopupButton.addEventListener('click', () => {
+                popup.classList.remove('hidden');
+                overlay.classList.remove('hidden');
+            });
+
+            acceptButton.addEventListener('click', () => {
+                // Handle accept logic here
+                popup.classList.add('hidden');
+                overlay.classList.add('hidden');
+            });
+
+            cancelButton.addEventListener('click', () => {
+                popup.classList.add('hidden');
+                overlay.classList.add('hidden');
+            });
+
+            overlay.addEventListener('click', () => {
+                popup.classList.add('hidden');
+                overlay.classList.add('hidden');
+            });
+        </script>
+    </body>
+</html>

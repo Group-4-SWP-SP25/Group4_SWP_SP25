@@ -15,18 +15,18 @@ const payment = async (req, res) => {
     hashAlgorithm: "SHA512",
     loggerFn: ignoreLogger,
   });
-  const tomorrow = new Date();
-  tomorrow.setDate(tomorrow.getDate() + 1);
+  const exprire = new Date();
+  exprire.setDate(exprire.getMinutes() + 15);
   const vnpayResponse = await vnp.buildPaymentUrl({
-    vnp_Amount: 100000,
+    vnp_Amount: req.body.money,
     vnp_IpAddr: "127.0.0.1",
-    vnp_TxnRef: "123456",
+    vnp_TxnRef: `${Date.now()}`,
     vnp_OrderInfo: "Test",
     vnp_OrderType: "billpayment",
     vnp_ReturnUrl: "http://localhost:3000/payment/callback",
     vnp_Locale: VnpLocale.EN,
     vnp_CreateDate: dateFormat(new Date()),
-    vnp_ExpireDate: dateFormat(tomorrow),
+    vnp_ExpireDate: dateFormat(exprire),
   });
   res.status(200).send(vnpayResponse);
 };

@@ -20,7 +20,7 @@ const paymentCallback = (req, res) => {
         "http://127.0.0.1:5500/front_end/Payment/payment.html"
       );
       return;
-    } else if (vnpParams["vnp _ResponseCode"] === "00") {
+    } else if (vnpParams["vnp _ResponseCode"] == "00") {
       return res.redirect("/frontend/Payment/success.html");
     } else {
       return res.redirect("/frontend/Payment/fail.html");
