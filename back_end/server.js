@@ -13,7 +13,7 @@ app.use(
       `http://127.0.0.1:5501`,
       `http://localhost:5501`,
       /http:\/\/127\.0\.0\.1:300\d/, // please do not change
-      /http:\/\/localhost:300\d/ // please do not change
+      /http:\/\/localhost:300\d/, // please do not change
     ], // Chỉ định origin được phép truy cập
     credentials: true, // Cho phép gửi cookie hoặc session
   })
@@ -36,6 +36,10 @@ const {
   getTotalUserCount,
 } = require("./myModule/controller/UserListControl.js");
 const TotalRevenueToday = require("./myModule/database/SaleReport/TotalRevenueToday.js");
+const TotalOrderToday = require("./myModule/database/SaleReport/TotalOrderToday.js");
+const TotalProductSold = require("./myModule/database/SaleReport/TotalProductSold.js");
+const TotalNewCustomer = require("./myModule/database/SaleReport/TotalNewCustomer.js");
+const TopProduct = require("./myModule/database/SaleReport/TopProduct.js");
 // user
 const register = require("./myModule/controller/register.js");
 const getPassword = require("./myModule/controller/user/getPassword.js");
@@ -55,7 +59,7 @@ const updateUserProfile = require("./myModule/controller/user/updateUserProfile.
 const serviceInfo = require("./myModule/controller/service/serviceInfo.js");
 const serviceListPerPart = require("./myModule/controller/service/listServicePerPart.js");
 const getServiceTypeDetailByName = require("./myModule/database/service/getServiceTypeDetailByName.js");
-const getServiceTypeList = require("./myModule/database/service/getServiceTypeList.js")
+const getServiceTypeList = require("./myModule/database/service/getServiceTypeList.js");
 
 
 // car
@@ -63,8 +67,11 @@ const carInfo = require("./myModule/controller/car/carInfo.js");
 const carList = require("./myModule/controller/car/carList.js");
 
 // car part
-const listCarPartBySystem = require("./myModule/controller/carPart/listCarPartBySystem.js");
 const carPartInfoInCar = require("./myModule/controller/carPart/carPartInfoInCar.js");
+
+// part info
+const listPartBySystem = require("./myModule/controller/partInfo/listPartBySystem.js");
+const partInfo = require("./myModule/controller/partInfo/partInfo.js");
 
 // car system
 const carSystemInfo = require("./myModule/controller/carSystem/carSystemInfo.js");
@@ -74,12 +81,17 @@ const listCarSystem = require("./myModule/database/carSystem/listCarSystem.js");
 const componentInStockInfo = require("./myModule/controller/inventory/componentInStockInfo.js");
 
 // order
+const orderInfo = require("./myModule/controller/order/orderInfo.js");
 const placeOrder = require("./myModule/controller/order/placeOrder.js");
 const listOrder = require("./myModule/controller/order/listOrder.js");
 const {
   removeAnOrder,
   removeAllOrder,
 } = require("./myModule/controller/order/removeOrder.js");
+
+// payment
+const payment = require("./myModule/controller/payment/payment.js");
+const paymentCallback = require("./myModule/controller/payment/callback.js");
 
 // message
 const {
@@ -104,6 +116,10 @@ app.post("/Message/GetMessage", authenticateJWT, GetMessage);
 app.post("/Message/GetList", authenticateJWT, GetList);
 app.post("/Message/CheckMessage", authenticateJWT, CheckMessage);
 app.post("/TotalRevenueToday", authenticateADMIN, TotalRevenueToday);
+app.post("/TotalOrderToday", authenticateADMIN, TotalOrderToday);
+app.post("/TotalProductSold", authenticateADMIN, TotalProductSold);
+app.post("/TotalNewCustomer", authenticateADMIN, TotalNewCustomer);
+app.post("/TopProduct", authenticateADMIN, TopProduct);
 // user
 app.post("/getPassword", getPassword);
 app.post("/changePassword", changePassword);
@@ -122,7 +138,7 @@ app.post("/updateUserProfile", updateUserProfile);
 app.post("/serviceInfo", serviceInfo);
 app.post("/serviceListPerPart", serviceListPerPart);
 app.post("/getServiceTypeDetailByName", getServiceTypeDetailByName);
-app.post("/getServiceTypeList", getServiceTypeList)
+app.post("/getServiceTypeList", getServiceTypeList);
 
 // car
 app.post("/carInfo", carInfo);
@@ -133,17 +149,25 @@ app.post("/carSystemInfo", carSystemInfo);
 app.post("/listCarSystem", listCarSystem);
 
 // car part
-app.post("/listCarPartBySystem", listCarPartBySystem);
 app.post("/carPartInfoInCar", carPartInfoInCar);
+
+// part info
+app.post("/listPartBySystem", listPartBySystem);
+app.post("/partInfo", partInfo);
 
 // inventory
 app.post("/componentInStockInfo", componentInStockInfo);
 
 // order
+app.post("/orderInfo", orderInfo);
 app.post("/placeOrder", placeOrder);
 app.post("/listOrder", listOrder);
 app.post("/removeAnOrder", removeAnOrder);
 app.post("/removeAllOrder", removeAllOrder);
+
+// payment
+app.post("/payment", payment);
+app.get("/payment/callback", paymentCallback);
 
 // ----------------------------------------------------------
 // START SERVER

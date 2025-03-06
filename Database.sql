@@ -32,6 +32,7 @@ CREATE TABLE [User](
 	Phone VARCHAR(11) DEFAULT NULL ,
 	DateCreated DATETIME DEFAULT CURRENT_TIMESTAMP,
 	DOB DATETIME DEFAULT NULL,
+	Avartar TEXT DEFAULT NULL,
 	LastActivity DATETIME,
 );
 GO
@@ -57,16 +58,21 @@ CREATE TABLE CarSystem (
 );
 GO
 
+CREATE TABLE PartInfo (
+	PartID INT NOT NULL PRIMARY KEY IDENTITY(1, 1),
+    PartName VARCHAR(200) NOT NULL,
+	CarSystemID INT NOT NULL FOREIGN KEY REFERENCES CarSystem(CarSystemID) ON DELETE CASCADE,
+	[Image]  NVARCHAR(500)
+);
+GO
+
 CREATE TABLE CarPart (
     CarID INT NOT NULL FOREIGN KEY REFERENCES Car(CarID) ON DELETE CASCADE,
-    PartID INT NOT NULL,
-    PartName VARCHAR(200) NOT NULL,
-    CarSystemID INT NOT NULL FOREIGN KEY REFERENCES CarSystem(CarSystemID) ON DELETE CASCADE,
+    PartID INT NOT NULL FOREIGN KEY REFERENCES PartInfo(PartID),
     InstallationDate DATETIME DEFAULT NULL,
     ExpiryDate DATETIME DEFAULT NULL,
     [Status] VARCHAR(10) DEFAULT NULL CHECK ([Status] IN ('Active', 'Broken', 'Expired')),
-    CONSTRAINT pk_CarPart PRIMARY KEY (CarID, PartID),
-    [Image]  NVARCHAR(500)
+    CONSTRAINT pk_CarPart PRIMARY KEY (CarID, PartID)
 );      
 GO
 
@@ -93,13 +99,29 @@ CREATE TABLE [Service] (
 GO
 
 -- 7
-CREATE TABLE Inventory (
+CREATE TABLE Branch (
+	BranchID INT IDENTITY (1, 1) NOT NULL PRIMARY KEY,
+	BranchName VARCHAR(200) NOT NULL,
+	BranchAddress TEXT
+);
+GO
+
+-- 8
+CREATE TABLE AccessoryInfo (
 	AccessoryID INT IDENTITY (1, 1) NOT NULL PRIMARY KEY,
 	AccessoryName VARCHAR(200) NOT NULL,
-	ServiceID INT FOREIGN KEY REFERENCES Service(ServiceID),
-	Quantity INT NOT NULL,
-	UnitPrice FLOAT NOT NULL,
+	ServiceID INT NOT NULL FOREIGN KEY REFERENCES Service(ServiceID),
 	[Description] TEXT NOT NULL
+);
+GO
+
+-- 9
+CREATE TABLE Inventory (
+	BranchID INT NOT NULL FOREIGN KEY REFERENCES Branch(BranchID),
+	AccessoryID INT NOT NULL FOREIGN KEY REFERENCES AccessoryInfo(AccessoryID),
+	Quantity INT,
+	UnitPrice FLOAT,
+	CONSTRAINT pk_Inventory PRIMARY KEY (BranchID, AccessoryID)
 );
 GO
  
@@ -110,6 +132,7 @@ CREATE TABLE [Order] (
     CarID INT NOT NULL,
     PartID INT NOT NULL,
 	ServiceID INT FOREIGN KEY REFERENCES [Service](ServiceID),
+	BranchID INT FOREIGN KEY REFERENCES Branch(BranchID),
     QuantityUsed INT NOT NULL,
     EstimatedCost FLOAT NOT NULL,
 	OrderDate DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -161,7 +184,45 @@ BEGIN
 END;
 GO
 
+INSERT INTO [CarSystem](CarSystemName) VALUES 
+('Engine System'),
+('Braking System'),
+('Electrical System'),
+('Air Conditioning System'),
+('Fuel System'),
+('Battery System'),
+('Shock Absorbers System'),
+('Wheel System');
+GO
 
+INSERT INTO PartInfo(PartName, CarSystemID, [Image]) VALUES 
+('Engine Oil', 1,'/resource/CarPark_image/Oil.webp'),
+('Spark Plug', 1,'/resource/CarPark_image/SparkPlug.webp'),
+('Injector', 1,'/resource/CarPark_image/InjectorE.webp'),
+('Cooling System', 1,'/resource/CarPark_image/CoolingSystem.webp'),
+('Brake Pad', 2,'/resource/CarPark_image/BrakePad.webp'),
+('Rotor', 2,'/resourc	e/CarPark_image/Rotor.webp'),
+('Fluid', 2,'/resource/CarPark_image/Fluids.webp'),
+('Bulb', 3,'/resource/CarPark_image/Buld.webp'),
+('Fuse', 3,'/resource/CarPark_image/Fuse.webp'),
+('Electric System', 3,'/resource/CarPark_image/ElectricSystem.webp'),
+('Wiring', 3,'/resource/CarPark_image/Wiring.webp'),
+('Gas', 4,'/resource/CarPark_image/Gas.webp'),
+('Condenser', 4,'/resource/CarPark_image/Condenser.webp'),
+('Filter', 4,'/resource/CarPark_image/FilterF.webp'),
+('Pump', 5,'/resource/CarPark_image/Pump.webp'),
+('Filter', 5,'/resource/CarPark_image/FilterA.webp'),
+('Injection', 5,'/resource/CarPark_image/InjectorF.webp'),
+('Charging', 6,'/resource/CarPark_image/Charging.webp'),
+('Terminal', 6,'/resource/CarPark_image/Terminal.webp'),
+('Shock', 7,'/resource/CarPark_image/Shock.webp'),
+('Control Arm', 7,'/resource/CarPark_image/ControlArm.webp'),
+('Tie Rod', 7,'/resource/CarPark_image/TieRod.webp'),
+('Suspension', 7,'/resource/CarPark_image/Suspension.webp'),
+('Tire', 8,'/resource/CarPark_image/Tire.webp'),
+('Rim', 8,'/resource/CarPark_image/Rim.webp'),
+('Wheel Hub', 8,'/resource/CarPark_image/WheelHub.webp')
+GO
 
 -- Trigger for Car Parts
 CREATE TRIGGER InsertCar
@@ -170,52 +231,13 @@ AFTER INSERT
 AS
 BEGIN
     SET NOCOUNT ON;
-
-	-- Danh sách các bộ phận mặc định của xe
-    DECLARE @DefaultParts TABLE (
-        PartName VARCHAR(200),
-        CarSystemID INT,
-		[Image] VARCHAR(500)
-    );
-
-    -- Thêm danh sách các bộ phận mặc định
-    INSERT INTO @DefaultParts (PartName, CarSystemID, [Image]) VALUES 
-    ('Engine Oil', 1,'/resource/CarPark_image/Oil.webp'),
-    ('Spark Plug', 1,'/resource/CarPark_image/SparkPlug.webp'),
-    ('Injector', 1,'/resource/CarPark_image/InjectorE.webp'),
-    ('Cooling System', 1,'/resource/CarPark_image/CoolingSystem.webp'),
-    ('Brake Pad', 2,'/resource/CarPark_image/BrakePad.webp'),
-    ('Rotor', 2,'/resourc	e/CarPark_image/Rotor.webp'),
-    ('Fluid', 2,'/resource/CarPark_image/Fluids.webp'),
-	('Bulb', 3,'/resource/CarPark_image/Buld.webp'),
-    ('Fuse', 3,'/resource/CarPark_image/Fuse.webp'),
-    ('Electric System', 3,'/resource/CarPark_image/ElectricSystem.webp'),
-	('Wiring', 3,'/resource/CarPark_image/Wiring.webp'),
-    ('Gas', 4,'/resource/CarPark_image/Gas.webp'),
-	('Condenser', 4,'/resource/CarPark_image/Condenser.webp'),
-	('Filter', 4,'/resource/CarPark_image/FilterF.webp'),
-    ('Pump', 5,'/resource/CarPark_image/Pump.webp'),
-    ('Filter', 5,'/resource/CarPark_image/FilterA.webp'),
-	('Injection', 5,'/resource/CarPark_image/InjectorF.webp'),
-	('Charging', 6,'/resource/CarPark_image/Charging.webp'),
-	('Terminal', 6,'/resource/CarPark_image/Terminal.webp'),
-    ('Shock', 7,'/resource/CarPark_image/Shock.webp'),
-    ('Control Arm', 7,'/resource/CarPark_image/ControlArm.webp'),
-    ('Tie Rod', 7,'/resource/CarPark_image/TieRod.webp'),
-	('Suspension', 7,'/resource/CarPark_image/Suspension.webp'),
-    ('Tire', 8,'/resource/CarPark_image/Tire.webp'),
-    ('Rim', 8,'/resource/CarPark_image/Rim.webp'),
-    ('Wheel Hub', 8,'/resource/CarPark_image/WheelHub.webp')
-
-   INSERT INTO [CarPart](CarID, PartID, PartName, CarSystemID, [Image])
+    
+   INSERT INTO [CarPart](CarID, PartID)
     SELECT 
         i.CarID,
-        ROW_NUMBER() OVER (PARTITION BY i.CarID ORDER BY d.CarSystemID) AS PartID,
-        d.PartName,
-        d.CarSystemID,
-		d.Image
+        ROW_NUMBER() OVER (PARTITION BY i.CarID ORDER BY p.CarSystemID) AS PartID
     FROM inserted i
-    CROSS JOIN @DefaultParts d;
+	CROSS JOIN PartInfo p
 END;
 GO
 
@@ -235,78 +257,64 @@ BEGIN
     INNER JOIN inserted i
         ON o.UserID = i.UserID
         AND o.CarID = i.CarID 
-        AND o.PartID = i.PartID 
+        AND o.PartID = i.PartID
+        AND o.BranchID = i.BranchID
         AND COALESCE(o.ServiceID, 0) = COALESCE(i.ServiceID, 0)
-    LEFT JOIN Inventory inv ON COALESCE(o.ServiceID, 0) = COALESCE(inv.ServiceID, 0)
-    LEFT JOIN [Service] s ON COALESCE(o.ServiceID, 0) = COALESCE(s.ServiceID, 0)
+    LEFT JOIN AccessoryInfo ai ON ai.ServiceID = i.ServiceID
+    LEFT JOIN Inventory inv ON inv.BranchID = i.BranchID
+                             AND inv.AccessoryID = ai.AccessoryID
+    LEFT JOIN [Service] s ON s.ServiceID = i.ServiceID
     WHERE i.QuantityUsed >= 0; -- Cho phép QuantityUsed = 0
 
     -- Chèn đơn hàng mới nếu chưa tồn tại
-    INSERT INTO [Order](UserID, OrderID, CarID, PartID, ServiceID, QuantityUsed, EstimatedCost)
+    INSERT INTO [Order](UserID, OrderID, CarID, PartID, ServiceID, BranchID, QuantityUsed, EstimatedCost)
     SELECT
         i.UserID,
         COALESCE((SELECT MAX(o.OrderID) FROM [Order] o WHERE o.UserID = i.UserID), 0) + 1,
         i.CarID,
         i.PartID,
         i.ServiceID,
+        i.BranchID,
         i.QuantityUsed,
         (i.QuantityUsed * COALESCE(inv.UnitPrice, 0)) + COALESCE(s.ServicePrice, 0)
     FROM inserted i
-    LEFT JOIN Inventory inv ON COALESCE(i.ServiceID, 0) = COALESCE(inv.ServiceID, 0)
-    LEFT JOIN [Service] s ON COALESCE(i.ServiceID, 0) = COALESCE(s.ServiceID, 0)
+    LEFT JOIN AccessoryInfo ai ON ai.ServiceID = i.ServiceID
+    LEFT JOIN Inventory inv ON inv.BranchID = i.BranchID
+                             AND inv.AccessoryID = ai.AccessoryID
+    LEFT JOIN [Service] s ON s.ServiceID = i.ServiceID
     WHERE NOT EXISTS (
         SELECT 1
         FROM [Order] o
         WHERE o.UserID = i.UserID
         AND o.CarID = i.CarID 
         AND o.PartID = i.PartID
+        AND o.BranchID = i.BranchID
         AND COALESCE(o.ServiceID, 0) = COALESCE(i.ServiceID, 0)
     )
     AND i.QuantityUsed >= 0; -- Cho phép QuantityUsed = 0
 END;
 GO
 
-
-
 CREATE TRIGGER DeleteOrder
 ON [Order]
 FOR DELETE
 AS
 BEGIN
-	SET NOCOUNT ON;
-	UPDATE ivt
-    SET ivt.Quantity = ivt.Quantity - d.QuantityUsed
+    SET NOCOUNT ON;
+
+    -- Cập nhật lại số lượng trong Inventory khi đơn hàng bị hủy
+    UPDATE ivt
+    SET ivt.Quantity = ivt.Quantity + d.QuantityUsed
     FROM Inventory ivt
-    INNER JOIN deleted d ON d.ServiceID = ivt.ServiceID;
+    INNER JOIN deleted d ON ivt.BranchID = d.BranchID
+    INNER JOIN AccessoryInfo ai ON ai.ServiceID = d.ServiceID
+                                AND ivt.AccessoryID = ai.AccessoryID;
 END;
 GO
 
 DISABLE TRIGGER DeleteOrder ON [Order];
 GO
 
--- Sample data
-
-INSERT INTO [User](Username, Password, FirstName, LastName, Email, Phone, DOB, Role)
-VALUES ('doanhieu18', 'doanhieu18@', 'Hieu', 'Doan', 'doanhieu180204@gmail.com', '0325413488', '2004-02-18', 'Admin');
-
-GO
-DECLARE @counter INT = 1
-WHILE @counter <= 100
-BEGIN
-    INSERT INTO [User] (Username, Password, FirstName, LastName, Email, Phone, DOB, LastActivity)
-    VALUES (
-        CONCAT('user', @counter), -- Username
-        'password', -- Password
-        CONCAT('FirstName', @counter), -- FirstName
-        CONCAT('LastName', @counter), -- LastName
-        CONCAT('user', @counter, '@example.com'), -- Email
-        CONCAT('01234567', @counter), -- Phone
-        DATEADD(DAY, -@counter, GETDATE()), -- DOB
-        GETDATE() -- LastActivity
-    )
-    SET @counter = @counter + 1
-END;
-GO
 
 INSERT INTO [ServiceType](ServiceTypeName, ServiceTypeDescription, ServiceImage) VALUES 
 -- 1
@@ -452,17 +460,162 @@ INSERT INTO [Service](ServiceTypeID, PartID, ServiceName, AffectInventory, Servi
 (8, 17, 'Injector Leak Test', 0, 'Testing for fuel injector leaks', 700000),
 (8, 17, 'High-Flow Fuel Injector Install', 1, 'Installing performance fuel injectors', 3000000),
 (8, 17, 'Throttle Body Cleaning', 0, 'Cleaning throttle body for smooth air intake', 800000);
+
+INSERT INTO AccessoryInfo(ServiceID, AccessoryName, Description)
+VALUES
+(1, 'Tire Set', 'Replace with new tires'),
+(4, 'High Performance Tires', 'Upgrade to high-performance tires'),
+(5, 'Off-road Tires', 'Specialized tires for off-road use'),
+(10, 'Wheel Rims', 'Replace with new wheel rims'),
+(14, 'Differential Oil', 'Oil for differential replacement'),
+(15, 'Wheel Bearing', 'Replace wheel bearings'),
+(18, 'Brake Pads', 'New brake pads replacement'),
+(20, 'Brake Fluid Hose', 'New brake fluid hoses'),
+(22, 'Brake Discs', 'Replace with new brake discs'),
+(27, 'Brake Fluid', 'Brake fluid refill'),
+(28, 'Brake Fluid', 'Complete brake fluid replacement'),
+(33, 'Engine Oil Filter', 'New engine oil filter'),
+(38, 'Supercharger Kit', 'Install supercharger kit'),
+(39, 'Intercooler', 'High-performance intercooler'),
+(43, 'Spark Plugs', 'Replace spark plugs'),
+(44, 'High Performance Spark Plugs', 'Upgrade to high-performance spark plugs'),
+(46, 'Ignition Coil', 'Replace ignition coils'),
+(47, 'Coolant Flush', 'Flush cooling system'),
+(49, 'Coolant', 'Replace with new coolant'),
+(52, 'Engine Cooling Fan', 'Replace engine cooling fan'),
+(58, 'Battery Ground Cable', 'Replace battery ground cable'),
+(60, 'Battery Terminals', 'Replace battery terminals'),
+(61, 'Headlight Bulbs', 'Replace headlight bulbs'),
+(62, 'Tail Light Bulbs', 'Replace tail light bulbs'),
+(63, 'Interior Light Bulbs', 'Replace interior light bulbs'),
+(65, 'HID/LED Headlights', 'Upgrade to HID/LED headlights'),
+(67, 'Fuse', 'Replace fuse'),
+(69, 'Fuse Box', 'Replace fuse box'),
+(74, 'Wiring Harness', 'Replace vehicle wiring harness'),
+(76, 'Wiper Motor', 'Replace windshield wiper motor'),
+(77, 'AC Refrigerant', 'Refill air conditioning refrigerant'),
+(82, 'AC Condenser', 'Replace air conditioning condenser'),
+(86, 'Engine Air Filter', 'Replace engine air filter'),
+(87, 'Cabin Air Filter', 'Replace cabin air filter'),
+(88, 'AC Expansion Valve', 'Replace air conditioning expansion valve'),
+(90, 'Shock Absorbers', 'Replace with new shock absorbers'),
+(92, 'Control Arms', 'Replace control arms'),
+(93, 'High Performance Control Arms', 'Upgrade to high-performance control arms'),
+(95, 'Tie Rod Ends', 'Replace tie rod ends'),
+(99, 'Suspension Struts', 'Replace suspension struts'),
+(101, 'Suspension Bushings', 'Replace suspension bushings'),
+(106, 'Fuel Pump', 'Replace fuel pump'),
+(108, 'Fuel Filter', 'Replace fuel filter'),
+(114, 'High Performance Fuel Injectors', 'Upgrade to high-performance fuel injectors');
 GO
 
-INSERT INTO [CarSystem](CarSystemName) VALUES 
-('Engine System'),
-('Braking System'),
-('Electrical System'),
-('Air Conditioning System'),
-('Fuel System'),
-('Battery System'),
-('Shock Absorbers System'),
-('Wheel System');
+CREATE TRIGGER trg_AfterInsert_Branch
+ON Branch
+AFTER INSERT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- Tạo bảng tạm lưu Quantity và UnitPrice (dữ liệu đã tách)
+    DECLARE @AccessoryData TABLE (
+        RowNum INT IDENTITY(1,1), -- Đánh số thứ tự để map với AccessoryID
+        Quantity INT,
+        UnitPrice FLOAT
+    );
+
+    -- Chèn dữ liệu vào bảng tạm (theo thứ tự AccessoryInfo)
+    INSERT INTO @AccessoryData (Quantity, UnitPrice)
+    VALUES
+        (4, 1800000),
+        (4, 2500000),
+        (4, 2250000),
+        (4, 2400000),
+        (1, 500000),
+        (2, 840000),
+        (2, 480000),
+        (2, 450000),
+        (2, 900000),
+        (1, 360000),
+        (1, 960000),
+        (1, 360000),
+        (1, 10000000),
+        (1, 5000000),
+        (4, 105000),
+        (4, 112500),
+        (4, 162500),
+        (1, 1080000),
+        (1, 600000),
+        (1, 700000),
+        (1, 350000),
+        (2, 240000),
+        (2, 240000),
+        (2, 210000),
+        (2, 150000),
+        (2, 500000),
+        (1, 180000),
+        (1, 450000),
+        (1, 1440000),
+        (1, 750000),
+        (1, 960000),
+        (1, 2160000),
+        (1, 480000),
+        (1, 600000),
+        (1, 700000),
+        (2, 1080000),
+        (2, 1080000),
+        (2, 1250000),
+        (2, 720000),
+        (2, 1200000),
+        (4, 360000),
+        (1, 1800000),
+        (1, 600000),
+        (4, 375000);
+
+    -- Chèn dữ liệu vào bảng Inventory
+    INSERT INTO Inventory (BranchID, AccessoryID, Quantity, UnitPrice)
+    SELECT 
+        i.BranchID,
+        ai.AccessoryID,
+        ad.Quantity,
+        ad.UnitPrice
+    FROM Inserted i
+    CROSS JOIN (
+        SELECT AccessoryID, ROW_NUMBER() OVER (ORDER BY AccessoryID) AS RowNum
+        FROM AccessoryInfo
+    ) ai
+    INNER JOIN @AccessoryData ad ON ai.RowNum = ad.RowNum;
+END;
+GO
+
+INSERT INTO Branch(BranchName, BranchAddress) VALUES
+('Branch 1', '123 Nguyen Van Linh, District 7, Ho Chi Minh City'),
+('Branch 2', '456 Le Van Luong, District 9, Ho Chi Minh City'),
+('Branch 3', '789 Nguyen Huu Tho, District 4, Ho Chi Minh City');
+
+-- Sample data
+
+INSERT INTO [User](Username, Password, FirstName, LastName, Email, Phone, DOB, Role)
+VALUES ('doanhieu18', 'doanhieu18@', 'Hieu', 'Doan', 'doanhieu180204@gmail.com', '0325413488', '2004-02-18', 'Admin');
+
+GO
+DECLARE @counter INT = 1
+WHILE @counter <= 100
+BEGIN
+    INSERT INTO [User] (Username, Password, FirstName, LastName, Email, Phone, DOB, LastActivity)
+    VALUES (
+        CONCAT('user', @counter), -- Username
+        'password', -- Password
+        CONCAT('FirstName', @counter), -- FirstName
+        CONCAT('LastName', @counter), -- LastName
+        CONCAT('user', @counter, '@example.com'), -- Email
+        CONCAT('01234567', @counter), -- Phone
+        DATEADD(DAY, -@counter, GETDATE()), -- DOB
+        GETDATE() -- LastActivity
+    )
+    SET @counter = @counter + 1
+END;
+GO
+
 GO
 
 INSERT INTO [Car](UserID, CarName, Brand, RegistrationNumber, [Year], CarImage, [Status]) VALUES 
@@ -475,56 +628,10 @@ INSERT INTO [Car](UserID, CarName, Brand, RegistrationNumber, [Year], CarImage, 
 (2, 'Car 3', 'Ford', '987654', 2018, 'https://images.dealer.com/autodata/us/640/2020/USD00FOS372A0/USC80FOS371A01300.jpg', 'Active'),
 (2, 'Car 4', 'BMW', '125478', 2020, '', 'Active');
 
-INSERT INTO Inventory (ServiceID, AccessoryName, Quantity, UnitPrice, Description)
-VALUES
-(1, 'Tire Set', 4, 1800000, 'Replace with new tires'),
-(4, 'High Performance Tires', 4, 2500000, 'Upgrade to high-performance tires'),
-(5, 'Off-road Tires', 4, 2250000, 'Specialized tires for off-road use'),
-(10, 'Wheel Rims', 4, 2400000, 'Replace with new wheel rims'),
-(14, 'Differential Oil', 1, 500000, 'Oil for differential replacement'),
-(15, 'Wheel Bearing', 2, 840000, 'Replace wheel bearings'),
-(18, 'Brake Pads', 2, 480000, 'New brake pads replacement'),
-(20, 'Brake Fluid Hose', 2, 450000, 'New brake fluid hoses'),
-(22, 'Brake Discs', 2, 900000, 'Replace with new brake discs'),
-(27, 'Brake Fluid', 1, 360000, 'Brake fluid refill'),
-(28, 'Brake Fluid', 1, 960000, 'Complete brake fluid replacement'),
-(33, 'Engine Oil Filter', 1, 360000, 'New engine oil filter'),
-(38, 'Supercharger Kit', 1, 10000000, 'Install supercharger kit'),
-(39, 'Intercooler', 1, 5000000, 'High-performance intercooler'),
-(43, 'Spark Plugs', 4, 105000, 'Replace spark plugs'),
-(44, 'High Performance Spark Plugs', 4, 112500, 'Upgrade to high-performance spark plugs'),
-(46, 'Ignition Coil', 4, 162500, 'Replace ignition coils'),
-(47, 'Coolant Flush', 1, 1080000, 'Flush cooling system'),
-(49, 'Coolant', 1, 600000, 'Replace with new coolant'),
-(52, 'Engine Cooling Fan', 1, 700000, 'Replace engine cooling fan'),
-(58, 'Battery Ground Cable', 1, 350000, 'Replace battery ground cable'),
-(60, 'Battery Terminals', 2, 240000, 'Replace battery terminals'),
-(61, 'Headlight Bulbs', 2, 240000, 'Replace headlight bulbs'),
-(62, 'Tail Light Bulbs', 2, 210000, 'Replace tail light bulbs'),
-(63, 'Interior Light Bulbs', 2, 150000, 'Replace interior light bulbs'),
-(65, 'HID/LED Headlights', 2, 500000, 'Upgrade to HID/LED headlights'),
-(67, 'Fuse', 1, 180000, 'Replace fuse'),
-(69, 'Fuse Box', 1, 450000, 'Replace fuse box'),
-(74, 'Wiring Harness', 1, 1440000, 'Replace vehicle wiring harness'),
-(76, 'Wiper Motor', 1, 750000, 'Replace windshield wiper motor'),
-(77, 'AC Refrigerant', 1, 960000, 'Refill air conditioning refrigerant'),
-(82, 'AC Condenser', 1, 2160000, 'Replace air conditioning condenser'),
-(86, 'Engine Air Filter', 1, 480000, 'Replace engine air filter'),
-(87, 'Cabin Air Filter', 1, 600000, 'Replace cabin air filter'),
-(88, 'AC Expansion Valve', 1, 700000, 'Replace air conditioning expansion valve'),
-(90, 'Shock Absorbers', 2, 1080000, 'Replace with new shock absorbers'),
-(92, 'Control Arms', 2, 1080000, 'Replace control arms'),
-(93, 'High Performance Control Arms', 2, 1250000, 'Upgrade to high-performance control arms'),
-(95, 'Tie Rod Ends', 2, 720000, 'Replace tie rod ends'),
-(99, 'Suspension Struts', 2, 1200000, 'Replace suspension struts'),
-(101, 'Suspension Bushings', 4, 360000, 'Replace suspension bushings'),
-(106, 'Fuel Pump', 1, 1800000, 'Replace fuel pump'),
-(108, 'Fuel Filter', 1, 600000, 'Replace fuel filter'),
-(114, 'High Performance Fuel Injectors', 4, 375000, 'Upgrade to high-performance fuel injectors');
-GO
 
-INSERT INTO [Order] (UserID, CarID, PartID, ServiceID, QuantityUsed)
-VALUES (2, 1, 8, 114, 3);
+
+INSERT INTO [Order] (UserID, CarID, BranchID, PartID, ServiceID, QuantityUsed)
+VALUES (2, 1, 1, 8, 114, 3);
 
 --ENABLE TRIGGER DeleteOrder ON [Order];
 --GO

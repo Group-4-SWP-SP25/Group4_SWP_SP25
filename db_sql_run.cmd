@@ -1,0 +1,1 @@
+sqlcmd -S localhost -U sa -P 123 -i Database.sql
