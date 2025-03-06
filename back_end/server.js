@@ -35,7 +35,11 @@ const {
   getUserList,
   getTotalUserCount,
 } = require("./myModule/controller/UserListControl.js");
-
+const TotalRevenueToday = require("./myModule/database/SaleReport/TotalRevenueToday.js");
+const TotalOrderToday = require("./myModule/database/SaleReport/TotalOrderToday.js");
+const TotalProductSold = require("./myModule/database/SaleReport/TotalProductSold.js");
+const TotalNewCustomer = require("./myModule/database/SaleReport/TotalNewCustomer.js");
+const TopProduct = require("./myModule/database/SaleReport/TopProduct.js");
 // user
 const register = require("./myModule/controller/register.js");
 const getPassword = require("./myModule/controller/user/getPassword.js");
@@ -62,6 +66,7 @@ const serviceListPerPart = require("./myModule/controller/service/listServicePer
 const getServiceTypeListAll = require("./myModule/database/service/getServiceTypeListAll.js");
 const getServiceTypeListByServiceTypeName = require("./myModule/database/service/getServiceTypeListByServiceTypeName.js");
 const deleteServiceById = require("./myModule/database/service/deleteServiceByID.js")
+
 
 // car
 const carInfo = require("./myModule/controller/car/carInfo.js");
@@ -120,7 +125,11 @@ app.post("/Message/SendMessage", authenticateJWT, SendMessage);
 app.post("/Message/GetMessage", authenticateJWT, GetMessage);
 app.post("/Message/GetList", authenticateJWT, GetList);
 app.post("/Message/CheckMessage", authenticateJWT, CheckMessage);
-
+app.post("/TotalRevenueToday", authenticateADMIN, TotalRevenueToday);
+app.post("/TotalOrderToday", authenticateADMIN, TotalOrderToday);
+app.post("/TotalProductSold", authenticateADMIN, TotalProductSold);
+app.post("/TotalNewCustomer", authenticateADMIN, TotalNewCustomer);
+app.post("/TopProduct", authenticateADMIN, TopProduct);
 // user
 app.post("/getPassword", getPassword);
 app.post("/changePassword", changePassword);

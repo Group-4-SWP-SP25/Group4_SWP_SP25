@@ -172,3 +172,106 @@ body {
     border-radius: 50%;
     margin-right: 10px;
 }
+
+.container {
+    display: flex;
+    flex-direction: column; /* Xếp các phần tử theo chiều dọc */
+    align-items: stretch; /* Đảm bảo các phần tử con chiếm hết chiều rộng */
+    width: 100%;
+    gap: 10px; /* Khoảng cách giữa các ô */
+}
+
+.box, .CSS1 {
+    width: 100%;
+    padding: 20px;
+    background-color: #33334d;
+    color: white;
+    text-align: center;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.CSS1 {
+    height: 400px; /* Điều chỉnh kích thước canvas */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+/* Today sale */
+.Today_sale {
+    background-color: #1e1e2f;
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+.Today_sale h2 {
+    font-size: 26px;
+    margin-bottom: 25px;
+    color: white;
+    text-align: center;
+}
+
+.sales-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.sales-box {
+    background-color: #24243e;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    flex: 1;
+}
+
+.sales-box img {
+    width: 30px;
+    height: 30px;
+    margin-bottom: 10px;
+}
+
+.amount {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.label {
+    font-size: 14px;
+    color: #bbb;
+}
+
+.change {
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.positive {
+    color: #4CAF50;
+}
+.sales-box img{
+    width: 70px;
+    height: 70px;
+    margin-bottom: 10px;
+ 
+}
+
+.left-content {
+    display: flex;
+    flex-direction: column; /* Sắp xếp theo chiều dọc */
+    align-items: center; /* Căn giữa nội dung */
+    width: 20%;
+    gap: 50px;
+}
+
+.title {
+    font-size: 26px;
+    margin-bottom: 20px; /* Khoảng cách giữa tiêu đề và ảnh */
+    text-align: center;
+}
+
+.service-img {
+    width: 30%;
+}
