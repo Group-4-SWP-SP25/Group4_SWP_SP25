@@ -39,59 +39,75 @@ function renderTable(result) {
 }
 
 // Search service
-function applyFilters(result) {
-    const searchTerm = searchBar.value.toLowerCase();
-
-    const checkedColumns = Array.from(filterCheckboxes)
-        .filter((checkbox) => checkbox.checked)
-        .map((checkbox) => checkbox.dataset.column);
-
-    let filteredData = result.filter((row) => {
-        let searchMatch = true;
-        if (searchTerm) {
-            searchMatch = Object.keys(row)
-                .filter((key) => key !== 'ServiceID') // exclude 'ServiceID' column
-                .some((key) => {
-                    const value = row[key];
-                    if (typeof value === 'string') {
-                        return value.toLowerCase().includes(searchTerm);
-                    }
-                    return String(value).toLowerCase().includes(searchTerm);
-                });
-        }
-
-        let columnMatch = true;
-        if (checkedColumns.length > 0) {
-            columnMatch = checkedColumns.some((column) => {
-                if (column === 'ServiceID') return false; // exclude 'ServiceID' column
-
-                const value = row[column];
-                if (typeof value === 'string') {
-                    return value.toLowerCase().includes(searchTerm);
-                }
-                return String(value).toLowerCase().includes(searchTerm);
-            });
-        }
-
-        return searchMatch && columnMatch;
-    });
-
-    renderTable(filteredData);
-}
-
 function searchService(result) {
-    const filterFunction = () => applyFilters(result);
-    searchBar.addEventListener('input', filterFunction);
+    const filterFunction = () => {
+        const searchTerm = searchBar.value.toLowerCase();
+        const checkedColumns = Array.from(filterCheckboxes)
+            .filter((checkbox) => checkbox.checked)
+            .map((checkbox) => checkbox.dataset.column);
+
+        const isSearchMatch = (row) => {
+            return !searchTerm || Object.values(row)
+                .filter((value) => typeof value === 'string')
+                .some((value) => value.toLowerCase().includes(searchTerm));
+        };
+
+        const isColumnMatch = (row) => {
+            if (checkedColumns.length === 0) return true;
+            return checkedColumns.some((column) => {
+                const value = String(row[column]).toLowerCase();
+                return value.includes(searchTerm);
+            });
+        };
+
+        const filteredData = result.filter((row) => isSearchMatch(row) && isColumnMatch(row));
+        renderTable(filteredData);
+    };
+
+    // Debounce function
+    const debounce = (func, delay) => {
+        let timeoutId;
+        return (...args) => {
+            clearTimeout(timeoutId);
+            timeoutId = setTimeout(() => func(...args), delay);
+        };
+    };
+
+    // Throttle function
+    const throttle = (func, limit) => {
+        let lastFunc;
+        let lastRan;
+        return function (...args) {
+            if (!lastRan) {
+                func.apply(this, args);
+                lastRan = Date.now();
+            } else {
+                clearTimeout(lastFunc);
+                lastFunc = setTimeout(function () {
+                    if ((Date.now() - lastRan) >= limit) {
+                        func.apply(this, args);
+                        lastRan = Date.now();
+                    }
+                }, limit - (Date.now() - lastRan));
+            }
+        };
+    };
+
+    const debouncedFilter = debounce(filterFunction, 300); // Debounce delay 300ms
+    const throttledFilter = throttle(filterFunction, 200); // Throttle delay 200ms
+
+    searchBar.addEventListener('input', debouncedFilter);
     filterCheckboxes.forEach((checkbox) => {
-        checkbox.addEventListener('change', filterFunction);
+        checkbox.addEventListener('change', throttledFilter);
     });
 }
 
 // Delete service
-let chosenServiceID = null; // storage variable
+let chosenServiceID = null; // store chosen ID
+let oldServiceData = []; // store old render table
 
 function showPopup(element) {
-    chosenServiceID = +element.dataset.serviceid; // store data get from self
+    chosenServiceID = +element.dataset.serviceid; // get dataset from self
     console.log(chosenServiceID);
     popup.classList.remove('hidden');
     overlay.classList.remove('hidden');
@@ -118,14 +134,6 @@ async function deleteService(serviceID) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ serviceID })
         });
-        // const result = await response.json();
-        // console.log("Delete response:", result);
-        // if (result.success) {
-        //     console.log(`Deleted service with ID = ${serviceID}`);
-        //     // await getServiceListAll(); // Refresh the table after deletion
-        // } else {
-        //     console.error('Failed to delete service:', result.error);
-        // }      
     } catch (err) {
         console.error('Error deleting service:', err);
     }
@@ -133,20 +141,31 @@ async function deleteService(serviceID) {
 
 // Main functions
 async function getServiceListAll() {
-    // Retrieve data
-    const response = await fetch('http://localhost:3000/getServiceListAll', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' }
-    });
-    const result = await response.json();
-    // console.log(result);
-    // console.log(typeof result[0].ServiceTypeID);
+    try {
+        const response = await fetch('http://localhost:3000/getServiceListAll', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' }
+        });
+        const result = await response.json();
+        console.log(result);
 
-    // Pre-render
-    renderTable(result);
+        if (oldServiceData === null || JSON.stringify(result) !== JSON.stringify(oldServiceData)) {
+            renderTable(result);
+            searchService(result);
+            oldServiceData = result;
+            scheduleNextUpdate(500); // short delay if changed
+        } else {
+            scheduleNextUpdate(10000); // long delay if unchanged
+        }
+    } catch (error) {
+        console.error('Error fetching service list:', error);
+        scheduleNextUpdate(5000); // retry if error
+    }
+}
 
-    // Search
-    searchService(result);
+// set refresh interval
+function scheduleNextUpdate(delay) {
+    setTimeout(getServiceListAll, delay);
 }
 
 getServiceListAll();
