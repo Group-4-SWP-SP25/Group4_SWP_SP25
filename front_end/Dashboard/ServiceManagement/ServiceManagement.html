@@ -158,33 +158,65 @@
         </div>
         <!-- End content -->
 
-        <!-- Popup delete -->
-        <!-- <div class="hidden delete-service">
-            <p class="display-6 container">Are you sure to delete this order?</p>
-            <div class="btn-submit">
-                <button class="btn btn-yes">Yes</button>
-                <button class="btn btn-cancel">Cancel</button>
-            </div>
-        </div>
-        <div class="hidden overlay"></div> -->
+        <!-- Hidden content -->
+        <div class="overlay hidden"><!-- overlay for popup--></div>
 
-        <div class="popup hidden">
+        <!-- delete popup -->
+        <div class="popup-delete hidden">
             <h2>Confirm delete?</h2>
             <div class="buttons">
                 <button
                     class="btn-yes"
-                    onclick="confirmedPopup();">
+                    onclick="confirmDeletePopup();">
                     Accept
                 </button>
                 <button
                     class="btn-no"
-                    onclick="hidePopup();">
+                    onclick="hideDeletePopup();">
                     Cancel
                 </button>
             </div>
         </div>
-        <div class="overlay hidden"></div>
-        <!-- End popup delete -->
+
+        <!-- add and update popup -->
+        <div class="popup-modify hidden">
+            <h2>Placeholder for add or update</h2>
+            <table style="margin-bottom: 10px;">
+                <thead>
+                    <tr>
+                        <td style="width: 4%">Type ID</td>
+                        <td style="width: 4%">Part ID</td>
+                        <td style="width: 10%">Service Name</td>
+                        <td style="width: 18%">Description</td>
+                        <td style="width: 6%">Price</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Content load from chosen to add, or empty for update -->
+                    <tr>
+                        <td>Placeholder Type ID</td>
+                        <td>Placeholder Part ID</td>
+                        <td>Placeholder Service Name</td>
+                        <td>Placeholder Description</td>
+                        <td>Placeholder Price</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="buttons">
+                <button
+                    class="btn-yes"
+                    onclick="confirmModifyPopup();">
+                    Accept
+                </button>
+                <button
+                    class="btn-no"
+                    onclick="hideModifyPopup();">
+                    Cancel
+                </button>
+            </div>
+        </div>
+
+        <!-- End hidden content -->
 
         <!-- Scripts -->
         <script
