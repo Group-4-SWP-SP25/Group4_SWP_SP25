@@ -143,7 +143,12 @@
                         <td
                             style="width: 10%"
                             class="buttons">
-                            <button class="btn-delete">Delete</button>
+                            <button
+                                class="btn-delete"
+                                onclick="showPopup(this);"
+                                data-serviceid="0">
+                                Delete
+                            </button>
                             <button class="btn-update">Update</button>
                         </td>
                     </tr> -->
@@ -154,14 +159,31 @@
         <!-- End content -->
 
         <!-- Popup delete -->
-        <div class="hidden delete-service">
+        <!-- <div class="hidden delete-service">
             <p class="display-6 container">Are you sure to delete this order?</p>
             <div class="btn-submit">
                 <button class="btn btn-yes">Yes</button>
                 <button class="btn btn-cancel">Cancel</button>
             </div>
         </div>
-        <div class="hidden overlay"></div>
+        <div class="hidden overlay"></div> -->
+
+        <div class="popup hidden">
+            <h2>Confirm delete?</h2>
+            <div class="buttons">
+                <button
+                    class="btn-yes"
+                    onclick="confirmedPopup();">
+                    Accept
+                </button>
+                <button
+                    class="btn-no"
+                    onclick="hidePopup();">
+                    Cancel
+                </button>
+            </div>
+        </div>
+        <div class="overlay hidden"></div>
         <!-- End popup delete -->
 
         <!-- Scripts -->

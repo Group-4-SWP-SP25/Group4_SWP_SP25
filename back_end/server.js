@@ -61,6 +61,7 @@ const getServiceListAll = require("./myModule/database/service/getServiceListAll
 const serviceListPerPart = require("./myModule/controller/service/listServicePerPart.js");
 const getServiceTypeListAll = require("./myModule/database/service/getServiceTypeListAll.js");
 const getServiceTypeListByServiceTypeName = require("./myModule/database/service/getServiceTypeListByServiceTypeName.js");
+const deleteServiceById = require("./myModule/database/service/deleteServiceByID.js")
 
 // car
 const carInfo = require("./myModule/controller/car/carInfo.js");
@@ -144,6 +145,7 @@ app.post("/getServiceListAll", getServiceListAll);
 app.post("/serviceListPerPart", serviceListPerPart);
 app.post("/getServiceTypeListAll", getServiceTypeListAll);
 app.post("/getServiceTypeListByServiceTypeName", getServiceTypeListByServiceTypeName);
+app.post("/deleteServiceById", deleteServiceById)
 
 // car
 app.post("/carInfo", carInfo);
