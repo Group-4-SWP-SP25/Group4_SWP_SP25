@@ -8,10 +8,17 @@ const filterCheckboxes = document.querySelectorAll('.search-filter input[type="c
 const overlay = document.querySelector('.overlay');
 const popupDelete = document.querySelector('.popup-delete');
 const popupModify = document.querySelector('.popup-modify');
+const data = popupModify.querySelectorAll('tbody td');
 
 // Global variables
 let chosenServiceID = null; // store chosen ID
+let chosenServiceTypeID = null;
+let chosenServicePartID = null;
+let chosenServiceName = null;
+let chosenServiceDescription = null;
+let chosenServicePrice = null;
 let oldServiceData = []; // store old render table
+let maxServiceID; // max current serviceID
 
 // Support functions
 // Search service
@@ -84,7 +91,7 @@ function searchService(result) {
 // Delete service
 function showDeletePopup(element) {
     chosenServiceID = +element.dataset.serviceid; // get dataset from self
-    console.log(chosenServiceID);
+    // console.log(chosenServiceID);
     popupDelete.classList.remove('hidden');
     overlay.classList.remove('hidden');
 }
@@ -103,12 +110,12 @@ function confirmDeletePopup() {
     overlay.classList.add('hidden');
 }
 
-async function deleteService(serviceID) {
+async function deleteService(ServiceID) {
     try {
         const response = await fetch('http://localhost:3000/deleteServiceById', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ serviceID })
+            body: JSON.stringify({ serviceID: ServiceID })
         });
     } catch (err) {
         console.error('Error deleting service:', err);
@@ -116,9 +123,48 @@ async function deleteService(serviceID) {
 }
 
 // Update function
+function defaultNumValue(element, globalVar, defaultValue) {
+    let value = parseInt(element.value);
+
+    if (isNaN(value) || value <= 0) {
+        globalVar = defaultValue;
+        element.value = defaultValue;
+    } else {
+        globalVar = value;
+    }
+
+    return globalVar;
+}
+
 function showModifyPopup(element) {
     chosenServiceID = +element.dataset.serviceid; // get dataset from self
-    console.log(chosenServiceID);
+    // console.log(chosenServiceID);
+    popupModify.querySelector('h2').textContent = 'Update Service'; // set title
+
+    // preset data
+    chosenServiceID = data[0].children[0].value = element.dataset.serviceid;
+    chosenServiceTypeID = data[1].children[0].value = element.dataset.typeid;
+    chosenServicePartID = data[2].children[0].value = element.dataset.partid;
+    chosenServiceName = data[3].children[0].value = element.dataset.servicename;
+    chosenServiceDescription = data[4].children[0].value = element.dataset.servicedescription;
+    chosenServicePrice = data[5].children[0].value = element.dataset.serviceprice;
+
+    // listen change
+    data[0].children[0].addEventListener('change', () => {
+        chosenServiceID = defaultNumValue(data[0].children[0], chosenServiceID, 1);
+      });
+    data[1].children[0].addEventListener('change', () => {
+        chosenServiceTypeID = defaultNumValue(data[1].children[0], chosenServiceTypeID, 1);
+    });
+    data[2].children[0].addEventListener('change', () => {
+        chosenServicePartID = defaultNumValue(data[2].children[0], chosenServicePartID, 1);
+    });
+    data[3].children[0].addEventListener('change', () => (chosenServiceName = data[3].children[0].value));
+    data[4].children[0].addEventListener('change', () => (chosenServiceDescription = data[4].children[0].value));
+    data[5].children[0].addEventListener('change', () => {
+        chosenServicePrice = defaultNumValue(data[5].children[0], chosenServicePrice, 1000);
+    });
+
     popupModify.classList.remove('hidden');
     overlay.classList.remove('hidden');
 }
@@ -129,8 +175,31 @@ function hideModifyPopup() {
 }
 
 function confirmModifyPopup() {
+    if (chosenServiceID) {
+        updateService(chosenServiceID, chosenServiceTypeID, chosenServicePartID, chosenServiceName, chosenServiceDescription, chosenServicePrice);
+    }
+    chosenServiceID = null; // reset storage variable
     popupModify.classList.add('hidden');
     overlay.classList.add('hidden');
+}
+
+async function updateService(ServiceID, ServiceTypeID, ServicePartID, ServiceName, ServiceDescription, ServicePrice) {
+    try {
+        const response = await fetch('http://localhost:3000/updateServiceById', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                serviceID: ServiceID,
+                typeID: ServiceTypeID,
+                partID: ServicePartID,
+                name: ServiceName,
+                description: ServiceDescription,
+                price: ServicePrice
+            })
+        });
+    } catch (err) {
+        console.error('Error updating service:', err);
+    }
 }
 
 // Render table out
@@ -147,12 +216,17 @@ function renderTable(result) {
                             <td style="width: 18%; text-align: left"">${service.ServiceDescription}</td>
                             <td style="width: 6%">${service.ServicePrice} ₫</td>
                             <td style="width: 10%" class="buttons">
-                                <button class="btn-delete" data-serviceid="${service.ServiceID}" 
-                                        onclick="showDeletePopup(this);">
+                                <button class="btn-delete" onclick="showDeletePopup(this);" 
+                                        data-serviceid="${service.ServiceID}">
                                     Delete
                                 </button>
-                                <button class="btn-update" data-serviceid="${service.ServiceID}"
-                                        onclick="showModifyPopup(this);">
+                                <button class="btn-update" onclick="showModifyPopup(this);"
+                                        data-serviceid="${service.ServiceID}"
+                                        data-typeid="${service.ServiceTypeID}"
+                                        data-partid="${service.PartID}"
+                                        data-servicename="${service.ServiceName}"
+                                        data-servicedescription="${service.ServiceDescription}"
+                                        data-serviceprice="${service.ServicePrice}">
                                     Update
                                 </button>
                             </td>
@@ -178,15 +252,17 @@ async function getServiceListAll() {
             headers: { 'Content-Type': 'application/json' }
         });
         const result = await response.json();
-        console.log(result);
+        // console.log(result);
 
+        maxServiceID = result.reduce((max, service) => Math.max(max, service.ServiceID), 0);
+        
         if (oldServiceData === null || JSON.stringify(result) !== JSON.stringify(oldServiceData)) {
             renderTable(result);
             searchService(result);
             oldServiceData = result;
             scheduleNextUpdate(1000);
         } else {
-            scheduleNextUpdate(3000);
+            scheduleNextUpdate(2000);
         }
     } catch (error) {
         console.error('Error fetching service list:', error);

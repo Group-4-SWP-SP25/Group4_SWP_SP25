@@ -181,9 +181,10 @@
         <!-- add and update popup -->
         <div class="popup-modify hidden">
             <h2>Placeholder for add or update</h2>
-            <table style="margin-bottom: 10px;">
+            <table style="margin-bottom: 10px">
                 <thead>
                     <tr>
+                        <td style="width: 4%">Service ID</td>
                         <td style="width: 4%">Type ID</td>
                         <td style="width: 4%">Part ID</td>
                         <td style="width: 10%">Service Name</td>
@@ -194,11 +195,40 @@
                 <tbody>
                     <!-- Content load from chosen to add, or empty for update -->
                     <tr>
-                        <td>Placeholder Type ID</td>
-                        <td>Placeholder Part ID</td>
-                        <td>Placeholder Service Name</td>
-                        <td>Placeholder Description</td>
-                        <td>Placeholder Price</td>
+                        <td>
+                            <input
+                                type="number"
+                                min="1"
+                                placeholder="Service ID" />
+                        </td>
+                        <td>
+                            <input
+                                type="number"
+                                min="1"
+                                placeholder="Type ID" />
+                        </td>
+                        <td>
+                            <input
+                                type="number"
+                                min="1"
+                                placeholder="Part ID" />
+                        </td>
+                        <td>
+                            <input
+                                type="text"
+                                placeholder="Service Name" />
+                        </td>
+                        <td>
+                            <textarea
+                                type="text"
+                                placeholder="Description"></textarea>
+                        </td>
+                        <td>
+                            <input
+                                type="number"
+                                min="1000"
+                                placeholder="Price" />
+                        </td>
                     </tr>
                 </tbody>
             </table>
