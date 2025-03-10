@@ -252,7 +252,8 @@ body.no-scroll {
 }
 
 table {
-    width: 100%;
+    /* width: 100%; */
+    width: 83vw;
     border-collapse: collapse;
     table-layout: fixed;
 
@@ -292,9 +293,9 @@ table {
     background-color: brown;
 }
 
-/* delete popup */
+/* overlay for popup */
 .overlay {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
@@ -304,62 +305,65 @@ table {
     z-index: 5;
 }
 
-.delete-service {
+/* delete popup */
+.popup-delete {
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%) scale(0.5);
-    width: 35%;
-    padding: 1.5rem 0;
-    background-color: #1e1e1e;
+    transform: translate(-50%, -50%);
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 4px 20px rgba(255, 255, 255, 0.1);
     z-index: 10;
-    color: #f9f9f9;
     text-align: center;
-    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
-
-    .container {
-        box-shadow: none !important;
-    }
 }
 
-.delete-service .btn-submit {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-top: 1rem;
+.popup-delete h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
 }
 
-.delete-service .btn {
-    padding: 10px 20px;
+.btn-yes {
+    background-color: forestgreen;
+    transition: background-color 0.3s ease;
+}
+.btn-yes:hover {
+    background-color: darkgreen;
+}
+
+.btn-no {
+    background-color: red;
+    transition: background-color 0.3s ease;
+}
+.btn-no:hover {
+    background-color: darkred;
+}
+
+/* add and update popup */
+.popup-modify {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 20px;
+    border-radius: 10px;
+    z-index: 10;
+    text-align: center;
+}
+
+.popup-modify table tbody tr td input,
+textarea {
+    width: 85%;
+    text-align: center;
+    align-content: center;
+    color: white;
+    background-color: transparent;
     border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
-.delete-service .btn-yes {
-    background-color: #007bff;
-    color: #fff;
-}
-
-.delete-service .btn-yes:hover {
-    background-color: #0056b3;
-    transform: scale(1.05);
-}
-
-.delete-service .btn-cancel {
-    background-color: #dc3545;
-    color: #fff;
-}
-
-.delete-service .btn-cancel:hover {
-    background-color: #a71d2a;
-    transform: scale(1.05);
-}
-
-.delete-service.show {
-    transform: translate(-50%, -50%) scale(1);
+.popup-modify table tbody tr td input::-webkit-inner-spin-button,
+input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
