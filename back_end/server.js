@@ -52,16 +52,6 @@ const userInfo = require("./myModule/controller/user/userInfo.js");
 const updateUserProfile = require("./myModule/controller/user/updateUserProfile.js");
 const { uploadFile, getFileInfo } = require("./myModule/controller/cloud/storage.js");
 const { getEmployees } = require("./myModule/controller/employee/employee.js");
-const register = require('./myModule/controller/register.js');
-const getPassword = require('./myModule/controller/user/getPassword.js');
-const changePassword = require('./myModule/database/user/changePassword.js');
-const checkAccount = require('./myModule/controller/user/checkAccount.js');
-const checkUserName = require('./myModule/database/user/checkUserName.js');
-const { resetPassword, verification } = require('./myModule/controller/resetpassword.js');
-const { AuthGoogle, Auth } = require('./myModule/controller/Login.js');
-const getUserProfile = require('./myModule/database/user/getUserProfile.js');
-const userInfo = require('./myModule/controller/user/userInfo.js');
-const updateUserProfile = require('./myModule/controller/user/updateUserProfile.js');
 
 // branch
 const branchInfo = require('./myModule/controller/branch/branchInfo.js');
