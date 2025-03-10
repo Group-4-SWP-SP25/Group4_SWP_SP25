@@ -275,3 +275,211 @@ body {
 .service-img {
     width: 30%;
 }
+/* Top services */
+
+.top-services thead {
+    position: sticky;
+    top: 0;
+    background-color: #24243e;
+    z-index: 10;
+}
+
+
+.top-services th {
+    background-color: #24243e;
+    padding: 12px;
+    border-bottom: 2px solid #444;
+}
+
+.top-services {
+    background-color: #24243e;
+    padding: 0px;
+    border-radius: 10px;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+
+.table-container {
+    max-height: 330px;
+    width: 1000px;
+    overflow-y: auto;
+    overflow-x: hidden;
+   
+ background-color: #24243e;
+    border-radius: 10px;
+}/* Table styling */
+.top-services table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.top-services th,
+.top-services td {
+    padding: 10px;
+    text-align: center;
+}
+    .popularity1 {
+    background-color: #333;
+    width: 400px;
+    height: 5px;
+
+    border-radius: 5px;
+    overflow: hidden;
+    margin-left: 10px;
+}
+
+.bar {
+    height: 100%;
+}
+
+.sales {
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: white;
+}
+
+/* Tùy chỉnh thanh cuộn */
+.table-container::-webkit-scrollbar {
+    width: 10px;
+
+
+}
+
+.table-container::-webkit-scrollbar-thumb {
+    background: #555;
+    border-radius: 4px;
+}
+
+.table-container::-webkit-scrollbar-thumb:hover {
+    background: #888;
+}
+/* Chart1 */
+#chart1 {
+
+    height: 400px;
+}
+#chart2{
+    width: 700px;
+}
+
+
+/* //chart */
+.chart-header {
+    display: flex;
+    align-items: center;
+    gap: 5px; /* Điều chỉnh khoảng cách giữa label và select */
+    justify-content: flex-end; /* Đẩy toàn bộ phần tử về bên phải */
+    width: 100%; /* Đảm bảo chiếm hết chiều rộng div cha */
+    margin-bottom: -40px;
+}
+
+.chart-header label {
+    font-size: 16px;
+    color: white;
+    margin: 0;
+}
+
+.chart-header select {
+    padding: 5px 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: white;
+    cursor: pointer;
+}
+/* Top Product by brand and by year */
+  
+
+.top-products thead {
+position: sticky;
+top: 0;
+background-color: #24243e;
+z-index: 10;
+}
+
+
+.top-products th {
+background-color: #24243e;
+padding: 12px;
+border-bottom: 2px solid #444;
+}
+
+.top-products {
+background-color: #24243e;
+padding: 0px;
+border-radius: 10px;
+color: white;
+font-family: Arial, sans-serif;
+gap: 10px;
+}
+
+
+.table-container {
+max-height: 330px;
+width: 1000px;
+overflow-y: auto;
+overflow-x: hidden;
+
+background-color: #24243e;
+border-radius: 10px;
+}
+.top-products table {
+width: 100%;
+border-collapse: collapse;
+}
+
+.top-products th,
+.top-products td {
+padding: 10px;
+text-align: center;
+}
+.popularity2 {
+background-color: #333;
+width: 350px;
+height: 5px;
+
+border-radius: 5px;
+overflow: hidden;
+margin-left: 10px;
+}
+
+
+
+.sales {
+padding: 5px 10px;
+border-radius: 5px;
+color: white;
+}
+.branch-year {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.branch-year label {
+    font-size: 16px;
+}
+
+    .branch-year select {
+        width:100px;
+        height: 45px;
+        padding: 5px;
+        border: none;
+        border-radius: 5px;
+        background-color: whitesmoke;
+        cursor: pointer;
+        font-size: 14px;
+    }      
+
+     
+   
+      
+   
+
+      
+
+   
+
+

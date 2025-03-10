@@ -1,11 +1,11 @@
 document.addEventListener("DOMContentLoaded", function () {
-  document.querySelectorAll(".tab-content > div").forEach(div => {
+  document.querySelectorAll(".tab-content > div").forEach((div) => {
     div.style.display = "none";
   });
   document.getElementById("Car-system-chart").style.display = "block";
   const buttons = document.querySelectorAll(".chart-btn");
 
-  buttons.forEach(button => {
+  buttons.forEach((button) => {
     button.addEventListener("click", function (event) {
       event.preventDefault();
       const targetId = this.getAttribute("href").substring(1);
@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 function showChart(id) {
-  document.querySelectorAll(".tab-content > div").forEach(div => {
+  document.querySelectorAll(".tab-content > div").forEach((div) => {
     div.style.display = "none";
   });
 
@@ -25,131 +25,143 @@ function showChart(id) {
   }
 }
 
-// async function getSystem() {
-//     try {
-//       const carSystems = await $.ajax({
-//         url: "http://localhost:3000/listCarSystem",
-//         method: "POST",
-//         contentType: "application/json",
-//       });
+// chart custom
 
-//       const systemList = $(".system-list");
-//       systemList.empty(); // Xóa dữ liệu cũ nếu có
+document.addEventListener("DOMContentLoaded", async function () {
+  const yearSelect = document.getElementById("yearSelect");
 
-//       carSystems.forEach((carSystem) => {
-//         const system = $(`
-//           <li>
-//             <a href="#" class="system-item" data-id="${carSystem.CarSystemID}">${carSystem.CarSystemName}</a>
-//           </li>
-//         `);
-//         systemList.append(system);
-//       });
+  // Thiết lập năm mặc định là 2025
+  async function fetchRevenueData(year) {
+    const response = await fetch("http://localhost:3000/TopRevenueByMonth", {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      body: JSON.stringify({ year: year }),
+    });
 
+    if (!response.ok) {
+      throw new Error(
+        `Failed to fetch data: ${response.status} ${response.statusText}`
+      );
+    }
 
-//     } catch (error) {
-//       console.error("Error fetching car systems:", error);
-//     }
-//   }
+    return response.json();
+  }
+  try {
+    const data = await fetchRevenueData(2025);
+    console.log("Default Revenue Data (2025):", data);
 
+    if (data && data.monthlyRevenue) {
+      updateChart(data.monthlyRevenue);
+    }
+  } catch (error) {
+    console.error("Error fetching default revenue data:", error);
+  }
 
+  yearSelect.addEventListener("change", async function () {
+    const selectedYear = this.value;
+    console.log("Selected Year:", selectedYear);
 
+    try {
+      const data = await fetchRevenueData(selectedYear);
+      console.log("Revenue Data:", data);
 
+      if (data && data.monthlyRevenue) {
+        updateChart(data.monthlyRevenue);
+      }
+    } catch (error) {
+      console.error("Error fetching revenue data:", error);
+    }
+  });
+});
 
-let myChart = document.getElementById('myChart1').getContext('2d');
+// Hàm cập nhật dữ liệu của biểu đồ
+function updateChart(revenueData) {
+  chart1.data.datasets[0].data = revenueData;
+  chart1.update();
+}
 
-Chart.defaults.font.family = 'Lato';
+let myChart = document.getElementById("myChart1").getContext("2d");
+Chart.defaults.font.family = "Lato";
 Chart.defaults.font.size = 18;
-Chart.defaults.color = '#777';
-console.log(typeof Chart); // Nếu là "undefined", thư viện chưa được tải
-
+Chart.defaults.color = "#fff";
 
 let chart1 = new Chart(myChart, {
-  type: 'line', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
+  type: "line",
   data: {
-    labels: ['Engine System', 'Braking System', 'Electrical System', 'Airconditioning System', 'Fuel System', 'Battery System', 'Shock Absorber System', 'Wheel System'],
-    datasets: [{
-      label: 'Revenue',
-      data: [
-        81045,
-        0,
-        106519,
-        105162,
-        95072,
-        67343,
-        12623,
-        13734
+    labels: [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ],
+    datasets: [
+      {
+        borderColor: "rgba(255, 99, 132, 0.6)",
+        label: "Revenue",
+        data: [],
 
-      ],
-      backgroundColor: [
-        'rgba(255, 99, 132, 0.6)',
-        'rgba(54, 162, 235, 0.6)',
-        'rgba(255, 206, 86, 0.6)',
-        'rgba(75, 192, 192, 0.6)',
-        'rgba(153, 102, 255, 0.6)',
-        'rgba(255, 159, 64, 0.6)',
-
-        'rgba(55, 62, 235, 0.6)',
-        'rgba(25, 206, 86, 0.6)',
-      ],
-      borderWidth: 1,
-      borderColor: '#777',
-      hoverBorderWidth: 3,
-      hoverBorderColor: '#000'
-
-    }]
+        backgroundColor: [
+          "rgba(255, 99, 132, 0.6)",
+          "rgba(54, 162, 235, 0.6)",
+          "rgba(255, 206, 86, 0.6)",
+          "rgba(75, 192, 192, 0.6)",
+          "rgba(153, 102, 255, 0.6)",
+          "rgba(255, 159, 64, 0.6)",
+          "rgba(255, 99, 132, 0.6)",
+          "rgba(54, 162, 235, 0.6)",
+          "rgba(255, 206, 86, 0.6)",
+          "rgba(75, 192, 192, 0.6)",
+          "rgba(153, 102, 255, 0.6)",
+          "rgba(255, 159, 64, 0.6)",
+        ],
+        borderWidth: 1,
+        borderColor: "pink",
+        hoverBorderWidth: 3,
+        hoverBorderColor: "pink",
+      },
+    ],
   },
   options: {
-    indexAxis: 'x', // Hiển thị theo chiều ngang
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
       title: {
         display: true,
-        text: 'The chart for revenue of each carsystem',
-        color: 'white',
-
-        font: {
-          size: 25
-        },
-
+        text: "Chart of sales per month",
+        color: "white",
+        font: { size: 25 },
       },
       legend: {
         display: true,
-        position: 'right',
-        labels: {
-          color: 'white',
-          font: {
-            size: 20
-          },
-          padding: 20
-        },
-
-        fullSize: true
+        position: "right",
+        labels: { color: "white", font: { size: 20 }, padding: 20 },
       },
-      tooltip: {
-        enabled: true
-      }
+      tooltip: { enabled: true },
     },
-    layout: {
-      padding: {
-        right: 70,
-        top: -10
-
-      }
-    }
-  }
-
+  },
 });
 
+// chart top product per month
 
-// Lay tong doanh thu hom nay va so sanh voi hom qua 
+// Lay tong doanh thu hom nay va so sanh voi hom qua
 async function fetchTotalRevenueToday() {
   try {
     const response = await fetch("http://localhost:3000/TotalRevenueToday", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${localStorage.getItem("token")}`
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
 
@@ -167,14 +179,17 @@ async function fetchTotalRevenueToday() {
     }
 
     if (changeElement) {
-      changeElement.textContent = `${data.percentChange}% from yesterday`;
-      changeElement.classList.toggle("positive", data.percentChange >= 0);
-      changeElement.classList.toggle("negative", data.percentChange < 0);
+      const percentChange = data.percentChange;
+      changeElement.textContent = `${percentChange >= 0 ? "+" : "-"}${Math.abs(
+        percentChange
+      )}% from yesterday`;
+      changeElement.style.color = percentChange >= 0 ? "green" : "red";
     }
   } catch (error) {
     console.error("Error fetching sales data:", error);
   }
 }
+
 document.addEventListener("DOMContentLoaded", fetchTotalRevenueToday);
 
 // lay tong order hom nay so voi hom truoc
@@ -185,7 +200,7 @@ async function fetchTotalOrderToday() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${localStorage.getItem("token")}`
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
     const data = await response.json();
@@ -197,18 +212,17 @@ async function fetchTotalOrderToday() {
     }
 
     if (changeElement) {
-      changeElement.textContent = `${data.percentChange}% from yesterday`;
-      changeElement.classList.toggle("positive", data.percentChange >= 0);
-      changeElement.classList.toggle("negative", data.percentChange < 0);
+      const percentChange = data.percentChange;
+      changeElement.textContent = `${percentChange >= 0 ? "+" : "-"}${Math.abs(
+        percentChange
+      )}% from yesterday`;
+      changeElement.style.color = percentChange >= 0 ? "green" : "red";
     }
-
   } catch (error) {
     console.error("Error fetching total orders data:", error);
   }
 }
 document.addEventListener("DOMContentLoaded", fetchTotalOrderToday);
-
-
 
 // Lay tong san pham da ban duoc hom nay so voi hom qua
 
@@ -218,7 +232,7 @@ async function fetchTotalProductSoldToday() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${localStorage.getItem("token")}`
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
     const data = await response.json();
@@ -230,18 +244,17 @@ async function fetchTotalProductSoldToday() {
     }
 
     if (changeElement) {
-      changeElement.textContent = `${data.percentChange}% from yesterday`;
-      changeElement.classList.toggle("positive", data.percentChange >= 0);
-      changeElement.classList.toggle("negative", data.percentChange < 0);
+      const percentChange = data.percentChange;
+      changeElement.textContent = `${percentChange >= 0 ? "+" : "-"}${Math.abs(
+        percentChange
+      )}% from yesterday`;
+      changeElement.style.color = percentChange >= 0 ? "green" : "red";
     }
-
   } catch (error) {
     console.error("Error fetching product sold data:", error);
   }
 }
 document.addEventListener("DOMContentLoaded", fetchTotalProductSoldToday);
-
-
 
 // Total new customer
 
@@ -251,7 +264,7 @@ async function fetchTotalNewCustomerToday() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${localStorage.getItem("token")}`
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
 
@@ -268,11 +281,12 @@ async function fetchTotalNewCustomerToday() {
     }
 
     if (changeElement) {
-      changeElement.textContent = `${data.percentChange}% from yesterday`;
-      changeElement.classList.toggle("positive", data.percentChange >= 0);
-      changeElement.classList.toggle("negative", data.percentChange < 0);
+      const percentChange = data.percentChange;
+      changeElement.textContent = `${percentChange >= 0 ? "+" : "-"}${Math.abs(
+        percentChange
+      )}% from yesterday`;
+      changeElement.style.color = percentChange >= 0 ? "green" : "red";
     }
-
   } catch (error) {
     console.error("Error fetching new customer data:", error);
   }
@@ -281,18 +295,13 @@ async function fetchTotalNewCustomerToday() {
 // Gọi hàm sau khi trang tải xong
 document.addEventListener("DOMContentLoaded", fetchTotalNewCustomerToday);
 
-
-
-
-
-
 async function fetchServiceOrders() {
   try {
-    const response = await fetch("http://localhost:3000/TopProduct", {
+    const response = await fetch("http://localhost:3000/TopService", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${localStorage.getItem("token")}`
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
 
@@ -301,13 +310,16 @@ async function fetchServiceOrders() {
     }
 
     const data = await response.json();
-    const tbody = document.querySelector(".top-products tbody");
+    const tbody = document.querySelector(".top-services tbody");
 
     if (!tbody) return;
 
     tbody.innerHTML = ""; // Xóa nội dung cũ
 
-    const totalOrders = data.reduce((sum, service) => sum + service.TotalOrders, 0);
+    const totalOrders = data.reduce(
+      (sum, service) => sum + service.TotalOrders,
+      0
+    );
 
     data.sort((a, b) => b.TotalOrders - a.TotalOrders);
 
@@ -320,7 +332,7 @@ async function fetchServiceOrders() {
                   <td>${index + 1}</td>
                   <td>${service.ServiceName}</td> 
                   <td>
-                      <div class="popularity">
+                      <div class="popularity1">
                           <div class="bar" style="width: ${barWidth}%; background-color: orange;"></div>
                       </div>
                   </td>
@@ -329,12 +341,94 @@ async function fetchServiceOrders() {
           `;
       tbody.innerHTML += row;
     });
-
   } catch (error) {
     console.error("Error fetching service orders:", error);
   }
 }
+document.addEventListener("DOMContentLoaded", fetchServiceOrders);
 
-// Gọi hàm khi trang tải xong
-document.addEventListener('DOMContentLoaded', fetchServiceOrders);
+//Top Product
 
+document.addEventListener("DOMContentLoaded", async function () {
+  const branchSelect = document.getElementById("branchSelect");
+  const yearSelect = document.getElementById("yearSelect1");
+  const tableBody = document.getElementById("tbody1");
+  console.log("step1", branchSelect, yearSelect, tableBody);
+
+  // Giá trị mặc định
+  const defaultBranch = "1";
+  const defaultYear = "2025";
+
+  if (branchSelect) branchSelect.value = defaultBranch;
+  if (yearSelect) yearSelect.value = defaultYear;
+
+  async function fetchTopProducts(branch, year) {
+    console.log("Đang gửi request với dữ liệu:", { branch, year });
+
+    try {
+      const response = await fetch("http://localhost:3000/TopProducts", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify({ branch, year }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Lỗi API: ${response.status} - ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      console.log("Dữ liệu API:", data);
+
+      if (!tableBody) return;
+      tableBody.innerHTML = "";
+
+      const totalOrders1 = data.reduce(
+        (sum, product) => sum + product.Sales,
+        0
+      );
+
+      data.sort((a, b) => b.Sales - a.Sales);
+
+      data.forEach((product, index) => {
+        const percentage1 = ((product.Sales / totalOrders1) * 100).toFixed(2);
+        const barWidth1 = Math.min(percentage1 * 2, 100);
+
+        const row = `
+          <tr>
+              <td>${index + 1}</td>
+              <td>${product.ProductName}</td>
+              <td>
+                  <div class="popularity2">
+                      <div class="bar" style="width: ${barWidth1}%; background-color: orange;"></div>
+                  </div>
+              </td>
+              <td><span class="sales" style="background-color: orange;">${percentage1}%</span></td>
+          </tr>
+        `;
+        tableBody.innerHTML += row;
+      });
+    } catch (error) {
+      console.error("Lỗi khi lấy dữ liệu:", error);
+    }
+  }
+
+  // Change year or brand event
+  if (branchSelect && yearSelect) {
+    branchSelect.addEventListener("change", (event) => {
+      event.preventDefault();
+      fetchTopProducts(branchSelect.value, yearSelect.value);
+    });
+
+    yearSelect.addEventListener("change", (event) => {
+      event.preventDefault();
+      fetchTopProducts(branchSelect.value, yearSelect.value);
+    });
+
+    await fetchTopProducts(defaultBranch, defaultYear);
+  } else {
+    console.error("Lỗi: Không tìm thấy branchSelect hoặc yearSelect trong DOM");
+  }
+});

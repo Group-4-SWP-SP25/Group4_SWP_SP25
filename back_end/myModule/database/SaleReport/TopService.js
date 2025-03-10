@@ -1,6 +1,6 @@
 const sql = require("mssql");
 
-const TopProduct = async (req, res) => {
+const TopService = async (req, res) => {
     try {
         const pool = global.pool;
         const result = await pool.request()
@@ -23,4 +23,4 @@ const TopProduct = async (req, res) => {
     }
 };
 
-module.exports = TopProduct;
+module.exports = TopService;

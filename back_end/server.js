@@ -39,7 +39,9 @@ const TotalRevenueToday = require("./myModule/database/SaleReport/TotalRevenueTo
 const TotalOrderToday = require("./myModule/database/SaleReport/TotalOrderToday.js");
 const TotalProductSold = require("./myModule/database/SaleReport/TotalProductSold.js");
 const TotalNewCustomer = require("./myModule/database/SaleReport/TotalNewCustomer.js");
-const TopProduct = require("./myModule/database/SaleReport/TopProduct.js");
+const TopService = require("./myModule/database/SaleReport/TopService.js");
+const TopRevenueByMonth = require("./myModule/database/SaleReport/TopRevenueByMonth.js");
+const TopProducts=require("./myModule/database/SaleReport/TopProducts.js");
 // user
 const register = require("./myModule/controller/register.js");
 const getPassword = require("./myModule/controller/user/getPassword.js");
@@ -129,7 +131,9 @@ app.post("/TotalRevenueToday", authenticateADMIN, TotalRevenueToday);
 app.post("/TotalOrderToday", authenticateADMIN, TotalOrderToday);
 app.post("/TotalProductSold", authenticateADMIN, TotalProductSold);
 app.post("/TotalNewCustomer", authenticateADMIN, TotalNewCustomer);
-app.post("/TopProduct", authenticateADMIN, TopProduct);
+app.post("/TopService", authenticateADMIN, TopService);
+app.post("/TopRevenueByMonth", authenticateADMIN, TopRevenueByMonth);
+app.post("/TopProducts", authenticateADMIN, TopProducts);
 // user
 app.post("/getPassword", getPassword);
 app.post("/changePassword", changePassword);
