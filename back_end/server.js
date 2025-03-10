@@ -2,6 +2,10 @@ const express = require("express");
 const cors = require("cors");
 const PORT = 3000;
 const app = express();
+const multer = require("multer");
+const upload = multer({
+  storage: multer.memoryStorage(),
+});
 app.use(express.json());
 app.use(
   cors({
@@ -50,6 +54,8 @@ const { AuthGoogle, Auth } = require("./myModule/controller/Login.js");
 const getUserProfile = require("./myModule/database/user/getUserProfile.js");
 const userInfo = require("./myModule/controller/user/userInfo.js");
 const updateUserProfile = require("./myModule/controller/user/updateUserProfile.js");
+const { uploadFile, getFileInfo } = require("./myModule/controller/cloud/storage.js");
+const { getEmployees } = require("./myModule/controller/employee/employee.js");
 
 // branch
 const branchInfo = require("./myModule/controller/branch/branchInfo.js");
@@ -105,20 +111,23 @@ const {
   CheckMessage,
 } = require("./myModule/controller/message/message.js");
 
+// calendar
+const { getEvents_api } = require('./myModule/controller/calendar/calendar.js')
+
 // ----------------------------------------------------------
 // CREATE API
 // admin
 app.post("/CustomerManager/getUserList", authenticateADMIN, getUserList);
-app.post(
-  "/CustomerManager/getTotelUserCount",
-  authenticateADMIN,
-  getTotalUserCount
-);
+app.post("/CustomerManager/getTotelUserCount", authenticateADMIN, getTotalUserCount);
 app.post("/CustomerManager/getUserInfo", authenticateADMIN, GetUserInfo_Admin);
 app.post("/Message/SendMessage", authenticateJWT, SendMessage);
 app.post("/Message/GetMessage", authenticateJWT, GetMessage);
 app.post("/Message/GetList", authenticateJWT, GetList);
 app.post("/Message/CheckMessage", authenticateJWT, CheckMessage);
+app.post("/Calendar/GetEvents", authenticateADMIN, getEvents_api);
+app.post("/Employee/getEmployees", authenticateADMIN, getEmployees);
+
+
 
 // user
 app.post("/getPassword", getPassword);
@@ -133,6 +142,9 @@ app.post("/auth/login", Auth);
 app.post("/getUserProfile", getUserProfile);
 app.post("/userInfo", userInfo);
 app.post("/updateUserProfile", updateUserProfile);
+
+app.post("/uploadFile", upload.single('file'), uploadFile);
+app.post("/getFileInfo", authenticateJWT, getFileInfo);
 
 // branch
 app.post("/branchInfo", branchInfo);
@@ -177,6 +189,7 @@ app.post("/removeAllOrder", removeAllOrder);
 // payment
 app.post("/payment", payment);
 app.get("/payment/callback", paymentCallback);
+
 
 // ----------------------------------------------------------
 // START SERVER
