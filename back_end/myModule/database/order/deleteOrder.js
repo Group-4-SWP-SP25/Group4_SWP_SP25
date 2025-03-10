@@ -1,29 +1,34 @@
 const sql = require("mssql");
-const deleteAnOrder = async (userId, orderId) => {
+const deleteAnOrder = async (userID, orderID) => {
   try {
     const pool = global.pool;
     const query = `
       DELETE FROM [Order]
-      WHERE  UserID = @userId AND OrderID = @orderId;
+      WHERE  UserID = @userID AND OrderID = @orderID;
     `;
     await pool
       .request()
-      .input("userId", sql.Int, userId)
-      .input("orderId", sql.Int, orderId)
+      .input("userID", sql.Int, userID)
+      .input("orderID", sql.Int, orderID)
       .query(query);
   } catch (err) {
     throw err;
   }
 };
 
-const deletAllOrder = async (userId) => {
+const deletAllOrder = async (userID, carID) => {
   try {
     const pool = global.pool;
     const query = `
-            DELETE FROM [Order]
-            WHERE UserID = @userId;
-        `;
-    await pool.request().input("userId", sql.Int, userId).query(query);
+      ALTER TABLE [Order] DISABLE TRIGGER DeleteOrder;
+      DELETE FROM [Order] WHERE UserID = @userID AND CarID = @carID;
+      ALTER TABLE [Order] ENABLE TRIGGER DeleteOrder;
+    `;
+    await pool
+      .request()
+      .input("userID", sql.Int, userID)
+      .input("carID", sql.Int, carID)
+      .query(query);
   } catch (err) {
     throw err;
   }

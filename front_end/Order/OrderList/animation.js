@@ -32,6 +32,19 @@ $(document).ready(function () {
   $(".overlay").click(function () {
     showHideConfimationDialog();
   });
+
+  $(".select-car").click(function (e) {
+    e.preventDefault();
+    $(".car-list").toggleClass("show");
+    $(".fa-chevron-right").toggleClass("active");
+  });
+
+  $(document).click(function (event) {
+    if (!$(event.target).closest(".choose-car").length) {
+      $(".car-list").removeClass("show");
+      $(".fa-chevron-right").removeClass("active");
+    }
+  });
 });
 
 function showNotification() {
@@ -57,7 +70,7 @@ function showNotification() {
   <span>An order has already been deleted!</span>
   <div class="progress-bar"></div>
 </div>
-        `);
+`);
 
   container.prepend(notification);
 
@@ -128,21 +141,21 @@ async function deleteAnOrder() {
     showNotification();
 
     const orderResponse = await $.ajax({
-      url: "http://localhost:3000/listOrder",
+      url: "http://localhost:3000/listOrderByCar",
       method: "POST",
       contentType: "application/json",
-      data: JSON.stringify({ userID: user.id }),
+      data: JSON.stringify({ userID: user.id, carID: orderDeleted.CarID }),
     });
 
     const orders = orderResponse;
     const orderEmpty = $(".order-empty");
-    const mainOrderPage = $(".main-order-page");
+    const orderPage = $(".order-page");
 
     if (orders.length !== 0) {
-      mainOrderPage.removeClass("hidden");
+      orderPage.removeClass("hidden");
       orderEmpty.addClass("hidden");
     } else {
-      mainOrderPage.addClass("hidden");
+      orderPage.addClass("hidden");
       orderEmpty.removeClass("hidden");
     }
   } catch (error) {

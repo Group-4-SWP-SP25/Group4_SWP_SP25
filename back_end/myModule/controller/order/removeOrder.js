@@ -16,8 +16,8 @@ const removeAnOrder = async (req, res) => {
 
 const removeAllOrder = async (req, res) => {
   try {
-    const { userID } = req.body;
-    await deletAllOrder(userID);
+    const { userID, carID } = req.body;
+    await deletAllOrder(userID, carID);
     res.status(200).send({ message: "All orders deleted" });
   } catch (err) {
     res.status(500).send({ error: "Internal Server Error" });
