@@ -1,127 +1,100 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FullCalendar với Google Calendar API</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/6.1.10/index.global.min.css" rel="stylesheet">
+    <title>Roadmap</title>
     <style>
-        /* 📌 Tùy chỉnh toàn bộ nền lịch */
-        .fc {
+        body {
             font-family: Arial, sans-serif;
-            background-color: #f9f9f9;
-            padding: 10px;
+            margin: 20px;
+        }
+
+        .roadmap {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .step {
+            position: relative;
+            margin: 20px;
+            padding: 20px;
+            text-align: center;
+            border: 2px solid #007bff;
             border-radius: 10px;
+            background-color: #f1f8ff;
+            width: 150px;
         }
 
-        /* 📌 Tùy chỉnh header (thanh điều hướng tháng/ngày) */
-        .fc-toolbar {
-            background-color: #007bff;
-            color: white;
-            padding: 10px;
-            border-radius: 5px;
+        .step::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            right: -30px;
+            width: 30px;
+            height: 2px;
+            background: #007bff;
+            transform: translateY(-50%);
         }
 
-        /* 📌 Tùy chỉnh nút điều hướng */
-        .fc-button {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 8px 12px;
-            border-radius: 5px;
+        .step:last-child::after {
+            display: none;
         }
 
-        .fc-button:hover {
-            background-color: #0056b3;
+        .step h4 {
+            margin: 0;
+            font-size: 18px;
+            color: #007bff;
         }
 
-        /* 📌 Tùy chỉnh màu nền của các ngày */
-        .fc-day {
-            background-color: white;
-            border: 1px solid #ddd;
-        }
-
-        /* 📌 Tùy chỉnh ô ngày hôm nay */
-        .fc-day-today {
-            background-color: #ffeb3b !important;
-            border-radius: 5px;
-        }
-
-        /* 📌 Tùy chỉnh sự kiện */
-        .fc-event {
-            background-color: #28a745 !important;
-            border: none !important;
-            color: white !important;
-            padding: 5px;
-            border-radius: 5px;
-        }
-
-        /* 📌 Khi hover vào sự kiện */
-        .fc-event:hover {
-            background-color: #218838 !important;
-            cursor: pointer;
-        }
-
-        /* 📌 Tùy chỉnh ô giờ trong chế độ tuần/ngày */
-        .fc-timegrid-slot {
-            background-color: #f0f8ff;
+        .step p {
+            margin: 10px 0 0;
+            font-size: 14px;
+            color: #333;
         }
     </style>
 </head>
 
 <body>
-
-    <div id="calendar"></div>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/6.1.10/index.global.min.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            let calendarEl = document.getElementById('calendar');
-            let calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'dayGridMonth',
-                events: 'http://localhost:3000/api/events', // Lấy dữ liệu từ Google Calendar API
-                editable: true,
-                selectable: true,
-
-                // 📌 Thêm sự kiện vào Google Calendar
-                dateClick: function (info) {
-                    let title = prompt("Nhập tên sự kiện:");
-                    if (title) {
-                        fetch("http://localhost:3000/api/events", {
-                            method: "POST",
-                            headers: { "Content-Type": "application/json" },
-                            body: JSON.stringify({
-                                title: title,
-                                start: info.dateStr + "T09:00:00",
-                                end: info.dateStr + "T10:00:00"
-                            })
-                        })
-                            .then(response => response.json())
-                            .then(data => {
-                                alert(data.message);
-                                calendar.refetchEvents(); // Refresh lại lịch
-                            });
-                    }
-                },
-
-                // 📌 Xóa sự kiện khỏi Google Calendar
-                eventClick: function (info) {
-                    if (confirm("Bạn có muốn xóa sự kiện này không?")) {
-                        fetch(`http://localhost:3000/api/events/${info.event.id}`, { method: "DELETE" })
-                            .then(response => response.json())
-                            .then(data => {
-                                alert(data.message);
-                                info.event.remove(); // Xóa sự kiện khỏi FullCalendar
-                            });
-                    }
-                }
-            });
-
-            calendar.render();
-        });
-    </script>
-
+    <h2>Roadmap</h2>
+    <div class="roadmap" id="roadmap">
+        <!-- Các bước sẽ được hiển thị ở đây -->
+    </div>
+    <script src="roadmap.js"></script>
 </body>
+<script>
+    // roadmap.js
+    document.addEventListener("DOMContentLoaded", () => {
+        const roadmap = document.getElementById("roadmap");
+
+        const steps = [
+            { title: "Bước 1", description: "Nghiên cứu thị trường" },
+            { title: "Bước 2", description: "Phát triển sản phẩm" },
+            { title: "Bước 3", description: "Kiểm tra chất lượng" },
+            { title: "Bước 4", description: "Triển khai và phát hành" },
+            { title: "Bước 5", description: "Hỗ trợ khách hàng" },
+        ];
+
+        steps.forEach((step, index) => {
+            const stepElement = document.createElement("div");
+            stepElement.classList.add("step");
+
+            const titleElement = document.createElement("h4");
+            titleElement.textContent = step.title;
+
+            const descriptionElement = document.createElement("p");
+            descriptionElement.textContent = step.description;
+
+            stepElement.appendChild(titleElement);
+            stepElement.appendChild(descriptionElement);
+
+            roadmap.appendChild(stepElement);
+        });
+    });
+
+</script>
 
 </html>

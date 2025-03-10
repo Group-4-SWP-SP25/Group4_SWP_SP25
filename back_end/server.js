@@ -2,6 +2,10 @@ const express = require('express');
 const cors = require('cors');
 const PORT = 3000;
 const app = express();
+const multer = require("multer");
+const upload = multer({
+    storage: multer.memoryStorage(),
+});
 app.use(express.json());
 app.use(
     cors({
@@ -33,16 +37,21 @@ const TotalNewCustomer = require('./myModule/database/SaleReport/TotalNewCustome
 const TopProduct = require('./myModule/database/SaleReport/TopProduct.js');
 
 // user
-const register = require('./myModule/controller/register.js');
-const getPassword = require('./myModule/controller/user/getPassword.js');
-const changePassword = require('./myModule/database/user/changePassword.js');
-const checkAccount = require('./myModule/controller/user/checkAccount.js');
-const checkUserName = require('./myModule/database/user/checkUserName.js');
-const { resetPassword, verification } = require('./myModule/controller/resetpassword.js');
-const { AuthGoogle, Auth } = require('./myModule/controller/Login.js');
-const getUserProfile = require('./myModule/database/user/getUserProfile.js');
-const userInfo = require('./myModule/controller/user/userInfo.js');
-const updateUserProfile = require('./myModule/controller/user/updateUserProfile.js');
+const register = require("./myModule/controller/register.js");
+const getPassword = require("./myModule/controller/user/getPassword.js");
+const changePassword = require("./myModule/database/user/changePassword.js");
+const checkAccount = require("./myModule/controller/user/checkAccount.js");
+const checkUserName = require("./myModule/database/user/checkUserName.js");
+const {
+    resetPassword,
+    verification,
+} = require("./myModule/controller/resetpassword.js");
+const { AuthGoogle, Auth } = require("./myModule/controller/Login.js");
+const getUserProfile = require("./myModule/database/user/getUserProfile.js");
+const userInfo = require("./myModule/controller/user/userInfo.js");
+const updateUserProfile = require("./myModule/controller/user/updateUserProfile.js");
+const { uploadFile, getFileInfo } = require("./myModule/controller/cloud/storage.js");
+const { getEmployees } = require("./myModule/controller/employee/employee.js");
 
 // branch
 const branchInfo = require('./myModule/controller/branch/branchInfo.js');
@@ -93,16 +102,21 @@ const paymentCallback = require('./myModule/controller/payment/callback.js');
 // message
 const { SendMessage, GetMessage, GetList, CheckMessage } = require('./myModule/controller/message/message.js');
 
+// calendar
+const { getEvents_api } = require('./myModule/controller/calendar/calendar.js')
+
 // ----------------------------------------------------------
 // CREATE API
 // admin
-app.post('/CustomerManager/getUserList', authenticateADMIN, getUserList);
-app.post('/CustomerManager/getTotelUserCount', authenticateADMIN, getTotalUserCount);
-app.post('/CustomerManager/getUserInfo', authenticateADMIN, GetUserInfo_Admin);
-app.post('/Message/SendMessage', authenticateJWT, SendMessage);
-app.post('/Message/GetMessage', authenticateJWT, GetMessage);
-app.post('/Message/GetList', authenticateJWT, GetList);
-app.post('/Message/CheckMessage', authenticateJWT, CheckMessage);
+app.post("/CustomerManager/getUserList", authenticateADMIN, getUserList);
+app.post("/CustomerManager/getTotelUserCount", authenticateADMIN, getTotalUserCount);
+app.post("/CustomerManager/getUserInfo", authenticateADMIN, GetUserInfo_Admin);
+app.post("/Message/SendMessage", authenticateJWT, SendMessage);
+app.post("/Message/GetMessage", authenticateJWT, GetMessage);
+app.post("/Message/GetList", authenticateJWT, GetList);
+app.post("/Message/CheckMessage", authenticateJWT, CheckMessage);
+app.post("/Calendar/GetEvents", authenticateADMIN, getEvents_api);
+app.post("/Employee/getEmployees", authenticateADMIN, getEmployees);
 app.post('/TotalRevenueToday', authenticateADMIN, TotalRevenueToday);
 app.post('/TotalOrderToday', authenticateADMIN, TotalOrderToday);
 app.post('/TotalProductSold', authenticateADMIN, TotalProductSold);
@@ -122,6 +136,9 @@ app.post('/auth/login', Auth);
 app.post('/getUserProfile', getUserProfile);
 app.post('/userInfo', userInfo);
 app.post('/updateUserProfile', updateUserProfile);
+
+app.post("/uploadFile", upload.single('file'), uploadFile);
+app.post("/getFileInfo", authenticateJWT, getFileInfo);
 
 // branch
 app.post('/branchInfo', branchInfo);
@@ -169,6 +186,7 @@ app.post('/removeAllOrder', removeAllOrder);
 // payment
 app.post('/payment', payment);
 app.get('/payment/callback', paymentCallback);
+
 
 // ----------------------------------------------------------
 // START SERVER
