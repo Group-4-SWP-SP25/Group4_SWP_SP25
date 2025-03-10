@@ -1,4 +1,7 @@
 let totalPrice = 0;
+const urlParams = new URLSearchParams(window.location.search);
+const carID = parseInt(urlParams.get("carID"));
+
 async function getOrderList() {
   try {
     const user = await $.ajax({
@@ -10,20 +13,22 @@ async function getOrderList() {
 
     // Lấy danh sách đơn hàng
     const orders = await $.ajax({
-      url: "http://localhost:3000/listOrder",
+      url: "http://localhost:3000/listOrderByCar",
       method: "POST",
       contentType: "application/json",
-      data: JSON.stringify({ userID: user.id }),
+      data: JSON.stringify({ userID: user.id, carID: carID }),
+    });
+    const carInfo = await $.ajax({
+      url: "http://localhost:3000/carInfo",
+      method: "POST",
+      contentType: "application/json",
+      data: JSON.stringify({ carID: carID }),
     });
 
-    const promises = orders.map(async (order) => {
-      const car = await $.ajax({
-        url: "http://localhost:3000/carInfo",
-        method: "POST",
-        contentType: "application/json",
-        data: JSON.stringify({ carID: order.CarID }),
-      });
+    $(".car-name").html(carInfo.CarName);
+    $(".car-image").attr("src", carInfo.CarImage);
 
+    const promises = orders.map(async (order) => {
       const branch = await $.ajax({
         url: "http://localhost:3000/branchInfo",
         method: "POST",
@@ -45,11 +50,11 @@ async function getOrderList() {
         data: JSON.stringify({ partID: order.PartID }),
       });
 
-      return { order, car, branch, service, partInfo };
+      return { order, branch, service, partInfo };
     });
 
     Promise.all(promises).then((results) => {
-      results.forEach(({ order, car, branch, service, partInfo }) => {
+      results.forEach(({ order, branch, service, partInfo }) => {
         const orderElement = $(`
             <span class="form-product-item show_image show_desc new_ui">
               <div data-wrapper-react="true" class="form-product-item-detail new_ui">
@@ -67,8 +72,7 @@ async function getOrderList() {
                         partInfo.PartName
                       }</span>
                       <div class="order-info">      
-                          <p class="title">Car </p>
-                          <p class="content">${car.CarName}</p>
+                          
                           <p class="title">Service </p>
                           <p class="content">${service.ServiceName}</p>
                           <p class="title">Branch</p>

@@ -86,7 +86,7 @@ const componentInStockInfo = require("./myModule/controller/inventory/componentI
 // order
 const orderInfo = require("./myModule/controller/order/orderInfo.js");
 const placeOrder = require("./myModule/controller/order/placeOrder.js");
-const listOrder = require("./myModule/controller/order/listOrder.js");
+const listOrderByCar = require("./myModule/controller/order/listOrderByCar.js");
 const {
   removeAnOrder,
   removeAllOrder,
@@ -168,7 +168,7 @@ app.post("/componentInStockInfo", componentInStockInfo);
 // order
 app.post("/orderInfo", orderInfo);
 app.post("/placeOrder", placeOrder);
-app.post("/listOrder", listOrder);
+app.post("/listOrderByCar", listOrderByCar);
 app.post("/removeAnOrder", removeAnOrder);
 app.post("/removeAllOrder", removeAllOrder);
 

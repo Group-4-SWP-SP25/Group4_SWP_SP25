@@ -121,7 +121,8 @@ CREATE TABLE Inventory (
 	AccessoryID INT NOT NULL FOREIGN KEY REFERENCES AccessoryInfo(AccessoryID),
 	Quantity INT,
 	UnitPrice FLOAT,
-	CONSTRAINT pk_Inventory PRIMARY KEY (BranchID, AccessoryID)
+	CONSTRAINT pk_Inventory PRIMARY KEY (BranchID, AccessoryID),
+
 );
 GO
  
@@ -129,8 +130,8 @@ GO
 CREATE TABLE [Order] (
 	UserID INT NOT NULL FOREIGN KEY REFERENCES [User](UserID) ON DELETE CASCADE,
     OrderID INT NOT NULL,
-    CarID INT NOT NULL,
-    PartID INT NOT NULL,
+    CarID INT NOT NULL FOREIGN KEY REFERENCES [Car](CarID),
+    PartID INT NOT NULL FOREIGN KEY REFERENCES [PartInfo](PartID),
 	ServiceID INT FOREIGN KEY REFERENCES [Service](ServiceID),
 	BranchID INT FOREIGN KEY REFERENCES Branch(BranchID),
     QuantityUsed INT NOT NULL,
@@ -160,6 +161,30 @@ CREATE TABLE MessageReads (
     FOREIGN KEY (MessageID) REFERENCES Messages(MessageID)
 );
 GO
+
+CREATE TABLE Payment(
+	UserID INT FOREIGN KEY REFERENCES [User](UserID),
+	PaymentID INT NOT NULL,
+	PaymentMethod VARCHAR(200),
+	PaymentDate DATETIME DEFAULT CURRENT_TIMESTAMP,
+	Amount FLOAT NOT NULL,
+	CONSTRAINT pk_Payments PRIMARY KEY (UserID, PaymentID)
+);
+GO
+
+CREATE TABLE Bill(
+	UserID INT,
+	PaymentID INT,
+	CarID INT NOT NULL FOREIGN KEY REFERENCES Car(CarID),
+    PartID INT NOT NULL FOREIGN KEY REFERENCES PartInfo(PartID),
+	ServiceID INT FOREIGN KEY REFERENCES [Service](ServiceID),
+	BranchID INT FOREIGN KEY REFERENCES Branch(BranchID),
+    QuantityUsed INT NOT NULL,
+	CONSTRAINT fk_Bills FOREIGN KEY (UserID, PaymentID) REFERENCES Payment(UserID, PaymentID),
+	CONSTRAINT pk_Bills PRIMARY KEY (UserID, PaymentID, CarID, PartID, ServiceID)
+);
+GO
+
 
 -- mesage 
 CREATE PROCEDURE UpsertMessageRead
@@ -304,7 +329,7 @@ BEGIN
 
     -- Cập nhật lại số lượng trong Inventory khi đơn hàng bị hủy
     UPDATE ivt
-    SET ivt.Quantity = ivt.Quantity + d.QuantityUsed
+    SET ivt.Quantity = ivt.Quantity - d.QuantityUsed
     FROM Inventory ivt
     INNER JOIN deleted d ON ivt.BranchID = d.BranchID
     INNER JOIN AccessoryInfo ai ON ai.ServiceID = d.ServiceID
@@ -315,6 +340,22 @@ GO
 DISABLE TRIGGER DeleteOrder ON [Order];
 GO
 
+CREATE TRIGGER InsertPayment
+ON Payment
+INSTEAD OF INSERT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    INSERT INTO Payment(PaymentID, UserID, PaymentMethod, Amount)
+    SELECT
+        COALESCE((SELECT MAX(p.PaymentID) FROM Payment p WHERE p.UserID = i.UserID), 0) + 1,
+        i.UserID,
+        i.PaymentMethod,
+        i.Amount
+    FROM inserted i;
+END;
+GO     
 
 INSERT INTO [ServiceType](ServiceTypeName, ServiceTypeDescription, ServiceImage) VALUES 
 -- 1
@@ -627,17 +668,18 @@ INSERT INTO [Car](UserID, CarName, Brand, RegistrationNumber, [Year], CarImage, 
 (2, 'Car 2', 'Honda', '654321', 2015, 'https://akm-img-a-in.tosshub.com/indiatoday/styles/medium_crop_simple/public/2024-11/1_4.jpg', 'Maintaining'),
 (2, 'Car 3', 'Ford', '987654', 2018, 'https://images.dealer.com/autodata/us/640/2020/USD00FOS372A0/USC80FOS371A01300.jpg', 'Active'),
 (2, 'Car 4', 'BMW', '125478', 2020, '', 'Active');
-
-
+GO
 
 INSERT INTO [Order] (UserID, CarID, BranchID, PartID, ServiceID, QuantityUsed)
 VALUES (2, 1, 1, 8, 114, 2);
+GO
 
---ENABLE TRIGGER DeleteOrder ON [Order];
---GO
 
---DELETE FROM [Order];
---GO
+ENABLE TRIGGER DeleteOrder ON [Order];
+GO
 
---DISABLE TRIGGER DeleteOrder ON [Order]
---GO
+DELETE FROM [Order] WHERE UserID = 2 AND CarID = 1;
+GO
+
+DISABLE TRIGGER DeleteOrder ON [Order]
+GO
