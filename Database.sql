@@ -221,7 +221,7 @@ INSERT INTO PartInfo(PartName, CarSystemID, [Image]) VALUES
 ('Suspension', 7,'/resource/CarPark_image/Suspension.webp'),
 ('Tire', 8,'/resource/CarPark_image/Tire.webp'),
 ('Rim', 8,'/resource/CarPark_image/Rim.webp'),
-('Wheel Hub', 8,'/resource/CarPark_image/WheelHub.webp')
+('Wheel Hub', 8,'/resource/CarPark_image/WheelHub.webp');
 GO
 
 -- Trigger for Car Parts
