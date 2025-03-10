@@ -21,6 +21,8 @@ let oldServiceData = []; // store old render table
 let maxServiceID; // max current serviceID
 let maxServiceTypeID; // max current serviceTypeID
 let maxServicePartID; // max current partID
+let partName = {};
+let typeName = {};
 
 // ---------- Support functions ----------
 // Search service
@@ -98,7 +100,7 @@ function showDeletePopup(element) {
 }
 
 function hideDeletePopup() {
-    chosenServiceID = null; // reset data variable
+    chosenServiceID = null; // reset variable data
 
     popupDelete.classList.add('hidden');
     overlay.classList.add('hidden');
@@ -109,7 +111,7 @@ function confirmDeletePopup() {
         deleteService(chosenServiceID);
     }
 
-    chosenServiceID = null; // reset data variable
+    chosenServiceID = null; // reset variable data
 
     popupDelete.classList.add('hidden');
     overlay.classList.add('hidden');
@@ -157,11 +159,12 @@ function showUpdatePopup(element) {
     });
 
     const typeSelect = data[1].children[0];
+    typeSelect.innerHTML = '';
     for (let i = 1; i <= maxServiceTypeID; i++) {
         const option = document.createElement('option');
         if (i === chosenServiceTypeID) option.selected = true;
         option.value = i;
-        option.textContent = `${i}`;
+        option.textContent = `${i} - ${typeName[i]}`;
         typeSelect.appendChild(option);
     }
     data[1].children[0].addEventListener('change', () => {
@@ -169,11 +172,12 @@ function showUpdatePopup(element) {
     });
 
     const partSelect = data[2].children[0];
+    partSelect.innerHTML = '';
     for (let i = 1; i <= maxServicePartID; i++) {
         const option = document.createElement('option');
         if (i === chosenServicePartID) option.selected = true;
         option.value = i;
-        option.textContent = `${i}`;
+        option.textContent = `${i} - ${partName[i]}`;
         partSelect.appendChild(option);
     }
     data[2].children[0].addEventListener('change', () => {
@@ -183,7 +187,7 @@ function showUpdatePopup(element) {
     data[3].children[0].addEventListener('change', () => {
         chosenServiceName = setStrValue(data[3].children[0], chosenServiceName, 'Unnamed Service');
     });
-    
+
     data[4].children[0].addEventListener('change', () => {
         chosenServiceDescription = setStrValue(data[4].children[0], chosenServiceDescription, 'No Description');
     });
@@ -197,11 +201,11 @@ function showUpdatePopup(element) {
 }
 
 function hideUpdatePopup() {
-    // reset data display
+    // reset display data
     data.forEach((datum) => {
         datum.children[0].value = '';
     });
-    chosenServiceID = chosenServiceTypeID = chosenServicePartID = chosenServiceName = chosenServiceDescription = chosenServicePrice = null; // reset data variable
+    chosenServiceID = chosenServiceTypeID = chosenServicePartID = chosenServiceName = chosenServiceDescription = chosenServicePrice = null; // reset variable data
     popupModify.querySelector('.btn-yes').removeEventListener('click', confirmUpdatePopup); // reset yes button
     popupModify.querySelector('.btn-no').removeEventListener('click', hideUpdatePopup); // reset no button
 
@@ -214,11 +218,11 @@ function confirmUpdatePopup() {
         updateService(chosenServiceID, chosenServiceTypeID, chosenServicePartID, chosenServiceName, chosenServiceDescription, chosenServicePrice);
     }
 
-    // reset data display
+    // reset display data
     data.forEach((datum) => {
         datum.children[0].value = '';
     });
-    chosenServiceID = chosenServiceTypeID = chosenServicePartID = chosenServiceName = chosenServiceDescription = chosenServicePrice = null; // reset data variable
+    chosenServiceID = chosenServiceTypeID = chosenServicePartID = chosenServiceName = chosenServiceDescription = chosenServicePrice = null; // reset variable data
     popupModify.querySelector('.btn-yes').removeEventListener('click', confirmUpdatePopup); // reset yes button
     popupModify.querySelector('.btn-no').removeEventListener('click', hideUpdatePopup); // reset no button
 
@@ -248,7 +252,6 @@ async function updateService(ServiceID, ServiceTypeID, ServicePartID, ServiceNam
 // Add service
 function showAddPopup() {
     chosenServiceID = maxServiceID + 1;
-    console.log(chosenServiceID);
     popupModify.querySelector('h2').textContent = 'Add Service'; // set title
     popupModify.querySelector('.btn-yes').addEventListener('click', confirmAddPopup); // set yes button
     popupModify.querySelector('.btn-no').addEventListener('click', hideAddPopup); // set no button
@@ -260,15 +263,16 @@ function showAddPopup() {
     chosenServiceName = data[3].children[0].value = 'Unnamed Service';
     chosenServiceDescription = data[4].children[0].value = 'No Description';
     chosenServicePrice = data[5].children[0].value = 1000;
-    console.log(chosenServiceTypeID, chosenServicePartID, chosenServiceName, chosenServiceDescription, chosenServicePrice);
+    // console.log(chosenServiceTypeID, chosenServicePartID, chosenServiceName, chosenServiceDescription, chosenServicePrice);
 
     // listen change
     const typeSelect = data[1].children[0];
+    typeSelect.innerHTML = '';
     for (let i = 1; i <= maxServiceTypeID; i++) {
         const option = document.createElement('option');
         if (i === 1) option.selected = true;
         option.value = i;
-        option.textContent = `${i}`;
+        option.textContent = `${i} - ${typeName[i]}`;
         typeSelect.appendChild(option);
     }
     data[1].children[0].addEventListener('change', () => {
@@ -276,11 +280,12 @@ function showAddPopup() {
     });
 
     const partSelect = data[2].children[0];
+    partSelect.innerHTML = '';
     for (let i = 1; i <= maxServicePartID; i++) {
         const option = document.createElement('option');
         if (i === 1) option.selected = true;
         option.value = i;
-        option.textContent = `${i}`;
+        option.textContent = `${i} - ${partName[i]}`;
         partSelect.appendChild(option);
     }
     data[2].children[0].addEventListener('change', () => {
@@ -306,13 +311,13 @@ function showAddPopup() {
     data[4].children[0].addEventListener('blur', () => {
         chosenServiceDescription = setStrValue(data[4].children[0], chosenServiceDescription, 'No Description');
     });
-    
+
     data[5].children[0].addEventListener('change', () => {
         chosenServicePrice = setNumValue(data[5].children[0], chosenServicePrice, 1000);
     });
     data[5].children[0].addEventListener('focus', () => {
         data[5].children[0].value = '';
-    })
+    });
     data[5].children[0].addEventListener('blur', () => {
         chosenServicePrice = setNumValue(data[5].children[0], chosenServicePrice, 1000);
     });
@@ -322,12 +327,12 @@ function showAddPopup() {
 }
 
 function hideAddPopup() {
-    // reset data display
+    // reset display data
     data.forEach((datum) => {
         datum.children[0].value = '';
     });
-    data[0].children[0].remove(0);
-    chosenServiceID = chosenServiceTypeID = chosenServicePartID = chosenServiceName = chosenServiceDescription = chosenServicePrice = null; // reset data variable
+    data[0].children[0].remove(0); // reset variable data
+    chosenServiceID = chosenServiceTypeID = chosenServicePartID = chosenServiceName = chosenServiceDescription = chosenServicePrice = null; // reset variable data
     popupModify.querySelector('.btn-yes').removeEventListener('click', confirmAddPopup); // reset yes button
     popupModify.querySelector('.btn-no').removeEventListener('click', hideAddPopup); // reset no button
 
@@ -340,12 +345,12 @@ function confirmAddPopup() {
         addService(chosenServiceTypeID, chosenServicePartID, chosenServiceName, chosenServiceDescription, chosenServicePrice);
     }
 
-    // reset data display
+    // reset display data
     data.forEach((datum) => {
         datum.children[0].value = '';
     });
     data[0].children[0].remove(0);
-    chosenServiceID = chosenServiceTypeID = chosenServicePartID = chosenServiceName = chosenServiceDescription = chosenServicePrice = null; // reset data variable
+    chosenServiceID = chosenServiceTypeID = chosenServicePartID = chosenServiceName = chosenServiceDescription = chosenServicePrice = null; // reset variable data
     popupModify.querySelector('.btn-yes').removeEventListener('click', confirmAddPopup); // reset yes button
     popupModify.querySelector('.btn-no').removeEventListener('click', hideAddPopup); // reset no button
 
@@ -452,9 +457,15 @@ async function getServiceListAll() {
         maxServiceID = result.reduce((max, service) => Math.max(max, service.ServiceID), 0);
         maxServiceTypeID = result.reduce((max, service) => Math.max(max, service.ServiceTypeID), 0);
         maxServicePartID = result.reduce((max, service) => Math.max(max, service.PartID), 0);
-        // console.log(maxServiceID, maxServiceTypeID, maxServicePartID);
 
-        // console.log(data);
+        result.forEach((service) => {
+            if (!partName[service.PartID]) {
+                partName[service.PartID] = service.PartName;
+            }
+            if (!typeName[service.ServiceTypeID]) {
+                typeName[service.ServiceTypeID] = service.ServiceTypeName;
+            }
+        });
 
         if (oldServiceData === null || JSON.stringify(result) !== JSON.stringify(oldServiceData)) {
             renderTable(result);
@@ -462,7 +473,7 @@ async function getServiceListAll() {
             oldServiceData = result;
             scheduleNextUpdate(1000);
         } else {
-            scheduleNextUpdate(2000);
+            scheduleNextUpdate(1000);
         }
     } catch (error) {
         console.error('Error fetching service list:', error);
