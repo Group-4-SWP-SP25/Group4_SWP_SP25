@@ -4,7 +4,6 @@ const deleteServiceById = async (req, res) => {
     try {
         const pool = global.pool;
         const { serviceID } = req.body;
-        // console.log(req.body);
 
         const query = `
                         -- Xóa từ bảng Inventory (bảng con 2)
