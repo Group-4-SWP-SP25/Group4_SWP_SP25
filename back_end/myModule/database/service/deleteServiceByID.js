@@ -1,9 +1,10 @@
 const sql = require('mssql');
 
-const deleteServiceById = async (req) => {
-    const serviceID = req.body.serviceID;
+const deleteServiceById = async (req, res) => {
     try {
         const pool = global.pool;
+        const { serviceID } = req.body;
+
         const query = `
                         -- Xóa từ bảng Inventory (bảng con 2)
                         DELETE FROM Inventory
@@ -24,6 +25,10 @@ const deleteServiceById = async (req) => {
 
         const result = await pool.request().input('serviceID', sql.Int, serviceID).query(query);
 
+        if (result.rowsAffected[0] === 0) {
+            console.log(`Failed to delete service with ID = ${serviceID}`);
+            return { success: false }; // Return failure status
+        }
         console.log(`Deleted service with ID = ${serviceID}`);
         return { success: result.rowsAffected[0] > 0 }; // Return success status
     } catch (err) {

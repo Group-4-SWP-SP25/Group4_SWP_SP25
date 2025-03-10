@@ -43,7 +43,11 @@
                 <div class="table-header">
                     <h1>Service Management</h1>
                     <div class="buttons">
-                        <button class="btn-add">+ Add Service</button>
+                        <button
+                            class="btn-add"
+                            onclick="showAddPopup()">
+                            + Add Service
+                        </button>
                     </div>
                 </div>
 
@@ -158,33 +162,90 @@
         </div>
         <!-- End content -->
 
-        <!-- Popup delete -->
-        <!-- <div class="hidden delete-service">
-            <p class="display-6 container">Are you sure to delete this order?</p>
-            <div class="btn-submit">
-                <button class="btn btn-yes">Yes</button>
-                <button class="btn btn-cancel">Cancel</button>
-            </div>
-        </div>
-        <div class="hidden overlay"></div> -->
+        <!-- Hidden content -->
+        <div class="overlay hidden"><!-- overlay for popup--></div>
 
-        <div class="popup hidden">
+        <!-- delete popup -->
+        <div class="popup-delete hidden">
             <h2>Confirm delete?</h2>
             <div class="buttons">
                 <button
                     class="btn-yes"
-                    onclick="confirmedPopup();">
+                    onclick="confirmDeletePopup();">
                     Accept
                 </button>
                 <button
                     class="btn-no"
-                    onclick="hidePopup();">
+                    onclick="hideDeletePopup();">
                     Cancel
                 </button>
             </div>
         </div>
-        <div class="overlay hidden"></div>
-        <!-- End popup delete -->
+
+        <!-- add and update popup -->
+        <div class="popup-modify hidden">
+            <h2>Placeholder for add or update</h2>
+            <table style="margin-bottom: 10px">
+                <thead>
+                    <tr>
+                        <td style="width: 2%">Service ID</td>
+                        <td style="width: 8%">Type ID</td>
+                        <td style="width: 6%">Part ID</td>
+                        <td style="width: 10%">Service Name</td>
+                        <td style="width: 18%">Description</td>
+                        <td style="width: 6%">Price</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Content load from chosen to add, or empty for update -->
+                    <tr>
+                        <td>
+                            <!-- <input
+                                type="number"
+                                min="1"
+                                placeholder="Service ID" /> -->
+                            <select></select>
+                        </td>
+                        <td>
+                            <!-- <input
+                                type="number"
+                                min="1"
+                                placeholder="Type ID" /> -->
+                            <select></select>
+                        </td>
+                        <td>
+                            <!-- <input
+                                type="number"
+                                min="1"
+                                placeholder="Part ID" /> -->
+                            <select></select>
+                        </td>
+                        <td>
+                            <input
+                                type="text"
+                                placeholder="Service Name" />
+                        </td>
+                        <td>
+                            <textarea
+                                type="text"
+                                placeholder="Description"></textarea>
+                        </td>
+                        <td>
+                            <input
+                                type="number"
+                                min="1000"
+                                placeholder="Price" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="buttons">
+                <button class="btn-yes">Accept</button>
+                <button class="btn-no">Cancel</button>
+            </div>
+        </div>
+
+        <!-- End hidden content -->
 
         <!-- Scripts -->
         <script
