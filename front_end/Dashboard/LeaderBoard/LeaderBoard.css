@@ -374,6 +374,27 @@ body {
     background: linear-gradient(to bottom, #222 90%, #ff5733 10%);
 }
 
+/* hover */
+.haveevent-low:hover {
+    background: #d6f5d6;
+    color: #222;
+}
+
+.haveevent-medium:hover {
+    background: #70AD47;
+    color: #222;
+}
+
+.haveevent-high:hover {
+    background: #ffb833;
+    color: #222;
+}
+
+.haveevent-full:hover {
+    background: #ff5733;
+    color: #222;
+}
+
 /* ---------------- time line ---------------- */
 
 .timeline-container {
@@ -535,6 +556,7 @@ body {
     border-radius: 50%;
     object-fit: cover;
     object-position: center;
+    border: 2px solid #fff;
 }
 
 .employee-subtitle {
