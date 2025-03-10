@@ -4,12 +4,11 @@ const updateServiceByID = async (req, res) => {
     try {
         const pool = global.pool;
         const { serviceID, typeID, partID, name, description, price } = req.body;
-        // console.log(req.body);
 
         const query = `
-            UPDATE [Service] 
-            SET ServiceTypeID = @typeID, PartID = @partID, ServiceName = @name, ServiceDescription = @description, ServicePrice = @price 
-            WHERE ServiceID = @serviceID`;
+                    UPDATE [Service] 
+                    SET ServiceTypeID = @typeID, PartID = @partID, ServiceName = @name, ServiceDescription = @description, ServicePrice = @price 
+                    WHERE ServiceID = @serviceID`;
 
         const result = await pool
             .request()
@@ -21,7 +20,6 @@ const updateServiceByID = async (req, res) => {
             .input('price', sql.Float, price)
             .query(query);
 
-        console.log(result);
         if (result.rowsAffected[0] === 0) {
             console.log(`Failed to update service with ID = ${serviceID}`);
             return { success: false }; // Return failure status
@@ -29,7 +27,8 @@ const updateServiceByID = async (req, res) => {
         console.log(`Updated service with ID = ${serviceID}`);
         return { success: result.rowsAffected[0] > 0 }; // Return success status
     } catch (err) {
-        throw err;
+        console.error(`Error updating service with ID = ${serviceID}:`, err);
+        return { success: false, error: err.message }; // Return error status
     }
 };
 

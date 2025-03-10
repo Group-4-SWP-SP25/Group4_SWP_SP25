@@ -43,7 +43,11 @@
                 <div class="table-header">
                     <h1>Service Management</h1>
                     <div class="buttons">
-                        <button class="btn-add">+ Add Service</button>
+                        <button
+                            class="btn-add"
+                            onclick="showAddPopup()">
+                            + Add Service
+                        </button>
                     </div>
                 </div>
 
@@ -196,22 +200,25 @@
                     <!-- Content load from chosen to add, or empty for update -->
                     <tr>
                         <td>
-                            <input
+                            <!-- <input
                                 type="number"
                                 min="1"
-                                placeholder="Service ID" />
+                                placeholder="Service ID" /> -->
+                            <select class="serviceID"></select>
                         </td>
                         <td>
-                            <input
+                            <!-- <input
                                 type="number"
                                 min="1"
-                                placeholder="Type ID" />
+                                placeholder="Type ID" /> -->
+                            <select class="typeID"></select>
                         </td>
                         <td>
-                            <input
+                            <!-- <input
                                 type="number"
                                 min="1"
-                                placeholder="Part ID" />
+                                placeholder="Part ID" /> -->
+                            <select class="partID"></select>
                         </td>
                         <td>
                             <input
@@ -233,16 +240,8 @@
                 </tbody>
             </table>
             <div class="buttons">
-                <button
-                    class="btn-yes"
-                    onclick="confirmModifyPopup();">
-                    Accept
-                </button>
-                <button
-                    class="btn-no"
-                    onclick="hideModifyPopup();">
-                    Cancel
-                </button>
+                <button class="btn-yes">Accept</button>
+                <button class="btn-no">Cancel</button>
             </div>
         </div>
 
