@@ -4,54 +4,97 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flexbox Example</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Roadmap</title>
     <style>
-        * {
-            box-sizing: border-box;
-        }
-
         body {
             font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
+            margin: 20px;
+        }
+
+        .roadmap {
             display: flex;
-            justify-content: center;
             align-items: center;
-            height: 100vh;
-        }
-
-        .flex-container {
-            display: flex;
+            justify-content: center;
             flex-wrap: wrap;
-            width: 80%;
-            max-width: 800px;
-            margin: auto;
         }
 
-        .flex-item {
-            background-color: #4CAF50;
-            color: white;
+        .step {
+            position: relative;
+            margin: 20px;
             padding: 20px;
             text-align: center;
-            border-radius: 5px;
-            font-size: 1.5rem;
-            flex: 1 1 calc(33.333% - 20px);
-            margin: 10px;
-            height: 150px;
-            /* Thiết lập chiều cao cố định */
+            border: 2px solid #007bff;
+            border-radius: 10px;
+            background-color: #f1f8ff;
+            width: 150px;
+        }
+
+        .step::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            right: -30px;
+            width: 30px;
+            height: 2px;
+            background: #007bff;
+            transform: translateY(-50%);
+        }
+
+        .step:last-child::after {
+            display: none;
+        }
+
+        .step h4 {
+            margin: 0;
+            font-size: 18px;
+            color: #007bff;
+        }
+
+        .step p {
+            margin: 10px 0 0;
+            font-size: 14px;
+            color: #333;
         }
     </style>
 </head>
 
 <body>
-    <div class="flex-container">
-        <div class="flex-item">1</div>
-        <div class="flex-item">2</div>
-        <div class="flex-item">3</div>
-        <div class="flex-item">4</div>
-        <div class="flex-item">5</div>
+    <h2>Roadmap</h2>
+    <div class="roadmap" id="roadmap">
+        <!-- Các bước sẽ được hiển thị ở đây -->
     </div>
+    <script src="roadmap.js"></script>
 </body>
+<script>
+    // roadmap.js
+    document.addEventListener("DOMContentLoaded", () => {
+        const roadmap = document.getElementById("roadmap");
+
+        const steps = [
+            { title: "Bước 1", description: "Nghiên cứu thị trường" },
+            { title: "Bước 2", description: "Phát triển sản phẩm" },
+            { title: "Bước 3", description: "Kiểm tra chất lượng" },
+            { title: "Bước 4", description: "Triển khai và phát hành" },
+            { title: "Bước 5", description: "Hỗ trợ khách hàng" },
+        ];
+
+        steps.forEach((step, index) => {
+            const stepElement = document.createElement("div");
+            stepElement.classList.add("step");
+
+            const titleElement = document.createElement("h4");
+            titleElement.textContent = step.title;
+
+            const descriptionElement = document.createElement("p");
+            descriptionElement.textContent = step.description;
+
+            stepElement.appendChild(titleElement);
+            stepElement.appendChild(descriptionElement);
+
+            roadmap.appendChild(stepElement);
+        });
+    });
+
+</script>
 
 </html>

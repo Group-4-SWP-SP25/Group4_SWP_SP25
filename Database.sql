@@ -32,7 +32,7 @@ CREATE TABLE [User](
 	Phone VARCHAR(11) DEFAULT NULL ,
 	DateCreated DATETIME DEFAULT CURRENT_TIMESTAMP,
 	DOB DATETIME DEFAULT NULL,
-	Avartar TEXT DEFAULT NULL,
+	Avartar VARCHAR(MAX) DEFAULT NULL,
 	LastActivity DATETIME,
 );
 GO
@@ -42,11 +42,11 @@ CREATE TABLE Car(
 	CarID INT IDENTITY(1, 1) NOT NULL PRIMARY KEY,
 	UserID INT FOREIGN KEY REFERENCES [User](UserID) ON DELETE CASCADE,
 	CarName VARCHAR(500) NOT NULL,
-	Brand TEXT,
+	Brand VARCHAR(MAX),
 	RegistrationNumber VARCHAR(50) NOT NULL,
 	[Year] INT,
     MaintenanceResgistrationDate DATE DEFAULT CURRENT_TIMESTAMP,
-    CarImage TEXT,
+    CarImage VARCHAR(MAX),
 	[Status] VARCHAR(50) DEFAULT NULL CHECK ([Status] IN ('Active', 'Maintaining'))
 );
 GO
@@ -80,8 +80,8 @@ GO
 CREATE TABLE ServiceType (
 	ServiceTypeID INT IDENTITY(1, 1) NOT NULL PRIMARY KEY,
 	ServiceTypeName VARCHAR(200),
-	ServiceTypeDescription TEXT,
-    ServiceImage TEXT
+	ServiceTypeDescription VARCHAR(MAX),
+    ServiceImage VARCHAR(MAX)
 );
 GO
 
@@ -91,8 +91,8 @@ CREATE TABLE [Service] (
 	ServiceTypeID INT FOREIGN KEY REFERENCES [ServiceType](ServiceTypeID) ON DELETE CASCADE,
 	PartID INT,
 	ServiceName VARCHAR(200) NOT NULL,
-	AffectInventory TINYINT NOT NULL,
-	ServiceDescription TEXT,
+	AffectInventory TINYINT DEFAULT 0,
+	ServiceDescription VARCHAR(MAX),
 	ServicePrice FLOAT NOT NULL,
 	Checking TINYINT DEFAULT 0
 );
@@ -102,7 +102,7 @@ GO
 CREATE TABLE Branch (
 	BranchID INT IDENTITY (1, 1) NOT NULL PRIMARY KEY,
 	BranchName VARCHAR(200) NOT NULL,
-	BranchAddress TEXT
+	BranchAddress VARCHAR(MAX)
 );
 GO
 
@@ -111,7 +111,7 @@ CREATE TABLE AccessoryInfo (
 	AccessoryID INT IDENTITY (1, 1) NOT NULL PRIMARY KEY,
 	AccessoryName VARCHAR(200) NOT NULL,
 	ServiceID INT NOT NULL FOREIGN KEY REFERENCES Service(ServiceID),
-	[Description] TEXT NOT NULL
+	[Description] VARCHAR(MAX) NOT NULL
 );
 GO
 
@@ -146,7 +146,7 @@ CREATE TABLE Messages (
     MessageID INT PRIMARY KEY IDENTITY,
     SenderID INT NOT NULL,
     ReceiverID INT NOT NULL,
-    Content TEXT NOT NULL,
+    Content VARCHAR(MAX) NOT NULL,
     SentAt DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (SenderID) REFERENCES [User](UserID),
     FOREIGN KEY (ReceiverID) REFERENCES [User](UserID),
@@ -246,7 +246,7 @@ INSERT INTO PartInfo(PartName, CarSystemID, [Image]) VALUES
 ('Suspension', 7,'/resource/CarPark_image/Suspension.webp'),
 ('Tire', 8,'/resource/CarPark_image/Tire.webp'),
 ('Rim', 8,'/resource/CarPark_image/Rim.webp'),
-('Wheel Hub', 8,'/resource/CarPark_image/WheelHub.webp')
+('Wheel Hub', 8,'/resource/CarPark_image/WheelHub.webp');
 GO
 
 -- Trigger for Car Parts

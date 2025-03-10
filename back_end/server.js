@@ -2,6 +2,10 @@ const express = require("express");
 const cors = require("cors");
 const PORT = 3000;
 const app = express();
+const multer = require("multer");
+const upload = multer({
+  storage: multer.memoryStorage(),
+});
 app.use(express.json());
 app.use(
   cors({
@@ -27,6 +31,7 @@ const {
   authenticateJWT,
   authenticateADMIN,
 } = require("./myModule/Utils/JWT.js");
+
 const {
   GetUserInfo,
   GetUserInfo_Admin,
@@ -35,6 +40,22 @@ const {
   getUserList,
   getTotalUserCount,
 } = require("./myModule/controller/UserListControl.js");
+const TotalRevenueToday = require("./myModule/database/SaleReport/TotalRevenueToday.js");
+const TotalOrderToday = require("./myModule/database/SaleReport/TotalOrderToday.js");
+const TotalProductSold = require("./myModule/database/SaleReport/TotalProductSold.js");
+const TotalNewCustomer = require("./myModule/database/SaleReport/TotalNewCustomer.js");
+const TopService = require("./myModule/database/SaleReport/TopService.js");
+const TopRevenueByMonth = require("./myModule/database/SaleReport/TopRevenueByMonth.js");
+const TopProducts = require("./myModule/database/SaleReport/TopProducts.js");
+// const connectDB = require('./myModule/database/connectDB.js');
+// const { authenticateJWT, authenticateADMIN } = require('./myModule/Utils/JWT.js');
+// const { GetUserInfo, GetUserInfo_Admin } = require('./myModule/database/user/getUserInfo.js');
+// const { getUserList, getTotalUserCount } = require('./myModule/controller/UserListControl.js');
+// const TotalRevenueToday = require('./myModule/database/SaleReport/TotalRevenueToday.js');
+// const TotalOrderToday = require('./myModule/database/SaleReport/TotalOrderToday.js');
+// const TotalProductSold = require('./myModule/database/SaleReport/TotalProductSold.js');
+// const TotalNewCustomer = require('./myModule/database/SaleReport/TotalNewCustomer.js');
+// const TopProduct = require('./myModule/database/SaleReport/TopProduct.js');
 
 // user
 const register = require("./myModule/controller/register.js");
@@ -50,6 +71,11 @@ const { AuthGoogle, Auth } = require("./myModule/controller/Login.js");
 const getUserProfile = require("./myModule/database/user/getUserProfile.js");
 const userInfo = require("./myModule/controller/user/userInfo.js");
 const updateUserProfile = require("./myModule/controller/user/updateUserProfile.js");
+const {
+  uploadFile,
+  getFileInfo,
+} = require("./myModule/controller/cloud/storage.js");
+const { getEmployees } = require("./myModule/controller/employee/employee.js");
 
 // branch
 const branchInfo = require("./myModule/controller/branch/branchInfo.js");
@@ -57,9 +83,13 @@ const branchList = require("./myModule/controller/branch/branchList.js");
 
 // service
 const serviceInfo = require("./myModule/controller/service/serviceInfo.js");
+const getServiceListAll = require("./myModule/database/service/getServiceListAll.js");
 const serviceListPerPart = require("./myModule/controller/service/listServicePerPart.js");
-const getServiceTypeDetailByName = require("./myModule/database/service/getServiceTypeDetailByName.js");
-const getServiceTypeList = require("./myModule/database/service/getServiceTypeList.js");
+const getServiceTypeListAll = require("./myModule/database/service/getServiceTypeListAll.js");
+const getServiceTypeListByServiceTypeName = require("./myModule/database/service/getServiceTypeListByServiceTypeName.js");
+const deleteServiceById = require("./myModule/database/service/deleteServiceByID.js");
+const updateServiceById = require("./myModule/database/service/updateServiceByID.js");
+const addService = require("./myModule/database/service/addService.js");
 
 // car
 const carInfo = require("./myModule/controller/car/carInfo.js");
@@ -104,6 +134,9 @@ const {
   CheckMessage,
 } = require("./myModule/controller/message/message.js");
 
+// calendar
+const { getEvents_api } = require("./myModule/controller/calendar/calendar.js");
+
 // ----------------------------------------------------------
 // CREATE API
 // admin
@@ -118,6 +151,20 @@ app.post("/Message/SendMessage", authenticateJWT, SendMessage);
 app.post("/Message/GetMessage", authenticateJWT, GetMessage);
 app.post("/Message/GetList", authenticateJWT, GetList);
 app.post("/Message/CheckMessage", authenticateJWT, CheckMessage);
+app.post("/TotalRevenueToday", authenticateADMIN, TotalRevenueToday);
+app.post("/TotalOrderToday", authenticateADMIN, TotalOrderToday);
+app.post("/TotalProductSold", authenticateADMIN, TotalProductSold);
+app.post("/TotalNewCustomer", authenticateADMIN, TotalNewCustomer);
+app.post("/TopService", authenticateADMIN, TopService);
+app.post("/TopRevenueByMonth", authenticateADMIN, TopRevenueByMonth);
+app.post("/TopProducts", authenticateADMIN, TopProducts);
+app.post("/Calendar/GetEvents", authenticateADMIN, getEvents_api);
+app.post("/Employee/getEmployees", authenticateADMIN, getEmployees);
+// app.post('/TotalRevenueToday', authenticateADMIN, TotalRevenueToday);
+// app.post('/TotalOrderToday', authenticateADMIN, TotalOrderToday);
+// app.post('/TotalProductSold', authenticateADMIN, TotalProductSold);
+// app.post('/TotalNewCustomer', authenticateADMIN, TotalNewCustomer);
+// app.post('/TopProduct', authenticateADMIN, TopProduct);
 
 // user
 app.post("/getPassword", getPassword);
@@ -133,15 +180,25 @@ app.post("/getUserProfile", getUserProfile);
 app.post("/userInfo", userInfo);
 app.post("/updateUserProfile", updateUserProfile);
 
+app.post("/uploadFile", upload.single("file"), uploadFile);
+app.post("/getFileInfo", authenticateJWT, getFileInfo);
+
 // branch
 app.post("/branchInfo", branchInfo);
 app.post("/branchList", branchList);
 
 // service
 app.post("/serviceInfo", serviceInfo);
+app.post("/getServiceListAll", getServiceListAll);
 app.post("/serviceListPerPart", serviceListPerPart);
-app.post("/getServiceTypeDetailByName", getServiceTypeDetailByName);
-app.post("/getServiceTypeList", getServiceTypeList);
+app.post("/getServiceTypeListAll", getServiceTypeListAll);
+app.post(
+  "/getServiceTypeListByServiceTypeName",
+  getServiceTypeListByServiceTypeName
+);
+app.post("/deleteServiceById", deleteServiceById);
+app.post("/updateServiceById", updateServiceById);
+app.post("/addService", addService);
 
 // car
 app.post("/carInfo", carInfo);

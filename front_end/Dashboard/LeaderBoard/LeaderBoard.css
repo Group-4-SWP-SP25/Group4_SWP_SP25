@@ -1,0 +1,578 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    display: flex;
+    height: 100vh;
+    background-color: #121212;
+    color: #e0e0e0;
+    overflow: hidden;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #1e1e2f;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    /* padding: 20px; */
+    position: fixed;
+    height: 100%;
+    overflow-y: auto;
+    margin-top: 60px;
+}
+
+.option {
+    display: block;
+    /* Để các mục trong sidebar xếp dọc */
+    position: relative;
+    /* Giúp ::before căn chỉnh theo phần tử này */
+    text-decoration: none;
+    color: white;
+    padding: 10px 20px;
+    /* transition: color 0.2s ease; */
+    overflow: hidden;
+    /* Đảm bảo hiệu ứng không tràn ra ngoài */
+}
+
+
+.option::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #33334d;
+    transform: scaleX(0);
+    /* Ban đầu thu nhỏ lại */
+    transform-origin: left;
+    /* Xuất phát từ giữa */
+    transition: transform 0.3s ease-in-out;
+    z-index: -1;
+}
+
+/* Khi hover, mở rộng từ giữa ra hai bên */
+.option:hover::before {
+    transform: scaleX(1);
+}
+
+.homepath {
+    text-decoration: none;
+    color: white;
+    transition: color 0.3s ease;
+}
+
+.homepath:hover {
+    color: #007bff;
+}
+
+.currentpath {
+    text-decoration: none;
+    color: #007bff;
+}
+
+
+#HomePage {
+    font-size: 20px;
+    padding: 30px 10px;
+    color: yellowgreen;
+}
+
+.sidebar a {
+    color: white;
+    text-decoration: none;
+    padding: 30px 30px;
+    display: block;
+    font-size: 14px;
+}
+
+.content {
+    flex: 1;
+    padding: 20px;
+    margin-left: 250px;
+    overflow-y: auto;
+    margin-top: 60px;
+}
+
+
+.admin {
+    display: flex;
+    align-items: center;
+    padding: 30px 10px;
+    background-color: #33334d;
+}
+
+.admin img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.admin span {
+    font-size: 14px;
+}
+
+/* ------------------- */
+
+.path {
+    width: 90%;
+    margin: 20px auto;
+    padding: 20px;
+}
+
+.container {
+    width: 90%;
+    margin: 20px auto;
+    background: #1e1e1e;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    overflow-x: auto;
+}
+
+
+.header {
+    background-color: #1e1e2f;
+}
+
+
+.header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 60px;
+    background-color: #1e1e2f;
+    color: #e0e0e0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.header h1 {
+    font-size: 18px;
+}
+
+.header .user-info {
+    display: flex;
+    align-items: center;
+}
+
+.header .user-info img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+
+.content-header {
+    width: 90%;
+    margin: 20px auto;
+    margin-bottom: 5px;
+    padding: 20px;
+    padding-bottom: 0px;
+    font-size: 40px;
+    display: flex;
+    align-items: center;
+}
+
+.content-header span {
+    font-size: 40px;
+}
+
+/* -----------------------------------scrolbar---------------------------- */
+.custom-scrollbar {
+    overflow-y: auto;
+    overflow-x: auto;
+    /* Bật tính năng cuộn dọc */
+    /* height: 100%; */
+    /* Chiều cao của container */
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+    /* Độ rộng của thanh cuộn */
+    transition: width 0.3s, height 0.3s;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: #333;
+    /* Màu nền của track */
+    border-radius: 10px;
+    /* Bo tròn track */
+
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #555;
+    /* Màu của thanh cuộn */
+    border-radius: 10px;
+    /* Bo tròn thanh cuộn */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #888;
+    /* Màu của thanh cuộn khi hover */
+}
+
+
+.loader {
+    border: 2px solid #5e5e5e;
+    border-top: 2px solid #3498db;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    animation: spin 0.5s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+
+
+/* --------- Calendar ----------------*/
+.calendar-container {
+    width: 90%;
+    min-width: 750px;
+    height: 450px;
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 30px;
+    background: #2b2b2b;
+    /* Màu nền của lịch */
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.calendar-header h2 {
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+#prevMonth,
+#nextMonth,
+#prevDay,
+#nextDay {
+    background: #444;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+#prevMonth:hover,
+#nextMonth:hover,
+#prevDay:hover,
+#nextDay:hover {
+    background: #666;
+}
+
+.calendar-grid {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    /* Cho phép các ngày xuống dòng */
+    justify-content: flex-start;
+    /* max-width: 350px; */
+    /* Giới hạn chiều rộng để đảm bảo 7 cột */
+    margin: auto;
+}
+
+.day-name {
+    width: calc(100% / 7);
+    /* 7 cột đều nhau */
+    font-weight: bold;
+    background: #333;
+    text-align: center;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+#calendarDays {
+    display: flex;
+    flex-wrap: wrap;
+    /* Cho phép các ngày xuống dòng */
+    justify-content: flex-start;
+    width: 100%;
+}
+
+.day {
+    width: calc(100% / 7);
+    /* Mỗi ngày chiếm 1/7 chiều rộng */
+    border: 1px solid #444;
+    padding: 10px;
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    /* Tránh bị tràn */
+    background: #222;
+    border-radius: 4px;
+    transition: 0.3s;
+}
+
+.today {
+    color: #ffcc00;
+    border: 1px solid white;
+    font-weight: bold;
+}
+
+.other-month {
+    color: #777;
+}
+
+.day:hover {
+    background: rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+}
+
+.other-month:hover {
+    cursor: not-allowed;
+    background: #222;
+}
+
+.haveevent-low {
+    background: linear-gradient(to bottom, #222 90%, #d6f5d6 10%);
+}
+
+.haveevent-medium {
+    background: linear-gradient(to bottom, #222 90%, #70AD47 10%);
+}
+
+.haveevent-high {
+    background: linear-gradient(to bottom, #222 90%, #ffb833 10%);
+}
+
+.haveevent-full {
+    background: linear-gradient(to bottom, #222 90%, #ff5733 10%);
+}
+
+/* hover */
+.haveevent-low:hover {
+    background: #d6f5d6;
+    color: #222;
+}
+
+.haveevent-medium:hover {
+    background: #70AD47;
+    color: #222;
+}
+
+.haveevent-high:hover {
+    background: #ffb833;
+    color: #222;
+}
+
+.haveevent-full:hover {
+    background: #ff5733;
+    color: #222;
+}
+
+/* ---------------- time line ---------------- */
+
+.timeline-container {
+    width: 90%;
+    min-width: 750px;
+    height: 450px;
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 30px;
+    background: #2b2b2b;
+    /* Màu nền của lịch */
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.timeline-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    height: 50px;
+}
+
+.timeline-header h2 {
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.timeline-itemheader {
+    background-color: #333;
+    padding: 10px;
+    height: 50px;
+    align-items: center;
+    font-weight: bold;
+    border-bottom: 1px solid #444;
+}
+
+.timeline-item {
+    background-color: #222;
+    padding: 2px;
+    align-items: center;
+    font-weight: bold;
+    height: 70px;
+    border-bottom: 1px solid #444;
+}
+
+.employee img {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.employee {
+    position: relative;
+    display: inline-block;
+    height: 50px;
+    width: 50px;
+}
+
+.subtitle {
+    position: absolute;
+    left: 50px;
+    top: 0px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    opacity: 0;
+    z-index: 9999;
+    /* Ẩn đi */
+    transition: opacity 0.3s;
+    /* Hiệu ứng mượt mà */
+}
+
+.employee:hover .subtitle {
+    opacity: 1;
+    z-index: 999;
+}
+
+.timeline-item-info {
+    height: 50px;
+    border-radius: 15px;
+    background-color: #007bff;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.timeline-item:hover {
+    background-color: #333;
+    cursor: pointer;
+}
+
+.timeline-item-icon {
+    font-size: 30px;
+}
+
+.timelineitemcontainer {
+    height: 300px;
+}
+
+.timeline-item-info:hover {
+    background-color: #3498db;
+    cursor: pointer;
+}
+
+#timeline-item-loader {
+    width: 50px;
+    height: 50px;
+}
+
+/* ---------------- employee ---------------- */
+
+.employee-container {
+    width: 90%;
+    min-width: 950px;
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 30px;
+    /* background: #2b2b2b; */
+    /* Màu nền của lịch */
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+    /* display: flex; */
+}
+
+.employee-info {
+    min-width: 300px;
+    display: flex;
+    align-items: center;
+    background: #2b2b2b;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+    padding: 20px;
+}
+
+.employee-info:hover {
+    cursor: pointer;
+    background-color: #333;
+}
+
+.employee-avatar {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.employee-info img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center;
+    border: 2px solid #fff;
+}
+
+.employee-subtitle {
+    width: 50%;
+    text-align: center;
+    color: white;
+    font-size: 20px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.employee-subtitle h2 {
+    font-weight: bold;
+}
+
+.employee-subtitle h3 {
+    font-size: 16px;
+}

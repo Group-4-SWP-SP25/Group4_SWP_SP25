@@ -1,18 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0" />
+        <title>Message</title>
+        <link
+            href="https://fonts.googleapis.com/icon?family=Material+Icons"
+            rel="stylesheet" />
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,0,1,0&icon_names=check_circle" />
+        <link
+            rel="stylesheet"
+            href="Message.css" />
+    </head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Message</title>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,0,1,0&icon_names=check_circle" />
-    <link rel="stylesheet" href="Message.css">
-</head>
-
-<body>
-    <div class="header">
+    <body>
+        <!-- <div class="header">
         <h1>Dashboard</h1>
         <div class="user-info">
             <span>Welcome, Admin</span>
@@ -27,7 +33,7 @@
             <span>Admin</span>
         </div>
         <a class="option" href="../DashBoard/dashboard.html">Overview</a>
-        <a class="option" href="#">Leaderboard</a>
+        <a class="option" href="../LeaderBoard/LeaderBoard.html">Leaderboard</a>
         <a class="option" href="#">Order</a>
         <a class="option" href="../ServiceManager/ServiceManager.html">Products</a>
         <a class="option" href="#">Sales Report</a>
@@ -37,110 +43,138 @@
             style="background-color: #33334d">Messages</a>
         <a class="option" href="#">Settings</a>
         <a class="option" href="#">Sign Out</a>
-    </div>
+    </div> -->
 
-    <div class="content" style="overflow-y: hidden;">
+        <!-- Header -->
+        <header>
+            <div class="page-frame"></div>
+        </header>
+        <!-- End header -->
 
-        <!-- Left  -->
-        <div class="message-left">
-            <div class="message-head">
-                <span>Messages</span>
-                <button class="message-head-action" id="message-head-action">
-                    <span class="material-icons md-light">
-                        library_add
-                    </span>
-                </button>
+        <div
+            class="content"
+            style="overflow-y: hidden">
+            <!-- Left  -->
+            <div class="message-left">
+                <div class="message-head">
+                    <span>Messages</span>
+                    <button
+                        class="message-head-action"
+                        id="message-head-action">
+                        <span class="material-icons md-light"> library_add </span>
+                    </button>
+                </div>
+                <div class="search">
+                    <span class="material-icons"> search </span>
+                    <input
+                        type="text"
+                        placeholder="Search..."
+                        id="searchString" />
+                </div>
+
+                <div
+                    class="message-item-list custom-scrollbar"
+                    id="message-item-list"></div>
             </div>
-            <div class="search">
-                <span class="material-icons">
-                    search
-                </span>
-                <input type="text" placeholder="Search..." id="searchString">
+
+            <!-- Right -->
+            <div class="message-right">
+                <!-- Head  -->
+                <div class="message-right-header">
+                    <a
+                        href="#"
+                        class="message-right-header-user">
+                        <img
+                            src="../../../resource/admin.jpg"
+                            alt="Admin" />
+                        <span id="header-username">Đoàn Minh Hiếu </span>
+                    </a>
+                    <div class="message-right-header-action">
+                        <button id="message-right-header-action-btn">
+                            <span class="material-icons md-light md-36"> info </span>
+                        </button>
+                    </div>
+                </div>
+                <!-- Body  -->
+
+                <div
+                    class="message-right-body custom-scrollbar"
+                    id="message-right-body"></div>
+                <!-- Footer  -->
+                <div class="message-right-footer">
+                    <button class="message-right-footer-action">
+                        <span class="material-icons"> add_circle </span>
+                    </button>
+                    <textarea
+                        rows="1"
+                        placeholder="Type a message..."
+                        id="message-input"
+                        oninput="autoResize(this)"
+                        class="custom-scrollbar"></textarea>
+                    <button id="send-message"><i class="material-icons">send</i></button>
+                </div>
             </div>
-
-            <div class="message-item-list custom-scrollbar" id="message-item-list">
-            </div>
-
-
         </div>
 
-        <!-- Right -->
-        <div class="message-right">
-            <!-- Head  -->
-            <div class="message-right-header">
-                <a href="#" class="message-right-header-user">
-                    <img src="../../../resource/admin.jpg" alt="Admin">
-                    <span id="header-username">Đoàn Minh Hiếu </span>
-                </a>
-                <div class="message-right-header-action">
-                    <button id="message-right-header-action-btn">
-                        <span class="material-icons md-light md-36">
-                            info
-                        </span>
+        <!-- Pupup -->
+        <div
+            class="overlay"
+            id="overlay"></div>
+
+        <div class="popup-container">
+            <div
+                class="popup"
+                id="popup">
+                <div class="popup-header">
+                    <span class="popup-header-TO"> TO: </span>
+                    <div class="popup-header-list"></div>
+                </div>
+                <div class="popup-search">
+                    <span class="material-icons"> search </span>
+                    <input
+                        type="text"
+                        placeholder="Search..."
+                        id="PopupsearchString" />
+                </div>
+                <div class="popup-list custom-scrollbar"></div>
+
+                <div class="popup-submit">
+                    <button class="popup-btn-done">
+                        <span class="material-icons"> done </span>
+                    </button>
+                    <button class="popup-btn-cancel">
+                        <span class="material-icons"> close </span>
                     </button>
                 </div>
             </div>
-            <!-- Body  -->
-
-            <div class="message-right-body custom-scrollbar" id="message-right-body">
-
-            </div>
-            <!-- Footer  -->
-            <div class="message-right-footer">
-                <button class="message-right-footer-action">
-                    <span class="material-icons">
-                        add_circle
-                    </span>
-                </button>
-                <textarea rows="1" placeholder="Type a message..." id="message-input" oninput="autoResize(this)"
-                    class="custom-scrollbar"></textarea>
-                <button id="send-message"><i class="material-icons">send</i></button>
-            </div>
         </div>
-    </div>
 
+        <!-- Scripts -->
+        <script src="./Message.js"></script>
+        <script src="./PopUp.js"></script>
+        <script>
+            fetch('../page_frame/page_frame.html')
+                .then((response) => response.text())
+                .then((data) => {
+                    document.querySelector('.page-frame').innerHTML = data;
+                    const css = document.createElement('link');
+                    css.rel = 'stylesheet';
+                    css.href = '../page_frame/style.css';
+                    document.head.appendChild(css);
 
-    <!-- Pupup -->
-    <div class="overlay" id="overlay"></div>
-
-    <div class="popup-container">
-        <div class="popup" id="popup">
-            <div class="popup-header">
-                <span class="popup-header-TO">
-                    TO:
-                </span>
-                <div class="popup-header-list ">
-                </div>
-            </div>
-            <div class="popup-search">
-                <span class="material-icons">
-                    search
-                </span>
-                <input type="text" placeholder="Search..." id="PopupsearchString">
-
-            </div>
-            <div class="popup-list custom-scrollbar">
-            </div>
-
-            <div class="popup-submit">
-                <button class="popup-btn-done">
-                    <span class="material-icons">
-                        done
-                    </span>
-                </button>
-                <button class="popup-btn-cancel">
-                    <span class="material-icons">
-                        close
-                    </span>
-                </button>
-            </div>
-        </div>
-    </div>
-
-
-
-    <script src="./Message.js"></script>
-    <script src="./PopUp.js"></script>
-</body>
-
+                    // current page indicator
+                    const currentPageFile = window.location.pathname.split('/').pop();
+                    document
+                        .querySelector('.page-frame')
+                        .querySelectorAll('.option')
+                        .forEach((option) => {
+                            const anchorHref = option.getAttribute('href');
+                            if (anchorHref.includes(currentPageFile)) {
+                                option.style.backgroundColor = '#33334d';
+                            }
+                        });
+                });
+        </script>
+        <!-- End scripts -->
+    </body>
 </html>
