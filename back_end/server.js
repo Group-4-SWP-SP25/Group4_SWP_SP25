@@ -26,15 +26,37 @@ app.use(
 // ----------------------------------------------------------
 // IMPORT MODULE
 // admin
-const connectDB = require('./myModule/database/connectDB.js');
-const { authenticateJWT, authenticateADMIN } = require('./myModule/Utils/JWT.js');
-const { GetUserInfo, GetUserInfo_Admin } = require('./myModule/database/user/getUserInfo.js');
-const { getUserList, getTotalUserCount } = require('./myModule/controller/UserListControl.js');
-const TotalRevenueToday = require('./myModule/database/SaleReport/TotalRevenueToday.js');
-const TotalOrderToday = require('./myModule/database/SaleReport/TotalOrderToday.js');
-const TotalProductSold = require('./myModule/database/SaleReport/TotalProductSold.js');
-const TotalNewCustomer = require('./myModule/database/SaleReport/TotalNewCustomer.js');
-const TopProduct = require('./myModule/database/SaleReport/TopProduct.js');
+const connectDB = require("./myModule/database/connectDB.js");
+const {
+  authenticateJWT,
+  authenticateADMIN,
+} = require("./myModule/Utils/JWT.js");
+
+
+const {
+  GetUserInfo,
+  GetUserInfo_Admin,
+} = require("./myModule/database/user/getUserInfo.js");
+const {
+  getUserList,
+  getTotalUserCount,
+} = require("./myModule/controller/UserListControl.js");
+const TotalRevenueToday = require("./myModule/database/SaleReport/TotalRevenueToday.js");
+const TotalOrderToday = require("./myModule/database/SaleReport/TotalOrderToday.js");
+const TotalProductSold = require("./myModule/database/SaleReport/TotalProductSold.js");
+const TotalNewCustomer = require("./myModule/database/SaleReport/TotalNewCustomer.js");
+const TopService = require("./myModule/database/SaleReport/TopService.js");
+const TopRevenueByMonth = require("./myModule/database/SaleReport/TopRevenueByMonth.js");
+const TopProducts=require("./myModule/database/SaleReport/TopProducts.js");
+// const connectDB = require('./myModule/database/connectDB.js');
+// const { authenticateJWT, authenticateADMIN } = require('./myModule/Utils/JWT.js');
+// const { GetUserInfo, GetUserInfo_Admin } = require('./myModule/database/user/getUserInfo.js');
+// const { getUserList, getTotalUserCount } = require('./myModule/controller/UserListControl.js');
+// const TotalRevenueToday = require('./myModule/database/SaleReport/TotalRevenueToday.js');
+// const TotalOrderToday = require('./myModule/database/SaleReport/TotalOrderToday.js');
+// const TotalProductSold = require('./myModule/database/SaleReport/TotalProductSold.js');
+// const TotalNewCustomer = require('./myModule/database/SaleReport/TotalNewCustomer.js');
+// const TopProduct = require('./myModule/database/SaleReport/TopProduct.js');
 
 // user
 const register = require("./myModule/controller/register.js");
@@ -115,13 +137,20 @@ app.post("/Message/SendMessage", authenticateJWT, SendMessage);
 app.post("/Message/GetMessage", authenticateJWT, GetMessage);
 app.post("/Message/GetList", authenticateJWT, GetList);
 app.post("/Message/CheckMessage", authenticateJWT, CheckMessage);
+app.post("/TotalRevenueToday", authenticateADMIN, TotalRevenueToday);
+app.post("/TotalOrderToday", authenticateADMIN, TotalOrderToday);
+app.post("/TotalProductSold", authenticateADMIN, TotalProductSold);
+app.post("/TotalNewCustomer", authenticateADMIN, TotalNewCustomer);
+app.post("/TopService", authenticateADMIN, TopService);
+app.post("/TopRevenueByMonth", authenticateADMIN, TopRevenueByMonth);
+app.post("/TopProducts", authenticateADMIN, TopProducts);
 app.post("/Calendar/GetEvents", authenticateADMIN, getEvents_api);
 app.post("/Employee/getEmployees", authenticateADMIN, getEmployees);
-app.post('/TotalRevenueToday', authenticateADMIN, TotalRevenueToday);
-app.post('/TotalOrderToday', authenticateADMIN, TotalOrderToday);
-app.post('/TotalProductSold', authenticateADMIN, TotalProductSold);
-app.post('/TotalNewCustomer', authenticateADMIN, TotalNewCustomer);
-app.post('/TopProduct', authenticateADMIN, TopProduct);
+// app.post('/TotalRevenueToday', authenticateADMIN, TotalRevenueToday);
+// app.post('/TotalOrderToday', authenticateADMIN, TotalOrderToday);
+// app.post('/TotalProductSold', authenticateADMIN, TotalProductSold);
+// app.post('/TotalNewCustomer', authenticateADMIN, TotalNewCustomer);
+// app.post('/TopProduct', authenticateADMIN, TopProduct);
 
 // user
 app.post('/getPassword', getPassword);
