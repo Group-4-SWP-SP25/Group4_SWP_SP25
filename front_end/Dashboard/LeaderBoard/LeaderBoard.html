@@ -1,164 +1,239 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0" />
+        <title>Dashboard</title>
+        <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+        <link
+            href="https://fonts.googleapis.com/icon?family=Material+Icons"
+            rel="stylesheet" />
+        <link
+            rel="stylesheet"
+            href="./LeaderBoard.css" />
+    </head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="./LeaderBoard.css">
-</head>
-
-<body>
-
-
-    <div class="header">
-        <h1>Dashboard</h1>
-        <div class="user-info">
-            <span>Welcome, Admin</span>
-        </div>
-    </div>
-
-    <div class="sidebar">
-        <a href="../../HomePage/HomePage.html" id="HomePage">Auto Care 247</a>
-        <div class="admin">
-            <img src="../../../resource/admin.jpg" alt="Admin">
-            <span>Admin</span>
-        </div>
-        <a class="option" href="../DashBoard/dashboard.html">Overview</a>
-        <a class="option" href="./LeaderBoard.html" style="background-color: #33334d">Leaderboard</a>
-        <a class="option" href="#">Order</a>
-        <a class="option" href="../ServiceManager/ServiceManager.html">Products</a>
-        <a class="option" href="../SaleReport/SaleReport.html">Sales Report</a>
-        <a class="option" href="../CustomerManager/customer_management.html">Customer
-            Management</a>
-        <a class="option" href="../Message/Message.html">Messages</a>
-        <a class="option" href="#">Settings</a>
-        <a class="option" href="#">Sign Out</a>
-    </div>
-
-    <div class="content custom-scrollbar">
-        <div class="path">
-            <a href="../DashBoard/dashboard.html" style="text-decoration: none; color: white;">Home</a>
-            /
-            <a href="../CustomerManager/customer_management.html" class="currentpath">Leader Board</a>
-        </div>
-
-        <!-- calendar -->
-        <div class="content-header">
-            Calendar
-            <span class="material-icons">
-                calendar_month
-            </span>
-        </div>
-
-        <div class="calendar-container">
-            <div class="calendar-header">
-                <div id="prevMonth">
-                    <span class="material-icons">
-                        chevron_left
-                    </span>
-                </div>
-                <div style="display: flex; gap: 10px; align-items: center;">
-                    <h2 id="currentMonth" aria-live="polite">Loading...</h2>
-                    <div class="loader" id="calendar-loader"></div>
-                </div>
-                <div id="nextMonth">
-                    <span class="material-icons">
-                        chevron_right
-                    </span>
-                </div>
-            </div>
-            <div class="calendar-grid">
-                <div class="day-name">Sunday</div>
-                <div class="day-name">Monday</div>
-                <div class="day-name">Tuesday</div>
-                <div class="day-name">Wednesday</div>
-                <div class="day-name">Thursday</div>
-                <div class="day-name">Friday</div>
-                <div class="day-name">Saturday</div>
-                <div id="calendarDays"></div>
+    <body>
+        <!-- <div class="header">
+            <h1>Dashboard</h1>
+            <div class="user-info">
+                <span>Welcome, Admin</span>
             </div>
         </div>
 
-        <!-- time line -->
-        <div class="content-header">
-            Timeline
-            <span class="material-icons">
-                view_timeline
-            </span>
-        </div>
+        <div class="sidebar">
+            <a
+                href="../../HomePage/HomePage.html"
+                id="HomePage">
+                Auto Care 247
+            </a>
+            <div class="admin">
+                <img
+                    src="../../../resource/admin.jpg"
+                    alt="Admin" />
+                <span>Admin</span>
+            </div>
+            <a
+                class="option"
+                href="../DashBoard/dashboard.html">
+                Overview
+            </a>
+            <a
+                class="option"
+                href="./LeaderBoard.html"
+                style="background-color: #33334d">
+                Leaderboard
+            </a>
+            <a
+                class="option"
+                href="#">
+                Order
+            </a>
+            <a
+                class="option"
+                href="../ServiceManager/ServiceManager.html">
+                Products
+            </a>
+            <a
+                class="option"
+                href="../SaleReport/SaleReport.html">
+                Sales Report
+            </a>
+            <a
+                class="option"
+                href="../CustomerManager/customer_management.html">
+                Customer Management
+            </a>
+            <a
+                class="option"
+                href="../Message/Message.html">
+                Messages
+            </a>
+            <a
+                class="option"
+                href="#">
+                Settings
+            </a>
+            <a
+                class="option"
+                href="#">
+                Sign Out
+            </a>
+        </div> -->
 
-        <div class="timeline-container">
-            <div class="timeline-header">
-                <div id="prevDay">
-                    <span class="material-icons">
-                        chevron_left
-                    </span>
+        <!-- Header -->
+        <header>
+            <div class="page-frame"></div>
+        </header>
+        <!-- End header -->
+
+        <div class="content custom-scrollbar">
+            <div class="path">
+                <a
+                    href="../DashBoard/dashboard.html"
+                    style="text-decoration: none; color: white">
+                    Home
+                </a>
+                /
+                <a
+                    href="../CustomerManager/customer_management.html"
+                    class="currentpath">
+                    Leader Board
+                </a>
+            </div>
+
+            <!-- calendar -->
+            <div class="content-header">
+                Calendar
+                <span class="material-icons"> calendar_month </span>
+            </div>
+
+            <div class="calendar-container">
+                <div class="calendar-header">
+                    <div id="prevMonth">
+                        <span class="material-icons"> chevron_left </span>
+                    </div>
+                    <div style="display: flex; gap: 10px; align-items: center">
+                        <h2
+                            id="currentMonth"
+                            aria-live="polite">
+                            Loading...
+                        </h2>
+                        <div
+                            class="loader"
+                            id="calendar-loader"></div>
+                    </div>
+                    <div id="nextMonth">
+                        <span class="material-icons"> chevron_right </span>
+                    </div>
                 </div>
-                <div style="display: flex; gap: 10px; align-items: center;">
-                    <h2 id="currentDay" aria-live="polite">Loading...
+                <div class="calendar-grid">
+                    <div class="day-name">Sunday</div>
+                    <div class="day-name">Monday</div>
+                    <div class="day-name">Tuesday</div>
+                    <div class="day-name">Wednesday</div>
+                    <div class="day-name">Thursday</div>
+                    <div class="day-name">Friday</div>
+                    <div class="day-name">Saturday</div>
+                    <div id="calendarDays"></div>
+                </div>
+            </div>
 
-                    </h2>
-                    <div class="loader" id="timeline-loader">
+            <!-- time line -->
+            <div class="content-header">
+                Timeline
+                <span class="material-icons"> view_timeline </span>
+            </div>
+
+            <div class="timeline-container">
+                <div class="timeline-header">
+                    <div id="prevDay">
+                        <span class="material-icons"> chevron_left </span>
+                    </div>
+                    <div style="display: flex; gap: 10px; align-items: center">
+                        <h2
+                            id="currentDay"
+                            aria-live="polite">
+                            Loading...
+                        </h2>
+                        <div
+                            class="loader"
+                            id="timeline-loader"></div>
+                    </div>
+
+                    <div id="nextDay">
+                        <span class="material-icons"> chevron_right </span>
                     </div>
                 </div>
 
-                <div id="nextDay">
-                    <span class="material-icons">
-                        chevron_right
-                    </span>
+                <div class="timeline">
+                    <!-- time line item header -->
+                    <div class="timeline-itemheader grid grid-cols-11">
+                        <div class="...">Time</div>
+                        <div class="...">7h</div>
+                        <div class="...">8h</div>
+                        <div class="...">9h</div>
+                        <div class="...">10h</div>
+                        <div class="...">11h</div>
+                        <div class="...">13h</div>
+                        <div class="...">14h</div>
+                        <div class="...">15h</div>
+                        <div class="...">16h</div>
+                        <div class="...">17h</div>
+                    </div>
+
+                    <div class="timelineitemcontainer custom-scrollbar"></div>
+
+                    <div
+                        class="loader"
+                        id="timeline-item-loader"></div>
                 </div>
             </div>
 
-            <div class="timeline">
-                <!-- time line item header -->
-                <div class="timeline-itemheader grid grid-cols-11">
-                    <div class="...">Time</div>
-                    <div class="...">7h</div>
-                    <div class="...">8h</div>
-                    <div class="...">9h</div>
-                    <div class="...">10h</div>
-                    <div class="...">11h</div>
-                    <div class="...">13h</div>
-                    <div class="...">14h</div>
-                    <div class="...">15h</div>
-                    <div class="...">16h</div>
-                    <div class="...">17h</div>
-
-                </div>
-
-                <div class="timelineitemcontainer custom-scrollbar">
-
-                </div>
-
-                <div class="loader" id="timeline-item-loader">
-                </div>
-
+            <!-- employee -->
+            <div class="content-header">
+                Employee
+                <span class="material-icons"> badge </span>
+                <div
+                    class="loader"
+                    id="employee-loader"></div>
             </div>
+
+            <div class="employee-container grid grid-cols-3 gap-10"></div>
+
+            <div style="height: 50px"></div>
         </div>
 
-        <!-- employee -->
-        <div class="content-header">
-            Employee
-            <span class="material-icons">
-                badge
-            </span>
-            <div class="loader" id="employee-loader">
-            </div>
-        </div>
+        <!-- Scripts -->
+        <script>
+            fetch('../page_frame/page_frame.html')
+                .then((response) => response.text())
+                .then((data) => {
+                    document.querySelector('.page-frame').innerHTML = data;
+                    const css = document.createElement('link');
+                    css.rel = 'stylesheet';
+                    css.href = '../page_frame/style.css';
+                    document.head.appendChild(css);
 
-        <div class="employee-container grid grid-cols-3 gap-10">
-        </div>
-
-        <div style="height: 50px;"></div>
-    </div>
-
-    <script src="./Calendar.js"></script>
-    <script src="./Employee.js"></script>
-    <script src="./TimeLine.js"></script>
-</body>
-
+                    // current page indicator
+                    const currentPageFile = window.location.pathname.split('/').pop();
+                    document
+                        .querySelector('.page-frame')
+                        .querySelectorAll('.option')
+                        .forEach((option) => {
+                            const anchorHref = option.getAttribute('href');
+                            if (anchorHref.includes(currentPageFile)) {
+                                option.style.backgroundColor = '#33334d';
+                            }
+                        });
+                });
+        </script>
+        <script src="./Calendar.js"></script>
+        <script src="./Employee.js"></script>
+        <script src="./TimeLine.js"></script>
+        <!-- End scripts -->
+    </body>
 </html>
 <!--  -->

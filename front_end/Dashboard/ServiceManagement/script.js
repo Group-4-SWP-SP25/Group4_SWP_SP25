@@ -11,18 +11,20 @@ const popupModify = document.querySelector('.popup-modify');
 const data = popupModify.querySelectorAll('tbody td');
 
 // Global variables
-let chosenServiceID = null;
-let chosenServiceTypeID = null;
-let chosenServicePartID = null;
-let chosenServiceName = null;
-let chosenServiceDescription = null;
-let chosenServicePrice = null;
+let chosenServiceID = null; // chosen row data
+let chosenServiceTypeID = null; // chosen row data
+let chosenServicePartID = null; // chosen row data
+let chosenServiceName = null; // chosen row data
+let chosenServiceDescription = null; // chosen row data
+let chosenServicePrice = null; // chosen row data
 let oldServiceData = []; // store old render table
 let maxServiceID; // max current serviceID
 let maxServiceTypeID; // max current serviceTypeID
 let maxServicePartID; // max current partID
-let partName = {};
-let typeName = {};
+let partName = {}; // name of partID
+let typeName = {}; // name of typeID
+let currentSortOrder = 'asc'; // store current sort order
+let currentSortColumn = null; // store current sort column
 
 // ---------- Support functions ----------
 // Search service
@@ -52,6 +54,7 @@ function searchService(result) {
 
         const filteredData = result.filter((row) => isSearchMatch(row) && isColumnMatch(row));
         renderTable(filteredData);
+        getServiceListAll();
     };
 
     // Debounce function
@@ -92,6 +95,39 @@ function searchService(result) {
     });
 }
 
+// Sort service
+document.querySelectorAll('.sort').forEach((button) => {
+    button.addEventListener('click', () => {
+        const column = button.dataset.col;
+
+        // Toggle sort order if clicking the same column
+        if (column === currentSortColumn) {
+            currentSortOrder = currentSortOrder === 'asc' ? 'desc' : 'asc';
+        } else {
+            currentSortColumn = column;
+            currentSortOrder = 'asc'; // Reset to ascending for new column
+        }
+        sortService(column, currentSortOrder);
+    });
+});
+
+async function sortService(col, ord) {
+    try {
+        const response = await fetch('http://localhost:3000/sortService', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                column: col,
+                order: ord
+            })
+        });
+        const result = await response.json();
+        renderTable(result);
+    } catch (err) {
+        console.error('Error sorting service:', err);
+    }
+}
+
 // Delete service
 function showDeletePopup(element) {
     chosenServiceID = +element.dataset.serviceid; // get dataset from self
@@ -130,6 +166,32 @@ async function deleteService(ServiceID) {
 }
 
 // Update service
+// Set value for number
+function setNumValue(element, globalVar, defaultValue) {
+    let value = parseInt(element.value);
+
+    if (isNaN(value) || value <= 0) {
+        globalVar = defaultValue;
+        element.value = defaultValue;
+    } else {
+        globalVar = value;
+    }
+
+    return globalVar;
+}
+
+// Set value for string
+function setStrValue(element, globalVar, defaultValue) {
+    if (element.value === '') {
+        globalVar = defaultValue;
+        element.value = defaultValue;
+    } else {
+        globalVar = element.value;
+    }
+
+    return globalVar;
+}
+
 function showUpdatePopup(element) {
     chosenServiceID = +element.dataset.serviceid; // get dataset from self
     popupModify.querySelector('h2').textContent = 'Update Service'; // set title
@@ -143,7 +205,6 @@ function showUpdatePopup(element) {
     chosenServiceName = data[3].children[0].value = element.dataset.servicename;
     chosenServiceDescription = data[4].children[0].value = element.dataset.servicedescription;
     chosenServicePrice = data[5].children[0].value = element.dataset.serviceprice;
-    // console.log(chosenServiceID, chosenServiceTypeID, chosenServicePartID, chosenServiceName, chosenServiceDescription, chosenServicePrice);
 
     // listen change
     const idSelect = data[0].children[0];
@@ -263,7 +324,6 @@ function showAddPopup() {
     chosenServiceName = data[3].children[0].value = 'Unnamed Service';
     chosenServiceDescription = data[4].children[0].value = 'No Description';
     chosenServicePrice = data[5].children[0].value = 1000;
-    // console.log(chosenServiceTypeID, chosenServicePartID, chosenServiceName, chosenServiceDescription, chosenServicePrice);
 
     // listen change
     const typeSelect = data[1].children[0];
@@ -374,32 +434,6 @@ async function addService(ServiceTypeID, ServicePartID, ServiceName, ServiceDesc
     } catch (err) {
         console.error('Error adding service:', err);
     }
-}
-
-// Set value for number
-function setNumValue(element, globalVar, defaultValue) {
-    let value = parseInt(element.value);
-
-    if (isNaN(value) || value <= 0) {
-        globalVar = defaultValue;
-        element.value = defaultValue;
-    } else {
-        globalVar = value;
-    }
-
-    return globalVar;
-}
-
-// Set value for string
-function setStrValue(element, globalVar, defaultValue) {
-    if (element.value === '') {
-        globalVar = defaultValue;
-        element.value = defaultValue;
-    } else {
-        globalVar = element.value;
-    }
-
-    return globalVar;
 }
 
 // Render table out
