@@ -122,7 +122,7 @@ body.no-scroll {
 .path {
     width: 90%;
     margin: 0 auto;
-    padding: 20px;
+    padding: 10px 0;
 }
 
 .container {
@@ -185,7 +185,7 @@ body.no-scroll {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 
     h1 {
         font-size: 1.5rem;
@@ -196,7 +196,7 @@ body.no-scroll {
     padding: 10px 15px;
     margin-left: 10px;
     border: none;
-    border-radius: 4px;
+    border-radius: 5px;
     cursor: pointer;
     color: white;
 }
@@ -218,9 +218,10 @@ body.no-scroll {
 }
 
 .search {
-    margin-bottom: 20px;
     display: flex;
-    justify-content: center;
+    flex-flow: column;
+    align-items: center;
+    margin-bottom: 15px;
     transition: width 0.4s ease-in-out;
 
     input {
@@ -232,9 +233,20 @@ body.no-scroll {
         transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s ease;
         color: #e0e0e0;
     }
+    
     input:focus {
         width: 60%;
     }
+}
+
+.btn-search {
+    color: black !important;
+    background-color: white;
+    transition: background-color 0.3s ease;
+}
+.btn-search:hover {
+    color: black !important;
+    background-color: lightgrey;
 }
 
 .search-filter {
@@ -252,7 +264,7 @@ table {
     table-layout: fixed;
 
     th {
-        padding: 15px 10px;
+        padding: 5px 10px;
         border: 1px solid #333;
         background-color: #2c2c2c;
         text-align: center;
@@ -262,7 +274,7 @@ table {
     }
 
     td {
-        padding: 15px 10px;
+        padding: 5px 10px;
         border: 1px solid #333;
         background-color: #1e1e1e;
         text-align: center;
@@ -360,4 +372,29 @@ textarea {
 input::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
+}
+
+/* pagination */
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination button {
+    padding: 8px 12px;
+    margin: 0 5px;
+    border: 1px solid #ccc;
+    background-color: #f0f0f0;
+    cursor: pointer;
+}
+
+.pagination button.active {
+    background-color: #33334d;
+    color: white;
+}
+
+.pagination button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
 }
