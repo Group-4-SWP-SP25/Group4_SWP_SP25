@@ -5,9 +5,8 @@ const addService = async (req, res) => {
         const pool = global.pool;
         const { typeID, partID, name, description, price } = req.body;
 
-        const query = `
-                    INSERT INTO [Service] (ServiceTypeID, PartID, ServiceName, ServiceDescription, ServicePrice)
-                    VALUES (@typeID, @partID, @name, @description, @price);`;
+        const query = ` INSERT INTO [Service] (ServiceTypeID, PartID, ServiceName, ServiceDescription, ServicePrice)
+                        VALUES (@typeID, @partID, @name, @description, @price)`;
 
         const result = await pool
             .request()

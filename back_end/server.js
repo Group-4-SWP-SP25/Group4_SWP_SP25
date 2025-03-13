@@ -91,6 +91,7 @@ const deleteServiceById = require("./myModule/database/service/deleteServiceByID
 const updateServiceById = require("./myModule/database/service/updateServiceByID.js");
 const addService = require("./myModule/database/service/addService.js");
 const sortService = require("./myModule/database/service/sortService.js");
+const searchService = require("./myModule/database/service/searchService.js");
 
 // car
 const carInfo = require("./myModule/controller/car/carInfo.js");
@@ -201,6 +202,7 @@ app.post("/deleteServiceById", deleteServiceById);
 app.post("/updateServiceById", updateServiceById);
 app.post("/addService", addService);
 app.post("/sortService", sortService);
+app.post("/searchService", searchService);
 
 // car
 app.post("/carInfo", carInfo);

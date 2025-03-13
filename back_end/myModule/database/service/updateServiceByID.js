@@ -5,10 +5,9 @@ const updateServiceByID = async (req, res) => {
         const pool = global.pool;
         const { serviceID, typeID, partID, name, description, price } = req.body;
 
-        const query = `
-                    UPDATE [Service] 
-                    SET ServiceTypeID = @typeID, PartID = @partID, ServiceName = @name, ServiceDescription = @description, ServicePrice = @price 
-                    WHERE ServiceID = @serviceID`;
+        const query = ` UPDATE [Service] 
+                        SET ServiceTypeID = @typeID, PartID = @partID, ServiceName = @name, ServiceDescription = @description, ServicePrice = @price 
+                        WHERE ServiceID = @serviceID`;
 
         const result = await pool
             .request()

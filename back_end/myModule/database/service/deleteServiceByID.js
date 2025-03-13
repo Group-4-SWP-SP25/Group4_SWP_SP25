@@ -5,8 +5,7 @@ const deleteServiceById = async (req, res) => {
         const pool = global.pool;
         const { serviceID } = req.body;
 
-        const query = `
-                        -- Xóa từ bảng Inventory (bảng con 2)
+        const query = ` -- Xóa từ bảng Inventory (bảng con 2)
                         DELETE FROM Inventory
                         WHERE AccessoryID IN (
                             SELECT AccessoryID
@@ -20,8 +19,7 @@ const deleteServiceById = async (req, res) => {
 
                         -- Xóa từ bảng Service (bảng cha)
                         DELETE FROM Service
-                        WHERE ServiceID = @serviceID;
-                    `;
+                        WHERE ServiceID = @serviceID`;
 
         const result = await pool.request().input('serviceID', sql.Int, serviceID).query(query);
 
