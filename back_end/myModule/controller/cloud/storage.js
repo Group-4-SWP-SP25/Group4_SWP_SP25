@@ -2,10 +2,10 @@ const axios = require("axios");
 const jwt = require("jsonwebtoken");
 const FormData = require("form-data");
 const { Readable } = require("stream");
+require('dotenv').config();
 
-
-const client_email = "car-care-247@gen-lang-client-0667635865.iam.gserviceaccount.com"
-const private_key = "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC0A2SL89PkNdq2\nzx28K16U79tOKBUNKFZyg+RLOxtiZZi3ndOZlg5uYYZcJUaRIOZzQEmAScb3w0oX\n3uU5kWaIbEchoaj4WA3O6fzjyiwPH53IMJxrPcusn/ZV9k/omA9cybqoS5PsyQFv\n0ub/2KDPFt2bSwi9IexLCqHbqT6oFI26UbMk0hN2vkhUCn9Sme3IIsWgAMN8y8Rq\nc+TW0HpX/611MugZLd1nfq6jGu4D4MA0x1+uaEl7hSF4WYehe9REeUZduLyJYagK\nvRZDNLDzLOWqo1YbTqz8Q3+QMDHUCUyaXt0LKqffOKrI1ce4xiReny0OsUvOte6h\n77FIuEYLAgMBAAECggEABSLBpOoA+2/qTY6PX4Sbgm4XsioKyZRHeLZ0h1GbjU03\neFzS3gWGY895fTofKMh+WIefYCWDPTQqUClu2YHp9yFN1ygpvQ6CmleeDXdn64Zn\nwqHhvrNBaF6SfgrjqouDzPSrOoj2RL+oSN7AadD2nuHp0rfnJcGzYExPdSGZGDKt\npJ6QF1iRf6HIgGVJa1G55JzsyMFt7agWBWUV/DgzlVyVgSKlA65M+L+rRhTQX+ma\n2pGpF0T9QZvB+7rF5aIyNrxT1WIIlcjSPeud3WBdPjyxUW702y858etC/+y9VIo3\nO3ZDIcwaAKosROlic2IQP1U5LOoMlsFR4sEJCWSJgQKBgQDl5/vLx8fy8MxO4ypb\nk5wRGOK58BfWtt06B1vWvevmEq1OgcyMfUII+U72oIR3h/qg922vqDYkOpWT+KQL\nFEZ7iWM2MGtECypYAbuBf6c4eo5LRjqgZEMhkkyFM8qrMnJO8oO55nZHa16XRLEE\nbhX21jrxq8wOxAY5wOiys4X+iwKBgQDIccAAr+EDrNKUYvGW+lVvopnuWUzBuWua\nK+cCliLHi85FNmwg/fgJFNNBtnpliOd0aMJ8+l59Ka+CZZGQvbyafdRAjDsKqoVj\nKmtSridAWpkkSQ1e0FAd8HE1gEpaticcpIjGOXFUS2RiNCCdao48phQtJYIhJHBf\ne9y2L+tGgQKBgQDPA0Lrq9kzvHUK92tViCU4E+NbL4AXmxK6RJQCWYLG6Lxae2+2\ndLb4I5xhYAnHI46eUAzY5SrTFllHItR7EWehpwTJb3G2lCMtmWm/4jStG1VzHCp/\n76eu2+/A5PCxlDvvMFlCE+0ew+QpavXFmmZ2m1H5+ApGpWVBrZ0aA6I8nwKBgBuI\nVGFDx1qj4ID1Xk3osNeWtCIjLgHmIDubEC4wxTI3p+ul4BBgEjPdIm+CSymrNm+s\n/BoCofv7P9pfbTE+fquR4RfEq095wLywVPGUblvOlf5/8lA1uOuD3WkF6DCxmIm8\np/TiawizGmTK2DgHLOZzwY25+zfmM3FKKDT2PBEBAoGBAJbWGWukqq0m2DInJNyK\nOFN6rVi6U0OzgL9o4eEpgTNLBj+Vj4FEA7tQaofdI9mXOSvWg+y977d6kBD/O/P1\nLD2SY8h2OnZb8rUghsZfg2NFGEMJEQd+zGHdis0eM/hrKjp1dpTSrGLcw9IqAbuQ\nu0JEBR/Ng66ApS1bR5pWj4jp\n-----END PRIVATE KEY-----\n"
+const client_email = process.env.CLIENT_EMAIL;
+const private_key = process.env.PRIVATE_KEY;
 
 let accessToken = null;
 let tokenExpirationTime = null;
