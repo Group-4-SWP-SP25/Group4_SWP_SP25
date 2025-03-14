@@ -3,10 +3,11 @@ const mssql = require('mssql');
 const addService = async (req, res) => {
     try {
         const pool = global.pool;
-        const { typeID, partID, name, description, price } = req.body;
+        const { typeID, partID, name, description, price, estTime } = req.body;
+        console.log(req.body);
 
-        const query = ` INSERT INTO [Service] (ServiceTypeID, PartID, ServiceName, ServiceDescription, ServicePrice)
-                        VALUES (@typeID, @partID, @name, @description, @price)`;
+        const query = ` INSERT INTO [Service] (ServiceTypeID, PartID, ServiceName, ServiceDescription, ServicePrice, EstimatedTime)
+                        VALUES (@typeID, @partID, @name, @description, @price, @estTime);`;
 
         const result = await pool
             .request()
@@ -15,6 +16,7 @@ const addService = async (req, res) => {
             .input('name', mssql.VarChar, name)
             .input('description', mssql.Text, description)
             .input('price', mssql.Float, price)
+            .input('estTime', mssql.Int, estTime)
             .query(query);
 
         if (result.rowsAffected[0] === 0) {

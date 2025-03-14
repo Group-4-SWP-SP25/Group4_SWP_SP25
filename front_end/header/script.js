@@ -87,12 +87,8 @@ async function searchServices(searchTerm) {
         }
 
         const results = await response.json();
-        // Lưu kết quả vào localStorage hoặc sessionStorage
-        localStorage.setItem('searchTerm', searchTerm);
-        localStorage.setItem('searchResults', JSON.stringify(results));
-
-        // Chuyển hướng đến trang kết quả tìm kiếm
-        window.location.href = '/front_end/serviceSearch/serviceSearch.html';
+        
+        window.location.href = `/front_end/serviceSearch/serviceSearch.html?results=${encodeURIComponent(JSON.stringify(results))}&searchTerm=${searchTerm}`;
     } catch (error) {
         console.error('Error searching services:', error);
         alert('An error occurred while searching.');

@@ -137,6 +137,14 @@
                                 ⇅
                             </button>
                         </th>
+                        <th style="width: 6%">
+                            Estimated Time<br />(mins)
+                            <button
+                                class="sort"
+                                data-col="EstimatedTime">
+                                ⇅
+                            </button>
+                        </th>
                         <th style="width: 10%">Actions</th>
                     </tr>
                 </thead>
@@ -173,12 +181,13 @@
             <table style="margin-bottom: 10px">
                 <thead>
                     <tr>
-                        <td style="width: 2%">Service ID</td>
+                        <td style="width: 3%">Service ID</td>
                         <td style="width: 8%">Type ID</td>
                         <td style="width: 6%">Part ID</td>
                         <td style="width: 10%">Service Name</td>
-                        <td style="width: 18%">Description</td>
+                        <td style="width: 15%">Description</td>
                         <td style="width: 6%">Price</td>
+                        <td style="width: 5%">Estimated Time</td>
                     </tr>
                 </thead>
                 <tbody>
@@ -208,6 +217,12 @@
                                 type="number"
                                 min="1000"
                                 placeholder="Price" />
+                        </td>
+                        <td>
+                            <input
+                                type="number"
+                                min="15"
+                                placeholder="Estimated Time" />
                         </td>
                     </tr>
                 </tbody>
