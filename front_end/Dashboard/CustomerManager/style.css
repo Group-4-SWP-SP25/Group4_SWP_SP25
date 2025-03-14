@@ -71,8 +71,8 @@ body {
     color: #007bff;
 }
 
-.currentpath{
-    text-decoration: none; 
+.currentpath {
+    text-decoration: none;
     color: #007bff;
 }
 
@@ -148,31 +148,55 @@ body {
     font-size: 1.5rem;
 }
 
-.table-header .buttons button {
+.buttons {
+    display: flex;
+}
+
+.table-header .buttons div {
     padding: 10px 15px;
     margin-left: 10px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     color: white;
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
-.table-header .buttons .filter {
+.filter {
     background: #007bff;
     transition: background-color 0.3s ease;
 }
 
-.table-header .buttons .filter:hover {
+.filter:hover {
     background: #005abb;
 }
 
-.table-header .buttons .add {
+.add {
     background: #28a745;
     transition: background-color 0.3s ease;
 }
 
-.table-header .buttons .add:hover {
+.add:hover {
     background: #006e1a;
+}
+
+.remove {
+    background: #dc3545;
+    transition: background-color 0.3s ease;
+}
+
+.remove:hover {
+    background: #a71d2a;
+}
+
+.message {
+    background: #3B3B6D;
+}
+
+.message:hover {
+    background: #2B2B4D;
 }
 
 .search {
@@ -224,6 +248,12 @@ table td {
     background-color: #1e1e1e;
 }
 
+table tr input {
+    width: 25px;
+    height: 25px;
+    padding: 8px;
+    accent-color: #007BFF
+}
 
 
 .details-btn {

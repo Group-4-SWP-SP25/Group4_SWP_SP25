@@ -5,6 +5,8 @@ let firstIndex;
 let currentPage = 1;
 const numRowPerTable = 10;
 
+let select = [];
+
 const searchInput = document.getElementById('searchString');
 let searchString = searchInput.value;
 
@@ -26,9 +28,12 @@ const secondDot = document.getElementById('secondDot');
 let sortColumn = '';
 let sortOrder = 'ASC';
 
+const userlist = document.getElementById('UserList').querySelector('tbody');
+
 function addRow(user) {
-    let newRow = table.insertRow();
+    let newRow = document.createElement('tr');
     newRow.innerHTML = `
+        <td> <input type="checkbox"/> </td>
         <td class="ID">${user.UserID}</td>
         <td class="Name">${user.FirstName + ' ' + user.LastName}</td>
         <td class="Email">${user.Email}</td>
@@ -36,7 +41,7 @@ function addRow(user) {
         <td class="Date">${user.DateCreated}</td>
         <td><button class="details-btn">View Details</button></td>
     `;
-
+    userlist.appendChild(newRow);
     // Add event listener for the "View Details" button
     const detailsButton = newRow.querySelector('.details-btn');
     detailsButton.addEventListener('click', () => {
