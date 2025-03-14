@@ -28,18 +28,18 @@ app.use(
 // admin
 const connectDB = require("./myModule/database/connectDB.js");
 const {
-  authenticateJWT,
-  authenticateADMIN,
+    authenticateJWT,
+    authenticateADMIN,
 } = require("./myModule/Utils/JWT.js");
 
 
 const {
-  GetUserInfo,
-  GetUserInfo_Admin,
+    GetUserInfo,
+    GetUserInfo_Admin,
 } = require("./myModule/database/user/getUserInfo.js");
 const {
-  getUserList,
-  getTotalUserCount,
+    getUserList,
+    getTotalUserCount,
 } = require("./myModule/controller/UserListControl.js");
 const TotalRevenueToday = require("./myModule/database/SaleReport/TotalRevenueToday.js");
 const TotalOrderToday = require("./myModule/database/SaleReport/TotalOrderToday.js");
@@ -47,7 +47,7 @@ const TotalProductSold = require("./myModule/database/SaleReport/TotalProductSol
 const TotalNewCustomer = require("./myModule/database/SaleReport/TotalNewCustomer.js");
 const TopService = require("./myModule/database/SaleReport/TopService.js");
 const TopRevenueByMonth = require("./myModule/database/SaleReport/TopRevenueByMonth.js");
-const TopProducts=require("./myModule/database/SaleReport/TopProducts.js");
+const TopProducts = require("./myModule/database/SaleReport/TopProducts.js");
 // const connectDB = require('./myModule/database/connectDB.js');
 // const { authenticateJWT, authenticateADMIN } = require('./myModule/Utils/JWT.js');
 // const { GetUserInfo, GetUserInfo_Admin } = require('./myModule/database/user/getUserInfo.js');
@@ -125,7 +125,7 @@ const paymentCallback = require('./myModule/controller/payment/callback.js');
 const { SendMessage, GetMessage, GetList, CheckMessage } = require('./myModule/controller/message/message.js');
 
 // calendar
-const { getEvents_api } = require('./myModule/controller/calendar/calendar.js')
+const { getEvents_api, addEvent_apis } = require('./myModule/controller/calendar/calendar.js')
 
 // ----------------------------------------------------------
 // CREATE API
@@ -145,6 +145,7 @@ app.post("/TopService", authenticateADMIN, TopService);
 app.post("/TopRevenueByMonth", authenticateADMIN, TopRevenueByMonth);
 app.post("/TopProducts", authenticateADMIN, TopProducts);
 app.post("/Calendar/GetEvents", authenticateADMIN, getEvents_api);
+app.post("/Calendar/AddEvent", authenticateADMIN, addEvent_apis);
 app.post("/Employee/getEmployees", authenticateADMIN, getEmployees);
 // app.post('/TotalRevenueToday', authenticateADMIN, TotalRevenueToday);
 // app.post('/TotalOrderToday', authenticateADMIN, TotalOrderToday);
