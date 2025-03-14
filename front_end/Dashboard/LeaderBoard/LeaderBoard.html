@@ -2,12 +2,12 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dashboard</title>
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="./LeaderBoard.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link rel="stylesheet" href="./LeaderBoard.css" />
 </head>
 
 <body>
@@ -18,9 +18,13 @@
 
     <div class="content custom-scrollbar">
         <div class="path">
-            <a href="../DashBoard/dashboard.html" style="text-decoration: none; color: white;">Home</a>
+            <a href="../DashBoard/dashboard.html" style="text-decoration: none; color: white">
+                Home
+            </a>
             /
-            <a href="../CustomerManager/customer_management.html" class="currentpath">Leader Board</a>
+            <a href="../CustomerManager/customer_management.html" class="currentpath">
+                Leader Board
+            </a>
         </div>
 
         <!-- calendar -->
@@ -39,18 +43,16 @@
         <div class="calendar-container">
             <div class="calendar-header">
                 <div id="prevMonth">
-                    <span class="material-icons">
-                        chevron_left
-                    </span>
+                    <span class="material-icons"> chevron_left </span>
                 </div>
-                <div style="display: flex; gap: 10px; align-items: center;">
-                    <h2 id="currentMonth" aria-live="polite">Loading...</h2>
+                <div style="display: flex; gap: 10px; align-items: center">
+                    <h2 id="currentMonth" aria-live="polite">
+                        Loading...
+                    </h2>
                     <div class="loader" id="calendar-loader"></div>
                 </div>
                 <div id="nextMonth">
-                    <span class="material-icons">
-                        chevron_right
-                    </span>
+                    <span class="material-icons"> chevron_right </span>
                 </div>
             </div>
             <div class="calendar-grid">
@@ -81,22 +83,17 @@
         <div class="timeline-container">
             <div class="timeline-header">
                 <div id="prevDay">
-                    <span class="material-icons">
-                        chevron_left
-                    </span>
+                    <span class="material-icons"> chevron_left </span>
                 </div>
-                <div style="display: flex; gap: 10px; align-items: center;">
-                    <h2 id="currentDay" aria-live="polite">Loading...
-
+                <div style="display: flex; gap: 10px; align-items: center">
+                    <h2 id="currentDay" aria-live="polite">
+                        Loading...
                     </h2>
-                    <div class="loader" id="timeline-loader">
-                    </div>
+                    <div class="loader" id="timeline-loader"></div>
                 </div>
 
                 <div id="nextDay">
-                    <span class="material-icons">
-                        chevron_right
-                    </span>
+                    <span class="material-icons"> chevron_right </span>
                 </div>
             </div>
 
@@ -118,13 +115,9 @@
 
                 </div>
 
-                <div class="timelineitemcontainer custom-scrollbar">
+                <div class="timelineitemcontainer custom-scrollbar"></div>
 
-                </div>
-
-                <div class="loader" id="timeline-item-loader">
-                </div>
-
+                <div class="loader" id="timeline-item-loader"></div>
             </div>
         </div>
 

@@ -94,6 +94,7 @@ CREATE TABLE [Service] (
 	AffectInventory TINYINT DEFAULT 0,
 	ServiceDescription VARCHAR(MAX),
 	ServicePrice FLOAT NOT NULL,
+    EstimatedTime INT NOT NULL,
 	Checking TINYINT DEFAULT 0
 );
 GO
@@ -121,7 +122,8 @@ CREATE TABLE Inventory (
 	AccessoryID INT NOT NULL FOREIGN KEY REFERENCES AccessoryInfo(AccessoryID),
 	Quantity INT,
 	UnitPrice FLOAT,
-	CONSTRAINT pk_Inventory PRIMARY KEY (BranchID, AccessoryID)
+	CONSTRAINT pk_Inventory PRIMARY KEY (BranchID, AccessoryID),
+
 );
 GO
  
@@ -129,8 +131,8 @@ GO
 CREATE TABLE [Order] (
 	UserID INT NOT NULL FOREIGN KEY REFERENCES [User](UserID) ON DELETE CASCADE,
     OrderID INT NOT NULL,
-    CarID INT NOT NULL,
-    PartID INT NOT NULL,
+    CarID INT NOT NULL FOREIGN KEY REFERENCES [Car](CarID),
+    PartID INT NOT NULL FOREIGN KEY REFERENCES [PartInfo](PartID),
 	ServiceID INT FOREIGN KEY REFERENCES [Service](ServiceID),
 	BranchID INT FOREIGN KEY REFERENCES Branch(BranchID),
     QuantityUsed INT NOT NULL,
@@ -160,6 +162,30 @@ CREATE TABLE MessageReads (
     FOREIGN KEY (MessageID) REFERENCES Messages(MessageID)
 );
 GO
+
+CREATE TABLE Payment(
+	UserID INT FOREIGN KEY REFERENCES [User](UserID),
+	PaymentID INT NOT NULL,
+	PaymentMethod VARCHAR(200),
+	PaymentDate DATETIME DEFAULT CURRENT_TIMESTAMP,
+	Amount FLOAT NOT NULL,
+	CONSTRAINT pk_Payments PRIMARY KEY (UserID, PaymentID)
+);
+GO
+
+CREATE TABLE Bill(
+	UserID INT,
+	PaymentID INT,
+	CarID INT NOT NULL FOREIGN KEY REFERENCES Car(CarID),
+    PartID INT NOT NULL FOREIGN KEY REFERENCES PartInfo(PartID),
+	ServiceID INT FOREIGN KEY REFERENCES [Service](ServiceID),
+	BranchID INT FOREIGN KEY REFERENCES Branch(BranchID),
+    QuantityUsed INT NOT NULL,
+	CONSTRAINT fk_Bills FOREIGN KEY (UserID, PaymentID) REFERENCES Payment(UserID, PaymentID),
+	CONSTRAINT pk_Bills PRIMARY KEY (UserID, PaymentID, CarID, PartID, ServiceID)
+);
+GO
+
 
 -- mesage 
 CREATE PROCEDURE UpsertMessageRead
@@ -304,7 +330,7 @@ BEGIN
 
     -- Cập nhật lại số lượng trong Inventory khi đơn hàng bị hủy
     UPDATE ivt
-    SET ivt.Quantity = ivt.Quantity + d.QuantityUsed
+    SET ivt.Quantity = ivt.Quantity - d.QuantityUsed
     FROM Inventory ivt
     INNER JOIN deleted d ON ivt.BranchID = d.BranchID
     INNER JOIN AccessoryInfo ai ON ai.ServiceID = d.ServiceID
@@ -315,6 +341,22 @@ GO
 DISABLE TRIGGER DeleteOrder ON [Order];
 GO
 
+CREATE TRIGGER InsertPayment
+ON Payment
+INSTEAD OF INSERT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    INSERT INTO Payment(PaymentID, UserID, PaymentMethod, Amount)
+    SELECT
+        COALESCE((SELECT MAX(p.PaymentID) FROM Payment p WHERE p.UserID = i.UserID), 0) + 1,
+        i.UserID,
+        i.PaymentMethod,
+        i.Amount
+    FROM inserted i;
+END;
+GO     
 
 INSERT INTO [ServiceType](ServiceTypeName, ServiceTypeDescription, ServiceImage) VALUES 
 -- 1
@@ -337,132 +379,132 @@ INSERT INTO [ServiceType](ServiceTypeName, ServiceTypeDescription, ServiceImage)
 ('Cleaning and Maintenance', 'Your car is more than just a mode of transportation; it''s an extension of your personality and a reflection of your style.<br><br>At AUTO247, we understand the importance of keeping your car looking and feeling its best, and that''s why we offer a comprehensive range of Cleaning and Maintenance services designed to help you maintain your car''s appearance and preserve its value.', 'https://di-uploads-pod18.dealerinspire.com/executivehonda/uploads/2024/03/EAG_March_Blog-1.jpg');
 GO
 
-INSERT INTO [Service](ServiceTypeID, PartID, ServiceName, AffectInventory, ServiceDescription, ServicePrice) VALUES
-(1, 24, 'Tire Replacement', 1, 'Installing new tires', 3600000),
-(1, 24, 'Tire Rotation', 0, 'Rotating tires for even wear', 960000),
-(1, 24, 'Run-Flat Tire Repair', 0, 'Fixing damage on run-flat tires', 1200000),
-(1, 24, 'Performance Tire Upgrade', 1, 'Installing high-performance tires', 5000000),
-(1, 24, 'Off-Road Tire Installation', 1, 'Mounting off-road tires', 4500000),
-(1, 25, 'Rim Polishing', 0, 'Cleaning and restoring rim finish', 1680000),
-(1, 25, 'Alloy Wheel Crack Repair', 0, 'Fixing cracks in alloy wheels', 1500000),
-(1, 25, 'Wheel Weight Balancing', 0, 'Balancing wheels for smooth rotation', 500000),
-(1, 25, 'Rim Restoration', 0, 'Restoring rim surface for a polished look', 2400000),
-(1, 25, 'Rim Replacement', 1, 'Installing new rims', 4800000),
-(1, 26, 'Wheel Balancing', 0, 'Ensuring even weight distribution on wheels', 1200000),
-(1, 26, 'Wheel Alignment', 0, 'Adjusting angles for proper wheel alignment', 1920000),
-(1, 26, '4x4 Drivetrain Service', 0, 'Servicing drivetrain for 4WD vehicles', 3000000),
-(1, 26, 'Differential Fluid Change', 1, 'Replacing fluid in differential', 1000000),
-(1, 26, 'Wheel Bearing Replacement', 1, 'Replacing worn-out wheel bearings', 3360000),
-(1, 26, 'Wheel Hub Greasing', 0, 'Lubricating wheel hub for smooth rotation', 1200000), 
+INSERT INTO [Service](ServiceTypeID, PartID, ServiceName, AffectInventory, ServiceDescription, ServicePrice, EstimatedTime) VALUES
+(1, 24, 'Tire Replacement', 1, 'Installing new tires', 3600000, 60),
+(1, 24, 'Tire Rotation', 0, 'Rotating tires for even wear', 960000, 30),
+(1, 24, 'Run-Flat Tire Repair', 0, 'Fixing damage on run-flat tires', 1200000, 45),
+(1, 24, 'Performance Tire Upgrade', 1, 'Installing high-performance tires', 5000000, 90),
+(1, 24, 'Off-Road Tire Installation', 1, 'Mounting off-road tires', 4500000, 75),
+(1, 25, 'Rim Polishing', 0, 'Cleaning and restoring rim finish', 1680000, 45),
+(1, 25, 'Alloy Wheel Crack Repair', 0, 'Fixing cracks in alloy wheels', 1500000, 60),
+(1, 25, 'Wheel Weight Balancing', 0, 'Balancing wheels for smooth rotation', 500000, 30),
+(1, 25, 'Rim Restoration', 0, 'Restoring rim surface for a polished look', 2400000, 75),
+(1, 25, 'Rim Replacement', 1, 'Installing new rims', 4800000, 90),
+(1, 26, 'Wheel Balancing', 0, 'Ensuring even weight distribution on wheels', 1200000, 30),
+(1, 26, 'Wheel Alignment', 0, 'Adjusting angles for proper wheel alignment', 1920000, 60),
+(1, 26, '4x4 Drivetrain Service', 0, 'Servicing drivetrain for 4WD vehicles', 3000000, 90),
+(1, 26, 'Differential Fluid Change', 1, 'Replacing fluid in differential', 1000000, 45),
+(1, 26, 'Wheel Bearing Replacement', 1, 'Replacing worn-out wheel bearings', 3360000, 75),
+(1, 26, 'Wheel Hub Greasing', 0, 'Lubricating wheel hub for smooth rotation', 1200000, 30),
 
-(2, 5, 'Brake Pad Inspection', 0, 'Checking brake pad thickness and wear', 600000),
-(2, 5, 'Brake Pad Replacement', 1, 'Installing new brake pads', 1920000),
-(2, 5, 'Brake Pad Adjustment', 0, 'Adjusting brake pads for optimal contact', 1200000),
-(2, 5, 'Brake Line Replacement', 1, 'Installing new brake lines', 1800000),
-(2, 6, 'Brake Rotor Resurfacing', 0, 'Smoothing brake rotors for better performance', 2400000),
-(2, 6, 'Brake Rotor Replacement', 1, 'Installing new brake rotors', 3600000),
-(2, 6, 'Brake Rotor Cleaning', 0, 'Removing rust and debris from rotors', 1440000),
-(2, 6, 'Brake Rotor Resurfacing', 0, 'Smoothing the rotor surface', 1000000),
-(2, 6, 'Brake Pedal Adjustment', 0, 'Adjusting pedal sensitivity', 600000),
-(2, 6, 'ABS Module Repair', 0, 'Repairing the ABS system', 2500000),
-(2, 7, 'Brake Fluid Top-Up', 1, 'Adding brake fluid to maintain levels', 720000),
-(2, 7, 'Brake Fluid Replacement', 1, 'Flushing old brake fluid and refilling', 1920000),
-(2, 7, 'Brake Fluid Leak Repair', 0, 'Fixing leaks in the brake fluid system', 2400000),
+(2, 5, 'Brake Pad Inspection', 0, 'Checking brake pad thickness and wear', 600000, 30),
+(2, 5, 'Brake Pad Replacement', 1, 'Installing new brake pads', 1920000, 60),
+(2, 5, 'Brake Pad Adjustment', 0, 'Adjusting brake pads for optimal contact', 1200000, 45),
+(2, 5, 'Brake Line Replacement', 1, 'Installing new brake lines', 1800000, 75),
+(2, 6, 'Brake Rotor Resurfacing', 0, 'Smoothing brake rotors for better performance', 2400000, 60),
+(2, 6, 'Brake Rotor Replacement', 1, 'Installing new brake rotors', 3600000, 90),
+(2, 6, 'Brake Rotor Cleaning', 0, 'Removing rust and debris from rotors', 1440000, 45),
+(2, 6, 'Brake Rotor Resurfacing', 0, 'Smoothing the rotor surface', 1000000, 30),
+(2, 6, 'Brake Pedal Adjustment', 0, 'Adjusting pedal sensitivity', 600000, 15),
+(2, 6, 'ABS Module Repair', 0, 'Repairing the ABS system', 2500000, 75),
+(2, 7, 'Brake Fluid Top-Up', 1, 'Adding brake fluid to maintain levels', 720000, 15),
+(2, 7, 'Brake Fluid Replacement', 1, 'Flushing old brake fluid and refilling', 1920000, 60),
+(2, 7, 'Brake Fluid Leak Repair', 0, 'Fixing leaks in the brake fluid system', 2400000, 75),
 
-(3, 1, 'Engine Oil Change', 0, 'Replacing old engine oil with fresh oil', 1200000),
-(3, 1, 'Engine Oil System Flush', 0, 'Cleaning the engine oil system thoroughly', 1680000),
-(3, 1, 'Engine Oil Leak Check', 0, 'Inspecting and fixing engine oil leaks', 960000),
-(3, 1, 'Engine Oil Filter Replacement', 1, 'Replacing clogged oil filter for better flow', 720000),
-(3, 1, 'Engine Mount Replacement', 0, 'Replacing worn-out engine mounts', 2000000),
-(3, 1, 'Engine Tuning', 0, 'Adjusting engine parameters for performance', 1800000),
-(3, 1, 'Advanced Engine Diagnostics', 0, 'Full engine health scan with detailed report', 1500000),
-(3, 1, 'Turbocharger Inspection', 0, 'Checking turbo performance & efficiency', 1200000),
-(3, 1, 'Supercharger Installation', 1, 'Installing a supercharger for more power', 5000000),
-(3, 1, 'Turbo Intercooler Upgrade', 1, 'Installing performance intercooler', 5000000),
-(3, 1, 'Exhaust System Cleaning', 0, 'Cleaning exhaust for better airflow', 1200000),
-(3, 2, 'Spark Plug Inspection', 0, 'Checking spark plug condition for wear', 600000),
-(3, 2, 'Spark Plug Cleaning', 0, 'Cleaning deposits from spark plugs', 480000),
-(3, 2, 'Spark Plug Replacement', 1, 'Installing new spark plugs for better ignition', 840000),
-(3, 2, 'High-Performance Spark Plug Install', 1, 'Upgrading to high-performance spark plugs', 900000),
-(3, 2, 'Ignition System Check', 0, 'Diagnosing and repairing ignition issues', 1440000),
-(3, 2, 'Ignition Coil Replacement', 1, 'Installing new ignition coils', 1300000),
-(3, 4, 'Cooling System Flush', 1, 'Draining and refilling coolant system', 2160000),
-(3, 4, 'Cooling System Leak Check', 0, 'Identifying leaks in the cooling system', 1440000),
-(3, 4, 'Coolant Replacement', 1, 'Replacing old coolant for optimal performance', 1200000),
-(3, 4, 'Radiator Cleaning', 0, 'Removing debris and buildup from radiator', 1680000),
-(3, 4, 'Radiator Flush', 0, 'Cleaning the radiator for better cooling', 900000),
-(3, 4, 'Engine Cooling Fan Replacement', 1, 'Replacing the engine cooling fan', 1400000),
+(3, 1, 'Engine Oil Change', 0, 'Replacing old engine oil with fresh oil', 1200000, 30),
+(3, 1, 'Engine Oil System Flush', 0, 'Cleaning the engine oil system thoroughly', 1680000, 45),
+(3, 1, 'Engine Oil Leak Check', 0, 'Inspecting and fixing engine oil leaks', 960000, 30),
+(3, 1, 'Engine Oil Filter Replacement', 1, 'Replacing clogged oil filter for better flow', 720000, 15),
+(3, 1, 'Engine Mount Replacement', 0, 'Replacing worn-out engine mounts', 2000000, 75),
+(3, 1, 'Engine Tuning', 0, 'Adjusting engine parameters for performance', 1800000, 60),
+(3, 1, 'Advanced Engine Diagnostics', 0, 'Full engine health scan with detailed report', 1500000, 45),
+(3, 1, 'Turbocharger Inspection', 0, 'Checking turbo performance & efficiency', 1200000, 30),
+(3, 1, 'Supercharger Installation', 1, 'Installing a supercharger for more power', 5000000, 120),
+(3, 1, 'Turbo Intercooler Upgrade', 1, 'Installing performance intercooler', 5000000, 90),
+(3, 1, 'Exhaust System Cleaning', 0, 'Cleaning exhaust for better airflow', 1200000, 45),
+(3, 2, 'Spark Plug Inspection', 0, 'Checking spark plug condition for wear', 600000, 15),
+(3, 2, 'Spark Plug Cleaning', 0, 'Cleaning deposits from spark plugs', 480000, 15),
+(3, 2, 'Spark Plug Replacement', 1, 'Installing new spark plugs for better ignition', 840000, 30),
+(3, 2, 'High-Performance Spark Plug Install', 1, 'Upgrading to high-performance spark plugs', 900000, 45),
+(3, 2, 'Ignition System Check', 0, 'Diagnosing and repairing ignition issues', 1440000, 60),
+(3, 2, 'Ignition Coil Replacement', 1, 'Installing new ignition coils', 1300000, 45),
+(3, 4, 'Cooling System Flush', 1, 'Draining and refilling coolant system', 2160000, 60),
+(3, 4, 'Cooling System Leak Check', 0, 'Identifying leaks in the cooling system', 1440000, 45),
+(3, 4, 'Coolant Replacement', 1, 'Replacing old coolant for optimal performance', 1200000, 30),
+(3, 4, 'Radiator Cleaning', 0, 'Removing debris and buildup from radiator', 1680000, 45),
+(3, 4, 'Radiator Flush', 0, 'Cleaning the radiator for better cooling', 900000, 30),
+(3, 4, 'Engine Cooling Fan Replacement', 1, 'Replacing the engine cooling fan', 1400000, 60),
 
-(4, 18, 'Battery Load Test', 0, 'Testing battery under load', 400000),
-(4, 18, 'Battery Management System Update', 0, 'Updating BMS software', 900000),
-(4, 18, 'Charging System Check', 0, 'Testing battery and alternator performance', 1200000),
-(4, 18, 'Battery Charging Service', 0, 'Recharging car battery for optimal power', 720000),
-(4, 18, 'Hybrid Battery Balancing', 0, 'Rebalancing hybrid battery cells', 3000000),
-(4, 19, 'Ground Cable Replacement', 1, 'Replacing battery ground cables', 700000),
-(4, 19, 'Battery Terminal Cleaning', 0, 'Cleaning corrosion from battery terminals', 600000),
-(4, 19, 'Battery Terminal Replacement', 1, 'Installing new battery terminals', 960000),
+(4, 18, 'Battery Load Test', 0, 'Testing battery under load', 400000, 15),
+(4, 18, 'Battery Management System Update', 0, 'Updating BMS software', 900000, 30),
+(4, 18, 'Charging System Check', 0, 'Testing battery and alternator performance', 1200000, 45),
+(4, 18, 'Battery Charging Service', 0, 'Recharging car battery for optimal power', 720000, 30),
+(4, 18, 'Hybrid Battery Balancing', 0, 'Rebalancing hybrid battery cells', 3000000, 90),
+(4, 19, 'Ground Cable Replacement', 1, 'Replacing battery ground cables', 700000, 30),
+(4, 19, 'Battery Terminal Cleaning', 0, 'Cleaning corrosion from battery terminals', 600000, 15),
+(4, 19, 'Battery Terminal Replacement', 1, 'Installing new battery terminals', 960000, 45),
 
-(5, 8, 'Headlight Bulb Replacement', 1, 'Changing old headlight bulbs', 960000),
-(5, 8, 'Tail Light Bulb Replacement', 1, 'Replacing faulty tail light bulbs', 840000),
-(5, 8, 'Interior Light Bulb Replacement', 1, 'Installing new interior light bulbs', 600000),
-(5, 8, 'Adaptive Lighting Calibration', 0, 'Calibrating advanced car lighting', 1200000),
-(5, 8, 'HID/LED Headlight Conversion', 1, 'Upgrading halogen to HID/LED headlights', 2000000),
-(5, 9, 'Fuse Check', 0, 'Inspecting fuses for electrical issues', 480000),
-(5, 9, 'Fuse Replacement', 1, 'Replacing blown fuses', 360000),
-(5, 9, 'Fuse Box Cleaning', 0, 'Cleaning corrosion from fuse box', 720000),
-(5, 9, 'Fuse Box Upgrade', 1, 'Installing an upgraded fuse box', 900000),
-(5, 10, 'Electrical System Diagnosis', 0, 'Checking car’s electrical components', 2400000),
-(5, 10, 'Alternator Check', 0, 'Testing alternator for proper charging', 1200000),
-(5, 10, 'ECU Reprogramming', 0, 'Updating ECU software', 2500000),
-(5, 11, 'Wiring Check', 0, 'Inspecting electrical wiring for damage', 1440000),
-(5, 11, 'Wiring Harness Replacement', 1, 'Installing new wiring harness', 2880000),
-(5, 11, 'Wiring Short Diagnosis', 0, 'Repairing short circuits in wiring', 2160000),
+(5, 8, 'Headlight Bulb Replacement', 1, 'Changing old headlight bulbs', 960000, 30),
+(5, 8, 'Tail Light Bulb Replacement', 1, 'Replacing faulty tail light bulbs', 840000, 30),
+(5, 8, 'Interior Light Bulb Replacement', 1, 'Installing new interior light bulbs', 600000, 15),
+(5, 8, 'Adaptive Lighting Calibration', 0, 'Calibrating advanced car lighting', 1200000, 60),
+(5, 8, 'HID/LED Headlight Conversion', 1, 'Upgrading halogen to HID/LED headlights', 2000000, 90),
+(5, 9, 'Fuse Check', 0, 'Inspecting fuses for electrical issues', 480000, 15),
+(5, 9, 'Fuse Replacement', 1, 'Replacing blown fuses', 360000, 15),
+(5, 9, 'Fuse Box Cleaning', 0, 'Cleaning corrosion from fuse box', 720000, 30),
+(5, 9, 'Fuse Box Upgrade', 1, 'Installing an upgraded fuse box', 900000, 45),
+(5, 10, 'Electrical System Diagnosis', 0, 'Checking car’s electrical components', 2400000, 60),
+(5, 10, 'Alternator Check', 0, 'Testing alternator for proper charging', 1200000, 45),
+(5, 10, 'ECU Reprogramming', 0, 'Updating ECU software', 2500000, 90),
+(5, 11, 'Wiring Check', 0, 'Inspecting electrical wiring for damage', 1440000, 45),
+(5, 11, 'Wiring Harness Replacement', 1, 'Installing new wiring harness', 2880000, 90),
+(5, 11, 'Wiring Short Diagnosis', 0, 'Repairing short circuits in wiring', 2160000, 60),
 
-(6, 10, 'Windshield Wiper Motor Replacement', 1, 'Replacing wiper motor', 1500000),
-(6, 12, 'AC Gas Refill', 1, 'Refilling air conditioning refrigerant', 1920000),
-(6, 12, 'AC Compressor Check', 0, 'Diagnosing AC compressor performance', 1680000),
-(6, 12, 'AC Gas Leak Detection', 0, 'Identifying leaks in AC refrigerant system', 1200000),
-(6, 13, 'AC Condenser Cleaning', 0, 'Removing dust and debris from AC condenser', 1440000),
-(6, 13, 'AC Condenser Repair', 0, 'Fixing leaks or clogs in AC condenser', 2880000),
-(6, 13, 'AC Condenser Replacement', 1, 'Installing new AC condenser', 4320000),
-(6, 13, 'AC System Diagnostics', 0, 'Checking AC performance and detecting issues', 2160000),
-(6, 13, 'AC Vent Cleaning', 0, 'Removing dust from AC vents for better airflow', 1440000),
-(6, 14, 'Air Filter Cleaning', 0, 'Removing dust from air filter', 600000),
-(6, 14, 'Air Filter Replacement', 1, 'Installing new air filter', 960000),
-(6, 14, 'AC Filter Replacement', 1, 'Installing a new air conditioning filter', 1200000),
-(6, 14, 'AC Expansion Valve Replacement', 1, 'Installing new expansion valve', 1400000),
+(6, 10, 'Windshield Wiper Motor Replacement', 1, 'Replacing wiper motor', 1500000, 45),
+(6, 12, 'AC Gas Refill', 1, 'Refilling air conditioning refrigerant', 1920000, 60),
+(6, 12, 'AC Compressor Check', 0, 'Diagnosing AC compressor performance', 1680000, 45),
+(6, 12, 'AC Gas Leak Detection', 0, 'Identifying leaks in AC refrigerant system', 1200000, 30),
+(6, 13, 'AC Condenser Cleaning', 0, 'Removing dust and debris from AC condenser', 1440000, 45),
+(6, 13, 'AC Condenser Repair', 0, 'Fixing leaks or clogs in AC condenser', 2880000, 75),
+(6, 13, 'AC Condenser Replacement', 1, 'Installing new AC condenser', 4320000, 90),
+(6, 13, 'AC System Diagnostics', 0, 'Checking AC performance and detecting issues', 2160000, 60),
+(6, 13, 'AC Vent Cleaning', 0, 'Removing dust from AC vents for better airflow', 1440000, 30),
+(6, 14, 'Air Filter Cleaning', 0, 'Removing dust from air filter', 600000, 15),
+(6, 14, 'Air Filter Replacement', 1, 'Installing new air filter', 960000, 30),
+(6, 14, 'AC Filter Replacement', 1, 'Installing a new air conditioning filter', 1200000, 45),
+(6, 14, 'AC Expansion Valve Replacement', 1, 'Installing new expansion valve', 1400000, 60),
 
-(7, 20, 'Shock Absorber Check', 0, 'Inspecting shock absorbers for leaks', 1200000),
-(7, 20, 'Shock Absorber Replacement', 1, 'Installing new shock absorbers', 4320000),
-(7, 21, 'Control Arm Inspection', 0, 'Checking control arms for wear and damage', 1200000),
-(7, 21, 'Control Arm Replacement', 1, 'Installing new control arms', 4320000),
-(7, 21, 'Performance Control Arm Upgrade', 1, 'Upgrading to reinforced control arms', 2500000),
-(7, 21, 'Hydraulic Power Steering Service', 0, 'Maintaining hydraulic steering system', 1400000),
-(7, 22, 'Tie Rod End Replacement', 1, 'Installing new tie rod ends', 2880000),
-(7, 22, 'Tie Rod Alignment', 0, 'Adjusting tie rods for proper steering', 1680000),
-(7, 22, 'Steering Rack Adjustment', 0, 'Fine-tuning steering rack', 900000),
-(7, 23, 'Suspension Inspection', 0, 'Checking suspension system components', 1440000),
-(7, 23, 'Suspension Repair', 1, 'Fixing worn suspension components', 4800000),
-(7, 23, 'Suspension Lubrication', 0, 'Lubricating suspension components', 960000),
-(7, 23, 'Suspension Bushing Replacement', 1, 'Replacing worn-out suspension bushings', 2880000),
-(7, 23, 'Underbody Rust Prevention', 0, 'Applying rust-proof coating', 1800000),
-(7, 23, 'Sunroof Leak Repair', 0, 'Sealing sunroof leaks', 1200000),
+(7, 20, 'Shock Absorber Check', 0, 'Inspecting shock absorbers for leaks', 1200000, 30),
+(7, 20, 'Shock Absorber Replacement', 1, 'Installing new shock absorbers', 4320000, 90),
+(7, 21, 'Control Arm Inspection', 0, 'Checking control arms for wear and damage', 1200000, 45),
+(7, 21, 'Control Arm Replacement', 1, 'Installing new control arms', 4320000, 90),
+(7, 21, 'Performance Control Arm Upgrade', 1, 'Upgrading to reinforced control arms', 2500000, 75),
+(7, 21, 'Hydraulic Power Steering Service', 0, 'Maintaining hydraulic steering system', 1400000, 60),
+(7, 22, 'Tie Rod End Replacement', 1, 'Installing new tie rod ends', 2880000, 75),
+(7, 22, 'Tie Rod Alignment', 0, 'Adjusting tie rods for proper steering', 1680000, 45),
+(7, 22, 'Steering Rack Adjustment', 0, 'Fine-tuning steering rack', 900000, 30),
+(7, 23, 'Suspension Inspection', 0, 'Checking suspension system components', 1440000, 45),
+(7, 23, 'Suspension Repair', 1, 'Fixing worn suspension components', 4800000, 120),
+(7, 23, 'Suspension Lubrication', 0, 'Lubricating suspension components', 960000, 30),
+(7, 23, 'Suspension Bushing Replacement', 1, 'Replacing worn-out suspension bushings', 2880000, 75),
+(7, 23, 'Underbody Rust Prevention', 0, 'Applying rust-proof coating', 1800000, 60),
+(7, 23, 'Sunroof Leak Repair', 0, 'Sealing sunroof leaks', 1200000, 45),
 
-(8, 15, 'Fuel Pump Cleaning', 0, 'Cleaning fuel pump for better efficiency', 1680000),
-(8, 15, 'Fuel Pump Repair', 0, 'Fixing fuel pump issues', 2400000),
-(8, 15, 'Fuel Pump Replacement', 1, 'Installing new fuel pump', 3600000),
-(8, 15, 'Fuel Rail Cleaning', 0, 'Removing dirt from fuel rails', 900000),
-(8, 16, 'Fuel Filter Replacement', 1, 'Replacing clogged fuel filter', 1200000),
-(8, 17, 'Fuel Injection Tuning', 0, 'Adjusting fuel injection for better efficiency', 2880000),
-(8, 17, 'Fuel Injection Cleaning', 0, 'Cleaning deposits from injectors', 2400000),
-(8, 17, 'Fuel Injector Repair', 0, 'Fixing faulty fuel injectors', 2880000),
-(8, 17, 'Fuel Injector Calibration', 0, 'Adjusting injector spray pattern', 2400000),
-(8, 17, 'Injector Leak Test', 0, 'Testing for fuel injector leaks', 700000),
-(8, 17, 'High-Flow Fuel Injector Install', 1, 'Installing performance fuel injectors', 3000000),
-(8, 17, 'Throttle Body Cleaning', 0, 'Cleaning throttle body for smooth air intake', 800000);
+(8, 15, 'Fuel Pump Cleaning', 0, 'Cleaning fuel pump for better efficiency', 1680000, 45),
+(8, 15, 'Fuel Pump Repair', 0, 'Fixing fuel pump issues', 2400000, 60),
+(8, 15, 'Fuel Pump Replacement', 1, 'Installing new fuel pump', 3600000, 90),
+(8, 15, 'Fuel Rail Cleaning', 0, 'Removing dirt from fuel rails', 900000, 30),
+(8, 16, 'Fuel Filter Replacement', 1, 'Replacing clogged fuel filter', 1200000, 45),
+(8, 17, 'Fuel Injection Tuning', 0, 'Adjusting fuel injection for better efficiency', 2880000, 75),
+(8, 17, 'Fuel Injection Cleaning', 0, 'Cleaning deposits from injectors', 2400000, 60),
+(8, 17, 'Fuel Injector Repair', 0, 'Fixing faulty fuel injectors', 2880000, 75),
+(8, 17, 'Fuel Injector Calibration', 0, 'Adjusting injector spray pattern', 2400000, 60),
+(8, 17, 'Injector Leak Test', 0, 'Testing for fuel injector leaks', 700000, 30),
+(8, 17, 'High-Flow Fuel Injector Install', 1, 'Installing performance fuel injectors', 3000000, 90),
+(8, 17, 'Throttle Body Cleaning', 0, 'Cleaning throttle body for smooth air intake', 800000, 30);
+GO
 
-INSERT INTO AccessoryInfo(ServiceID, AccessoryName, Description)
-VALUES
+INSERT INTO AccessoryInfo(ServiceID, AccessoryName, Description) VALUES
 (1, 'Tire Set', 'Replace with new tires'),
 (4, 'High Performance Tires', 'Upgrade to high-performance tires'),
 (5, 'Off-road Tires', 'Specialized tires for off-road use'),
@@ -627,17 +669,18 @@ INSERT INTO [Car](UserID, CarName, Brand, RegistrationNumber, [Year], CarImage, 
 (2, 'Car 2', 'Honda', '654321', 2015, 'https://akm-img-a-in.tosshub.com/indiatoday/styles/medium_crop_simple/public/2024-11/1_4.jpg', 'Maintaining'),
 (2, 'Car 3', 'Ford', '987654', 2018, 'https://images.dealer.com/autodata/us/640/2020/USD00FOS372A0/USC80FOS371A01300.jpg', 'Active'),
 (2, 'Car 4', 'BMW', '125478', 2020, '', 'Active');
-
-
+GO
 
 INSERT INTO [Order] (UserID, CarID, BranchID, PartID, ServiceID, QuantityUsed)
 VALUES (2, 1, 1, 8, 114, 2);
+GO
 
---ENABLE TRIGGER DeleteOrder ON [Order];
---GO
 
---DELETE FROM [Order];
---GO
+ENABLE TRIGGER DeleteOrder ON [Order];
+GO
 
---DISABLE TRIGGER DeleteOrder ON [Order]
---GO
+DELETE FROM [Order] WHERE UserID = 2 AND CarID = 1;
+GO
+
+DISABLE TRIGGER DeleteOrder ON [Order]
+GO

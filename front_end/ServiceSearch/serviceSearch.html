@@ -5,15 +5,11 @@
         <meta
             name="viewport"
             content="width=device-width, initial-scale=1.0" />
-        <title>Service Detail</title>
-        <link
-            rel="stylesheet"
-            href="style.css" />
-        <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-            rel="stylesheet" />
+        <title>Search results</title>
     </head>
-
+    <link
+        rel="stylesheet"
+        href="style.css" />
     <body>
         <!-- Header -->
         <header>
@@ -21,26 +17,18 @@
         </header>
         <!-- End header -->
 
-        <!-- Service description -->
-        <section class="service-info">
-            <div class="info">
-                <h1 class="info-name">(placeholder type name)</h1>
-                <h3 class="info-desc">(placeholder type description)</h3>
-            </div>
-        </section>
-        <!-- End service description -->
+        <!-- Search results -->
+        <section class="search-results">
+            <h1 class="results-title">Search results:</h1>
+            <h1 class="results-count">There are x results matching keyword y</h1>
 
-        <!-- Service detail -->
-        <section class="service-detail">
-            <h1 class="detail-title">Service detail:</h1>
-
-            <div class="detail">
-                <table class="detail-table">
+            <div class="results">
+                <table class="results-table">
                     <thead style="text-align: center">
-                        <th>Service name</th>
-                        <th>Service description</th>
-                        <th>Estimated time (mins)</th>
-                        <th>Service price</th>
+                        <th style="width: 25%">Service name</th>
+                        <th style="width: 40%">Service description</th>
+                        <th style="width: 20%">Estimated time (mins)</th>
+                        <th style="width: 15%">Service price</th>
                     </thead>
                     <tbody>
                         <!-- Content from js query -->
@@ -48,15 +36,23 @@
                 </table>
             </div>
 
-            <div class="reservation">
+            <div class="reservation go-carlist">
                 <a
                     href="../CarList/CarList.html"
                     class="button-reservation">
-                    <h4>Reservation Request</h4>
+                    <h3>Reservation Request</h3>
+                </a>
+            </div>
+
+            <div class="reservation back-home hidden">
+                <a
+                    href="/front_end/HomePage/HomePage.html"
+                    class="button-reservation">
+                    <h3>Back to Homepage</h3>
                 </a>
             </div>
         </section>
-        <!-- End service detail -->
+        <!-- End search results -->
 
         <!-- Footer -->
         <footer>
@@ -71,7 +67,6 @@
             integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
             crossorigin="anonymous"
             referrerpolicy="no-referrer"></script>
-
         <script>
             fetch('../header/header.html')
                 .then((response) => response.text())

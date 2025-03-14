@@ -1,58 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+        <link
+            rel="stylesheet"
+            href="/front_end/header/style.css" />
+    </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
-  <link rel="stylesheet" href="/front_end/header/style.css">
+    <body>
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <a href="/front_end/HomePage/HomePage.html">
+                    <img
+                        src="/resource/logo.jpg"
+                        alt="Logo" />
+                </a>
+            </div>
+            <nav class="navbar">
+                <ul>
+                    <li><a href="/front_end/HomePage/HomePage.html">Home</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="/front_end/ServiceTypes/serviceTypes.html">Services</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+                <div class="search-bar">
+                    <input
+                        type="text"
+                        placeholder="Search service..." />
+                </div>
+            </nav>
 
-</head>
+            <div class="guest">
+                <ul>
+                    <li><a href="../Login/Login.html">Sign in</a></li>
+                    <li><a href="../Register/Register.html">Sign up</a></li>
+                </ul>
+            </div>
+            <div class="user-login">
+                <div class="user-name">
+                    <div>
+                        <i class="fa-solid fa-user user-icon"></i>
+                        <p id="name"></p>
+                    </div>
+                    <button class="button"><i class="fas fa-chevron-down fa-sm fa-user"></i></button>
+                </div>
+                <ul class="user-info">
+                    <li id="profile"><a>View profile</a></li>
+                    <li id="dashboard"><a>Dashboard</a></li>
+                    <li id="my-cars"><a>My Cars</a></li>
+                    <li id="my-orders"><a>My Orders</a></li>
+                    <li id="sign-out"><a>Sign out</a></li>
+                </ul>
+            </div>
+        </header>
+        <!-- End header -->
 
-<body>
-  <header class="header">
-    <div class="logo">
-      <a href="http://127.0.0.1:5500/front_end/HomePage/HomePage.html">
-        <img src="/resource/logo.jpg" alt="Logo">
-      </a>
-    </div>
-    <nav class="navbar">
-      <ul>
-        <li><a href="/front_end/HomePage/HomePage.html">Home</a></li>
-        <li><a href="#">About</a></li>
-        <li><a href="/front_end/ServiceTypes/serviceTypes.html">Services</a></li>
-        <li><a href="#">Contact</a></li>
-      </ul>
-    </nav>
-
-    <div class="guest">
-      <ul>
-        <li><a href="../Login/Login.html">Sign in</a></li>
-        <li><a href="../Register/Register.html">Sign up</a></li>
-      </ul>
-    </div>
-    <div class="user-login">
-      <div class="user-name">
-        <div>
-          <i class="fa-solid fa-user user-icon"></i>
-          <p id="name"></p>
-        </div>
-        <button class="button"> <i class="fas fa-chevron-down fa-sm fa-user"></i></button>
-      </div>
-      <ul class="user-info">
-        <li id="profile"><a>View profile</a></li>
-        <li id="dashboard"><a>Dashboard</a></li>
-        <li id="my-cars"><a>My Cars</a></li>
-        <li id="my-orders"><a>My Orders</a></li>
-        <li id="sign-out"><a>Sign out</a></li>
-      </ul>
-    </div>
-  </header>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
-    integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <script src="../header/script.js"></script>
-</body>
-
+        <!-- Scripts -->
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+            integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"></script>
+        <script src="../header/script.js"></script>
+        <!-- End scripts -->
+    </body>
 </html>
