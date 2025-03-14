@@ -17,6 +17,7 @@ let chosenServicePartID = null; // chosen row data
 let chosenServiceName = null; // chosen row data
 let chosenServiceDescription = null; // chosen row data
 let chosenServicePrice = null; // chosen row data
+let chosenEstimatedTime = null; // chosen row data
 let oldServiceData = []; // store old render table
 let maxServiceID; // max current serviceID
 let maxServiceTypeID; // max current serviceTypeID
@@ -192,6 +193,24 @@ function setStrValue(element, globalVar, defaultValue) {
     return globalVar;
 }
 
+// Check name exist
+async function isServiceNameExists(serviceName) {
+    try {
+        const response = await fetch('http://localhost:3000/getServiceListAll', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' }
+        });
+        const result = await response.json();
+        const exists = result.some((service) => {
+            return service.ServiceName.toLowerCase() === serviceName.toLowerCase();
+        });
+        return exists;
+    } catch (error) {
+        console.error('Error checking service name:', error);
+        return false;
+    }
+}
+
 function showUpdatePopup(element) {
     chosenServiceID = +element.dataset.serviceid; // get dataset from self
     popupModify.querySelector('h2').textContent = 'Update Service'; // set title
@@ -205,6 +224,7 @@ function showUpdatePopup(element) {
     chosenServiceName = data[3].children[0].value = element.dataset.servicename;
     chosenServiceDescription = data[4].children[0].value = element.dataset.servicedescription;
     chosenServicePrice = data[5].children[0].value = element.dataset.serviceprice;
+    chosenEstimatedTime = data[6].children[0].value = element.dataset.estimatedtime;
 
     // listen change
     const idSelect = data[0].children[0];
@@ -257,6 +277,10 @@ function showUpdatePopup(element) {
         chosenServicePrice = setNumValue(data[5].children[0], chosenServicePrice, 1000);
     });
 
+    data[6].children[0].addEventListener('change', () => {
+        chosenEstimatedTime = setNumValue(data[6].children[0], chosenEstimatedTime, 15);
+    });
+
     popupModify.classList.remove('hidden');
     overlay.classList.remove('hidden');
 }
@@ -274,9 +298,15 @@ function hideUpdatePopup() {
     overlay.classList.add('hidden');
 }
 
-function confirmUpdatePopup() {
+async function confirmUpdatePopup() {
     if (chosenServiceID) {
-        updateService(chosenServiceID, chosenServiceTypeID, chosenServicePartID, chosenServiceName, chosenServiceDescription, chosenServicePrice);
+        // Kiểm tra xem ServiceName đã tồn tại chưa (trừ khi tên không thay đổi)
+        if (chosenServiceName !== document.querySelector(`[data-serviceid="${chosenServiceID}"]`).dataset.servicename && (await isServiceNameExists(chosenServiceName))) {
+            alert('Service Name already exists. Please enter a different name.');
+            return; // Không thực hiện update nếu tên đã tồn tại
+        }
+
+        updateService(chosenServiceID, chosenServiceTypeID, chosenServicePartID, chosenServiceName, chosenServiceDescription, chosenServicePrice, chosenEstimatedTime);
     }
 
     // reset display data
@@ -291,7 +321,7 @@ function confirmUpdatePopup() {
     overlay.classList.add('hidden');
 }
 
-async function updateService(ServiceID, ServiceTypeID, ServicePartID, ServiceName, ServiceDescription, ServicePrice) {
+async function updateService(ServiceID, ServiceTypeID, ServicePartID, ServiceName, ServiceDescription, ServicePrice, EstimatedTime) {
     try {
         const response = await fetch('http://localhost:3000/updateServiceById', {
             method: 'POST',
@@ -302,7 +332,8 @@ async function updateService(ServiceID, ServiceTypeID, ServicePartID, ServiceNam
                 partID: ServicePartID,
                 name: ServiceName,
                 description: ServiceDescription,
-                price: ServicePrice
+                price: ServicePrice,
+                estTime: EstimatedTime
             })
         });
     } catch (err) {
@@ -324,6 +355,7 @@ function showAddPopup() {
     chosenServiceName = data[3].children[0].value = 'Unnamed Service';
     chosenServiceDescription = data[4].children[0].value = 'No Description';
     chosenServicePrice = data[5].children[0].value = 1000;
+    chosenEstimatedTime = data[6].children[0].value = 15;
 
     // listen change
     const typeSelect = data[1].children[0];
@@ -382,6 +414,16 @@ function showAddPopup() {
         chosenServicePrice = setNumValue(data[5].children[0], chosenServicePrice, 1000);
     });
 
+    data[6].children[0].addEventListener('change', () => {
+        chosenEstimatedTime = setNumValue(data[6].children[0], chosenEstimatedTime, 15);
+    });
+    data[6].children[0].addEventListener('focus', () => {
+        data[6].children[0].value = '';
+    });
+    data[6].children[0].addEventListener('blur', () => {
+        chosenEstimatedTime = setNumValue(data[6].children[0], chosenEstimatedTime, 15);
+    });
+
     popupModify.classList.remove('hidden');
     overlay.classList.remove('hidden');
 }
@@ -392,7 +434,7 @@ function hideAddPopup() {
         datum.children[0].value = '';
     });
     data[0].children[0].remove(0); // reset variable data
-    chosenServiceID = chosenServiceTypeID = chosenServicePartID = chosenServiceName = chosenServiceDescription = chosenServicePrice = null; // reset variable data
+    chosenServiceID = chosenServiceTypeID = chosenServicePartID = chosenServiceName = chosenServiceDescription = chosenServicePrice = chosenEstimatedTime = null; // reset variable data
     popupModify.querySelector('.btn-yes').removeEventListener('click', confirmAddPopup); // reset yes button
     popupModify.querySelector('.btn-no').removeEventListener('click', hideAddPopup); // reset no button
 
@@ -400,9 +442,15 @@ function hideAddPopup() {
     overlay.classList.add('hidden');
 }
 
-function confirmAddPopup() {
+async function confirmAddPopup() {
     if (chosenServiceTypeID) {
-        addService(chosenServiceTypeID, chosenServicePartID, chosenServiceName, chosenServiceDescription, chosenServicePrice);
+        const exists = await isServiceNameExists(chosenServiceName);
+        if (exists) {
+            alert('Service Name already exists. Please enter a different name.');
+            return;
+        }
+
+        addService(chosenServiceTypeID, chosenServicePartID, chosenServiceName, chosenServiceDescription, chosenServicePrice, chosenEstimatedTime);
     }
 
     // reset display data
@@ -410,7 +458,7 @@ function confirmAddPopup() {
         datum.children[0].value = '';
     });
     data[0].children[0].remove(0);
-    chosenServiceID = chosenServiceTypeID = chosenServicePartID = chosenServiceName = chosenServiceDescription = chosenServicePrice = null; // reset variable data
+    chosenServiceID = chosenServiceTypeID = chosenServicePartID = chosenServiceName = chosenServiceDescription = chosenServicePrice = chosenEstimatedTime = null; // reset variable data
     popupModify.querySelector('.btn-yes').removeEventListener('click', confirmAddPopup); // reset yes button
     popupModify.querySelector('.btn-no').removeEventListener('click', hideAddPopup); // reset no button
 
@@ -418,7 +466,7 @@ function confirmAddPopup() {
     overlay.classList.add('hidden');
 }
 
-async function addService(ServiceTypeID, ServicePartID, ServiceName, ServiceDescription, ServicePrice) {
+async function addService(ServiceTypeID, ServicePartID, ServiceName, ServiceDescription, ServicePrice, EstimatedTime) {
     try {
         const response = await fetch('http://localhost:3000/addService', {
             method: 'POST',
@@ -428,7 +476,8 @@ async function addService(ServiceTypeID, ServicePartID, ServiceName, ServiceDesc
                 partID: ServicePartID,
                 name: ServiceName,
                 description: ServiceDescription,
-                price: ServicePrice
+                price: ServicePrice,
+                estTime: EstimatedTime
             })
         });
     } catch (err) {
@@ -449,6 +498,7 @@ function renderTable(result) {
                             <td style="width: 10%; text-align: left">${service.ServiceName}</td>
                             <td style="width: 18%; text-align: left"">${service.ServiceDescription}</td>
                             <td style="width: 6%">${service.ServicePrice} ₫</td>
+                            <td style="width: 6%">${service.EstimatedTime}</td>
                             <td style="width: 10%" class="buttons">
                                 <button class="btn-delete" onclick="showDeletePopup(this);" 
                                         data-serviceid="${service.ServiceID}">
