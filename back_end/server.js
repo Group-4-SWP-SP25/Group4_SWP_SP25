@@ -137,7 +137,7 @@ const {
 } = require("./myModule/controller/message/message.js");
 
 // calendar
-const { getEvents_api } = require("./myModule/controller/calendar/calendar.js");
+const { getEvents_api, addEvent_apis } = require("./myModule/controller/calendar/calendar.js");
 
 // ----------------------------------------------------------
 // CREATE API

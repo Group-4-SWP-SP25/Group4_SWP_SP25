@@ -1,6 +1,6 @@
 const { SessionsClient } = require("@google-cloud/dialogflow");
 const { DateTime } = require("mssql");
-process.env.GOOGLE_APPLICATION_CREDENTIALS = "../../../service-account.json"
+// process.env.GOOGLE_APPLICATION_CREDENTIALS = "../../../service-account.json"
 
 
 const projectID = "gen-lang-client-0667635865";
