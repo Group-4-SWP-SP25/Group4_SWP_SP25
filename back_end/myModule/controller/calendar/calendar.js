@@ -41,14 +41,14 @@ async function getAccessToken() {
     return accessToken;
 }
 
-async function addEvent() {
+async function addEvent(summary, start, end, description) {
     try {
         const accessToken = await getAccessToken();
-
         const event = {
-            summary: "Cuộc họp quan trọng",
-            start: { dateTime: "2025-03-10T10:00:00Z", timeZone: "Asia/Ho_Chi_Minh" },
-            end: { dateTime: "2025-03-10T11:00:00Z", timeZone: "Asia/Ho_Chi_Minh" },
+            summary: summary,
+            start: { dateTime: start, timeZone: "Asia/Ho_Chi_Minh" },
+            end: { dateTime: end, timeZone: "Asia/Ho_Chi_Minh" },
+            description: description,
         };
 
         const response = await axios.post(
@@ -57,9 +57,10 @@ async function addEvent() {
             { headers: { Authorization: `Bearer ${accessToken}` } }
         );
 
-        console.log("Sự kiện đã được thêm:", response.data);
+        return response.data;
     } catch (error) {
-        console.error("Lỗi khi thêm sự kiện:", error.response.data);
+        console.error("Lỗi khi thêm sự kiện:", error);
+        return null;
     }
 }
 
@@ -103,6 +104,17 @@ async function deleteEvent(eventId) {
     }
 }
 
+async function addEvent_apis(req, res) {
+    const { employeeID, customerID, startTime, endTime, description } = req.body;
+    const summary = `Employee-${employeeID}-Customer-${customerID}`;
+    const event = await addEvent(summary, startTime, endTime, description);
+    if (event == null) {
+        res.status(500).json({ message: "Add event failed" });
+    } else {
+        res.status(200).json({ message: "Add event successfully", event: event });
+    }
+}
+
 async function getEvents_api(req, res) {
     const { startDate, endDate } = req.body
     const events = await getEvents(startDate, endDate);
@@ -128,5 +140,6 @@ async function getEvents_api(req, res) {
 
 
 module.exports = {
-    getEvents_api
+    getEvents_api,
+    addEvent_apis
 }

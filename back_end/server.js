@@ -161,6 +161,7 @@ app.post("/TopService", authenticateADMIN, TopService);
 app.post("/TopRevenueByMonth", authenticateADMIN, TopRevenueByMonth);
 app.post("/TopProducts", authenticateADMIN, TopProducts);
 app.post("/Calendar/GetEvents", authenticateADMIN, getEvents_api);
+app.post("/Calendar/AddEvent", authenticateADMIN, addEvent_apis);
 app.post("/Employee/getEmployees", authenticateADMIN, getEmployees);
 // app.post('/TotalRevenueToday', authenticateADMIN, TotalRevenueToday);
 // app.post('/TotalOrderToday', authenticateADMIN, TotalOrderToday);
