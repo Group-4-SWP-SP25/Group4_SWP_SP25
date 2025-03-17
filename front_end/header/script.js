@@ -30,7 +30,6 @@ $(document).ready(async function () {
       break;
   }
   $("#profile").on("click", function () {
-    
     window.location.href = "/front_end/UserProfile/UserProfile.html";
   });
   $("#sign-out").on("click", function () {
@@ -44,6 +43,10 @@ $(document).ready(async function () {
 
   $("#my-cars").on("click", function () {
     window.location.href = "/front_end/CarList/CarList.html";
+  });
+
+  $("#payment-invoice").on("click", function () {
+    window.location.href = "/front_end/Payment/Bill/BillList/billList.html";
   });
 
   $("#my-orders").on("click", function () {

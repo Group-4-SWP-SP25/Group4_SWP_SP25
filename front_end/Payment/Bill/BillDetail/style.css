@@ -1,0 +1,140 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #000;
+  margin-top: 100px;
+  color: #fff;
+}
+
+body.no-scroll {
+  overflow: hidden;
+}
+
+/* Breadcrumb */
+.bread-crumb {
+  margin: auto;
+  padding: auto;
+  width: 80%;
+}
+.breadcrumb {
+  margin: 0;
+  font-size: 25px;
+  padding: 25px 0;
+  border-radius: 0;
+  font-weight: 400;
+  line-height: 24px;
+  background-color: transparent;
+  width: 100%;
+  text-align: left;
+}
+
+.breadcrumb li > a {
+  color: #fff;
+}
+
+.breadcrumb li .mr_lr svg {
+  width: 10px;
+  height: 10px;
+  margin-top: -2px;
+}
+
+.breadcrumb li span {
+  display: inline;
+  color: #fff;
+}
+
+.breadcrumb li a:hover span,
+.breadcrumb li.active span,
+.breadcrumb li strong span {
+  color: #007bff;
+  font-weight: 700;
+}
+
+/* Car info */
+.my-bill {
+  width: 80%;
+  margin: 0 auto;
+  position: relative;
+}
+
+.car-info {
+  border-bottom: 1px solid #007bff;
+  position: absolute;
+  top: -75px;
+  right: 0;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  padding-bottom: 20px;
+}
+
+.car-info h1 {
+  font-size: 20px;
+}
+
+.car-info img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+/* Bill info */
+.bill-list h1 {
+  font-size: 25px;
+  margin: 20px 0;
+  flex-basis: 100%;
+}
+
+.bill-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding-bottom: 30px;
+  border-bottom: 1px solid #007bff;
+}
+
+.bill-list .bill {
+  width: calc(25% - 40px);
+  border: 1px solid rgba(195, 202, 216, 0.5);
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+}
+
+.bill-list .bill img {
+  width: 100%;
+  height: 100%;
+  border-radius: 5px 5px 0 0;
+}
+
+.bill .bill-info {
+  padding: 0 10px;
+  background-color: #007bff;
+  border-radius: 0 0 5px 5px;
+  flex-grow: 1;
+}
+
+.bill .bill-info table tr td {
+  padding: 5px 0;
+  font-size: 15px;
+  color: #fff;
+  &:first-child {
+    font-weight: 700;
+  }
+  &:last-child {
+    text-align: right;
+  }
+}
+
+.my-bill .total {
+  display: flex;
+  justify-content: flex-end;
+  padding: 20px 0;
+  h1 {
+    font-size: 25px;
+  }
+}

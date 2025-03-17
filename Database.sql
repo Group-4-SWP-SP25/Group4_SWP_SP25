@@ -165,6 +165,7 @@ GO
 CREATE TABLE Payment(
 	UserID INT FOREIGN KEY REFERENCES [User](UserID),
 	PaymentID INT NOT NULL,
+	CarID INT NOT NULL FOREIGN KEY REFERENCES Car(CarID),
 	PaymentMethod VARCHAR(200),
 	PaymentDate DATETIME DEFAULT CURRENT_TIMESTAMP,
 	Amount FLOAT NOT NULL,
@@ -175,13 +176,14 @@ GO
 CREATE TABLE Bill(
 	UserID INT,
 	PaymentID INT,
-	CarID INT NOT NULL FOREIGN KEY REFERENCES Car(CarID),
     PartID INT NOT NULL FOREIGN KEY REFERENCES PartInfo(PartID),
 	ServiceID INT FOREIGN KEY REFERENCES [Service](ServiceID),
 	BranchID INT FOREIGN KEY REFERENCES Branch(BranchID),
     QuantityUsed INT NOT NULL,
+	TotalPrice FLOAT NOT NULL,
+	OrderDate DATETIME NOT NULL,
 	CONSTRAINT fk_Bills FOREIGN KEY (UserID, PaymentID) REFERENCES Payment(UserID, PaymentID),
-	CONSTRAINT pk_Bills PRIMARY KEY (UserID, PaymentID, CarID, PartID, ServiceID)
+	CONSTRAINT pk_Bills PRIMARY KEY (UserID, PaymentID, PartID, ServiceID)
 );
 GO
 
@@ -347,10 +349,11 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
-    INSERT INTO Payment(PaymentID, UserID, PaymentMethod, Amount)
+    INSERT INTO Payment(PaymentID, UserID, CarID, PaymentMethod, Amount)
     SELECT
         COALESCE((SELECT MAX(p.PaymentID) FROM Payment p WHERE p.UserID = i.UserID), 0) + 1,
         i.UserID,
+		i.CarID,
         i.PaymentMethod,
         i.Amount
     FROM inserted i;
