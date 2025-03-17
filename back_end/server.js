@@ -46,12 +46,12 @@ const TotalProductSold = require("./myModule/database/SaleReport/TotalProductSol
 const TotalNewCustomer = require("./myModule/database/SaleReport/TotalNewCustomer.js");
 const TopService = require("./myModule/database/SaleReport/TopService.js");
 const TopRevenueByMonth = require("./myModule/database/SaleReport/TopRevenueByMonth.js");
-const TopProducts=require("./myModule/database/SaleReport/TopProducts.js");
-const TotalQuantity=require("./myModule/database/ProductManagement/TotalQuantity.js");  
-const ProductOverview=require("./myModule/database/ProductManagement/ProductOverview.js");
-const DeleteProduct= require("./myModule/database/ProductManagement/DeleteProduct.js");
-const UpdateProduct= require("./myModule/database/ProductManagement/UpdateProduct.js");
-const CompareTotalProduct= require("./myModule/database/ProductManagement/CompareTotalProduct.js");
+const TopProducts = require("./myModule/database/SaleReport/TopProducts.js");
+const TotalQuantity = require("./myModule/database/ProductManagement/TotalQuantity.js");
+const ProductOverview = require("./myModule/database/ProductManagement/ProductOverview.js");
+const DeleteProduct = require("./myModule/database/ProductManagement/DeleteProduct.js");
+const UpdateProduct = require("./myModule/database/ProductManagement/UpdateProduct.js");
+const CompareTotalProduct = require("./myModule/database/ProductManagement/CompareTotalProduct.js");
 // const connectDB = require('./myModule/database/connectDB.js');
 // const { authenticateJWT, authenticateADMIN } = require('./myModule/Utils/JWT.js');
 // const { GetUserInfo, GetUserInfo_Admin } = require('./myModule/database/user/getUserInfo.js');
@@ -105,6 +105,7 @@ const getCarPartsApi = require("./myModule/controller/car/carParts.js");
 const updateCarInfoApi = require("./myModule/controller/car/updateCarInfo.js");
 const createNewCarApi = require("./myModule/controller/car/createNewCar.js");
 const deleteCarApi = require('./myModule/controller/car/deleteCar.js')
+const UpdateCarPartApi = require('./myModule/controller/car/updateCarPartApi.js')
 
 // car part
 const carPartInfoInCar = require("./myModule/controller/carPart/carPartInfoInCar.js");
@@ -178,10 +179,10 @@ app.post("/Calendar/GetEvents", authenticateADMIN, getEvents_api);
 app.post("/Calendar/AddEvent", authenticateADMIN, addEvent_apis);
 app.post("/Employee/getEmployees", authenticateADMIN, getEmployees);
 app.post("/TotalQuantity", authenticateADMIN, TotalQuantity);
-app.post("/ProductOverview",authenticateADMIN, ProductOverview);
-app.delete("/DeleteProduct",authenticateADMIN,DeleteProduct );
-app.post("/UpdateProduct",authenticateADMIN,UpdateProduct );
-app.post("/CompareTotalProduct",authenticateADMIN,CompareTotalProduct );
+app.post("/ProductOverview", authenticateADMIN, ProductOverview);
+app.delete("/DeleteProduct", authenticateADMIN, DeleteProduct);
+app.post("/UpdateProduct", authenticateADMIN, UpdateProduct);
+app.post("/CompareTotalProduct", authenticateADMIN, CompareTotalProduct);
 // app.post('/TotalRevenueToday', authenticateADMIN, TotalRevenueToday);
 // app.post('/TotalOrderToday', authenticateADMIN, TotalOrderToday);
 // app.post('/TotalProductSold', authenticateADMIN, TotalProductSold);
@@ -231,6 +232,7 @@ app.post("/getCarParts", getCarPartsApi);
 app.post("/updateCarInfo", updateCarInfoApi);
 app.post("/createNewCar", authenticateADMIN, createNewCarApi);
 app.post('/deleteCar', authenticateADMIN, deleteCarApi)
+app.post('/updateCarPart', authenticateADMIN, UpdateCarPartApi)
 
 // car system
 app.post("/carSystemInfo", carSystemInfo);

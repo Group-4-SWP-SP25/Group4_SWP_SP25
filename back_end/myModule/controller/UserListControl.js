@@ -8,8 +8,8 @@ const getUserList = async (req, res) => {
 
 const getTotalUserCount = async (req, res) => {
     const { searchString } = req.body;
-    const totalUserCount = await TotalUserCount(searchString);
-    res.status(200).json({ count: totalUserCount });
+    const list = await TotalUserCount(searchString);
+    res.status(200).json({ list: list });
 }
 
 module.exports = {
