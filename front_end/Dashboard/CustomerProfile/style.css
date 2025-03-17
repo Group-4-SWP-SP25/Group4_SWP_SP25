@@ -233,13 +233,15 @@ body {
     text-align: center;
 }
 
-.btn-delete {
+.btn-delete,
+.btn-cancel {
     background-color: #f8d7da;
     color: #d9534f;
     width: 200px;
 }
 
-.btn-delete:hover {
+.btn-delete:hover,
+.btn-cancel:hover {
     background-color: #d9534f;
     color: white;
 }

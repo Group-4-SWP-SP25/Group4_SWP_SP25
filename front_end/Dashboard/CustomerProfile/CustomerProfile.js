@@ -62,7 +62,7 @@ async function GetUserInfo() {
 
 // Message button
 document.querySelector('.btn-message').addEventListener('click', () => {
-  window.location.href = `http://localhost:5500/front_end/Dashboard/Message/Message.html?ID=${id}&Name=${document.getElementById("user-name").innerHTML}`;
+  window.location.href = `/front_end/Dashboard/Message/Message.html?ID=${id}&Name=${document.getElementById("user-name").innerHTML}`;
 });
 
 
@@ -189,7 +189,7 @@ nextCar.addEventListener('click', () => {
 
 // edit car
 document.querySelector('.edit-car-btn').addEventListener('click', () => {
-  window.location.href = `http://localhost:5500/front_end/Dashboard/CarDetail/CarDetail.html?ID=${id}&name=${document.getElementById("user-name").innerHTML}&carID=${carList[currentCar].CarID}`;
+  window.location.href = `/front_end/Dashboard/CarDetail/CarDetail.html?ID=${id}&name=${document.getElementById("user-name").innerHTML}&carID=${carList[currentCar].CarID}`;
 })
 
 // add car
