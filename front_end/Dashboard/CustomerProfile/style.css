@@ -282,6 +282,10 @@ body {
     object-position: center;
 }
 
+#user-avatar:hover {
+    cursor: pointer;
+}
+
 #user-name {
     font-size: 34px;
     margin: 0;
@@ -313,7 +317,7 @@ body {
 
 .container .car-info {
     display: flex;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
     /* padding: 20px; */
     width: 100%;
@@ -349,7 +353,7 @@ body {
     height: 75%;
     width: 100%;
     display: flex;
-    justify-content: start;
+    justify-content: center;
     align-items: center;
     flex-direction: column;
     /* padding: 20px; */
@@ -358,8 +362,9 @@ body {
 .car-info-footer {
     height: 5%px;
     width: 100%;
-    display: flex;
+    display: none;
     justify-content: space-between;
+    position: relative;
     align-items: center;
 }
 
@@ -367,6 +372,16 @@ body {
 .next-car {
     height: 100%;
     padding: 5px 10px;
+    border-radius: 5%;
+    position: absolute;
+}
+
+.previous-car {
+    left: 0;
+}
+
+.next-car {
+    right: 0;
 }
 
 .previous-car:hover,
@@ -382,6 +397,7 @@ body {
     height: 100%;
     background-color: #333;
     gap: 10px;
+    margin: auto;
 }
 
 .edit-car-btn:hover {
@@ -390,7 +406,7 @@ body {
 }
 
 .car-info-image {
-    display: flex;
+    display: none;
     justify-content: center;
     align-items: center;
     width: 100%;
@@ -411,9 +427,14 @@ body {
 }
 
 .car-info-detail {
+    display: none;
     width: 100%;
     padding-left: 30px;
     padding-right: 30px;
+}
+
+.zero-car {
+    display: none;
 }
 
 .car-info-detail li {
@@ -506,7 +527,7 @@ table tr {
     height: 40px;
 }
 
-table tr:hover {
+table tbody tr:hover {
     background-color: #222;
 }
 
@@ -520,4 +541,23 @@ table tr:hover {
 
 .cancel {
     color: #dc3545;
+}
+
+.loader {
+    border: 2px solid #5e5e5e;
+    border-top: 2px solid #3498db;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    animation: spin 0.5s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }

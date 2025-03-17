@@ -101,6 +101,10 @@ const searchService = require("./myModule/database/service/searchService.js");
 // car
 const carInfo = require("./myModule/controller/car/carInfo.js");
 const carList = require("./myModule/controller/car/carList.js");
+const getCarPartsApi = require("./myModule/controller/car/carParts.js");
+const updateCarInfoApi = require("./myModule/controller/car/updateCarInfo.js");
+const createNewCarApi = require("./myModule/controller/car/createNewCar.js");
+const deleteCarApi = require('./myModule/controller/car/deleteCar.js')
 
 // car part
 const carPartInfoInCar = require("./myModule/controller/carPart/carPartInfoInCar.js");
@@ -223,6 +227,10 @@ app.post("/searchService", searchService);
 // car
 app.post("/carInfo", carInfo);
 app.post("/carList", carList);
+app.post("/getCarParts", getCarPartsApi);
+app.post("/updateCarInfo", updateCarInfoApi);
+app.post("/createNewCar", authenticateADMIN, createNewCarApi);
+app.post('/deleteCar', authenticateADMIN, deleteCarApi)
 
 // car system
 app.post("/carSystemInfo", carSystemInfo);

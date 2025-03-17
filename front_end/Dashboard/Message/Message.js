@@ -1,3 +1,7 @@
+const urlParams = new URLSearchParams(window.location.search);
+const url_id = urlParams.get("ID");
+const url_name = urlParams.get("Name");
+
 const body = document.getElementById('message-right-body');
 const messageInput = document.getElementById('message-input');
 const userList = document.getElementById('message-item-list');
@@ -11,14 +15,29 @@ const intervals = []
 
 window.onload = async () => {
     // left 
-    GetList();
+    await GetList();
 
     // right
     body.innerHTML = "";
     firstIndex = 0;
     autoResize(messageInput);
 
-    loadMessages();
+    if (url_id != null) {
+        let item = userList.querySelector(`div[message-item-id="${url_id}"]`)
+        if (item == null) {
+            // not exist
+            AddUser(url_id, url_name, '')
+            switchUser(url_id, url_name)
+            MoveUserToTop(url_id, null);
+        } else {
+            // exist
+            switchUser(url_id, url_name)
+            MoveUserToTop(url_id, null);
+        }
+    } else {
+        loadMessages();
+    }
+
 }
 
 // click send message
