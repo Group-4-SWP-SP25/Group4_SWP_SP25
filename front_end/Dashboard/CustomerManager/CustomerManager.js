@@ -45,7 +45,7 @@ function addRow(user) {
     // Add event listener for the "View Details" button
     const detailsButton = newRow.querySelector('.details-btn');
     detailsButton.addEventListener('click', () => {
-        window.location.href = `http://127.0.0.1:5500/front_end/Dashboard/CustomerProfile/CustomerProfile.html?ID=${user.UserID}`;
+        window.location.href = `/front_end/Dashboard/CustomerProfile/CustomerProfile.html?ID=${user.UserID}`;
     });
 }
 
@@ -204,7 +204,7 @@ async function showTable() {
         .then(response => {
             if (response.status === 403) {
                 localStorage.removeItem('token');
-                window.location.href = 'http://localhost:5500/front_end/Login/Login.html';
+                window.location.href = '/front_end/Login/Login.html';
             }
             return response.json()
         })
