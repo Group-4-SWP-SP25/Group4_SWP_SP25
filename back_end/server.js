@@ -90,6 +90,8 @@ const getServiceTypeListByServiceTypeName = require("./myModule/database/service
 const deleteServiceById = require("./myModule/database/service/deleteServiceByID.js");
 const updateServiceById = require("./myModule/database/service/updateServiceByID.js");
 const addService = require("./myModule/database/service/addService.js");
+const sortService = require("./myModule/database/service/sortService.js");
+const searchService = require("./myModule/database/service/searchService.js");
 
 // car
 const carInfo = require("./myModule/controller/car/carInfo.js");
@@ -140,7 +142,7 @@ const {
 } = require("./myModule/controller/message/message.js");
 
 // calendar
-const { getEvents_api } = require("./myModule/controller/calendar/calendar.js");
+const { getEvents_api, addEvent_apis } = require("./myModule/controller/calendar/calendar.js");
 
 // ----------------------------------------------------------
 // CREATE API
@@ -164,6 +166,7 @@ app.post("/TopService", authenticateADMIN, TopService);
 app.post("/TopRevenueByMonth", authenticateADMIN, TopRevenueByMonth);
 app.post("/TopProducts", authenticateADMIN, TopProducts);
 app.post("/Calendar/GetEvents", authenticateADMIN, getEvents_api);
+app.post("/Calendar/AddEvent", authenticateADMIN, addEvent_apis);
 app.post("/Employee/getEmployees", authenticateADMIN, getEmployees);
 // app.post('/TotalRevenueToday', authenticateADMIN, TotalRevenueToday);
 // app.post('/TotalOrderToday', authenticateADMIN, TotalOrderToday);
@@ -204,6 +207,8 @@ app.post(
 app.post("/deleteServiceById", deleteServiceById);
 app.post("/updateServiceById", updateServiceById);
 app.post("/addService", addService);
+app.post("/sortService", sortService);
+app.post("/searchService", searchService);
 
 // car
 app.post("/carInfo", carInfo);
