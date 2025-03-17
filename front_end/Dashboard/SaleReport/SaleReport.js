@@ -238,7 +238,7 @@ async function fetchTotalProductSoldToday() {
     const data = await response.json();
     const totalProductElement = document.querySelector("#ProductSold .amount");
     const changeElement = document.querySelector("#ProductSold .change");
-
+    
     if (totalProductElement) {
       totalProductElement.textContent = `${data.totalProducts} products`;
     }

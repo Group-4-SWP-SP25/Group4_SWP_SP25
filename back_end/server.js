@@ -46,7 +46,12 @@ const TotalProductSold = require("./myModule/database/SaleReport/TotalProductSol
 const TotalNewCustomer = require("./myModule/database/SaleReport/TotalNewCustomer.js");
 const TopService = require("./myModule/database/SaleReport/TopService.js");
 const TopRevenueByMonth = require("./myModule/database/SaleReport/TopRevenueByMonth.js");
-const TopProducts = require("./myModule/database/SaleReport/TopProducts.js");
+const TopProducts=require("./myModule/database/SaleReport/TopProducts.js");
+const TotalQuantity=require("./myModule/database/ProductManagement/TotalQuantity.js");  
+const ProductOverview=require("./myModule/database/ProductManagement/ProductOverview.js");
+const DeleteProduct= require("./myModule/database/ProductManagement/DeleteProduct.js");
+const UpdateProduct= require("./myModule/database/ProductManagement/UpdateProduct.js");
+const CompareTotalProduct= require("./myModule/database/ProductManagement/CompareTotalProduct.js");
 // const connectDB = require('./myModule/database/connectDB.js');
 // const { authenticateJWT, authenticateADMIN } = require('./myModule/Utils/JWT.js');
 // const { GetUserInfo, GetUserInfo_Admin } = require('./myModule/database/user/getUserInfo.js');
@@ -131,6 +136,11 @@ const {
 // payment
 const payment = require("./myModule/controller/payment/payment.js");
 const paymentCallback = require("./myModule/controller/payment/callback.js");
+const paymentList = require("./myModule/controller/payment/paymentList.js");
+const paymentInfo = require("./myModule/controller/payment/paymentInfo.js");
+
+// bill
+const billList = require("./myModule/controller/bill/billList.js");
 
 // message
 const {
@@ -167,6 +177,11 @@ app.post("/TopProducts", authenticateADMIN, TopProducts);
 app.post("/Calendar/GetEvents", authenticateADMIN, getEvents_api);
 app.post("/Calendar/AddEvent", authenticateADMIN, addEvent_apis);
 app.post("/Employee/getEmployees", authenticateADMIN, getEmployees);
+app.post("/TotalQuantity", authenticateADMIN, TotalQuantity);
+app.post("/ProductOverview",authenticateADMIN, ProductOverview);
+app.delete("/DeleteProduct",authenticateADMIN,DeleteProduct );
+app.post("/UpdateProduct",authenticateADMIN,UpdateProduct );
+app.post("/CompareTotalProduct",authenticateADMIN,CompareTotalProduct );
 // app.post('/TotalRevenueToday', authenticateADMIN, TotalRevenueToday);
 // app.post('/TotalOrderToday', authenticateADMIN, TotalOrderToday);
 // app.post('/TotalProductSold', authenticateADMIN, TotalProductSold);
@@ -245,7 +260,11 @@ app.post("/removeAllOrder", removeAllOrder);
 // payment
 app.post("/payment", payment);
 app.get("/payment/callback", paymentCallback);
+app.post("/paymentList", paymentList);
+app.post("/paymentInfo", paymentInfo);
 
+// bill
+app.post("/billList", billList);
 // ----------------------------------------------------------
 // START SERVER
 app.listen(PORT, () => {

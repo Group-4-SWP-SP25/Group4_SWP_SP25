@@ -5,10 +5,13 @@ const TotalNewCustomer = async (req, res) => {
         const pool = global.pool;
         const result = await pool.request()
             .query(`
-                SELECT 
-                    COUNT(CASE WHEN CONVERT(date, DateCreated) = CONVERT(date, GETDATE()) THEN UserID END) AS today_customers,
-                    COUNT(CASE WHEN CONVERT(date, DateCreated) = CONVERT(date, DATEADD(DAY, -1, GETDATE())) THEN UserID END) AS yesterday_customers
-                FROM [User]
+               SELECT 
+    COUNT(CASE 
+             WHEN CONVERT(date, DateCreated) = CONVERT(date, GETDATE()) 
+                  AND Role = 'User' 
+             THEN UserID 
+          END) AS today_customers
+FROM [User];
             `);
 
         const todayCustomers = result.recordset[0].today_customers || 0;
