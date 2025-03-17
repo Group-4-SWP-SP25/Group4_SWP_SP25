@@ -70,7 +70,7 @@ CREATE TABLE CarPart (
     PartID INT NOT NULL FOREIGN KEY REFERENCES PartInfo(PartID),
     InstallationDate DATETIME DEFAULT NULL,
     ExpiryDate DATETIME DEFAULT NULL,
-    [Status] VARCHAR(10) DEFAULT NULL CHECK ([Status] IN ('OK', 'Expired', 'Maintenance required')),
+    [Status] VARCHAR(220) DEFAULT NULL CHECK ([Status] IN ('OK', 'Expired', 'Maintenance required')),
     CONSTRAINT pk_CarPart PRIMARY KEY (CarID, PartID)
 );      
 GO
@@ -665,15 +665,15 @@ GO
 
 GO
 
-INSERT INTO [Car](UserID, CarName, Brand, RegistrationNumber, [Year], CarImage, [Status]) VALUES 
-(1, 'Car 1', 'Toyota', '123456', 2010, 'https://vov.vn/sites/default/files/styles/large/public/2022-08/289624929_453408263095020_5408162982360432160_n.png', 'Active'),
-(1, 'Car 2', 'Honda', '654321', 2015, 'https://akm-img-a-in.tosshub.com/indiatoday/styles/medium_crop_simple/public/2024-11/1_4.jpg', 'Maintaining'),
-(1, 'Car 3', 'Ford', '987654', 2018, 'https://images.dealer.com/autodata/us/640/2020/USD00FOS372A0/USC80FOS371A01300.jpg', 'Active'),
-(1, 'Car 4', 'BMW', '125478', 2020, '', 'Active'),
-(2, 'Car 1', 'Toyota', '123456', 2010, 'https://vov.vn/sites/default/files/styles/large/public/2022-08/289624929_453408263095020_5408162982360432160_n.png', 'Active'),
-(2, 'Car 2', 'Honda', '654321', 2015, 'https://akm-img-a-in.tosshub.com/indiatoday/styles/medium_crop_simple/public/2024-11/1_4.jpg', 'Maintaining'),
-(2, 'Car 3', 'Ford', '987654', 2018, 'https://images.dealer.com/autodata/us/640/2020/USD00FOS372A0/USC80FOS371A01300.jpg', 'Active'),
-(2, 'Car 4', 'BMW', '125478', 2020, '', 'Active');
+INSERT INTO [Car](UserID, CarName, Brand, RegistrationNumber, [Year], [Status]) VALUES 
+(1, 'Car 1', 'Toyota', '123456', 2010, 'Active'),
+(1, 'Car 2', 'Honda', '654321', 2015, 'Maintaining'),
+(1, 'Car 3', 'Ford', '987654', 2018, 'Active'),
+(1, 'Car 4', 'BMW', '125478', 2020, 'Active'),
+(2, 'Car 1', 'Toyota', '123456', 2010, 'Active'),
+(2, 'Car 2', 'Honda', '654321', 2015, 'Maintaining'),
+(2, 'Car 3', 'Ford', '987654', 2018, 'Active'),
+(2, 'Car 4', 'BMW', '125478', 2020, 'Active');
 GO
 
 INSERT INTO [Order] (UserID, CarID, BranchID, PartID, ServiceID, QuantityUsed)

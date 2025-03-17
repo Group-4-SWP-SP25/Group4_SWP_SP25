@@ -1,6 +1,6 @@
 const urlParams = new URLSearchParams(window.location.search);
 const url_id = urlParams.get("ID");
-const url_name = urlParams.get("Name");
+let url_name = null
 
 const body = document.getElementById('message-right-body');
 const messageInput = document.getElementById('message-input');
@@ -24,6 +24,16 @@ window.onload = async () => {
 
     if (url_id != null) {
         let item = userList.querySelector(`div[message-item-id="${url_id}"]`)
+        await fetch('http://localhost:3000/CustomerManager/getUserInfo', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`,
+            },
+            body: JSON.stringify({ id: url_id })
+        })
+            .then(response => response.json())
+            .then(result => url_name = result.FirstName + ' ' + result.LastName)
         if (item == null) {
             // not exist
             AddUser(url_id, url_name, '')

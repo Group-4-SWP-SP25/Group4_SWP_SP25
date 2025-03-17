@@ -270,7 +270,7 @@ li p {
 .branch-map {
     width: 60%;
     height: 100%;
-    background-color: #333;
+    /* background-color: #333; */
 }
 
 .action {
@@ -292,4 +292,9 @@ li p {
 .edit:hover {
     background-color: #0056b3;
     cursor: pointer;
+}
+
+#map {
+    height: 100%;
+    width: 100%;
 }
