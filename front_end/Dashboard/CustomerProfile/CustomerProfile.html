@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Customer Profile</title>
     <link rel="stylesheet" href="./style.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"> -->
@@ -113,22 +113,26 @@
                             <ul>
                                 <li>
                                     <span>Car's name:</span>
-                                    <span>{CarName}</span>
+                                    <span id="car-name"></span>
                                 </li>
                                 <li>
                                     <span>Brand:</span>
-                                    <span>{Brand}</span>
+                                    <span id="car-brand"></span>
                                 </li>
                                 <li>
                                     <span>Registration Number:</span>
-                                    <span>16M7 9790</span>
+                                    <span id="registration-number"></span>
                                 </li>
                                 <li>
                                     <span>Year:</span>
-                                    <span>2025</span>
+                                    <span id="year"></span>
                                 </li>
                             </ul>
                         </div>
+
+                        <span class="zero-car">No Car Available</span>
+
+                        <div class="loader car-loader"></div>
                     </div>
                     <div class="car-info-footer">
                         <span class="material-icons previous-car">
