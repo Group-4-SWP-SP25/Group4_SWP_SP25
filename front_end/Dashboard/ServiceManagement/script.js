@@ -485,6 +485,34 @@ async function addService(ServiceTypeID, ServicePartID, ServiceName, ServiceDesc
     }
 }
 
+// Handle hide popup
+function hidePopup() {
+    popupDelete.classList.add('hidden');
+    popupModify.classList.add('hidden');
+    overlay.classList.add('hidden');
+
+    // Reset các biến liên quan đến popup
+    chosenServiceID = chosenServiceTypeID = chosenServicePartID = chosenServiceName = chosenServiceDescription = chosenServicePrice = chosenEstimatedTime = null;
+
+    // Gỡ bỏ các trình xử lý sự kiện (nếu cần)
+    popupModify.querySelector('.btn-yes').removeEventListener('click', confirmUpdatePopup);
+    popupModify.querySelector('.btn-no').removeEventListener('click', hideUpdatePopup);
+    popupModify.querySelector('.btn-yes').removeEventListener('click', confirmAddPopup);
+    popupModify.querySelector('.btn-no').removeEventListener('click', hideAddPopup);
+}
+
+// Sự kiện nhấn phím Esc
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+        hidePopup();
+    }
+});
+
+// Sự kiện click ra bên ngoài popup
+overlay.addEventListener('click', function() {
+    hidePopup();
+});
+
 // Render table out
 function renderTable(result) {
     serviceTableBody.innerHTML = ''; // clear old content
@@ -493,13 +521,13 @@ function renderTable(result) {
     result.forEach((service) => {
         const dataRow = `
                         <tr>
-                            <td style="width: 4%">${service.ServiceTypeID}</td>
-                            <td style="width: 4%">${service.PartID}</td>
-                            <td style="width: 10%; text-align: left">${service.ServiceName}</td>
-                            <td style="width: 18%; text-align: left"">${service.ServiceDescription}</td>
-                            <td style="width: 6%">${service.ServicePrice} ₫</td>
-                            <td style="width: 6%">${service.EstimatedTime}</td>
-                            <td style="width: 10%" class="buttons">
+                            <td>${service.ServiceTypeName}</td>
+                            <td>${service.PartName}</td>
+                            <td style="text-align: left">${service.ServiceName}</td>
+                            <td style="text-align: left">${service.ServiceDescription}</td>
+                            <td>${service.ServicePrice} ₫</td>
+                            <td>${service.EstimatedTime}</td>
+                            <td class="buttons">
                                 <button class="btn-delete" onclick="showDeletePopup(this);" 
                                         data-serviceid="${service.ServiceID}">
                                     Delete
@@ -536,7 +564,7 @@ async function getServiceListAll() {
             headers: { 'Content-Type': 'application/json' }
         });
         const result = await response.json();
-        // console.log(result);
+        console.log(result);
 
         maxServiceID = result.reduce((max, service) => Math.max(max, service.ServiceID), 0);
         maxServiceTypeID = result.reduce((max, service) => Math.max(max, service.ServiceTypeID), 0);

@@ -2,8 +2,7 @@ const sql = require('mssql');
 const getServiceListAll = async (req, res) => {
     try {
         const pool = global.pool;
-        const query = `
-                        SELECT
+        const query = ` SELECT
                             s.*,
                             st.ServiceTypeName,
                             pi.PartName
