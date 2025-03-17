@@ -1,18 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1.0" />
-        <title>Customer Management</title>
-        <link
-            rel="stylesheet"
-            href="./style.css" />
-    </head>
 
-    <body>
-        <!-- <div class="header">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Customer Management</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css" />
+</head>
+
+<body>
+    <!-- <div class="header">
         <h1>Dashboard</h1>
         <div class="user-info">
             <span>Welcome, Admin</span>
@@ -38,151 +36,156 @@
         <a class="option" href="#">Sign Out</a>
     </div> -->
 
-        <!-- Header -->
-        <header>
-            <div class="page-frame"></div>
-        </header>
-        <!-- End header -->
+    <!-- Header -->
+    <header>
+        <div class="page-frame"></div>
+    </header>
+    <!-- End header -->
 
-        <div class="content">
-            <div class="path">
-                <a
-                    href="../DashBoard/dashboard.html"
-                    class="homepath">
-                    Home
-                </a>
-                /
-                <a
-                    href="./customer_management.html"
-                    class="currentpath">
-                    Customer Management
-                </a>
-            </div>
-
-            <div class="container">
-                <div class="table-header">
-                    <h1>Customer</h1>
-                    <div class="buttons">
-                        <button class="filter">Filter</button>
-                        <button class="add">+ Add Customer</button>
-                    </div>
-                </div>
-
-                <div class="search">
-                    <input
-                        id="searchString"
-                        type="text"
-                        placeholder="Search..." />
-                </div>
-
-                <table id="UserList">
-                    <thead>
-                        <tr>
-                            <th style="width: 10%">
-                                Customer ID
-                                <button
-                                    class="sort"
-                                    data-column="UserID">
-                                    ⇅
-                                </button>
-                            </th>
-                            <th style="width: 25%">
-                                Customer Name
-                                <button
-                                    class="sort"
-                                    data-column="FirstName">
-                                    ⇅
-                                </button>
-                            </th>
-                            <th style="width: 25%">
-                                Email Address
-                                <button
-                                    class="sort"
-                                    data-column="Email">
-                                    ⇅
-                                </button>
-                            </th>
-                            <th style="width: 15%">
-                                Contact Number
-                                <button
-                                    class="sort"
-                                    data-column="Phone">
-                                    ⇅
-                                </button>
-                            </th>
-                            <th style="width: 15%">
-                                Date Created
-                                <button
-                                    class="sort"
-                                    data-column="DateCreated">
-                                    ⇅
-                                </button>
-                            </th>
-                            <th style="width: 10%">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-
-                <div class="pagination">
-                    <button id="Previous">Previous</button>
-                    <button
-                        class="button"
-                        id="firstPage">
-                        1
-                    </button>
-                    <span id="firstDot"> .... </span>
-                    <button
-                        class="button"
-                        id="firstButton">
-                        3
-                    </button>
-                    <button
-                        class="button"
-                        id="secondButton">
-                        4
-                    </button>
-                    <button
-                        class="button"
-                        id="thirdButton">
-                        5
-                    </button>
-                    <span id="secondDot"> .... </span>
-                    <button
-                        class="button"
-                        id="lastPage">
-                        7
-                    </button>
-                    <button id="Next">Next</button>
-                </div>
-            </div>
+    <div class="content">
+        <div class="path">
+            <a href="../DashBoard/dashboard.html" class="homepath">
+                Home
+            </a>
+            /
+            <a href="./customer_management.html" class="currentpath">
+                Customer Management
+            </a>
         </div>
 
-        <!-- Scripts -->
-        <script src="./CustomerManager.js"></script>
-        <script>
-            fetch('../page_frame/page_frame.html')
-                .then((response) => response.text())
-                .then((data) => {
-                    document.querySelector('.page-frame').innerHTML = data;
-                    const css = document.createElement('link');
-                    css.rel = 'stylesheet';
-                    css.href = '../page_frame/style.css';
-                    document.head.appendChild(css);
+        <div class="container">
+            <div class="table-header">
+                <h1>Customer</h1>
+                <div class="buttons">
+                    <div>
+                        <span class="material-icons">
+                            download_done
+                        </span>
+                        0 people selected
+                    </div>
+                    <div class="filter">
+                        <span class="material-icons">
+                            filter_alt
+                        </span>
+                        Filter
+                    </div>
+                    <div class="add">
+                        <span class="material-icons">
+                            person_add_alt_1
+                        </span>
+                        Add Customer
+                    </div>
+                    <div class="remove">
+                        <span class="material-icons">
+                            delete
+                        </span>
+                        Remove Customer
+                    </div>
+                    <div class="message">
+                        <span class="material-icons">
+                            message
+                        </span>
+                        Message
+                    </div>
+                </div>
+            </div>
 
-                    // current page indicator
-                    const currentPageFile = window.location.pathname.split('/').pop();
-                    document
-                        .querySelector('.page-frame')
-                        .querySelectorAll('.option')
-                        .forEach((option) => {
-                            const anchorHref = option.getAttribute('href');
-                            if (anchorHref.includes(currentPageFile)) {
-                                option.style.backgroundColor = '#33334d';
-                            }
-                        });
-                });
-        </script>
-        <!-- End scripts -->
-    </body>
+            <div class="search">
+                <input id="searchString" type="text" placeholder="Search..." />
+            </div>
+
+            <table id="UserList">
+                <thead>
+                    <tr>
+                        <th style="width: 5%">
+                            #
+                        </th>
+                        <th style="width: 10%">
+                            Customer ID
+                            <button class="sort" data-column="UserID">
+                                ⇅
+                            </button>
+                        </th>
+                        <th style="width: 20%">
+                            Customer Name
+                            <button class="sort" data-column="FirstName">
+                                ⇅
+                            </button>
+                        </th>
+                        <th style="width: 25%">
+                            Email Address
+                            <button class="sort" data-column="Email">
+                                ⇅
+                            </button>
+                        </th>
+                        <th style="width: 15%">
+                            Contact Number
+                            <button class="sort" data-column="Phone">
+                                ⇅
+                            </button>
+                        </th>
+                        <th style="width: 15%">
+                            Date Created
+                            <button class="sort" data-column="DateCreated">
+                                ⇅
+                            </button>
+                        </th>
+                        <th style="width: 10%">Actions</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+
+            <div class="pagination">
+                <button id="Previous">Previous</button>
+                <button class="button" id="firstPage">
+                    1
+                </button>
+                <span id="firstDot"> .... </span>
+                <button class="button" id="firstButton">
+                    3
+                </button>
+                <button class="button" id="secondButton">
+                    4
+                </button>
+                <button class="button" id="thirdButton">
+                    5
+                </button>
+                <span id="secondDot"> .... </span>
+                <button class="button" id="lastPage">
+                    7
+                </button>
+                <button id="Next">Next</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="./CustomerManager.js"></script>
+    <script>
+        fetch('../page_frame/page_frame.html')
+            .then((response) => response.text())
+            .then((data) => {
+                document.querySelector('.page-frame').innerHTML = data;
+                const css = document.createElement('link');
+                css.rel = 'stylesheet';
+                css.href = '../page_frame/style.css';
+                document.head.appendChild(css);
+
+                // current page indicator
+                const currentPageFile = window.location.pathname.split('/').pop();
+                document
+                    .querySelector('.page-frame')
+                    .querySelectorAll('.option')
+                    .forEach((option) => {
+                        const anchorHref = option.getAttribute('href');
+                        if (anchorHref.includes(currentPageFile)) {
+                            option.style.backgroundColor = '#33334d';
+                        }
+                    });
+            });
+    </script>
+    <!-- End scripts -->
+</body>
+
 </html>

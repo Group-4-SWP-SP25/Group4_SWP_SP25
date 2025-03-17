@@ -41,6 +41,10 @@ ul.page-section {
   list-style: none;
 }
 
+.car-image {
+  width: 50%;
+  border-radius: 10px;
+}
 .form-input-wide {
   width: 100%;
 }

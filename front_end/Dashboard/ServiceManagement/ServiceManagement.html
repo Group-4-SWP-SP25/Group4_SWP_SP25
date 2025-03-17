@@ -56,6 +56,9 @@
                         class="search-input"
                         type="text"
                         placeholder="Search..." />
+                    <!-- <div class="buttons" style="padding: 10px">
+                        <button class="btn-search">Search</button>
+                    </div> -->
                 </div>
                 <div class="search-filter">
                     <label>
@@ -98,7 +101,7 @@
                             Type ID
                             <button
                                 class="sort"
-                                data-column="TypeID">
+                                data-col="ServiceTypeID">
                                 ⇅
                             </button>
                         </th>
@@ -106,7 +109,7 @@
                             Part ID
                             <button
                                 class="sort"
-                                data-column="PartID">
+                                data-col="PartID">
                                 ⇅
                             </button>
                         </th>
@@ -114,7 +117,7 @@
                             Service Name
                             <button
                                 class="sort"
-                                data-column="ServiceName">
+                                data-col="ServiceName">
                                 ⇅
                             </button>
                         </th>
@@ -122,7 +125,7 @@
                             Description
                             <button
                                 class="sort"
-                                data-column="Description">
+                                data-col="ServiceDescription">
                                 ⇅
                             </button>
                         </th>
@@ -130,7 +133,15 @@
                             Price
                             <button
                                 class="sort"
-                                data-column="Price">
+                                data-col="ServicePrice">
+                                ⇅
+                            </button>
+                        </th>
+                        <th style="width: 6%">
+                            Estimated Time<br />(mins)
+                            <button
+                                class="sort"
+                                data-col="EstimatedTime">
                                 ⇅
                             </button>
                         </th>
@@ -138,24 +149,6 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- <tr>
-                        <td style="width: 4%">test</td>
-                        <td style="width: 4%">test</td>
-                        <td style="width: 10%">test</td>
-                        <td style="width: 18%">test</td>
-                        <td style="width: 6%">test</td>
-                        <td
-                            style="width: 10%"
-                            class="buttons">
-                            <button
-                                class="btn-delete"
-                                onclick="showPopup(this);"
-                                data-serviceid="0">
-                                Delete
-                            </button>
-                            <button class="btn-update">Update</button>
-                        </td>
-                    </tr> -->
                     <!-- Content from js query -->
                 </tbody>
             </table>
@@ -188,36 +181,25 @@
             <table style="margin-bottom: 10px">
                 <thead>
                     <tr>
-                        <td style="width: 2%">Service ID</td>
+                        <td style="width: 3%">Service ID</td>
                         <td style="width: 8%">Type ID</td>
                         <td style="width: 6%">Part ID</td>
                         <td style="width: 10%">Service Name</td>
-                        <td style="width: 18%">Description</td>
+                        <td style="width: 15%">Description</td>
                         <td style="width: 6%">Price</td>
+                        <td style="width: 5%">Estimated Time</td>
                     </tr>
                 </thead>
                 <tbody>
                     <!-- Content load from chosen to add, or empty for update -->
                     <tr>
                         <td>
-                            <!-- <input
-                                type="number"
-                                min="1"
-                                placeholder="Service ID" /> -->
                             <select></select>
                         </td>
                         <td>
-                            <!-- <input
-                                type="number"
-                                min="1"
-                                placeholder="Type ID" /> -->
                             <select></select>
                         </td>
                         <td>
-                            <!-- <input
-                                type="number"
-                                min="1"
-                                placeholder="Part ID" /> -->
                             <select></select>
                         </td>
                         <td>
@@ -235,6 +217,12 @@
                                 type="number"
                                 min="1000"
                                 placeholder="Price" />
+                        </td>
+                        <td>
+                            <input
+                                type="number"
+                                min="15"
+                                placeholder="Estimated Time" />
                         </td>
                     </tr>
                 </tbody>

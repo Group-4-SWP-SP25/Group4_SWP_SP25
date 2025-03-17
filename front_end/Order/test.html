@@ -4,125 +4,69 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Thông báo với thanh thời gian</title>
+  <title>Trang Web AJAX Loading</title>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <style>
-    body {
-      font-family: Arial, sans-serif;
+    #loading {
+      display: none;
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+      color: blue;
     }
 
-    #notificationContainer {
-      position: fixed;
-
-      top: 10px;
-      right: 10px;
-      z-index: 1000;
+    .spinner {
+      border: 4px solid rgba(0, 0, 0, 0.1);
+      border-top: 4px solid blue;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 10px auto;
     }
 
-    .notification {
-      position: relative;
-      background: #4caf50;
-      border-radius: 5px;
-      display: flex;
-      align-items: center;
-      color: black;
-      padding: 15px;
-      margin-bottom: 10px;
-      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-      overflow: hidden;
-      animation: slideIn 0.5s ease-in-out;
-    }
-
-    .progress-bar {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 3px;
-      background-color: hsla(0, 0%, 100%, 0.664);
-      transition: width linear 3s;
-    }
-
-    .notification svg {
-      fill: #fff;
-      width: 20px;
-      height: 20px;
-      margin-right: 10px;
-    }
-
-    .notification span {
-      font-size: 16px;
-      color: #fff;
-    }
-
-    @keyframes slideIn {
-      from {
-        transform: translateX(100%);
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
       }
 
-      to {
-        transform: translateX(0);
-      }
-    }
-
-    @keyframes slideOut {
-      from {
-        transform: translateX(0);
-      }
-
-      to {
-        transform: translateX(100%);
+      100% {
+        transform: rotate(360deg);
       }
     }
   </style>
 </head>
 
 <body>
-
-  <button onclick="showNotification()">Hiển thị Thông báo</button>
-  <div id="notificationContainer"></div>
+  <h2>Nội dung động với AJAX</h2>
+  <button id="loadData">Tải Nội Dung</button>
+  <div id="loading">
+    <div class="spinner"></div>
+    Đang tải...
+  </div>
+  <div id="content"></div>
 
   <script>
-    function showNotification() {
-      const container = $("#notificationContainer");
-      const notification = $(`
-                <div class="notification">
-      <svg viewBox="0 0 408.483 408.483">
-        <g>
-          <g>
-            <path d="M87.748,388.784c0.461,11.01,9.521,19.699,20.539,19.699h191.911c11.018,0,20.078-8.689,20.539-19.699
-                     l13.705-289.316H74.043L87.748,388.784z M247.655,171.329c0-4.61,3.738-8.349,8.35-8.349h13.355
-                     c4.609,0,8.35,3.738,8.35,8.349v165.293c0,4.611-3.738,8.349-8.35,8.349h-13.355c-4.61,0-8.35-3.736-8.35-8.349V171.329z
-                     M189.216,171.329c0-4.61,3.738-8.349,8.349-8.349h13.355c4.609,0,8.349,3.738,8.349,8.349v165.293
-                     c0,4.611-3.737,8.349-8.349,8.349h-13.355c-4.61,0-8.349-3.736-8.349-8.349V171.329L189.216,171.329z
-                     M130.775,171.329c0-4.61,3.738-8.349,8.349-8.349h13.356c4.61,0,8.349,3.738,8.349,8.349v165.293
-                     c0,4.611-3.738,8.349-8.349,8.349h-13.356c-4.61,0-8.349-3.736-8.349-8.349V171.329z"/>
-            <path d="M343.567,21.043h-88.535V4.305c0-2.377-1.927-4.305-4.305-4.305h-92.971
-                     c-2.377,0-4.304,1.928-4.304,4.305v16.737H64.916c-7.125,0-12.9,5.776-12.9,12.901V74.47h304.451V33.944
-                     C356.467,26.819,350.692,21.043,343.567,21.043z"/>
-          </g>
-        </g>
-      </svg>
-      <span>An order has already been deleted!</span>
-      <div class="progress-bar"></div>
-    </div>
-            `);
+    $(document).ready(function () {
+      $("#loadData").click(function () {
+        $("#loading").show(); // Hiển thị hiệu ứng loading
 
-      container.prepend(notification);
-
-      // Thanh thời gian giảm từ phải sang trái
-      setTimeout(() => {
-        $(".progress-bar", notification).css("width", "0%");
-      }, 10);
-
-      // Xóa thông báo sau 3 giây với hiệu ứng trượt ra ngoài
-      setTimeout(function () {
-        notification.css("animation", "slideOut 0.5s ease-in-out forwards");
-        setTimeout(() => notification.remove(), 500);
-      }, 3000);
-    }
+        setTimeout(function () { // Giả lập hiệu ứng loading trong 2s
+          $.ajax({
+            url: "https://jsonplaceholder.typicode.com/posts/1",
+            type: "GET",
+            success: function (data) {
+              $("#content").html("<h3>" + data.title + "</h3><p>" + data.body + "</p>");
+            },
+            error: function () {
+              $("#content").html("<p style='color: red;'>Lỗi khi tải dữ liệu.</p>");
+            },
+            complete: function () {
+              $("#loading").hide(); // Ẩn hiệu ứng loading sau khi tải xong
+            }
+          });
+        }, 2000);
+      });
+    });
   </script>
-
 </body>
-
-</html>

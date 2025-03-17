@@ -13,11 +13,10 @@ const getServiceTypeListByServiceTypeName = async (req, res) => {
             return res.status(500).json({ error: 'Database connection not initialized' });
         }
 
-        const query = `
-            SELECT st.ServiceTypeName, st.ServiceTypeDescription, s.*
-            FROM [Service] s 
-            JOIN [ServiceType] st ON s.ServiceTypeID = st.ServiceTypeID 
-            WHERE st.ServiceTypeName = @serviceTypeName`;
+        const query = ` SELECT st.ServiceTypeName, st.ServiceTypeDescription, s.*
+                        FROM [Service] s 
+                        JOIN [ServiceType] st ON s.ServiceTypeID = st.ServiceTypeID 
+                        WHERE st.ServiceTypeName = @serviceTypeName`;
         const result = await pool.request().input('serviceTypeName', sql.VarChar, serviceTypeName).query(query);
         res.json(result.recordset);
     } catch (err) {
