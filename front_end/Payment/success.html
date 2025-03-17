@@ -66,11 +66,11 @@
     </div>
     <div class="thanks">
       <h1>Thank you!</h1>
-      <p>You have successfully paid <strong class="amount">$100</strong></p>
+      <p>You have successfully paid <strong class="amount"></strong></p>
     </div>
 
     <div class="see-detail-btn">
-      <button>Go to my bill</button>
+      <button>View invoice</button>
     </div>
   </div>
 
@@ -79,10 +79,28 @@
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
   <script>
-    const urlParams = new URLSearchParams(window.location.search);
-    const amount = parseInt(urlParams.get("amount"));
-
-    $(".amount").text(amount.toLocaleString("vi-VN") + "₫");
+    $(document).ready(async function () {
+      const user = await $.ajax({
+        url: "http://localhost:3000/getUserInfo",
+        method: "POST",
+        contentType: "application/json",
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      });
+      const urlParams = new URLSearchParams(window.location.search);
+      const paymentID = parseInt(urlParams.get("paymentID"));
+      const payment = await $.ajax({
+        url: `http://localhost:3000/paymentInfo`,
+        method: "POST",
+        contentType: "application/json",
+        data: JSON.stringify({ userID: user.id, paymentID }),
+      })
+      const amount = payment.Amount;
+      console.log(amount);
+      $(".amount").text(amount.toLocaleString("vi-VN") + "₫");
+      $(".see-detail-btn button").click(() => {
+        window.location.href = `/front_end/Payment/Bill/BillDetail/billDetail.html?paymentID=${paymentID}`;
+      });
+    }); 
   </script>
 </body>
 

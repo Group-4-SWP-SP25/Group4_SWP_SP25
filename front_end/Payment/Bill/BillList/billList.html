@@ -9,7 +9,6 @@
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
   <link rel="stylesheet" href="./style.css" />
-
 </head>
 
 <body>
@@ -30,54 +29,35 @@
               class=""></path>
           </svg>&nbsp;</span>
       </li>
-      <li><strong><span>My Orders</span></strong></li>
+      <li><strong><span>Payment Invoice</span></strong></li>
     </ul>
   </section>
   <!-- End bread crumb -->
 
   <!-- Order table -->
-  <section class="main-order-page">
-    <div class="choose-car">
-      <button class="select-car">Car:
-        <span class="car-name"></span>
-        &nbsp;&nbsp;<i class="fa-solid fa-chevron-right hidden"></i>
-      </button>
-      <ul class="car-list hidden">
-      </ul>
-    </div>
-    <div class="order-page hidden">
-      <div class="order-table">
-        <div class="order-header-info">
+  <section class="main-invoice-page">
+    <div class="invoice-page hidden">
+      <div class="invoice-table">
+        <div class="invoice-header-info">
           <div>#</div>
-          <div>Component</div>
-          <div>Service</div>
-          <div>Order date</div>
-          <div>Estimated cost</div>
-          <div>Action</div>
+          <div>Your car</div>
+          <div>Payment date</div>
+          <div>Price</div>
+          <div></div>
         </div>
-        <div class="order-body">
+        <div class="invoice-body">
+
         </div>
-        <div class="order-footer">
-          <div class="row">
-            <div class="col-lg-4 col-12 offset-xl-8">
-              <div class="order-subtotal">
-                <div class="order-col-6">Total Price:</div>
-                <div class="order-totle"><span class="total-price">
-                  </span></div>
-              </div>
-              <div class="order-checkout">
-                <button type="submit" class="btn btn-default btn-checkout"
-                  onclick="window.location.href=`/front_end/Payment/payment.html?carID=${$('.select-car').data('selectedCar')}`">
-                  Check out
-                </button>
-              </div>
-            </div>
+        <div class="invoice-footer">
+          <div class="invoice-subtotal">Total Price:</div>
+          <div class="invoice-totle">
+            <span class="total-price">AA</span>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="text-center order-empty">
+    <div class="text-center invoice-empty ">
       <svg class="icon-box" fill="#000000" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
         xmlns:xlink="http://www.w3.org/1999/xlink" width="800px" height="800px" viewBox="0 0 408.483 408.483"
         xml:space="preserve">
@@ -95,45 +75,25 @@
           </g>
         </g>
       </svg>
-      <p>There are no lost or found orders</p>
+      <p>There are no lost or found invoices</p>
     </div>
   </section>
   <!-- End order table -->
-
-
-
-  <!-- Window confirm to delete order -->
-  <div class="hidden del-window text-center">
-    <p class="display-6 container">Are you sure to delete this order?</p>
-    <div class="btn-submit">
-      <button class="btn btn-yes">Yes</button>
-      <button class="btn btn-cancel">Cancel</button>
-    </div>
-  </div>
-  <!-- End window confirm to delete order -->
-  <div class="overlay hidden"></div>
-
-  <!-- Notify -->
-  <div id="notificationContainer"></div>
-  <!-- End notify -->
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
     integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script>
-    fetch("../../header/header.html")
+    fetch("/front_end/header/header.html")
       .then(response => response.text())
       .then(data => {
         document.getElementById("header-container").innerHTML = data;
         const script = document.createElement("script");
-        script.src = "../../header/script.js";
+        script.src = "/front_end/header/script.js";
         document.body.appendChild(script);
       });
   </script>
-  <script src="script.js"></script>
-  <script src="animation.js"></script>
-  <script src="press.js"></script>
-
+  <script src="./data.js"></script>
 </body>
 
 </html>

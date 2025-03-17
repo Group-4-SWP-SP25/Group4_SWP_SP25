@@ -127,6 +127,11 @@ const {
 // payment
 const payment = require("./myModule/controller/payment/payment.js");
 const paymentCallback = require("./myModule/controller/payment/callback.js");
+const paymentList = require("./myModule/controller/payment/paymentList.js");
+const paymentInfo = require("./myModule/controller/payment/paymentInfo.js");
+
+// bill
+const billList = require("./myModule/controller/bill/billList.js");
 
 // message
 const {
@@ -237,7 +242,11 @@ app.post("/removeAllOrder", removeAllOrder);
 // payment
 app.post("/payment", payment);
 app.get("/payment/callback", paymentCallback);
+app.post("/paymentList", paymentList);
+app.post("/paymentInfo", paymentInfo);
 
+// bill
+app.post("/billList", billList);
 // ----------------------------------------------------------
 // START SERVER
 app.listen(PORT, () => {
