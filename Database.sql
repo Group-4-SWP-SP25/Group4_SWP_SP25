@@ -41,12 +41,11 @@ GO
 CREATE TABLE Car(
 	CarID INT IDENTITY(1, 1) NOT NULL PRIMARY KEY,
 	UserID INT FOREIGN KEY REFERENCES [User](UserID) ON DELETE CASCADE,
-	CarName VARCHAR(500) NOT NULL,
-	Brand VARCHAR(MAX),
-	RegistrationNumber VARCHAR(50) NOT NULL,
-	[Year] INT,
+	CarName VARCHAR(500) DEFAULT NULL,
+	Brand VARCHAR(MAX) DEFAULT NULL, 
+	RegistrationNumber VARCHAR(50) DEFAULT NULL,
+	[Year] INT DEFAULT NULL,
     MaintenanceResgistrationDate DATE DEFAULT CURRENT_TIMESTAMP,
-    CarImage VARCHAR(MAX),
 	[Status] VARCHAR(50) DEFAULT NULL CHECK ([Status] IN ('Active', 'Maintaining'))
 );
 GO
@@ -71,7 +70,7 @@ CREATE TABLE CarPart (
     PartID INT NOT NULL FOREIGN KEY REFERENCES PartInfo(PartID),
     InstallationDate DATETIME DEFAULT NULL,
     ExpiryDate DATETIME DEFAULT NULL,
-    [Status] VARCHAR(10) DEFAULT NULL CHECK ([Status] IN ('Active', 'Broken', 'Expired')),
+    [Status] VARCHAR(220) DEFAULT NULL CHECK ([Status] IN ('OK', 'Expired', 'Maintenance required')),
     CONSTRAINT pk_CarPart PRIMARY KEY (CarID, PartID)
 );      
 GO
@@ -112,9 +111,12 @@ GO
 CREATE TABLE AccessoryInfo (
 	AccessoryID INT IDENTITY (1, 1) NOT NULL PRIMARY KEY,
 	AccessoryName VARCHAR(200) NOT NULL,
-	ServiceID INT NOT NULL FOREIGN KEY REFERENCES [Service](ServiceID),
-	[Description] VARCHAR(MAX) NOT NULL
+	ServiceID INT NOT NULL FOREIGN KEY REFERENCES Service(ServiceID),
+	[Description] VARCHAR(MAX) NOT NULL,
+  AddDate DATETIME DEFAULT CURRENT_TIMESTAMP
 );
+
+
 GO
 
 -- 9
@@ -167,6 +169,7 @@ GO
 CREATE TABLE Payment(
 	UserID INT FOREIGN KEY REFERENCES [User](UserID),
 	PaymentID INT NOT NULL,
+	CarID INT NOT NULL FOREIGN KEY REFERENCES Car(CarID),
 	PaymentMethod VARCHAR(200),
 	PaymentDate DATETIME DEFAULT CURRENT_TIMESTAMP,
 	Amount FLOAT NOT NULL,
@@ -177,13 +180,14 @@ GO
 CREATE TABLE Bill(
 	UserID INT,
 	PaymentID INT,
-	CarID INT NOT NULL FOREIGN KEY REFERENCES Car(CarID),
     PartID INT NOT NULL FOREIGN KEY REFERENCES PartInfo(PartID),
 	ServiceID INT FOREIGN KEY REFERENCES [Service](ServiceID),
 	BranchID INT FOREIGN KEY REFERENCES Branch(BranchID),
     QuantityUsed INT NOT NULL,
+	TotalPrice FLOAT NOT NULL,
+	OrderDate DATETIME NOT NULL,
 	CONSTRAINT fk_Bills FOREIGN KEY (UserID, PaymentID) REFERENCES Payment(UserID, PaymentID),
-	CONSTRAINT pk_Bills PRIMARY KEY (UserID, PaymentID, CarID, PartID, ServiceID)
+	CONSTRAINT pk_Bills PRIMARY KEY (UserID, PaymentID, PartID, ServiceID)
 );
 GO
 
@@ -228,7 +232,7 @@ INSERT INTO PartInfo(PartName, CarSystemID, [Image]) VALUES
 ('Injector', 1,'/resource/CarPark_image/InjectorE.webp'),
 ('Cooling System', 1,'/resource/CarPark_image/CoolingSystem.webp'),
 ('Brake Pad', 2,'/resource/CarPark_image/BrakePad.webp'),
-('Rotor', 2,'/resourc	e/CarPark_image/Rotor.webp'),
+('Rotor', 2,'/resource/CarPark_image/Rotor.webp'),
 ('Fluid', 2,'/resource/CarPark_image/Fluids.webp'),
 ('Bulb', 3,'/resource/CarPark_image/Buld.webp'),
 ('Fuse', 3,'/resource/CarPark_image/Fuse.webp'),
@@ -349,10 +353,11 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
-    INSERT INTO Payment(PaymentID, UserID, PaymentMethod, Amount)
+    INSERT INTO Payment(PaymentID, UserID, CarID, PaymentMethod, Amount)
     SELECT
         COALESCE((SELECT MAX(p.PaymentID) FROM Payment p WHERE p.UserID = i.UserID), 0) + 1,
         i.UserID,
+		i.CarID,
         i.PaymentMethod,
         i.Amount
     FROM inserted i;
@@ -658,15 +663,15 @@ GO
 
 GO
 
-INSERT INTO [Car](UserID, CarName, Brand, RegistrationNumber, [Year], CarImage, [Status]) VALUES 
-(1, 'Car 1', 'Toyota', '123456', 2010, 'https://vov.vn/sites/default/files/styles/large/public/2022-08/289624929_453408263095020_5408162982360432160_n.png', 'Active'),
-(1, 'Car 2', 'Honda', '654321', 2015, 'https://akm-img-a-in.tosshub.com/indiatoday/styles/medium_crop_simple/public/2024-11/1_4.jpg', 'Maintaining'),
-(1, 'Car 3', 'Ford', '987654', 2018, 'https://images.dealer.com/autodata/us/640/2020/USD00FOS372A0/USC80FOS371A01300.jpg', 'Active'),
-(1, 'Car 4', 'BMW', '125478', 2020, '', 'Active'),
-(2, 'Car 1', 'Toyota', '123456', 2010, 'https://vov.vn/sites/default/files/styles/large/public/2022-08/289624929_453408263095020_5408162982360432160_n.png', 'Active'),
-(2, 'Car 2', 'Honda', '654321', 2015, 'https://akm-img-a-in.tosshub.com/indiatoday/styles/medium_crop_simple/public/2024-11/1_4.jpg', 'Maintaining'),
-(2, 'Car 3', 'Ford', '987654', 2018, 'https://images.dealer.com/autodata/us/640/2020/USD00FOS372A0/USC80FOS371A01300.jpg', 'Active'),
-(2, 'Car 4', 'BMW', '125478', 2020, '', 'Active');
+INSERT INTO [Car](UserID, CarName, Brand, RegistrationNumber, [Year], [Status]) VALUES 
+(1, 'Car 1', 'Toyota', '123456', 2010, 'Active'),
+(1, 'Car 2', 'Honda', '654321', 2015, 'Maintaining'),
+(1, 'Car 3', 'Ford', '987654', 2018, 'Active'),
+(1, 'Car 4', 'BMW', '125478', 2020, 'Active'),
+(2, 'Car 1', 'Toyota', '123456', 2010, 'Active'),
+(2, 'Car 2', 'Honda', '654321', 2015, 'Maintaining'),
+(2, 'Car 3', 'Ford', '987654', 2018, 'Active'),
+(2, 'Car 4', 'BMW', '125478', 2020, 'Active');
 GO
 
 INSERT INTO [Order] (UserID, CarID, BranchID, PartID, ServiceID, QuantityUsed)

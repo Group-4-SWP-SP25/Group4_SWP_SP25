@@ -57,11 +57,23 @@
             <div class="table-header">
                 <h1>Customer</h1>
                 <div class="buttons">
-                    <div>
+                    <div class="num-select">
                         <span class="material-icons">
                             download_done
                         </span>
                         0 people selected
+                    </div>
+                    <div class="select-all">
+                        <span class="material-icons">
+                            done_all
+                        </span>
+                        Select all
+                    </div>
+                    <div class="unselect-all">
+                        <span class="material-icons">
+                            remove_done
+                        </span>
+                        Unselect all
                     </div>
                     <div class="filter">
                         <span class="material-icons">
@@ -92,16 +104,22 @@
 
             <div class="search">
                 <input id="searchString" type="text" placeholder="Search..." />
+                <span class="material-icons">
+                    search
+                </span>
             </div>
 
             <table id="UserList">
                 <thead>
                     <tr>
-                        <th style="width: 5%">
+                        <th style="width: 5%;">
                             #
                         </th>
                         <th style="width: 10%">
-                            Customer ID
+
+                            <span>
+                                ID
+                            </span>
                             <button class="sort" data-column="UserID">
                                 ⇅
                             </button>

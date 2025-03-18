@@ -1,0 +1,300 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    display: flex;
+    height: 100vh;
+    background-color: #121212;
+    color: #e0e0e0;
+    overflow: hidden;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #1e1e2f;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    /* padding: 20px; */
+    position: fixed;
+    height: 100%;
+    overflow-y: auto;
+    margin-top: 60px;
+}
+
+.option {
+    display: block;
+    /* Để các mục trong sidebar xếp dọc */
+    position: relative;
+    /* Giúp ::before căn chỉnh theo phần tử này */
+    text-decoration: none;
+    color: white;
+    padding: 10px 20px;
+    /* transition: color 0.2s ease; */
+    overflow: hidden;
+    /* Đảm bảo hiệu ứng không tràn ra ngoài */
+}
+
+
+.option::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #33334d;
+    transform: scaleX(0);
+    /* Ban đầu thu nhỏ lại */
+    transform-origin: left;
+    /* Xuất phát từ giữa */
+    transition: transform 0.3s ease-in-out;
+    z-index: -1;
+}
+
+/* Khi hover, mở rộng từ giữa ra hai bên */
+.option:hover::before {
+    transform: scaleX(1);
+}
+
+.homepath {
+    text-decoration: none;
+    color: white;
+    transition: color 0.3s ease;
+}
+
+.homepath:hover {
+    color: #007bff;
+}
+
+.currentpath {
+    text-decoration: none;
+    color: #007bff;
+}
+
+
+#HomePage {
+    font-size: 20px;
+    padding: 30px 10px;
+    color: yellowgreen;
+}
+
+.sidebar a {
+    color: white;
+    text-decoration: none;
+    padding: 30px 30px;
+    display: block;
+    font-size: 14px;
+}
+
+.content {
+    flex: 1;
+    padding: 20px;
+    margin-left: 250px;
+    overflow-y: auto;
+    margin-top: 60px;
+}
+
+
+.admin {
+    display: flex;
+    align-items: center;
+    padding: 30px 10px;
+    background-color: #33334d;
+}
+
+.admin img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.admin span {
+    font-size: 14px;
+}
+
+/* ------------------- */
+
+.path {
+    width: 90%;
+    margin: 20px auto;
+    padding: 20px;
+}
+
+.container {
+    width: 90%;
+    margin: 20px auto;
+    background: #1e1e1e;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    overflow-x: auto;
+}
+
+
+.header {
+    background-color: #1e1e2f;
+}
+
+
+.header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 60px;
+    background-color: #1e1e2f;
+    color: #e0e0e0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.header h1 {
+    font-size: 18px;
+}
+
+.header .user-info {
+    display: flex;
+    align-items: center;
+}
+
+.header .user-info img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.custom-scrollbar {
+    overflow-y: auto;
+
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+    /* Độ rộng của thanh cuộn */
+    transition: width 0.3s, height 0.3s;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: #333;
+    /* Màu nền của track */
+    border-radius: 10px;
+    /* Bo tròn track */
+
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #555;
+    /* Màu của thanh cuộn */
+    border-radius: 10px;
+    /* Bo tròn thanh cuộn */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #888;
+    /* Màu của thanh cuộn khi hover */
+}
+
+/* ------------------- */
+
+.branch-container {
+    display: flex;
+    flex-direction: column;
+    min-width: 1000px;
+    width: 90%;
+    margin: 20px auto;
+    padding: 20px;
+}
+
+.branch-card {
+    width: 100%;
+    height: 700px;
+    background: #1e1e1e;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    overflow-x: auto;
+    display: flex;
+}
+
+.branch-info {
+    width: 40%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+}
+
+.branch-info img {
+    width: 100%;
+    height: 50%;
+    object-fit: cover;
+}
+
+ul {
+    width: 100%;
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+
+li {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: solid 1px #33334d;
+    padding: 15px;
+    height: 70px;
+}
+
+li span {
+    font-weight: bold;
+    margin-right: 20px;
+}
+
+li p {
+    margin: 0;
+}
+
+.branch-map {
+    width: 60%;
+    height: 100%;
+    /* background-color: #333; */
+}
+
+.action {
+    display: flex;
+    justify-content: end;
+    height: 50px;
+    margin-top: 20px;
+}
+
+.edit {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.edit:hover {
+    background-color: #0056b3;
+    cursor: pointer;
+}
+
+#map {
+    height: 100%;
+    width: 100%;
+}

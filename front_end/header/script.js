@@ -20,22 +20,24 @@ $(document).ready(async function () {
     // set name
     document.getElementById('name').innerHTML = result.name;
 
-    switch (result.role) {
-        case 'Admin':
-            $('#my-cars').addClass('hidden');
-            $('#my-orders').addClass('hidden');
-            break;
-        case 'User':
-            $('#dashboard').addClass('hidden');
-            break;
-    }
-    $('#profile').on('click', function () {
-        window.location.href = '/front_end/UserProfile/UserProfile.html';
-    });
-    $('#sign-out').on('click', function () {
-        localStorage.removeItem('token');
-        window.location.href = '/front_end/HomePage/HomePage.html';
-    });
+
+  switch (result.role) {
+    case "Admin":
+      $("#my-cars").addClass("hidden");
+      $("#my-orders").addClass("hidden");
+      break;
+    case "User":
+      $("#dashboard").addClass("hidden");
+      break;
+  }
+  $("#profile").on("click", function () {
+    window.location.href = "/front_end/UserProfile/UserProfile.html";
+  });
+  $("#sign-out").on("click", function () {
+    localStorage.removeItem("token");
+    window.location.href = "/front_end/HomePage/HomePage.html";
+  });
+
 
     $('#dashboard').on('click', function () {
         window.location.href = '/front_end/Dashboard/DashBoard/dashboard.html';
@@ -45,9 +47,14 @@ $(document).ready(async function () {
         window.location.href = '/front_end/CarList/CarList.html';
     });
 
-    $('#my-orders').on('click', function () {
-        window.location.href = '/front_end/Order/OrderList/orderList.html';
-    });
+
+  $("#payment-invoice").on("click", function () {
+    window.location.href = "/front_end/Payment/Bill/BillList/billList.html";
+  });
+
+  $("#my-orders").on("click", function () {
+    window.location.href = "/front_end/Order/OrderList/orderList.html";
+  });
 });
 
 $(document).on('click', '.user-login', function (e) {

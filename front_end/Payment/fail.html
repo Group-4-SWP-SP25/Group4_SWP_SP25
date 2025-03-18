@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment Failed</title>
+
+  <style>
+    body {
+      font-family: Inter, sans-serif;
+      font-size: 16px;
+      color: #8c1212;
+      background-color: #b72424;
+    }
+
+    .container {
+      width: calc(100% - 70px);
+      background: #ffd6d6;
+      max-width: 758px;
+      margin: 35px auto;
+      padding: 0 10px;
+      padding-bottom: 30px;
+      box-shadow: 0 4px 4px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .error-symbol {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .error-symbol img {
+      width: 100px;
+      height: 100px;
+      margin: 24px 0 18px 0;
+    }
+
+    .error-message {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .retry-btn {
+      text-align: center;
+    }
+
+    .retry-btn button {
+      background-color: #8c1212;
+      border: none;
+      color: white;
+      padding: 15px 30px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="error-symbol">
+      <img src="https://cdn-icons-png.flaticon.com/512/753/753345.png" alt="Error">
+    </div>
+    <div class="error-message">
+      <h1>Payment Failed!</h1>
+      <p class="error"></p>
+    </div>
+
+    <div class="retry-btn">
+      <button onclick="retryPayment()">Try Again</button>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" crossorigin="anonymous"
+    referrerpolicy="no-referrer"></script>
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const err = urlParams.get("err");
+    const carID = parseInt(urlParams.get("carID"));
+    $(".error").text(err);
+
+    function retryPayment() {
+      window.location.href = `/front_end/Payment/payment.html?carID=${carID}`; // Thay thế URL này bằng trang thanh toán của bạn
+    }
+  </script>
+</body>
+
+</html>

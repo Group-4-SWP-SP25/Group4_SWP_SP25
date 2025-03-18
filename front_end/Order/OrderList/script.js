@@ -163,7 +163,6 @@ async function fetchOrdersByCarID(userID, carID, element) {
             <input type="hidden" class="order-id" value="${order.OrderID}"/>
             <div class="order-info">
               <div class="grid order-index">${index + 1}</div> 
-              <div class="grid">${car.CarName}</div>
               <div class="grid">${partInfo.PartName}</div>
               <div class="grid">${service.ServiceName}</div>
               <div class="grid">${formatDate(order.OrderDate)}</div>
