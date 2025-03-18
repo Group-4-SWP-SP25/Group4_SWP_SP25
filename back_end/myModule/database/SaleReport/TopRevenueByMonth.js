@@ -14,11 +14,13 @@ const TopRevenueByMonth = async (req, res) => {
         .input("year", sql.Int, year)
         .query(`
             SELECT 
-            MONTH(OrderDate) AS month, 
-            SUM(EstimatedCost) AS total_revenue
-                FROM [Order]
-                WHERE YEAR(OrderDate) = @year
-                GROUP BY MONTH(OrderDate)
+    MONTH(OrderDate) AS month, 
+    SUM(TotalPrice) AS total_revenue
+FROM Bill
+WHERE YEAR(OrderDate) = @year
+GROUP BY MONTH(OrderDate)
+ORDER BY MONTH(OrderDate);
+
             `);
 
         // Tạo mảng 12 tháng

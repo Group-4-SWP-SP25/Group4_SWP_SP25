@@ -4,7 +4,7 @@ const ProductOverview = async (req, res) => {
     try {
         const pool = global.pool;
        const result = await pool.request()
-            .query(`SELECT i.AccessoryID, ai.AccessoryName, b.BranchName, i.Quantity,b.BranchID
+            .query(`SELECT i.AccessoryID, ai.AccessoryName, b.BranchName, i.Quantity,b.BranchID, i.UnitPrice
                     FROM Inventory i
                     JOIN AccessoryInfo ai ON i.AccessoryID = ai.AccessoryID
                     JOIN Branch b ON i.BranchID = b.BranchID;`);
