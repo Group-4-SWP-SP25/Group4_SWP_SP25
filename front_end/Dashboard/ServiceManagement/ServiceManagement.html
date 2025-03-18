@@ -64,13 +64,13 @@
                     <label>
                         <input
                             type="checkbox"
-                            data-column="ServiceTypeID" />
+                            data-column="ServiceTypeName" />
                         Type ID
                     </label>
                     <label>
                         <input
                             type="checkbox"
-                            data-column="PartID" />
+                            data-column="PartName" />
                         Part ID
                     </label>
                     <label>
@@ -97,6 +97,7 @@
             <table>
                 <thead>
                     <tr>
+                        <th style="width: 6%">Image</th>
                         <th style="width: 6%">
                             Service Type
                             <button
@@ -145,7 +146,7 @@
                                 ⇅
                             </button>
                         </th>
-                        <th style="width: 8%">Actions</th>
+                        <th style="width: 9%">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -182,12 +183,13 @@
                 <thead>
                     <tr>
                         <td style="width: 3%">Service ID</td>
-                        <td style="width: 8%">Service Type</td>
-                        <td style="width: 6%">Part</td>
-                        <td style="width: 10%">Service Name</td>
-                        <td style="width: 15%">Description</td>
-                        <td style="width: 6%">Price</td>
-                        <td style="width: 5%">Estimated Time</td>
+                        <td style="width: 9%">Service Type</td>
+                        <td style="width: 7%">Part</td>
+                        <td style="width: 9%">Service Name</td>
+                        <td style="width: 13%">Description</td>
+                        <td style="width: 4%">Price (₫)</td>
+                        <td style="width: 3%">Estimated<br />Time<br />(mins)</td>
+                        <td style="width: 9%">Service Image</td>
                     </tr>
                 </thead>
                 <tbody>
@@ -223,6 +225,12 @@
                                 type="number"
                                 min="15"
                                 placeholder="Estimated Time" />
+                        </td>
+                        <td>
+                            <textarea
+                                type="text"
+                                placeholder="Service Image"
+                                rows="7"></textarea>
                         </td>
                     </tr>
                 </tbody>
@@ -264,6 +272,22 @@
                             }
                         });
                 });
+        </script>
+        <script>
+            window.onload = async () => {
+                console.log('get token')
+                const token = localStorage.getItem("token");
+            
+                if (token === null) window.location.href = "/front_end/Login/Login.html";
+                
+                const response = await fetch("http://localhost:3000/getUserInfo", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` }
+                });
+                
+                const result = await response.json();
+                console.log('result: ', result);
+            }
         </script>
         <!-- End scripts -->
     </body>
