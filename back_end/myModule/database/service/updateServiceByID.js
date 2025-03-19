@@ -3,10 +3,11 @@ const sql = require('mssql');
 const updateServiceByID = async (req, res) => {
     try {
         const pool = global.pool;
-        const { serviceID, typeID, partID, name, description, price } = req.body;
+        const { serviceID, typeID, partID, name, description, price, estTime, image } = req.body;
+        console.log(req.body);
 
         const query = ` UPDATE [Service] 
-                        SET ServiceTypeID = @typeID, PartID = @partID, ServiceName = @name, ServiceDescription = @description, ServicePrice = @price 
+                        SET ServiceTypeID = @typeID, PartID = @partID, ServiceName = @name, ServiceDescription = @description, ServicePrice = @price, EstimatedTime = @estTime, ServiceImage = @image
                         WHERE ServiceID = @serviceID`;
 
         const result = await pool
@@ -17,6 +18,8 @@ const updateServiceByID = async (req, res) => {
             .input('name', sql.VarChar, name)
             .input('description', sql.Text, description)
             .input('price', sql.Float, price)
+            .input('estTime', sql.Int, estTime)
+            .input('image', sql.VarChar, image)
             .query(query);
 
         if (result.rowsAffected[0] === 0) {
