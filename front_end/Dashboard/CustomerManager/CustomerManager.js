@@ -364,6 +364,7 @@ message.addEventListener('click', () => {
     if (select.length == 1) {
         window.location.href = `/front_end/Dashboard/Message/Message.html?ID=${select[0]}`;
     } else {
-        alert('function not done yet')
+        localStorage.setItem('group', JSON.stringify(select));
+        window.location.href = `/front_end/Dashboard/Message/Message.html?ID=0`;
     }
 })
