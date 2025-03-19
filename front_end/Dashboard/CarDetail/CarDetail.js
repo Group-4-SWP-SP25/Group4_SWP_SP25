@@ -17,8 +17,9 @@ document.querySelector('.btn-cancel').addEventListener('click', async () => {
 });
 
 document.querySelector('.btn-done').addEventListener('click', async () => {
-    SaveCarDetail();
-    // await SaveCarParts();
+    await SaveCarDetail();
+    await SaveCarParts();
+    alert('Update Car successfully')
 });
 
 //click
@@ -76,6 +77,7 @@ function EditDate(cell) {
     }
 };
 
+// edit car info
 function EditCar(cell) {
     if (!cell.querySelector('input')) {
         let temp = cell.innerHTML;
@@ -189,8 +191,8 @@ const carPartContainer = document.querySelector('.car-part-container');
 // display car parts
 function displayCarParts(part) {
     let item = carPartContainer.querySelector(`tr[part="${part.PartID}"]`);
-    item.querySelector('.InstallationDate').innerHTML = (part.InstallationDate == null) ? "YYYY-MM-DD" : part.InstallationDate;
-    item.querySelector('.ExpirationDate').innerHTML = (part.ExpiryDate == null) ? "YYYY-MM-DD" : part.ExpiryDate;
+    item.querySelector('.InstallationDate').innerHTML = (part.InstallationDate == null) ? "YYYY-MM-DD" : part.InstallationDate.split('T')[0];
+    item.querySelector('.ExpirationDate').innerHTML = (part.ExpiryDate == null) ? "YYYY-MM-DD" : part.ExpiryDate.split('T')[0];
     setStatus(item.querySelector('.Status'), (part.Status == null) ? "Not available" : part.Status);
 }
 
@@ -210,10 +212,6 @@ async function SaveCarDetail() {
             },
             body: JSON.stringify({ carID: carID, carName: carName, brand: brand, regNum: registrationNumber, year: year }),
         })
-        const status = response.status;
-        if (status == 200) {
-            alert("Car detail updated!");
-        }
     } catch (err) {
         console.error("Cannot save car detail!:", err);
     }
@@ -240,3 +238,37 @@ document.querySelector('.btn-delete').addEventListener('click', async () => {
         console.error("Cannot delete car!:", err);
     }
 })
+
+// save car parts 
+async function SaveCarParts() {
+    const parts = carPartContainer.querySelectorAll('tr[part]');
+    let list = []
+    for (let part of parts) {
+        const partID = part.getAttribute('part')
+        const InstallationDate = part.querySelector('.InstallationDate').innerHTML;
+        const ExpiryDate = part.querySelector('.ExpirationDate').innerHTML;
+        const Status = part.querySelector('.Status').innerHTML;
+        list.push({
+            PartID: partID,
+            InstallationDate: (InstallationDate == 'YYYY-MM-DD') ? null : InstallationDate,
+            ExpiryDate: (InstallationDate == 'YYYY-MM-DD') ? null : ExpiryDate,
+            Status: (Status == 'Not available') ? null : Status
+        })
+    }
+
+    try {
+        const response = await fetch('http://localhost:3000/updateCarPart', {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem("token")}`,
+            },
+            body: JSON.stringify({
+                carID: carID,
+                parts: list
+            }),
+        })
+    } catch (error) {
+        console.log(error)
+    }
+}

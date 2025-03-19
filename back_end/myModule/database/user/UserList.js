@@ -52,18 +52,10 @@ const TotalUserCount = async (searchString) => {
             return 0; // Trả về 0 nếu không có user nào khớp với searchString
         }
 
-        const query = `
-            SELECT COUNT(*) AS TotalUserCount
-            FROM [User]
-            WHERE UserID IN (${userIds})
-        `;
+        let list = [];
+        for (let user of searchResult) list.push(user.UserID)
 
-        const result = await pool
-            .request()
-            .query(query);
-
-        const totalUserCount = result.recordset[0].TotalUserCount;
-        return totalUserCount;
+        return list;
     } catch (err) {
         console.log(err);
         throw err;

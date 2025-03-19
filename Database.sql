@@ -70,7 +70,7 @@ CREATE TABLE CarPart (
     PartID INT NOT NULL FOREIGN KEY REFERENCES PartInfo(PartID),
     InstallationDate DATETIME DEFAULT NULL,
     ExpiryDate DATETIME DEFAULT NULL,
-    [Status] VARCHAR(10) DEFAULT NULL CHECK ([Status] IN ('OK', 'Expired', 'Maintenance required')),
+    [Status] VARCHAR(220) DEFAULT NULL CHECK ([Status] IN ('OK', 'Expired', 'Maintenance required')),
     CONSTRAINT pk_CarPart PRIMARY KEY (CarID, PartID)
 );      
 GO
@@ -80,7 +80,7 @@ CREATE TABLE ServiceType (
 	ServiceTypeID INT IDENTITY(1, 1) NOT NULL PRIMARY KEY,
 	ServiceTypeName VARCHAR(200),
 	ServiceTypeDescription VARCHAR(MAX),
-    ServiceImage VARCHAR(MAX)
+    ServiceTypeImage VARCHAR(MAX)
 );
 GO
 
@@ -94,7 +94,8 @@ CREATE TABLE [Service] (
 	ServiceDescription VARCHAR(MAX),
 	ServicePrice FLOAT NOT NULL,
     EstimatedTime INT NOT NULL,
-	Checking TINYINT DEFAULT 0
+	Checking TINYINT DEFAULT 0,
+    ServiceImage VARCHAR(MAX)
 );
 GO
 
@@ -102,7 +103,10 @@ GO
 CREATE TABLE Branch (
 	BranchID INT IDENTITY (1, 1) NOT NULL PRIMARY KEY,
 	BranchName VARCHAR(200) NOT NULL,
-	BranchAddress VARCHAR(MAX)
+	BranchAddress VARCHAR(MAX) DEFAULT NULL,
+    BranchPhone VARCHAR(11) DEFAULT NULL,
+    BranchEmail VARCHAR(200) DEFAULT NULL,
+    BranchLocation GEOGRAPHY DEFAULT NULL
 );
 GO
 
@@ -112,7 +116,7 @@ CREATE TABLE AccessoryInfo (
 	AccessoryName VARCHAR(200) NOT NULL,
 	ServiceID INT NOT NULL FOREIGN KEY REFERENCES Service(ServiceID),
 	[Description] VARCHAR(MAX) NOT NULL,
-    AddDate DATETIME DEFAULT CURRENT_TIMESTAMP
+  AddDate DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
 
@@ -124,7 +128,7 @@ CREATE TABLE Inventory (
 	AccessoryID INT NOT NULL FOREIGN KEY REFERENCES AccessoryInfo(AccessoryID),
 	Quantity INT,
 	UnitPrice FLOAT,
-	CONSTRAINT pk_Inventory PRIMARY KEY (BranchID, AccessoryID),
+	CONSTRAINT pk_Inventory PRIMARY KEY (BranchID, AccessoryID)
 
 );
 GO
@@ -363,7 +367,7 @@ BEGIN
 END;
 GO     
 
-INSERT INTO [ServiceType](ServiceTypeName, ServiceTypeDescription, ServiceImage) VALUES 
+INSERT INTO [ServiceType](ServiceTypeName, ServiceTypeDescription, ServiceTypeImage) VALUES 
 -- 1
 ('Wheel System', 'Your wheels are more than just round things that keep you rolling. They''re the foundation of your vehicle''s performance, safety, and overall driving experience.<br><br>At AUTO247, we understand the critical role your wheels play, and that''s why we offer a comprehensive Wheel System Service designed to keep you cruising in confidence.', 'https://autostreamcarcare.com/wp-content/uploads/2024/05/AutoStream-Maryland-Tire-Repair.jpg'),
 --2
@@ -384,129 +388,127 @@ INSERT INTO [ServiceType](ServiceTypeName, ServiceTypeDescription, ServiceImage)
 ('Cleaning and Maintenance', 'Your car is more than just a mode of transportation; it''s an extension of your personality and a reflection of your style.<br><br>At AUTO247, we understand the importance of keeping your car looking and feeling its best, and that''s why we offer a comprehensive range of Cleaning and Maintenance services designed to help you maintain your car''s appearance and preserve its value.', 'https://di-uploads-pod18.dealerinspire.com/executivehonda/uploads/2024/03/EAG_March_Blog-1.jpg');
 GO
 
-INSERT INTO [Service](ServiceTypeID, PartID, ServiceName, AffectInventory, ServiceDescription, ServicePrice, EstimatedTime) VALUES
-(1, 24, 'Tire Replacement', 1, 'Installing new tires', 3600000, 60),
-(1, 24, 'Tire Rotation', 0, 'Rotating tires for even wear', 960000, 30),
-(1, 24, 'Run-Flat Tire Repair', 0, 'Fixing damage on run-flat tires', 1200000, 45),
-(1, 24, 'Performance Tire Upgrade', 1, 'Installing high-performance tires', 5000000, 90),
-(1, 24, 'Off-Road Tire Installation', 1, 'Mounting off-road tires', 4500000, 75),
-(1, 25, 'Rim Polishing', 0, 'Cleaning and restoring rim finish', 1680000, 45),
-(1, 25, 'Alloy Wheel Crack Repair', 0, 'Fixing cracks in alloy wheels', 1500000, 60),
-(1, 25, 'Wheel Weight Balancing', 0, 'Balancing wheels for smooth rotation', 500000, 30),
-(1, 25, 'Rim Restoration', 0, 'Restoring rim surface for a polished look', 2400000, 75),
-(1, 25, 'Rim Replacement', 1, 'Installing new rims', 4800000, 90),
-(1, 26, 'Wheel Balancing', 0, 'Ensuring even weight distribution on wheels', 1200000, 30),
-(1, 26, 'Wheel Alignment', 0, 'Adjusting angles for proper wheel alignment', 1920000, 60),
-(1, 26, '4x4 Drivetrain Service', 0, 'Servicing drivetrain for 4WD vehicles', 3000000, 90),
-(1, 26, 'Differential Fluid Change', 1, 'Replacing fluid in differential', 1000000, 45),
-(1, 26, 'Wheel Bearing Replacement', 1, 'Replacing worn-out wheel bearings', 3360000, 75),
-(1, 26, 'Wheel Hub Greasing', 0, 'Lubricating wheel hub for smooth rotation', 1200000, 30),
+INSERT INTO [Service](ServiceTypeID, PartID, ServiceName, AffectInventory, ServiceDescription, ServicePrice, EstimatedTime, ServiceImage) VALUES
+(1, 24, 'Tire Replacement', 1, 'Installing new tires', 3600000, 60, 'https://cdn.prod.website-files.com/61aa482275701e722856da7b/64df83e144ebc120074c2df3_change-a-tire.jpg'),
+(1, 24, 'Tire Rotation', 0, 'Rotating tires for even wear', 960000, 30, 'https://www.bridgestonetire.com/content/dam/consumer/bst/na/learn/tire-rotation-hero.jpg'),
+(1, 24, 'Run-Flat Tire Repair', 0, 'Fixing damage on run-flat tires', 1200000, 45, 'https://cars.usnews.com/images/article/201802/127188/6_-_Kypros.jpg'),
+(1, 24, 'Performance Tire Upgrade', 1, 'Installing high-performance tires', 5000000, 90, 'https://s19532.pcdn.co/wp-content/uploads/2022/10/Science-of-UHP-Tires-Hero-1400.jpg'),
+(1, 24, 'Off-Road Tire Installation', 1, 'Mounting off-road tires', 4500000, 75, 'https://rbptires.com/wp-content/uploads/Off-Road-Tire-Size-Guide-Image-2.jpg'),
+(1, 25, 'Rim Polishing', 0, 'Cleaning and restoring rim finish', 1680000, 45, 'https://i.ytimg.com/vi/zDqYTVWLTHM/maxresdefault.jpg'),
+(1, 25, 'Alloy Wheel Crack Repair', 0, 'Fixing cracks in alloy wheels', 1500000, 60, 'https://manchesteralloywheelrepair.co.uk/wp-content/uploads/2018/05/Alloy-Wheel-Crack-Repair.jpg'),
+(1, 25, 'Wheel Weight Balancing', 0, 'Balancing wheels for smooth rotation', 500000, 30, 'https://img.moderntiredealer.com/files/base/ebm/moderntiredealer/image/2023/01/1673300656717-howadhesiveweightsarechangingtirebalancing.png?auto=format,compress&fit=max&q=45&w=640&width=640'),
+(1, 25, 'Rim Restoration', 0, 'Restoring rim surface for a polished look', 2400000, 75, 'https://preview.redd.it/diy-curbed-wheel-rim-repair-v0-w8m3p0gzc8za1.jpg?width=4000&format=pjpg&auto=webp&s=8f09c4b85cc000e17edb17242be5d01e41208330'),
+(1, 25, 'Rim Replacement', 1, 'Installing new rims', 4800000, 90, 'https://kennedytransmission.com/wp-content/uploads/2024/04/kennedy-1.jpg'),
+(1, 26, 'Wheel Balancing', 0, 'Ensuring even weight distribution on wheels', 1200000, 30, 'https://www.barum-tyres.com/adobe/dynamicmedia/deliver/dm-aid--235bc7fe-dcbd-4a07-a153-eefa72ce93ca/barum-tyre-testing-in-workshop-stock.jpg?quality=85&preferwebp=true'),
+(1, 26, 'Wheel Alignment', 0, 'Adjusting angles for proper wheel alignment', 1920000, 60, 'https://www-cdn.rac.com.au/-/media/images/rac-website/tile-images/wheel-balance-alignment-t.jpg?modified=20230224033256'),
+(1, 26, '4x4 Drivetrain Service', 0, 'Servicing drivetrain for 4WD vehicles', 3000000, 90, 'https://www.mightyautopro.com/wp-content/uploads/2019/12/Drivetrain-Maintenance-Medina-OH.jpg'),
+(1, 26, 'Differential Fluid Change', 1, 'Replacing fluid in differential', 1000000, 45, 'https://toyotacreek.com/wp-content/uploads/2022/07/axle-fluid.jpg'),
+(1, 26, 'Wheel Bearing Replacement', 1, 'Replacing worn-out wheel bearings', 3360000, 75, 'https://www.motortrend.com/uploads/f/97599970.jpg?w=768&width=768&q=75&format=webp'),
+(1, 26, 'Wheel Hub Greasing', 0, 'Lubricating wheel hub for smooth rotation', 1200000, 30, 'https://i.ytimg.com/vi/mdHlF9qaczE/maxresdefault.jpg'),
 
-(2, 5, 'Brake Pad Inspection', 0, 'Checking brake pad thickness and wear', 600000, 30),
-(2, 5, 'Brake Pad Replacement', 1, 'Installing new brake pads', 1920000, 60),
-(2, 5, 'Brake Pad Adjustment', 0, 'Adjusting brake pads for optimal contact', 1200000, 45),
-(2, 5, 'Brake Line Replacement', 1, 'Installing new brake lines', 1800000, 75),
-(2, 6, 'Brake Rotor Resurfacing', 0, 'Smoothing brake rotors for better performance', 2400000, 60),
-(2, 6, 'Brake Rotor Replacement', 1, 'Installing new brake rotors', 3600000, 90),
-(2, 6, 'Brake Rotor Cleaning', 0, 'Removing rust and debris from rotors', 1440000, 45),
-(2, 6, 'Brake Rotor Resurfacing', 0, 'Smoothing the rotor surface', 1000000, 30),
-(2, 6, 'Brake Pedal Adjustment', 0, 'Adjusting pedal sensitivity', 600000, 15),
-(2, 6, 'ABS Module Repair', 0, 'Repairing the ABS system', 2500000, 75),
-(2, 7, 'Brake Fluid Top-Up', 1, 'Adding brake fluid to maintain levels', 720000, 15),
-(2, 7, 'Brake Fluid Replacement', 1, 'Flushing old brake fluid and refilling', 1920000, 60),
-(2, 7, 'Brake Fluid Leak Repair', 0, 'Fixing leaks in the brake fluid system', 2400000, 75),
+(2, 5, 'Brake Pad Inspection', 0, 'Checking brake pad thickness and wear', 600000, 30, 'https://www.familyhandyman.com/wp-content/uploads/2025/01/How-To-Check-Brake-Pads-Without-Removing-the-Wheel_FHMVS24_PK_11_25_CheckBrakePads_Step2.jpg?fit=700,1024'),
+(2, 5, 'Brake Pad Replacement', 1, 'Installing new brake pads', 1920000, 60, 'https://www.crcindustries.com/media/amasty/blog/how-to-replace-brake-pads-for-car.webp'),
+(2, 5, 'Brake Pad Adjustment', 0, 'Adjusting brake pads for optimal contact', 1200000, 45, 'https://di-uploads-pod21.dealerinspire.com/performancehondafairfield/uploads/2022/11/signs-you-need-new-brake-pads-fairfield-oh.webp'),
+(2, 5, 'Brake Line Replacement', 1, 'Installing new brake lines', 1800000, 75, 'https://www.vipauto.com/wp-content/uploads/2019/04/services-brakeline.jpg'),
+(2, 6, 'Brake Rotor Resurfacing', 0, 'Smoothing brake rotors for better performance', 2400000, 60, 'https://i.ytimg.com/vi/5qB-jnANdTw/maxresdefault.jpg'),
+(2, 6, 'Brake Rotor Replacement', 1, 'Installing new brake rotors', 3600000, 90, 'https://www.oneprojectcloser.com/wp-content/uploads/2019/08/DIY-How-to-replace-rotors-on-a-Car-One-Project-Closer-IMG_4704.jpg'),
+(2, 6, 'Brake Rotor Cleaning', 0, 'Removing rust and debris from rotors', 1440000, 45, 'https://www.familyhandyman.com/wp-content/uploads/2019/12/shutterstock_1148622437-Brake-cleaner.jpg?resize=1024,683'),
+(2, 6, 'Brake Pedal Adjustment', 0, 'Adjusting pedal sensitivity', 600000, 15, 'https://carfromjapan.com/wp-content/uploads/2022/02/brake-pedal-adjustment.jpg'),
+(2, 6, 'ABS Module Repair', 0, 'Repairing the ABS system', 2500000, 75, 'https://repairsmith-prod-wordpress.s3.amazonaws.com/2021/03/abs-control-module.jpg'),
+(2, 7, 'Brake Fluid Top-Up', 1, 'Adding brake fluid to maintain levels', 720000, 15, 'https://www-cdn.rac.com.au/-/media/images/rac-website/articles/content-hub/2024/check-brake-fluid-pouring.jpg?h=410&w=630&modified=20241104045030&hash=F6ABE9F7C54261247644EF22C87D4864'),
+(2, 7, 'Brake Fluid Replacement', 1, 'Flushing old brake fluid and refilling', 1920000, 60, 'https://www.harborbrakes.com/repairs/wp-content/uploads/2023/12/shutterstock_1732229527-scaled.jpg'),
+(2, 7, 'Brake Fluid Leak Repair', 0, 'Fixing leaks in the brake fluid system', 2400000, 75, 'https://www.buybrakes.com/help/wp-content/uploads/2022/05/brake-fluid-leak.jpeg'),
 
-(3, 1, 'Engine Oil Change', 0, 'Replacing old engine oil with fresh oil', 1200000, 30),
-(3, 1, 'Engine Oil System Flush', 0, 'Cleaning the engine oil system thoroughly', 1680000, 45),
-(3, 1, 'Engine Oil Leak Check', 0, 'Inspecting and fixing engine oil leaks', 960000, 30),
-(3, 1, 'Engine Oil Filter Replacement', 1, 'Replacing clogged oil filter for better flow', 720000, 15),
-(3, 1, 'Engine Mount Replacement', 0, 'Replacing worn-out engine mounts', 2000000, 75),
-(3, 1, 'Engine Tuning', 0, 'Adjusting engine parameters for performance', 1800000, 60),
-(3, 1, 'Advanced Engine Diagnostics', 0, 'Full engine health scan with detailed report', 1500000, 45),
-(3, 1, 'Turbocharger Inspection', 0, 'Checking turbo performance & efficiency', 1200000, 30),
-(3, 1, 'Supercharger Installation', 1, 'Installing a supercharger for more power', 5000000, 120),
-(3, 1, 'Turbo Intercooler Upgrade', 1, 'Installing performance intercooler', 5000000, 90),
-(3, 1, 'Exhaust System Cleaning', 0, 'Cleaning exhaust for better airflow', 1200000, 45),
-(3, 2, 'Spark Plug Inspection', 0, 'Checking spark plug condition for wear', 600000, 15),
-(3, 2, 'Spark Plug Cleaning', 0, 'Cleaning deposits from spark plugs', 480000, 15),
-(3, 2, 'Spark Plug Replacement', 1, 'Installing new spark plugs for better ignition', 840000, 30),
-(3, 2, 'High-Performance Spark Plug Install', 1, 'Upgrading to high-performance spark plugs', 900000, 45),
-(3, 2, 'Ignition System Check', 0, 'Diagnosing and repairing ignition issues', 1440000, 60),
-(3, 2, 'Ignition Coil Replacement', 1, 'Installing new ignition coils', 1300000, 45),
-(3, 4, 'Cooling System Flush', 1, 'Draining and refilling coolant system', 2160000, 60),
-(3, 4, 'Cooling System Leak Check', 0, 'Identifying leaks in the cooling system', 1440000, 45),
-(3, 4, 'Coolant Replacement', 1, 'Replacing old coolant for optimal performance', 1200000, 30),
-(3, 4, 'Radiator Cleaning', 0, 'Removing debris and buildup from radiator', 1680000, 45),
-(3, 4, 'Radiator Flush', 0, 'Cleaning the radiator for better cooling', 900000, 30),
-(3, 4, 'Engine Cooling Fan Replacement', 1, 'Replacing the engine cooling fan', 1400000, 60),
+(3, 1, 'Engine Oil Change', 0, 'Replacing old engine oil with fresh oil', 1200000, 30, 'https://www.wynns.eu/wp-content/uploads/sites/3/2024/07/oil_change.png'),
+(3, 1, 'Engine Oil System Flush', 0, 'Cleaning the engine oil system thoroughly', 1680000, 45, 'https://carfromjapan.com/wp-content/uploads/2018/04/engine-flush.jpg'),
+(3, 1, 'Engine Oil Leak Check', 0, 'Inspecting and fixing engine oil leaks', 960000, 30, 'https://jenkinspain.com/wp-content/uploads/2022/10/FI-engine-oil-leak.jpeg'),
+(3, 1, 'Engine Oil Filter Replacement', 1, 'Replacing clogged oil filter for better flow', 720000, 15, 'https://repairsmith-prod-wordpress.s3.amazonaws.com/2021/09/iStock-1074469344-1.jpg'),
+(3, 1, 'Engine Mount Replacement', 0, 'Replacing worn-out engine mounts', 2000000, 75, 'https://jordistireshop.com/wp-content/uploads/2024/11/Addressing-a-Broken-Motor-Mount-1024x536.jpg'),
+(3, 1, 'Engine Tuning', 0, 'Adjusting engine parameters for performance', 1800000, 60, 'https://tiresandterrain.com/wp-content/uploads/2024/03/tires-and-terrain-jbm-performance-bmw-f80-engine-tuning.jpg'),
+(3, 1, 'Advanced Engine Diagnostics', 0, 'Full engine health scan with detailed report', 1500000, 45, 'https://sagecreekrepair.com/img/service-AutoDiagnostics.jpg'),
+(3, 1, 'Turbocharger Inspection', 0, 'Checking turbo performance & efficiency', 1200000, 30, 'https://www.slashgear.com/img/gallery/how-to-check-if-your-engine-can-handle-a-turbo/can-my-car-handle-a-turbo-1701382736.jpg'),
+(3, 1, 'Supercharger Installation', 1, 'Installing a supercharger for more power', 5000000, 120, 'https://prestigeautoworksllc.com/wp-content/uploads/2023/06/mustang-supercharger-kit-1024x683.jpg'),
+(3, 1, 'Turbo Intercooler Upgrade', 1, 'Installing performance intercooler', 5000000, 90, 'https://cdn.club-magazin.autodoc.de/uploads/sites/30/2020/11/intercooler.jpg'),
+(3, 1, 'Exhaust System Cleaning', 0, 'Cleaning exhaust for better airflow', 1200000, 45, 'https://cdn.customcompleteautomotive.com/images/blog/2020/april/04-01-20/how-to-clean-your-cars-exhaust-system.jpeg'),
+(3, 2, 'Spark Plug Inspection', 0, 'Checking spark plug condition for wear', 600000, 15, 'https://i.ytimg.com/vi/9UyxRc2lCvk/sddefault.jpg'),
+(3, 2, 'Spark Plug Cleaning', 0, 'Cleaning deposits from spark plugs', 480000, 15, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHmZEWd_-3eefNEa9puEn2AurT-2MBr0Am6g&s'),
+(3, 2, 'Spark Plug Replacement', 1, 'Installing new spark plugs for better ignition', 840000, 30, 'https://washford.a.bigcontent.io/v1/static/Spark_Plugs_770x470'),
+(3, 2, 'High-Performance Spark Plug Install', 1, 'Upgrading to high-performance spark plugs', 900000, 45, 'https://www.htsaves.com/wp-content/uploads/2024/10/Spark-plug.jpg'),
+(3, 2, 'Ignition System Check', 0, 'Diagnosing and repairing ignition issues', 1440000, 60, 'https://marvel-b1-cdn.bc0a.com/f00000000270529/s19536.pcdn.co/wp-content/uploads/2023/09/ignition-feature-1000x500.jpg'),
+(3, 2, 'Ignition Coil Replacement', 1, 'Installing new ignition coils', 1300000, 45, 'https://uchanics.ca/wp-content/uploads/2023/04/Ignition-Coil-Replacement-Cost-and-Guide-1.jpg'),
+(3, 4, 'Cooling System Flush', 1, 'Draining and refilling coolant system', 2160000, 60, 'https://www.meyle.com/fileadmin/_processed_/4/1/csm_Spuelfuchs_Einsatz_760x507_d724c98cf5.jpg'),
+(3, 4, 'Cooling System Leak Check', 0, 'Identifying leaks in the cooling system', 1440000, 45, 'https://dsportmag.com/wp-content/uploads/2020/08/219-Tech-CoolingSystemPressureCheck-004-Test.jpg'),
+(3, 4, 'Coolant Replacement', 1, 'Replacing old coolant for optimal performance', 1200000, 30, 'https://www.familyhandyman.com/wp-content/uploads/2024/07/GettyImages-586723614-e1720102288877.jpg'),
+(3, 4, 'Radiator Cleaning', 0, 'Removing debris and buildup from radiator', 1680000, 45, 'https://forum.ih8mud.com/attachments/radiator-clog-3-jpg.2036262/'),
+(3, 4, 'Radiator Flush', 0, 'Cleaning the radiator for better cooling', 900000, 30, 'https://www.ranger-forums.com/attachments/engine-drivetrain-122/115471d1501320248-how-radiator-flush-using-flush-kit-dscn0207.jpg'),
+(3, 4, 'Engine Cooling Fan Replacement', 1, 'Replacing the engine cooling fan', 1400000, 60, 'https://automotive.evalube.com/wp-content/uploads/2024/10/shutterstock_2402703163-scaled.jpg'),
 
-(4, 18, 'Battery Load Test', 0, 'Testing battery under load', 400000, 15),
-(4, 18, 'Battery Management System Update', 0, 'Updating BMS software', 900000, 30),
-(4, 18, 'Charging System Check', 0, 'Testing battery and alternator performance', 1200000, 45),
-(4, 18, 'Battery Charging Service', 0, 'Recharging car battery for optimal power', 720000, 30),
-(4, 18, 'Hybrid Battery Balancing', 0, 'Rebalancing hybrid battery cells', 3000000, 90),
-(4, 19, 'Ground Cable Replacement', 1, 'Replacing battery ground cables', 700000, 30),
-(4, 19, 'Battery Terminal Cleaning', 0, 'Cleaning corrosion from battery terminals', 600000, 15),
-(4, 19, 'Battery Terminal Replacement', 1, 'Installing new battery terminals', 960000, 45),
+(4, 18, 'Battery Load Test', 0, 'Testing battery under load', 400000, 15, 'https://i.ytimg.com/vi/qP5r6NB0ypo/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLByxvoLEXqPsH-eQq2eRavonFcsvQ'),
+(4, 18, 'Battery Management System Update', 0, 'Updating BMS software', 900000, 30, 'https://i.ytimg.com/vi/GktGBdKMHIM/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLBqD3A8NT-ZEAuV1R7VGUP8-wLW2A'),
+(4, 18, 'Charging System Check', 0, 'Testing battery and alternator performance', 1200000, 45, 'https://azblogsingle.wpengine.com/wp-content/uploads/2020/12/alternator-testing-man-with-multimeter-5.jpg'),
+(4, 18, 'Battery Charging Service', 0, 'Recharging car battery for optimal power', 720000, 30, 'https://www.mrclutch.com/blog/wp-content/uploads/2024/10/Mechanic_showing_how_to_charge_a_car_battery.webp'),
+(4, 18, 'Hybrid Battery Balancing', 0, 'Rebalancing hybrid battery cells', 3000000, 90, 'https://www.autocareplus.com/electrifiedauto/wp-content/uploads/sites/6/2022/02/Battery-work.jpg'),
+(4, 19, 'Ground Cable Replacement', 1, 'Replacing battery ground cables', 700000, 30, 'https://autowiringpro.com/wp-content/uploads/2023/03/1-12.jpg'),
+(4, 19, 'Battery Terminal Cleaning', 0, 'Cleaning corrosion from battery terminals', 600000, 15, 'https://www.autodeal.com.ph/custom/blog-post/header/clean-your-battery-terminals-using-common-household-items-5c63d441dc8f6.jpg'),
+(4, 19, 'Battery Terminal Replacement', 1, 'Installing new battery terminals', 960000, 45, 'https://practicalmechanic.com/wp-content/uploads/2020/07/17-positive-battery-cable-clamp-1.jpg'),
 
-(5, 8, 'Headlight Bulb Replacement', 1, 'Changing old headlight bulbs', 960000, 30),
-(5, 8, 'Tail Light Bulb Replacement', 1, 'Replacing faulty tail light bulbs', 840000, 30),
-(5, 8, 'Interior Light Bulb Replacement', 1, 'Installing new interior light bulbs', 600000, 15),
-(5, 8, 'Adaptive Lighting Calibration', 0, 'Calibrating advanced car lighting', 1200000, 60),
-(5, 8, 'HID/LED Headlight Conversion', 1, 'Upgrading halogen to HID/LED headlights', 2000000, 90),
-(5, 9, 'Fuse Check', 0, 'Inspecting fuses for electrical issues', 480000, 15),
-(5, 9, 'Fuse Replacement', 1, 'Replacing blown fuses', 360000, 15),
-(5, 9, 'Fuse Box Cleaning', 0, 'Cleaning corrosion from fuse box', 720000, 30),
-(5, 9, 'Fuse Box Upgrade', 1, 'Installing an upgraded fuse box', 900000, 45),
-(5, 10, 'Electrical System Diagnosis', 0, 'Checking car’s electrical components', 2400000, 60),
-(5, 10, 'Alternator Check', 0, 'Testing alternator for proper charging', 1200000, 45),
-(5, 10, 'ECU Reprogramming', 0, 'Updating ECU software', 2500000, 90),
-(5, 11, 'Wiring Check', 0, 'Inspecting electrical wiring for damage', 1440000, 45),
-(5, 11, 'Wiring Harness Replacement', 1, 'Installing new wiring harness', 2880000, 90),
-(5, 11, 'Wiring Short Diagnosis', 0, 'Repairing short circuits in wiring', 2160000, 60),
+(5, 8, 'Headlight Bulb Replacement', 1, 'Changing old headlight bulbs', 960000, 30, 'https://www.hella-bulbs.com/storage/app/media/uploaded-files/10114444a_AM0.jpg'),
+(5, 8, 'Tail Light Bulb Replacement', 1, 'Replacing faulty tail light bulbs', 840000, 30, 'https://i.ytimg.com/vi/fxsYV_ZaXzs/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLA1x-ptA7Ue1eDv2tWP7ng7nhg9CA'),
+(5, 8, 'Interior Light Bulb Replacement', 1, 'Installing new interior light bulbs', 600000, 15, 'https://i.ytimg.com/vi/0-DxXcnm-jA/maxresdefault.jpg'),
+(5, 8, 'Adaptive Lighting Calibration', 0, 'Calibrating advanced car lighting', 1200000, 60, 'https://rts.i-car.com/images/crn/15142.jpg'),
+(5, 8, 'HID/LED Headlight Conversion', 1, 'Upgrading halogen to HID/LED headlights', 2000000, 90, 'https://carfromjapan.com/wp-content/uploads/2016/12/hid-kit-install.jpg'),
+(5, 9, 'Fuse Check', 0, 'Inspecting fuses for electrical issues', 480000, 15, 'https://reliable-auto.com/wp-content/uploads/2019/12/car-fuses-1.jpg'),
+(5, 9, 'Fuse Replacement', 1, 'Replacing blown fuses', 360000, 15, 'https://carpart.com.au/uploads/blog/355370/checking-a-car-fuse-1680842634.jpeg'),
+(5, 9, 'Fuse Box Cleaning', 0, 'Cleaning corrosion from fuse box', 720000, 30, 'https://www.chemtronics.com/content/images/thumbs/0001955_ultimate-guide-to-contact-cleaners.jpeg'),
+(5, 9, 'Fuse Box Upgrade', 1, 'Installing an upgraded fuse box', 900000, 45, 'https://www.eurocartech.pro/Files/Images/Blog/AdobeStock_118240295.jpeg'),
+(5, 10, 'Electrical System Diagnosis', 0, 'Checking car’s electrical components', 2400000, 60, 'https://www.motor.com/wp-content/uploads/2024/07/featured-electrical-diag-0923-qdgsvkxhd6x8d7188qjbq3b8gbge4h0trp0504uk02.jpeg'),
+(5, 10, 'Alternator Check', 0, 'Testing alternator for proper charging', 1200000, 45, 'https://i.ytimg.com/vi/AbCiWkQQtLw/maxresdefault.jpg'),
+(5, 10, 'ECU Reprogramming', 0, 'Updating ECU software', 2500000, 90, 'https://www.ecu-repairs.com/wp-content/uploads/2023/08/ecu-remapping.jpg'),
+(5, 11, 'Wiring Check', 0, 'Inspecting electrical wiring for damage', 1440000, 45, 'https://dsportmag.com/wp-content/uploads/2018/02/189-Tech-ElectricalGremlins-005-Fuses.jpg'),
+(5, 11, 'Wiring Harness Replacement', 1, 'Installing new wiring harness', 2880000, 90, 'https://www.wiringo.com/wp-content/uploads/2019/07/3-7.jpg'),
+(5, 11, 'Wiring Short Diagnosis', 0, 'Repairing short circuits in wiring', 2160000, 60, 'https://m.media-amazon.com/images/S/aplus-media/sc/c9d3ec35-e283-439a-9aed-d410c6d3446b.__CR0,0,1464,600_PT0_SX1464_V1___.jpg'),
 
-(6, 10, 'Windshield Wiper Motor Replacement', 1, 'Replacing wiper motor', 1500000, 45),
-(6, 12, 'AC Gas Refill', 1, 'Refilling air conditioning refrigerant', 1920000, 60),
-(6, 12, 'AC Compressor Check', 0, 'Diagnosing AC compressor performance', 1680000, 45),
-(6, 12, 'AC Gas Leak Detection', 0, 'Identifying leaks in AC refrigerant system', 1200000, 30),
-(6, 13, 'AC Condenser Cleaning', 0, 'Removing dust and debris from AC condenser', 1440000, 45),
-(6, 13, 'AC Condenser Repair', 0, 'Fixing leaks or clogs in AC condenser', 2880000, 75),
-(6, 13, 'AC Condenser Replacement', 1, 'Installing new AC condenser', 4320000, 90),
-(6, 13, 'AC System Diagnostics', 0, 'Checking AC performance and detecting issues', 2160000, 60),
-(6, 13, 'AC Vent Cleaning', 0, 'Removing dust from AC vents for better airflow', 1440000, 30),
-(6, 14, 'Air Filter Cleaning', 0, 'Removing dust from air filter', 600000, 15),
-(6, 14, 'Air Filter Replacement', 1, 'Installing new air filter', 960000, 30),
-(6, 14, 'AC Filter Replacement', 1, 'Installing a new air conditioning filter', 1200000, 45),
-(6, 14, 'AC Expansion Valve Replacement', 1, 'Installing new expansion valve', 1400000, 60),
+(6, 10, 'Windshield Wiper Motor Replacement', 1, 'Replacing wiper motor', 1500000, 45, 'https://content.instructables.com/F3E/ACJ1/G68GWS5K/F3EACJ1G68GWS5K.jpg?auto=webp&fit=bounds&frame=1&height=1024&width=1024auto=webp&frame=1&height=150'),
+(6, 12, 'AC Gas Refill', 1, 'Refilling air conditioning refrigerant', 1920000, 60, 'https://i.ytimg.com/vi/Xc4x17dnc9Q/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGGUgTihGMA8=&rs=AOn4CLDkGhp1BMRoQZ3fN6yWBSwC_buSuw'),
+(6, 12, 'AC Compressor Check', 0, 'Diagnosing AC compressor performance', 1680000, 45, 'https://res.cloudinary.com/total-dealer/image/upload/w_3840,f_auto,q_75/v1/production/zejr355c65jx3uhkzmcjdb477dr1'),
+(6, 12, 'AC Gas Leak Detection', 0, 'Identifying leaks in AC refrigerant system', 1200000, 30, 'https://www.2carpros.com/images/articles/original/air-conditioner-leak-detector-sniffer.jpg'),
+(6, 13, 'AC Condenser Cleaning', 0, 'Removing dust and debris from AC condenser', 1440000, 45, 'https://www.shutterstock.com/shutterstock/videos/1023388285/thumb/1.jpg?ip=x480'),
+(6, 13, 'AC Condenser Repair', 0, 'Fixing leaks or clogs in AC condenser', 2880000, 75, 'https://i.ytimg.com/vi/d30mJhSjXEw/maxresdefault.jpg'),
+(6, 13, 'AC Condenser Replacement', 1, 'Installing new AC condenser', 4320000, 90, 'https://myjackfrost.com.au/wp-content/uploads/2022/05/car-ac-condenser.webp'),
+(6, 13, 'AC System Diagnostics', 0, 'Checking AC performance and detecting issues', 2160000, 60, 'https://zimaautomotive.com/wp-content/uploads/2023/08/Zima-AC-2.jpeg'),
+(6, 13, 'AC Vent Cleaning', 0, 'Removing dust from AC vents for better airflow', 1440000, 30, 'https://www.moje-auto.pl/wp-content/uploads/2024/10/19-075_MOJE_AUTO_-_Preparat_do_Czyszczenia_Nawieww_600ml_5_670f6f14a54e3-650x433.jpg'),
+(6, 14, 'AC Filter Cleaning', 0, 'Removing dust from air filter', 600000, 15, 'https://www.motorbeam.com/wp-content/uploads/Clean-Your-Air-Filter.jpg'),
+(6, 14, 'AC Filter Replacement', 1, 'Installing a new air conditioning filter', 1200000, 45, 'https://di-uploads-pod28.dealerinspire.com/suntruphyundaisouth/uploads/2020/06/Engine-Air-Filter-Replacement_71713481.jpg'),
+(6, 14, 'AC Expansion Valve Replacement', 1, 'Installing new expansion valve', 1400000, 60, 'https://www.socool.sg/wp-content/uploads/2024/08/SBF_expansion_valve.webp'),
 
-(7, 20, 'Shock Absorber Check', 0, 'Inspecting shock absorbers for leaks', 1200000, 30),
-(7, 20, 'Shock Absorber Replacement', 1, 'Installing new shock absorbers', 4320000, 90),
-(7, 21, 'Control Arm Inspection', 0, 'Checking control arms for wear and damage', 1200000, 45),
-(7, 21, 'Control Arm Replacement', 1, 'Installing new control arms', 4320000, 90),
-(7, 21, 'Performance Control Arm Upgrade', 1, 'Upgrading to reinforced control arms', 2500000, 75),
-(7, 21, 'Hydraulic Power Steering Service', 0, 'Maintaining hydraulic steering system', 1400000, 60),
-(7, 22, 'Tie Rod End Replacement', 1, 'Installing new tie rod ends', 2880000, 75),
-(7, 22, 'Tie Rod Alignment', 0, 'Adjusting tie rods for proper steering', 1680000, 45),
-(7, 22, 'Steering Rack Adjustment', 0, 'Fine-tuning steering rack', 900000, 30),
-(7, 23, 'Suspension Inspection', 0, 'Checking suspension system components', 1440000, 45),
-(7, 23, 'Suspension Repair', 1, 'Fixing worn suspension components', 4800000, 120),
-(7, 23, 'Suspension Lubrication', 0, 'Lubricating suspension components', 960000, 30),
-(7, 23, 'Suspension Bushing Replacement', 1, 'Replacing worn-out suspension bushings', 2880000, 75),
-(7, 23, 'Underbody Rust Prevention', 0, 'Applying rust-proof coating', 1800000, 60),
-(7, 23, 'Sunroof Leak Repair', 0, 'Sealing sunroof leaks', 1200000, 45),
+(7, 20, 'Shock Absorber Check', 0, 'Inspecting shock absorbers for leaks', 1200000, 30, 'https://motorsolve.co.uk/wp-content/uploads/2020/10/shock-absorber-1024x683.jpeg'),
+(7, 20, 'Shock Absorber Replacement', 1, 'Installing new shock absorbers', 4320000, 90, 'https://motorhills.com/wp-content/uploads/2021/10/Replacing-the-shock-absorber-and-strut-for-a-vehicle.webp'),
+(7, 21, 'Control Arm Inspection', 0, 'Checking control arms for wear and damage', 1200000, 45, 'https://suspensionmfg.com/wp-content/uploads/2024/03/word-image-924-2.jpeg'),
+(7, 21, 'Control Arm Replacement', 1, 'Installing new control arms', 4320000, 90, 'https://i.ytimg.com/vi/3C2bigjqQbs/maxresdefault.jpg'),
+(7, 21, 'Performance Control Arm Upgrade', 1, 'Upgrading to reinforced control arms', 2500000, 75, 'https://cdn11.bigcommerce.com/s-pqjmdlht5a/images/stencil/1280x1280/products/1277/15831/IMG_3344__20908__30698.1718914950.jpg?c=1'),
+(7, 21, 'Hydraulic Power Steering Service', 0, 'Maintaining hydraulic steering system', 1400000, 60, 'https://www.autotrainingcentre.com/wp-content/uploads/2021/09/Sep-30-mechanic-courses.jpg'),
+(7, 22, 'Tie Rod End Replacement', 1, 'Installing new tie rod ends', 2880000, 75, 'https://rparts-sites.s3.amazonaws.com/e462c2e0d9f1da0757c98d083caed71e/design/replace-tie-rod-ends-gm.jpg'),
+(7, 22, 'Tie Rod Alignment', 0, 'Adjusting tie rods for proper steering', 1680000, 45, 'https://hometowneautorepairandtireofwoodbridge.com/blog/wp-content/uploads/2017/01/Tie-rod-adjustment-during-a-wheel-alignment.jpg'),
+(7, 22, 'Steering Rack Adjustment', 0, 'Fine-tuning steering rack', 900000, 30, 'https://i.ytimg.com/vi/vAPV7ownWvY/maxresdefault.jpg'),
+(7, 23, 'Suspension Inspection', 0, 'Checking suspension system components', 1440000, 45, 'https://mytyresite-images.s3-ap-southeast-2.amazonaws.com/news/LegacyUploads/Blog6.jpg'),
+(7, 23, 'Suspension Repair', 1, 'Fixing worn suspension components', 4800000, 120, 'https://www.cbac.com/images/blog/Screenshot_4.jpg'),
+(7, 23, 'Suspension Lubrication', 0, 'Lubricating suspension components', 960000, 30, 'https://media.wd40.co.uk/app/uploads/2020/11/23134713/30010-Gel-Lube-10oz-Straw-Up-Edit.jpg.webp'),
+(7, 23, 'Suspension Bushing Replacement', 1, 'Replacing worn-out suspension bushings', 2880000, 75, 'https://i.ytimg.com/vi/aPbL9HTHZg0/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLCGjxvAJ01sdTbwQGEWfQ9t22vxtA'),
+(7, 23, 'Underbody Rust Prevention', 0, 'Applying rust-proof coating', 1800000, 60, 'https://www.erps.com.au/wp-content/uploads/2019/02/underbody-coating-1030x687.jpg'),
+(7, 23, 'Sunroof Leak Repair', 0, 'Sealing sunroof leaks', 1200000, 45, 'https://www.glassfixitauto.com/wp-content/uploads/2024/12/how-often-do-sunroofs-leak.jpg'),
 
-(8, 15, 'Fuel Pump Cleaning', 0, 'Cleaning fuel pump for better efficiency', 1680000, 45),
-(8, 15, 'Fuel Pump Repair', 0, 'Fixing fuel pump issues', 2400000, 60),
-(8, 15, 'Fuel Pump Replacement', 1, 'Installing new fuel pump', 3600000, 90),
-(8, 15, 'Fuel Rail Cleaning', 0, 'Removing dirt from fuel rails', 900000, 30),
-(8, 16, 'Fuel Filter Replacement', 1, 'Replacing clogged fuel filter', 1200000, 45),
-(8, 17, 'Fuel Injection Tuning', 0, 'Adjusting fuel injection for better efficiency', 2880000, 75),
-(8, 17, 'Fuel Injection Cleaning', 0, 'Cleaning deposits from injectors', 2400000, 60),
-(8, 17, 'Fuel Injector Repair', 0, 'Fixing faulty fuel injectors', 2880000, 75),
-(8, 17, 'Fuel Injector Calibration', 0, 'Adjusting injector spray pattern', 2400000, 60),
-(8, 17, 'Injector Leak Test', 0, 'Testing for fuel injector leaks', 700000, 30),
-(8, 17, 'High-Flow Fuel Injector Install', 1, 'Installing performance fuel injectors', 3000000, 90),
-(8, 17, 'Throttle Body Cleaning', 0, 'Cleaning throttle body for smooth air intake', 800000, 30);
+(8, 15, 'Fuel Pump Cleaning', 0, 'Cleaning fuel pump for better efficiency', 1680000, 45, 'https://www.diesel-electric.co.za/wp-content/uploads/2015/12/cleaning-the-vehicle-fuel-tank.jpg'),
+(8, 15, 'Fuel Pump Repair', 0, 'Fixing fuel pump issues', 2400000, 60, 'https://i.ytimg.com/vi/GuGRb98S8mU/maxresdefault.jpg'),
+(8, 15, 'Fuel Pump Replacement', 1, 'Installing new fuel pump', 3600000, 90, 'https://uchanics.ca/wp-content/uploads/2023/08/Fuel-Pump-Replacement-Cost-and-Guide.jpg'),
+(8, 15, 'Fuel Rail Cleaning', 0, 'Removing dirt from fuel rails', 900000, 30, 'https://www.delphiautoparts.com/images/default-source/theme/masters-of-motion/how-to-clean-a-fuel-injector-masters-of-motion.jpg?sfvrsn=4672b68a_13'),
+(8, 16, 'Fuel Filter Replacement', 1, 'Replacing clogged fuel filter', 1200000, 45, 'https://littlegarageslc.com/wp-content/uploads/2024/02/car-repair-fuel-filter-replacement-.jpg'),
+(8, 17, 'Fuel Injection Tuning', 0, 'Adjusting fuel injection for better efficiency', 2880000, 75, 'https://www.motortrend.com/uploads/2023/08/002-stone_soup_engine.jpg?w=768&width=768&q=75&format=webp'),
+(8, 17, 'Fuel Injection Cleaning', 0, 'Cleaning deposits from injectors', 2400000, 60, 'https://www.thedrive.com/wp-content/uploads/2020/05/02/Fuel-Injectors-Depositphotos_25402615_l-2015.webp?quality=85'),
+(8, 17, 'Fuel Injector Repair', 0, 'Fixing faulty fuel injectors', 2880000, 75, 'https://uchanics.ca/wp-content/uploads/2023/07/Fuel-Injector-Replacement-Cost-and-Guide.jpg'),
+(8, 17, 'Fuel Injector Calibration', 0, 'Adjusting injector spray pattern', 2400000, 60, 'https://cdn.shopify.com/s/files/1/2364/1235/files/When_to_Calibrate_Your_Injection_Pump_480x480.jpg?v=1696338843'),
+(8, 17, 'Injector Leak Test', 0, 'Testing for fuel injector leaks', 700000, 30, 'https://i.ytimg.com/vi/iSp6I3OiaeQ/maxresdefault.jpg'),
+(8, 17, 'High-Flow Fuel Injector Install', 1, 'Installing performance fuel injectors', 3000000, 90, 'https://www.autotrainingcentre.com/wp-content/uploads/2020/07/auto-mechanic-school-10.jpg'),
+(8, 17, 'Throttle Body Cleaning', 0, 'Cleaning throttle body for smooth air intake', 800000, 30, 'https://www.motortrend.com/files/6622c8fca5a1530008deb5b3/007-berryman-b12-chemtool-carburetor-choke-throttle-body-cleaner-in-use.jpg');
 GO
 
 INSERT INTO AccessoryInfo(ServiceID, AccessoryName, Description) VALUES
@@ -552,8 +554,7 @@ INSERT INTO AccessoryInfo(ServiceID, AccessoryName, Description) VALUES
 (99, 'Suspension Struts', 'Replace suspension struts'),
 (101, 'Suspension Bushings', 'Replace suspension bushings'),
 (106, 'Fuel Pump', 'Replace fuel pump'),
-(108, 'Fuel Filter', 'Replace fuel filter'),
-(114, 'High Performance Fuel Injectors', 'Upgrade to high-performance fuel injectors');
+(108, 'Fuel Filter', 'Replace fuel filter');
 GO
 
 CREATE TRIGGER trg_AfterInsert_Branch
@@ -665,19 +666,19 @@ GO
 
 GO
 
-INSERT INTO [Car](UserID, CarName, Brand, RegistrationNumber, [Year], CarImage, [Status]) VALUES 
-(1, 'Car 1', 'Toyota', '123456', 2010, 'https://vov.vn/sites/default/files/styles/large/public/2022-08/289624929_453408263095020_5408162982360432160_n.png', 'Active'),
-(1, 'Car 2', 'Honda', '654321', 2015, 'https://akm-img-a-in.tosshub.com/indiatoday/styles/medium_crop_simple/public/2024-11/1_4.jpg', 'Maintaining'),
-(1, 'Car 3', 'Ford', '987654', 2018, 'https://images.dealer.com/autodata/us/640/2020/USD00FOS372A0/USC80FOS371A01300.jpg', 'Active'),
-(1, 'Car 4', 'BMW', '125478', 2020, '', 'Active'),
-(2, 'Car 1', 'Toyota', '123456', 2010, 'https://vov.vn/sites/default/files/styles/large/public/2022-08/289624929_453408263095020_5408162982360432160_n.png', 'Active'),
-(2, 'Car 2', 'Honda', '654321', 2015, 'https://akm-img-a-in.tosshub.com/indiatoday/styles/medium_crop_simple/public/2024-11/1_4.jpg', 'Maintaining'),
-(2, 'Car 3', 'Ford', '987654', 2018, 'https://images.dealer.com/autodata/us/640/2020/USD00FOS372A0/USC80FOS371A01300.jpg', 'Active'),
-(2, 'Car 4', 'BMW', '125478', 2020, '', 'Active');
+INSERT INTO [Car](UserID, CarName, Brand, RegistrationNumber, [Year], [Status]) VALUES 
+(1, 'Car 1', 'Toyota', '123456', 2010, 'Active'),
+(1, 'Car 2', 'Honda', '654321', 2015, 'Maintaining'),
+(1, 'Car 3', 'Ford', '987654', 2018, 'Active'),
+(1, 'Car 4', 'BMW', '125478', 2020, 'Active'),
+(2, 'Car 1', 'Toyota', '123456', 2010, 'Active'),
+(2, 'Car 2', 'Honda', '654321', 2015, 'Maintaining'),
+(2, 'Car 3', 'Ford', '987654', 2018, 'Active'),
+(2, 'Car 4', 'BMW', '125478', 2020, 'Active');
 GO
 
 INSERT INTO [Order] (UserID, CarID, BranchID, PartID, ServiceID, QuantityUsed)
-VALUES (2, 1, 1, 8, 114, 2);
+VALUES (2, 1, 1, 8, 113, 2);
 GO
 
 

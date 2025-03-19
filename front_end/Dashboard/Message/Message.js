@@ -1,6 +1,5 @@
 const urlParams = new URLSearchParams(window.location.search);
 const url_id = urlParams.get("ID");
-const url_name = urlParams.get("Name");
 
 const body = document.getElementById('message-right-body');
 const messageInput = document.getElementById('message-input');
@@ -12,6 +11,7 @@ let ReceiverID = 0;
 let firstIndex = 0;
 let count = 15;
 const intervals = []
+let group = [];
 
 window.onload = async () => {
     // left 
@@ -23,21 +23,34 @@ window.onload = async () => {
     autoResize(messageInput);
 
     if (url_id != null) {
-        let item = userList.querySelector(`div[message-item-id="${url_id}"]`)
-        if (item == null) {
-            // not exist
-            AddUser(url_id, url_name, '')
-            switchUser(url_id, url_name)
-            MoveUserToTop(url_id, null);
-        } else {
-            // exist
-            switchUser(url_id, url_name)
-            MoveUserToTop(url_id, null);
+        if (url_id == 0) {
+            if (localStorage.getItem('group') != null)
+                await switchGroup();
         }
-    } else {
-        loadMessages();
+        else {
+            let item = userList.querySelector(`div[message-item-id="${url_id}"]`)
+            let url_name = await fetch('http://localhost:3000/CustomerManager/getUserInfo', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                },
+                body: JSON.stringify({ id: url_id })
+            })
+                .then(response => response.json())
+                .then(result => { return result.FirstName + ' ' + result.LastName })
+            if (item == null) {
+                // not exist
+                AddUser(url_id, url_name, '')
+                switchUser(url_id, url_name)
+                MoveUserToTop(url_id, null);
+            } else {
+                // exist
+                switchUser(url_id, url_name)
+                MoveUserToTop(url_id, null);
+            }
+        }
     }
-
 }
 
 // click send message
@@ -51,20 +64,47 @@ document.getElementById("send-message").addEventListener("click", async function
     }
     const name = "You";
     const date = new Date();
-
     messageInput.value = "";
     autoResize(messageInput);
     let message = await addMessageRight(0, name, content, date.toLocaleString(), 'new');
-    MoveUserToTop(ReceiverID, content);
 
-    const id = await Send({ content: content, ReceiverID: ReceiverID });
-    if (id != -1) {
+    if (ReceiverID == 0) {
+        for (let userid of group) {
+            const id = await Send({ content: content, ReceiverID: userid });
+            let item = userList.querySelector(`div[message-item-id="${userid}"]`)
+            if (item == null) {
+                // not exist
+                let user_name = await fetch('http://localhost:3000/CustomerManager/getUserInfo', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    },
+                    body: JSON.stringify({ id: userid })
+                })
+                    .then(response => response.json())
+                    .then(result => { return result.FirstName + ' ' + result.LastName })
+                AddUser(userid, user_name, content, id)
+                MoveUserToTop(userid, content, id);
+            } else {
+                // exist
+                MoveUserToTop(userid, content, id);
+            }
+        }
         message.querySelector(".status").innerHTML = `<span class="material-icons">check_circle</span>`;
     } else {
-        message.querySelector(".status").innerHTML = `<span class="material-icons" style="color: orangered;">error</span>`;
+        MoveUserToTop(ReceiverID, content);
+
+        const id = await Send({ content: content, ReceiverID: ReceiverID });
+        if (id != -1) {
+            message.querySelector(".status").innerHTML = `<span class="material-icons">check_circle</span>`;
+        } else {
+            message.querySelector(".status").innerHTML = `<span class="material-icons" style="color: orangered;">error</span>`;
+        }
+
+        message.setAttribute('msg-id', id);
     }
 
-    message.setAttribute('msg-id', id);
 });
 document.getElementById("message-input").addEventListener("keyup", function (event) {
     if (event.key === 'Enter') {
@@ -226,6 +266,10 @@ const GetList = async () => {
         intervals.forEach(intervalID => clearInterval(intervalID));
         for (let user of list) {
             AddUser(user.ContactID, user.ContactName, user.LastMessage, user.LastMessageID)
+            if (ReceiverID == 0) {
+                ReceiverID = user.ContactID
+                switchUser(ReceiverID, user.ContactName)
+            }
             intervals.push(setInterval(async () => { check(user.ContactID); }, 2000))
         }
     } catch (error) {
@@ -243,6 +287,25 @@ const switchUser = (id, name) => {
     firstIndex = 0;
     headerUsername.innerHTML = name;
     loadMessages();
+}
+
+// switch group
+const switchGroup = async () => {
+    ReceiverID = 0;
+    group = JSON.parse(localStorage.getItem('group'));
+    localStorage.removeItem('group');
+    let name = await fetch('http://localhost:3000/CustomerManager/getUserInfo', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        },
+        body: JSON.stringify({ id: group[0] })
+    })
+        .then(response => response.json())
+        .then(result => { return result.FirstName })
+    headerUsername.innerHTML = name + ' và ' + (group.length - 1) + ' người khác';
+    body.innerHTML = "";
 }
 
 // add user 
@@ -341,3 +404,8 @@ const check = async (id) => {
             }
         })
 }
+
+document.getElementById('message-right-header-action-btn').addEventListener('click', () => {
+    if (ReceiverID == 0) return
+    window.location.href = `/front_end/Dashboard/CustomerProfile/CustomerProfile.html?ID=${ReceiverID}`;
+})

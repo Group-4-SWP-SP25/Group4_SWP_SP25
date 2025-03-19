@@ -13,7 +13,7 @@ async function getServiceTypeList() {
 
         const type = `
                     <div class="type">
-                        <img src="${item.ServiceImage}"/>
+                        <img src="${item.ServiceTypeImage}"/>
                         <div class="type-overlay">
                             <h2>${item.ServiceTypeName} Service</h2>
                             <br/>

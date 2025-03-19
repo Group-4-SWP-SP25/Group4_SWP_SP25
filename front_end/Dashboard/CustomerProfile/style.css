@@ -221,7 +221,10 @@ body {
 }
 
 .btn {
-    display: inline-block;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
     font-size: 16px;
     padding: 10px 20px;
     border: none;
@@ -246,13 +249,15 @@ body {
     color: white;
 }
 
-.btn-edit {
+.btn-edit,
+.btn-accept {
     background-color: #31a8ff;
     color: #ffffff;
     width: 200px;
 }
 
-.btn-edit:hover {
+.btn-edit:hover,
+.btn-accept:hover {
     background-color: #007ed9;
 }
 
@@ -284,13 +289,30 @@ body {
     object-position: center;
 }
 
+.user-info input {
+    height: 100%;
+    background-color: #1e1e1e;
+    color: #ffffff;
+    border: 1px solid #444444;
+    font-size: 1em;
+}
+
+.user-info input::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+}
+
 #user-avatar:hover {
     cursor: pointer;
 }
 
 #user-name {
+    height: 70px;
     font-size: 34px;
     margin: 0;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .user-info .details ul {
@@ -302,10 +324,12 @@ body {
 }
 
 .user-info .details li {
+    height: 70px;
     list-style: none;
     display: flex;
+    align-items: center;
     border-bottom: solid 1px #33334d;
-    padding: 20px;
+    padding: 10px;
 }
 
 .user-info .details li span {

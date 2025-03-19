@@ -25,6 +25,7 @@ async function getServiceTypeDetailByName() {
 
         const typeDetail = `
                         <tr>
+                            <td><img src="${item.ServiceImage} width="200" height="150"></td>
                             <td>${item.ServiceName}</td>
                             <td>${item.ServiceDescription}</td>
                             <td style="text-align: center; width: 15%">${item.EstimatedTime}</td>
