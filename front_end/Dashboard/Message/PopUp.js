@@ -176,7 +176,10 @@ doneButton.addEventListener('click', () => {
         }
     } else {
         // mutil message
-        alert('funtion not done yet!')
-        console.log(ListHeader)
+        let group = []
+        for (let item of ListHeader) group.push(item[0])
+        localStorage.setItem('group', JSON.stringify(group))
+        switchGroup();
+        togglePopup()
     }
 })
