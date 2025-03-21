@@ -82,7 +82,7 @@ async function GetTimeLine(date, controller) {
         timeline_loader.style.display = 'none';
     }
     catch (error) {
-        console.log(error)
+        // console.log(error)
     }
 }
 
@@ -101,17 +101,11 @@ async function AddTimeLine(event) {
         </span>
     `
 
-    if (startHour < 7) {
-        return
-    } else if (startHour < 11) {
-        item.classList.add(`col-start-${startHour - 5}`);
-        item.classList.add(`col-end-${endHour - 5}`);
-    } else if (startHour < 17) {
-        item.classList.add(`col-start-${startHour - 6}`);
-        item.classList.add(`col-end-${endHour - 6}`);
-    } else {
-        return
-    }
+    item.classList.add(`col-start-${startHour - 5}`);
+    item.setAttribute('start', startHour);
+    item.classList.add(`col-end-${endHour - 5}`);
+    item.setAttribute('end', endHour);
+
 
     employee.appendChild(item);
 }
@@ -140,6 +134,10 @@ async function GetEmployees() {
         employee_container.style.display = 'grid';
         document.getElementById('timeline-item-loader').style.display = 'none';
         document.getElementById('employee-loader').style.display = 'none';
+        document.getElementById('add-timeline').addEventListener('click', () => {
+            togglePopup();
+        });
+
     }
     catch (error) {
         console.log(error)
@@ -150,10 +148,9 @@ async function AddEmployee(employee) {
     let item = document.createElement("div");
     item.classList.add(`timeline-item`);
     item.classList.add(`grid`);
-    item.classList.add(`grid-cols-11`);
+    item.classList.add(`grid-cols-12`);
     item.setAttribute('timeline-item-id', employee.UserID)
 
-    await AddEmployeeCard(employee);
     // avatar
     let linkAvatar = null;
     try {
@@ -180,7 +177,16 @@ async function AddEmployee(employee) {
         linkAvatar = "/resource/admin.jpg";
     }
 
+    AddEmployeeCard(employee, linkAvatar);
+    AddEmployeePopup(employee.UserID, employee.FirstName + ' ' + employee.LastName, linkAvatar);
 
+    item.addEventListener('click', () => {
+        Choose_employee = employee.UserID
+        document.querySelector('.employee-select-btn').innerHTML = employee.FirstName + ' ' + employee.LastName
+        document.querySelector('.employee-select-btn').style.color = 'white';
+        PopupDate.value = currentDay.getFullYear() + '-' + format(currentDay.getMonth() + 1) + '-' + format(currentDay.getDate());
+        togglePopup()
+    })
     item.innerHTML = `
         <div class="employee ...">
             <img src="${linkAvatar}" alt="employee">

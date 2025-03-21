@@ -13,6 +13,14 @@ function format(number) {
     return number < 10 ? `0${number}` : number;
 }
 
+document.getElementById('calendar-today').addEventListener('click', () => {
+    today = new Date();
+    currentYear = today.getFullYear();
+    currentMonthIndex = today.getMonth();
+    renderCalendar(currentYear, currentMonthIndex);
+});
+
+
 document.addEventListener("DOMContentLoaded", function () {
 
     renderCalendar(currentYear, currentMonthIndex);
@@ -69,6 +77,7 @@ async function renderCalendar(year, month) {
             calendarDays.appendChild(dayElement);
         }
     }
+
 
     // Hủy bỏ tất cả các `AbortController` cũ
     controllers.forEach(controller => controller.abort());
@@ -151,6 +160,9 @@ async function GetEvents(year, month, controller) {
                 item.className = 'day haveevent-high'
             } else {
                 item.className = 'day haveevent-full'
+            }
+            if (day == today.getDate()) {
+                item.classList.add("today");
             }
         }
     } catch (error) {

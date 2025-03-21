@@ -117,6 +117,41 @@ body {
     font-size: 14px;
 }
 
+.custom-scrollbar {
+    overflow-y: auto;
+    /* overflow-x: auto; */
+    /* Bật tính năng cuộn dọc */
+    height: 100%;
+    /* Chiều cao của container */
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+    /* Độ rộng của thanh cuộn */
+    transition: width 0.3s, height 0.3s;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: #333;
+    /* Màu nền của track */
+    border-radius: 10px;
+    /* Bo tròn track */
+
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #555;
+    /* Màu của thanh cuộn */
+    border-radius: 10px;
+    /* Bo tròn thanh cuộn */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #888;
+    /* Màu của thanh cuộn khi hover */
+}
+
+
 /* ------------------- */
 
 .path {
@@ -127,12 +162,25 @@ body {
 
 .container {
     width: 90%;
+    height: 1000px;
+    min-width: 1000px;
     margin: 20px auto;
     background: #1e1e1e;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-    overflow-x: auto;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    display: flex;
+}
+
+.container .container-item {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 }
 
 
@@ -182,11 +230,13 @@ body {
     color: white;
     font-family: Arial, sans-serif;
     transition: background-color 0.3s ease, color 0.3s ease;
+    text-align: center;
 }
 
 .btn-delete {
     background-color: #f8d7da;
     color: #d9534f;
+    width: 200px;
 }
 
 .btn-delete:hover {
@@ -197,8 +247,277 @@ body {
 .btn-edit {
     background-color: #31a8ff;
     color: #ffffff;
+    width: 200px;
 }
 
 .btn-edit:hover {
     background-color: #007ed9;
+}
+
+.btn-message {
+    background-color: #28a745;
+    color: #ffffff;
+    width: 200px;
+}
+
+.btn-message:hover {
+    background-color: #218838;
+}
+
+.container .user-info {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.container .user-info img {
+    width: 175px;
+    height: 175px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+    object-fit: cover;
+    object-position: center;
+}
+
+#user-name {
+    font-size: 34px;
+    margin: 0;
+}
+
+.user-info .details ul {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+}
+
+.user-info .details li {
+    list-style: none;
+    display: flex;
+    border-bottom: solid 1px #33334d;
+    padding: 20px;
+}
+
+.user-info .details li span {
+    font-weight: bold;
+    margin-right: 20px;
+}
+
+.user-info .details li p {
+    margin: 0;
+}
+
+.container .car-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* padding: 20px; */
+    width: 100%;
+    height: 70%;
+    flex-direction: column;
+}
+
+
+.btn-add {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 40px;
+    height: 30px;
+    background-color: #333;
+}
+
+.btn-add:hover {
+    background-color: #007bff;
+}
+
+.car-info-head {
+    height: 20%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 34px;
+    /* margin: 20px; */
+}
+
+.car-info-body {
+    height: 75%;
+    width: 100%;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    flex-direction: column;
+    /* padding: 20px; */
+}
+
+.car-info-footer {
+    height: 5%px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.previous-car,
+.next-car {
+    height: 100%;
+    padding: 5px 10px;
+}
+
+.previous-car:hover,
+.next-car:hover {
+    background-color: #444;
+    cursor: pointer;
+}
+
+.edit-car-btn {
+    display: flex;
+    align-items: center;
+    padding: 5px 40px;
+    height: 100%;
+    background-color: #333;
+    gap: 10px;
+}
+
+.edit-car-btn:hover {
+    background-color: #007bff;
+    cursor: pointer;
+}
+
+.car-info-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.car-info img {
+    width: 375px;
+    height: 175px;
+    border-radius: 5%;
+    margin-bottom: 20px;
+}
+
+.car-info-detail ul {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+}
+
+.car-info-detail {
+    width: 100%;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.car-info-detail li {
+    list-style: none;
+    display: flex;
+    border-bottom: solid 1px #33334d;
+    padding: 20px;
+}
+
+.car-info-detail li span {
+    font-weight: bold;
+    margin-right: 20px;
+}
+
+.car-info-detail li p {
+    margin: 0;
+}
+
+
+.history {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: flex-start;
+    /* padding: 20px; */
+    width: 100%;
+    height: 40%;
+}
+
+.history-head {
+    display: flex;
+    align-items: flex-start;
+    height: 20%;
+    width: 100%;
+    justify-content: space-between;
+    font-size: 34px;
+}
+
+.history-body {
+    height: 80%;
+    overflow-y: hidden;
+    width: 100%;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 18px;
+    text-align: left;
+    border-radius: 10px;
+}
+
+thead,
+tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
+table thead {
+    table-layout: fixed;
+    background-color: #555;
+}
+
+tbody {
+    display: block;
+    max-height: 150px;
+    /* Chiều cao tối đa cho phần nội dung cuộn */
+    overflow-y: auto;
+    overflow-x: hidden;
+    /* Kích hoạt cuộn dọc */
+}
+
+table th,
+table td {
+    /* background-color: #33334d; */
+    color: white;
+    padding: 10px 20px;
+}
+
+table td {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+table tr {
+    border-bottom: solid 1px #33334d;
+    height: 40px;
+}
+
+table tr:hover {
+    background-color: #222;
+}
+
+.complete {
+    color: #28a745;
+}
+
+.inprogress {
+    color: yellow;
+}
+
+.cancel {
+    color: #dc3545;
 }

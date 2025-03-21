@@ -24,6 +24,7 @@ $(document).ready(async function () {
     case "Admin":
       $("#my-cars").addClass("hidden");
       $("#my-orders").addClass("hidden");
+      $("#payment-invoice").addClass("hidden");
       break;
     case "User":
       $("#dashboard").addClass("hidden");
@@ -65,3 +66,37 @@ $(document).click(function () {
   $(".user-info").slideUp(500);
   $(".fa-user").removeClass("active");
 });
+
+const searchInput = document.querySelector(".search-bar input");
+
+searchInput.addEventListener("keyup", (event) => {
+  if (event.key === "Enter") {
+    const searchTerm = searchInput.value.trim();
+    searchServices(searchTerm);
+  }
+});
+
+async function searchServices(searchTerm) {
+  try {
+    const response = await fetch("http://localhost:3000/searchService", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ input: searchTerm }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const results = await response.json();
+
+    window.location.href = `/front_end/serviceSearch/serviceSearch.html?results=${encodeURIComponent(
+      JSON.stringify(results)
+    )}&searchTerm=${searchTerm}`;
+  } catch (error) {
+    console.error("Error searching services:", error);
+    alert("An error occurred while searching.");
+  }
+}
