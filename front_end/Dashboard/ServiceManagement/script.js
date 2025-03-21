@@ -18,6 +18,7 @@ let chosenServiceName = null; // chosen row data
 let chosenServiceDescription = null; // chosen row data
 let chosenServicePrice = null; // chosen row data
 let chosenEstimatedTime = null; // chosen row data
+let chosenServiceImage = null; // chosen row data
 let oldServiceData = []; // store old render table
 let maxServiceID; // max current serviceID
 let maxServiceTypeID; // max current serviceTypeID
@@ -225,6 +226,7 @@ function showUpdatePopup(element) {
     chosenServiceDescription = data[4].children[0].value = element.dataset.servicedescription;
     chosenServicePrice = data[5].children[0].value = element.dataset.serviceprice;
     chosenEstimatedTime = data[6].children[0].value = element.dataset.estimatedtime;
+    chosenServiceImage = data[7].children[0].value = element.dataset.serviceimage;
 
     // listen change
     const idSelect = data[0].children[0];
@@ -266,19 +268,23 @@ function showUpdatePopup(element) {
     });
 
     data[3].children[0].addEventListener('change', () => {
-        chosenServiceName = setStrValue(data[3].children[0], chosenServiceName, 'Unnamed Service');
+        chosenServiceName = setStrValue(data[3].children[0], chosenServiceName, chosenServiceName);
     });
 
     data[4].children[0].addEventListener('change', () => {
-        chosenServiceDescription = setStrValue(data[4].children[0], chosenServiceDescription, 'No Description');
+        chosenServiceDescription = setStrValue(data[4].children[0], chosenServiceDescription, chosenServiceDescription);
     });
 
     data[5].children[0].addEventListener('change', () => {
-        chosenServicePrice = setNumValue(data[5].children[0], chosenServicePrice, 1000);
+        chosenServicePrice = setNumValue(data[5].children[0], chosenServicePrice, chosenServicePrice);
     });
 
     data[6].children[0].addEventListener('change', () => {
-        chosenEstimatedTime = setNumValue(data[6].children[0], chosenEstimatedTime, 15);
+        chosenEstimatedTime = setNumValue(data[6].children[0], chosenEstimatedTime, chosenEstimatedTime);
+    });
+
+    data[7].children[0].addEventListener('change', () => {
+        chosenServiceImage = setStrValue(data[7].children[0], chosenServiceImage, chosenServiceImage);
     });
 
     popupModify.classList.remove('hidden');
@@ -290,7 +296,7 @@ function hideUpdatePopup() {
     data.forEach((datum) => {
         datum.children[0].value = '';
     });
-    chosenServiceID = chosenServiceTypeID = chosenServicePartID = chosenServiceName = chosenServiceDescription = chosenServicePrice = null; // reset variable data
+    chosenServiceID = chosenServiceTypeID = chosenServicePartID = chosenServiceName = chosenServiceDescription = chosenServicePrice = chosenEstimatedTime = chosenServiceImage = null; // reset variable data
     popupModify.querySelector('.btn-yes').removeEventListener('click', confirmUpdatePopup); // reset yes button
     popupModify.querySelector('.btn-no').removeEventListener('click', hideUpdatePopup); // reset no button
 
@@ -299,21 +305,13 @@ function hideUpdatePopup() {
 }
 
 async function confirmUpdatePopup() {
-    if (chosenServiceID) {
-        // Kiểm tra xem ServiceName đã tồn tại chưa (trừ khi tên không thay đổi)
-        if (chosenServiceName !== document.querySelector(`[data-serviceid="${chosenServiceID}"]`).dataset.servicename && (await isServiceNameExists(chosenServiceName))) {
-            alert('Service Name already exists. Please enter a different name.');
-            return; // Không thực hiện update nếu tên đã tồn tại
-        }
-
-        updateService(chosenServiceID, chosenServiceTypeID, chosenServicePartID, chosenServiceName, chosenServiceDescription, chosenServicePrice, chosenEstimatedTime);
-    }
+    updateService(chosenServiceID, chosenServiceTypeID, chosenServicePartID, chosenServiceName, chosenServiceDescription, chosenServicePrice, chosenEstimatedTime, chosenServiceImage);
 
     // reset display data
     data.forEach((datum) => {
         datum.children[0].value = '';
     });
-    chosenServiceID = chosenServiceTypeID = chosenServicePartID = chosenServiceName = chosenServiceDescription = chosenServicePrice = null; // reset variable data
+    chosenServiceID = chosenServiceTypeID = chosenServicePartID = chosenServiceName = chosenServiceDescription = chosenServicePrice = chosenEstimatedTime = chosenServiceImage = null; // reset variable data
     popupModify.querySelector('.btn-yes').removeEventListener('click', confirmUpdatePopup); // reset yes button
     popupModify.querySelector('.btn-no').removeEventListener('click', hideUpdatePopup); // reset no button
 
@@ -321,7 +319,7 @@ async function confirmUpdatePopup() {
     overlay.classList.add('hidden');
 }
 
-async function updateService(ServiceID, ServiceTypeID, ServicePartID, ServiceName, ServiceDescription, ServicePrice, EstimatedTime) {
+async function updateService(ServiceID, ServiceTypeID, ServicePartID, ServiceName, ServiceDescription, ServicePrice, EstimatedTime, ServiceImage) {
     try {
         const response = await fetch('http://localhost:3000/updateServiceById', {
             method: 'POST',
@@ -333,7 +331,8 @@ async function updateService(ServiceID, ServiceTypeID, ServicePartID, ServiceNam
                 name: ServiceName,
                 description: ServiceDescription,
                 price: ServicePrice,
-                estTime: EstimatedTime
+                estTime: EstimatedTime,
+                image: ServiceImage
             })
         });
     } catch (err) {
@@ -356,6 +355,7 @@ function showAddPopup() {
     chosenServiceDescription = data[4].children[0].value = 'No Description';
     chosenServicePrice = data[5].children[0].value = 1000;
     chosenEstimatedTime = data[6].children[0].value = 15;
+    chosenServiceImage = data[7].children[0].value = 'https://via.placeholder.com/1';
 
     // listen change
     const typeSelect = data[1].children[0];
@@ -424,6 +424,16 @@ function showAddPopup() {
         chosenEstimatedTime = setNumValue(data[6].children[0], chosenEstimatedTime, 15);
     });
 
+    data[7].children[0].addEventListener('change', () => {
+        chosenServiceImage = setStrValue(data[7].children[0], chosenServiceImage, 'https://via.placeholder.com/1');
+    });
+    data[7].children[0].addEventListener('focus', () => {
+        data[7].children[0].value = '';
+    });
+    data[7].children[0].addEventListener('blur', () => {
+        chosenServiceImage = setStrValue(data[7].children[0], chosenServiceImage, 'https://via.placeholder.com/1');
+    });
+
     popupModify.classList.remove('hidden');
     overlay.classList.remove('hidden');
 }
@@ -434,7 +444,7 @@ function hideAddPopup() {
         datum.children[0].value = '';
     });
     data[0].children[0].remove(0); // reset variable data
-    chosenServiceID = chosenServiceTypeID = chosenServicePartID = chosenServiceName = chosenServiceDescription = chosenServicePrice = chosenEstimatedTime = null; // reset variable data
+    chosenServiceID = chosenServiceTypeID = chosenServicePartID = chosenServiceName = chosenServiceDescription = chosenServicePrice = chosenEstimatedTime = chosenServiceImage = null; // reset variable data
     popupModify.querySelector('.btn-yes').removeEventListener('click', confirmAddPopup); // reset yes button
     popupModify.querySelector('.btn-no').removeEventListener('click', hideAddPopup); // reset no button
 
@@ -450,7 +460,7 @@ async function confirmAddPopup() {
             return;
         }
 
-        addService(chosenServiceTypeID, chosenServicePartID, chosenServiceName, chosenServiceDescription, chosenServicePrice, chosenEstimatedTime);
+        addService(chosenServiceTypeID, chosenServicePartID, chosenServiceName, chosenServiceDescription, chosenServicePrice, chosenEstimatedTime, chosenServiceImage);
     }
 
     // reset display data
@@ -458,7 +468,7 @@ async function confirmAddPopup() {
         datum.children[0].value = '';
     });
     data[0].children[0].remove(0);
-    chosenServiceID = chosenServiceTypeID = chosenServicePartID = chosenServiceName = chosenServiceDescription = chosenServicePrice = chosenEstimatedTime = null; // reset variable data
+    chosenServiceID = chosenServiceTypeID = chosenServicePartID = chosenServiceName = chosenServiceDescription = chosenServicePrice = chosenEstimatedTime = chosenServiceImage = null; // reset variable data
     popupModify.querySelector('.btn-yes').removeEventListener('click', confirmAddPopup); // reset yes button
     popupModify.querySelector('.btn-no').removeEventListener('click', hideAddPopup); // reset no button
 
@@ -466,7 +476,7 @@ async function confirmAddPopup() {
     overlay.classList.add('hidden');
 }
 
-async function addService(ServiceTypeID, ServicePartID, ServiceName, ServiceDescription, ServicePrice, EstimatedTime) {
+async function addService(ServiceTypeID, ServicePartID, ServiceName, ServiceDescription, ServicePrice, EstimatedTime, ServiceImage) {
     try {
         const response = await fetch('http://localhost:3000/addService', {
             method: 'POST',
@@ -477,13 +487,42 @@ async function addService(ServiceTypeID, ServicePartID, ServiceName, ServiceDesc
                 name: ServiceName,
                 description: ServiceDescription,
                 price: ServicePrice,
-                estTime: EstimatedTime
+                estTime: EstimatedTime,
+                image: ServiceImage
             })
         });
     } catch (err) {
         console.error('Error adding service:', err);
     }
 }
+
+// Handle hide popup
+function hidePopup() {
+    popupDelete.classList.add('hidden');
+    popupModify.classList.add('hidden');
+    overlay.classList.add('hidden');
+
+    // Reset các biến liên quan đến popup
+    chosenServiceID = chosenServiceTypeID = chosenServicePartID = chosenServiceName = chosenServiceDescription = chosenServicePrice = chosenEstimatedTime = chosenServiceImage = null;
+
+    // Gỡ bỏ các trình xử lý sự kiện (nếu cần)
+    popupModify.querySelector('.btn-yes').removeEventListener('click', confirmUpdatePopup);
+    popupModify.querySelector('.btn-no').removeEventListener('click', hideUpdatePopup);
+    popupModify.querySelector('.btn-yes').removeEventListener('click', confirmAddPopup);
+    popupModify.querySelector('.btn-no').removeEventListener('click', hideAddPopup);
+}
+
+// Sự kiện nhấn phím Esc
+document.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape') {
+        hidePopup();
+    }
+});
+
+// Sự kiện click ra bên ngoài popup
+overlay.addEventListener('click', function () {
+    hidePopup();
+});
 
 // Render table out
 function renderTable(result) {
@@ -493,13 +532,14 @@ function renderTable(result) {
     result.forEach((service) => {
         const dataRow = `
                         <tr>
-                            <td style="width: 4%">${service.ServiceTypeID}</td>
-                            <td style="width: 4%">${service.PartID}</td>
-                            <td style="width: 10%; text-align: left">${service.ServiceName}</td>
-                            <td style="width: 18%; text-align: left"">${service.ServiceDescription}</td>
-                            <td style="width: 6%">${service.ServicePrice} ₫</td>
-                            <td style="width: 6%">${service.EstimatedTime}</td>
-                            <td style="width: 10%" class="buttons">
+                            <td><img src="${service.ServiceImage}" width="100" height="75"></td>
+                            <td>${service.ServiceTypeName}</td>
+                            <td>${service.PartName}</td>
+                            <td style="text-align: left">${service.ServiceName}</td>
+                            <td style="text-align: left">${service.ServiceDescription}</td>
+                            <td>${service.ServicePrice} ₫</td>
+                            <td>${service.EstimatedTime}</td>
+                            <td class="buttons">
                                 <button class="btn-delete" onclick="showDeletePopup(this);" 
                                         data-serviceid="${service.ServiceID}">
                                     Delete
@@ -510,7 +550,9 @@ function renderTable(result) {
                                         data-partid="${service.PartID}"
                                         data-servicename="${service.ServiceName}"
                                         data-servicedescription="${service.ServiceDescription}"
-                                        data-serviceprice="${service.ServicePrice}">
+                                        data-serviceprice="${service.ServicePrice}" 
+                                        data-estimatedtime="${service.EstimatedTime}"
+                                        data-serviceimage="${service.ServiceImage}">
                                     Update
                                 </button>
                             </td>
@@ -536,7 +578,7 @@ async function getServiceListAll() {
             headers: { 'Content-Type': 'application/json' }
         });
         const result = await response.json();
-        // console.log(result);
+        console.log(result);
 
         maxServiceID = result.reduce((max, service) => Math.max(max, service.ServiceID), 0);
         maxServiceTypeID = result.reduce((max, service) => Math.max(max, service.ServiceTypeID), 0);

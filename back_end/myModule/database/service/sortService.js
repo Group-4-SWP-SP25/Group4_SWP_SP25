@@ -5,8 +5,16 @@ const sortService = async (req, res) => {
         const pool = global.pool;
         const { column, order } = req.body;
 
-        const query = ` SELECT * 
-                        FROM [Service] 
+        const query = ` SELECT
+                            s.*,
+                            st.ServiceTypeName,
+                            pi.PartName
+                        FROM
+                            Service s
+                        LEFT JOIN
+                            ServiceType st ON s.ServiceTypeID = st.ServiceTypeID
+                        LEFT JOIN
+                            PartInfo pi ON s.PartID = pi.PartID 
                         ORDER BY ${column} ${order};`;
 
         const result = await pool.request().query(query);

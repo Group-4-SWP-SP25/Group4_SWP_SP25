@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Details</title>
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="./CarDetail.css">
+</head>
+
+<body>
+
+
+    <div class="header">
+        <h1>Dashboard</h1>
+        <div class="user-info">
+            <span>Welcome, Admin</span>
+        </div>
+    </div>
+
+    <div class="sidebar">
+        <h2><a href="../../HomePage/HomePage.html" id="HomePage">Auto Care 247</a>
+        </h2>
+        <div class="admin">
+            <img src="../../../resource/admin.jpg" alt="Admin">
+            <span>Admin</span>
+        </div>
+        <a class="option" href="../DashBoard/dashboard.html">Overview</a>
+        <a class="option" href="#">Leaderboard</a>
+        <a class="option" href="#">Order</a>
+        <a class="option" href="#">Products</a>
+        <a class="option" href="#">Sales Report</a>
+        <a class="option" href="../CustomerManager/customer_management.html" style="background-color: #33334d">Customer
+            Management</a>
+        <a class="option" href="#">Messages</a>
+        <a class="option" href="#">Settings</a>
+        <a class="option" href="#">Sign Out</a>
+    </div>
+
+    <div class="content custom-scrollbar">
+        <div class="path">
+            <a href="../DashBoard/dashboard.html" class="homepath">Home</a>
+            /
+            <a href="../CustomerManager/customer_management.html" class="homepath">Customer
+                Management</a>
+            /
+            <a href="./CustomerProfile.html" class="homepath" id="path-username">{UserName}</a>
+            /
+            <a href="#" class="currentpath" id="path-carname">{CarName}</a>
+        </div>
+
+        <div class="car-detail">
+            <img src="../../../resource/pic1.jpg" alt="Car Detail">
+            <div class="car-info-detail">
+                <ul>
+                    <li class="car-name">
+                        <div style="display: flex;">
+                            Car's name:
+                            <div class="-car-name text">Car's name:</div>
+                        </div>
+                        <span class="material-icons edit-carname edit-car">edit</span>
+                    </li>
+                    <li class="car-brand">
+                        <div style="display: flex;">
+                            Brand:
+                            <div class="-car-brand text ">Brand:</div>
+                        </div>
+                        <span class="material-icons edit-brand edit-car">edit</span>
+                    </li>
+                    <li class="registration-number">
+                        <div style="display: flex;">
+                            Registration Number:
+                            <div class="-registration-number text">Registration Number:</div>
+                        </div>
+                        <span class="material-icons edit-regnum edit-car">edit</span>
+                    </li>
+                    <li class="purchased-year">
+                        <div style="display: flex;">
+                            Purchased Year:
+                            <div class="-purchased-year text">Purchased Year:</div>
+                        </div>
+                        <span class="material-icons edit-year edit-car">edit</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="car-part-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 20%;">Part name</th>
+                        <th style="width: 30%;">InstallationDate</th>
+                        <th style="width: 30%;">ExpirationDate</th>
+                        <th style="width: 20%;">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- System 1 -->
+                    <tr class="car-system">
+                        <td colspan="4">
+                            <span>Engine System</span>
+                        </td>
+                    </tr>
+                    <tr part="1">
+                        <td>Engine Oil</td>
+                        <td class="InstallationDate date"></td>
+                        <td class="ExpirationDate date"></td>
+                        <td class="Status"></td>
+                    </tr>
+                    <tr part="2">
+                        <td>Spark Plug</td>
+                        <td class="InstallationDate date"></td>
+                        <td class="ExpirationDate date"></td>
+                        <td class="Status"></td>
+                    </tr>
+                    <tr part="3">
+                        <td>Injector</td>
+                        <td class="InstallationDate date"></td>
+                        <td class="ExpirationDate date"></td>
+                        <td class="Status"></td>
+                    </tr>
+                    <tr part="4">
+                        <td>Cooling System</td>
+                        <td class="InstallationDate date"></td>
+                        <td class="ExpirationDate date"></td>
+                        <td class="Status"></td>
+                    </tr>
+                    <!-- System 2 -->
+                    <tr class="car-system">
+                        <td colspan="4">
+                            <span>Braking System</span>
+                        </td>
+                    </tr>
+                    <tr part="5">
+                        <td>Brake Pad</td>
+                        <td class="InstallationDate date"></td>
+                        <td class="ExpirationDate date"></td>
+                        <td class="Status"></td>
+                    </tr>
+                    <tr part="6">
+                        <td>Rotor</td>
+                        <td class="InstallationDate date"></td>
+                        <td class="ExpirationDate date"></td>
+                        <td class="Status"></td>
+                    </tr>
+                    <tr part="7">
+                        <td>Fluid</td>
+                        <td class="InstallationDate date"></td>
+                        <td class="ExpirationDate date"></td>
+                        <td class="Status"></td>
+                    </tr>
+                    <!-- System 3 -->
+                    <tr class="car-system">
+                        <td colspan="4">
+                            <span>Electrical System</span>
+                        </td>
+                    </tr>
+                    <tr part="8">
+                        <td>Bulb</td>
+                        <td class="InstallationDate date"></td>
+                        <td class="ExpirationDate date"></td>
+                        <td class="Status"></td>
+                    </tr>
+                    <tr part="9">
+                        <td>Fuse</td>
+                        <td class="InstallationDate date"></td>
+                        <td class="ExpirationDate date"></td>
+                        <td class="Status"></td>
+                    </tr>
+                    <tr part="10">
+                        <td>Electric System</td>
+                        <td class="InstallationDate date"></td>
+                        <td class="ExpirationDate date"></td>
+                        <td class="Status"></td>
+                    </tr>
+                    <tr part="11">
+                        <td>Wiring</td>
+                        <td class="InstallationDate date"></td>
+                        <td class="ExpirationDate date"></td>
+                        <td class="Status"></td>
+                    </tr>
+                    <!-- System 4 -->
+                    <tr class="car-system">
+                        <td colspan="4">
+                            <span>Air Conditioning System</span>
+                        </td>
+                    </tr>
+                    <tr part="12">
+                        <td>Gas</td>
+                        <td class="InstallationDate date"></td>
+                        <td class="ExpirationDate date"></td>
+                        <td class="Status"></td>
+                    </tr>
+                    <tr part="13">
+                        <td>Condenser</td>
+                        <td class="InstallationDate date"></td>
+                        <td class="ExpirationDate date"></td>
+                        <td class="Status"></td>
+                    </tr>
+                    <tr part="14">
+                        <td>Filter</td>
+                        <td class="InstallationDate date"></td>
+                        <td class="ExpirationDate date"></td>
+                        <td class="Status"></td>
+                    </tr>
+                    <!-- System 5 -->
+                    <tr class="car-system">
+                        <td colspan="4">
+                            <span>Fuel System</span>
+                        </td>
+                    </tr>
+                    <tr part="15">
+                        <td>Pump</td>
+                        <td class="InstallationDate date"></td>
+                        <td class="ExpirationDate date"></td>
+                        <td class="Status"></td>
+                    </tr>
+                    <tr part="16">
+                        <td>Filter</td>
+                        <td class="InstallationDate date"></td>
+                        <td class="ExpirationDate date"></td>
+                        <td class="Status"></td>
+                    </tr>
+                    <tr part="17">
+                        <td>Injection</td>
+                        <td class="InstallationDate date"></td>
+                        <td class="ExpirationDate date"></td>
+                        <td class="Status"></td>
+                    </tr>
+                    <!-- System 6 -->
+                    <tr class="car-system">
+                        <td colspan="4">
+                            <span>Battery System</span>
+                        </td>
+                    </tr>
+                    <tr part="18">
+                        <td>Charging</td>
+                        <td class="InstallationDate date"></td>
+                        <td class="ExpirationDate date"></td>
+                        <td class="Status"></td>
+                    </tr>
+                    <tr part="19">
+                        <td>Terminal</td>
+                        <td class="InstallationDate date"></td>
+                        <td class="ExpirationDate date"></td>
+                        <td class="Status"></td>
+                    </tr>
+                    <!-- System 7 -->
+                    <tr class="car-system">
+                        <td colspan="4">
+                            <span>Shock Absorbers System</span>
+                        </td>
+                    </tr>
+                    <tr part="20">
+                        <td>Shock</td>
+                        <td class="InstallationDate date"></td>
+                        <td class="ExpirationDate date"></td>
+                        <td class="Status"></td>
+                    </tr>
+                    <tr part="21">
+                        <td>Control Arm</td>
+                        <td class="InstallationDate date"></td>
+                        <td class="ExpirationDate date"></td>
+                        <td class="Status"></td>
+                    </tr>
+                    <tr part="22">
+                        <td>Tie Rod</td>
+                        <td class="InstallationDate date"></td>
+                        <td class="ExpirationDate date"></td>
+                        <td class="Status"></td>
+                    </tr>
+                    <tr part="23">
+                        <td>Suspension</td>
+                        <td class="InstallationDate date"></td>
+                        <td class="ExpirationDate date"></td>
+                        <td class="Status"></td>
+                    </tr>
+                    <!-- System 8 -->
+                    <tr class="car-system">
+                        <td colspan="4">
+                            <span>Wheel System</span>
+                        </td>
+                    </tr>
+                    <tr part="24">
+                        <td>Tire</td>
+                        <td class="InstallationDate date"></td>
+                        <td class="ExpirationDate date"></td>
+                        <td class="Status"></td>
+                    </tr>
+                    <tr part="25">
+                        <td>Rim</td>
+                        <td class="InstallationDate date"></td>
+                        <td class="ExpirationDate date"></td>
+                        <td class="Status"></td>
+                    </tr>
+                    <tr part="26">
+                        <td>Wheel Hub</td>
+                        <td class="InstallationDate date"></td>
+                        <td class="ExpirationDate date"></td>
+                        <td class="Status"></td>
+                    </tr>
+                    <!-- end -->
+                </tbody>
+            </table>
+        </div>
+
+        <div class="submit">
+            <button class="btn-done">
+                <span class="material-icons"> done </span>
+            </button>
+            <button class="btn-cancel">
+                <span class="material-icons"> restore </span>
+            </button>
+            <button class="btn-delete">
+                <span class="material-icons"> delete </span>
+            </button>
+        </div>
+    </div>
+
+    <script src="./CarDetail.js"></script>
+</body>
+
+</html>

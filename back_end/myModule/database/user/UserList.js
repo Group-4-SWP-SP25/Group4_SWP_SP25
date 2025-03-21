@@ -64,6 +64,7 @@ const TotalUserCount = async (searchString) => {
       return 0; // Trả về 0 nếu không có user nào khớp với searchString
     }
 
+<<<<<<< HEAD
     const query = `
             SELECT COUNT(*) AS TotalUserCount
             FROM [User]
@@ -78,6 +79,16 @@ const TotalUserCount = async (searchString) => {
     console.log(err);
     throw err;
   }
+=======
+        let list = [];
+        for (let user of searchResult) list.push(user.UserID)
+
+        return list;
+    } catch (err) {
+        console.log(err);
+        throw err;
+    }
+>>>>>>> 8dff84a5512cee792f851614c6881edd929c33ea
 };
 
 const search = async (searchString) => {
@@ -86,10 +97,12 @@ const search = async (searchString) => {
     const query = `
             SELECT *
             FROM [User]
-            WHERE FirstName LIKE @searchString
+            WHERE 
+            (FirstName LIKE @searchString 
             OR LastName LIKE @searchString
             OR Email LIKE @searchString
-            OR Phone LIKE @searchString
+            OR Phone LIKE @searchString)
+            
         `;
 
     const result = await pool
