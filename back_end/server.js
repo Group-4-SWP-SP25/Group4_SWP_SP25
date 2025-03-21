@@ -85,6 +85,8 @@ const { getEmployees } = require("./myModule/controller/employee/employee.js");
 // branch
 const branchInfo = require("./myModule/controller/branch/branchInfo.js");
 const branchList = require("./myModule/controller/branch/branchList.js");
+const editBranchInfo = require("./myModule/controller/branch/editBranchInfo.js");
+const { getBranchLocation, saveBranchLocation } = require("./myModule/controller/map/map.js");
 
 // service
 const serviceInfo = require("./myModule/controller/service/serviceInfo.js");
@@ -216,6 +218,9 @@ app.post("/getFileInfo", authenticateJWT, getFileInfo);
 // branch
 app.post("/branchInfo", branchInfo);
 app.post("/branchList", branchList);
+app.post('/editBranchInfo', authenticateADMIN, editBranchInfo)
+app.post('/getBranchLocation', getBranchLocation)
+app.post('/saveBranchLocation', authenticateADMIN, saveBranchLocation)
 
 // service
 app.post("/serviceInfo", serviceInfo);
