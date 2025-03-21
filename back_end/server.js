@@ -86,7 +86,10 @@ const { getEmployees } = require("./myModule/controller/employee/employee.js");
 const branchInfo = require("./myModule/controller/branch/branchInfo.js");
 const branchList = require("./myModule/controller/branch/branchList.js");
 const editBranchInfo = require("./myModule/controller/branch/editBranchInfo.js");
-const { getBranchLocation, saveBranchLocation } = require("./myModule/controller/map/map.js");
+const {
+  getBranchLocation,
+  saveBranchLocation,
+} = require("./myModule/controller/map/map.js");
 
 // service
 const serviceInfo = require("./myModule/controller/service/serviceInfo.js");
@@ -106,8 +109,8 @@ const carList = require("./myModule/controller/car/carList.js");
 const getCarPartsApi = require("./myModule/controller/car/carParts.js");
 const updateCarInfoApi = require("./myModule/controller/car/updateCarInfo.js");
 const createNewCarApi = require("./myModule/controller/car/createNewCar.js");
-const deleteCarApi = require('./myModule/controller/car/deleteCar.js')
-const UpdateCarPartApi = require('./myModule/controller/car/updateCarPartApi.js')
+const deleteCarApi = require("./myModule/controller/car/deleteCar.js");
+const UpdateCarPartApi = require("./myModule/controller/car/updateCarPartApi.js");
 
 // car part
 const carPartInfoInCar = require("./myModule/controller/carPart/carPartInfoInCar.js");
@@ -214,9 +217,9 @@ app.post("/getFileInfo", authenticateJWT, getFileInfo);
 // branch
 app.post("/branchInfo", branchInfo);
 app.post("/branchList", branchList);
-app.post('/editBranchInfo', authenticateADMIN, editBranchInfo)
-app.post('/getBranchLocation', getBranchLocation)
-app.post('/saveBranchLocation', authenticateADMIN, saveBranchLocation)
+app.post("/editBranchInfo", authenticateADMIN, editBranchInfo);
+app.post("/getBranchLocation", getBranchLocation);
+app.post("/saveBranchLocation", authenticateADMIN, saveBranchLocation);
 
 // service
 app.post("/serviceInfo", serviceInfo);
@@ -239,8 +242,8 @@ app.post("/carList", carList);
 app.post("/getCarParts", getCarPartsApi);
 app.post("/updateCarInfo", updateCarInfoApi);
 app.post("/createNewCar", authenticateADMIN, createNewCarApi);
-app.post('/deleteCar', authenticateADMIN, deleteCarApi)
-app.post('/updateCarPart', authenticateADMIN, UpdateCarPartApi)
+app.post("/deleteCar", authenticateADMIN, deleteCarApi);
+app.post("/updateCarPart", authenticateADMIN, UpdateCarPartApi);
 
 // car system
 app.post("/carSystemInfo", carSystemInfo);
