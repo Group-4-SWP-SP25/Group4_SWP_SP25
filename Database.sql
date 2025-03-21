@@ -1,4 +1,5 @@
-﻿USE master
+﻿-- Initialize
+USE master
 GO
 
 IF EXISTS (
@@ -19,6 +20,8 @@ GO
 
 USE SWP_G4;
 GO
+
+-- Create tables
 -- 1
 CREATE TABLE [User](
 	UserID INT IDENTITY(1, 1) NOT NULL PRIMARY KEY,
@@ -38,7 +41,7 @@ CREATE TABLE [User](
 GO
 
 -- 2
-CREATE TABLE Car(
+CREATE TABLE [Car](
 	CarID INT IDENTITY(1, 1) NOT NULL PRIMARY KEY,
 	UserID INT FOREIGN KEY REFERENCES [User](UserID) ON DELETE CASCADE,
 	CarName VARCHAR(500) DEFAULT NULL,
@@ -51,13 +54,14 @@ CREATE TABLE Car(
 GO
 
 -- 3
-CREATE TABLE CarSystem ( 
+CREATE TABLE [CarSystem] ( 
 	CarSystemID INT NOT NULL PRIMARY KEY IDENTITY(1, 1),
 	CarSystemName VARCHAR(200) NOT NULL,
 );
 GO
 
-CREATE TABLE PartInfo (
+-- 4
+CREATE TABLE [PartInfo] (
 	PartID INT NOT NULL PRIMARY KEY IDENTITY(1, 1),
     PartName VARCHAR(200) NOT NULL,
 	CarSystemID INT NOT NULL FOREIGN KEY REFERENCES CarSystem(CarSystemID) ON DELETE CASCADE,
@@ -65,7 +69,8 @@ CREATE TABLE PartInfo (
 );
 GO
 
-CREATE TABLE CarPart (
+-- 5
+CREATE TABLE [CarPart] (
     CarID INT NOT NULL FOREIGN KEY REFERENCES Car(CarID) ON DELETE CASCADE,
     PartID INT NOT NULL FOREIGN KEY REFERENCES PartInfo(PartID),
     InstallationDate DATETIME DEFAULT NULL,
@@ -75,8 +80,8 @@ CREATE TABLE CarPart (
 );      
 GO
 
--- 5
-CREATE TABLE ServiceType (
+-- 6
+CREATE TABLE [ServiceType] (
 	ServiceTypeID INT IDENTITY(1, 1) NOT NULL PRIMARY KEY,
 	ServiceTypeName VARCHAR(200),
 	ServiceTypeDescription VARCHAR(MAX),
@@ -84,7 +89,7 @@ CREATE TABLE ServiceType (
 );
 GO
 
--- 6
+-- 7
 CREATE TABLE [Service] (
 	ServiceID INT IDENTITY(1, 1) NOT NULL PRIMARY KEY,
 	ServiceTypeID INT FOREIGN KEY REFERENCES [ServiceType](ServiceTypeID) ON DELETE CASCADE,
@@ -99,8 +104,8 @@ CREATE TABLE [Service] (
 );
 GO
 
--- 7
-CREATE TABLE Branch (
+-- 8
+CREATE TABLE [Branch] (
 	BranchID INT IDENTITY (1, 1) NOT NULL PRIMARY KEY,
 	BranchName NVARCHAR(200) NOT NULL,
 	BranchAddress NVARCHAR(MAX) DEFAULT NULL,
@@ -110,20 +115,18 @@ CREATE TABLE Branch (
 );
 GO
 
--- 8
-CREATE TABLE AccessoryInfo (
+-- 9
+CREATE TABLE [AccessoryInfo] (
 	AccessoryID INT IDENTITY (1, 1) NOT NULL PRIMARY KEY,
 	AccessoryName VARCHAR(200) NOT NULL,
 	ServiceID INT NOT NULL FOREIGN KEY REFERENCES Service(ServiceID),
 	[Description] VARCHAR(MAX) NOT NULL,
   AddDate DATETIME DEFAULT CURRENT_TIMESTAMP
 );
-
-
 GO
 
--- 9
-CREATE TABLE Inventory (
+-- 10
+CREATE TABLE [Inventory] (
 	BranchID INT NOT NULL FOREIGN KEY REFERENCES Branch(BranchID),
 	AccessoryID INT NOT NULL FOREIGN KEY REFERENCES AccessoryInfo(AccessoryID),
 	Quantity INT,
@@ -133,7 +136,7 @@ CREATE TABLE Inventory (
 );
 GO
  
--- 7
+-- 11
 CREATE TABLE [Order] (
 	UserID INT NOT NULL FOREIGN KEY REFERENCES [User](UserID) ON DELETE CASCADE,
     OrderID INT NOT NULL,
@@ -148,8 +151,8 @@ CREATE TABLE [Order] (
 );
 GO
 
--- 8
-CREATE TABLE Messages (
+-- 12
+CREATE TABLE [Messages] (
     MessageID INT PRIMARY KEY IDENTITY,
     SenderID INT NOT NULL,
     ReceiverID INT NOT NULL,
@@ -160,7 +163,8 @@ CREATE TABLE Messages (
 );
 GO
 
-CREATE TABLE MessageReads (
+-- 13
+CREATE TABLE [MessageReads] (
     ReadID INT NOT NULL,
     UserID INT NOT NULL,
     MessageID INT NOT NULL,
@@ -169,7 +173,8 @@ CREATE TABLE MessageReads (
 );
 GO
 
-CREATE TABLE Payment(
+-- 14
+CREATE TABLE [Payment](
 	UserID INT FOREIGN KEY REFERENCES [User](UserID),
 	PaymentID INT NOT NULL,
 	CarID INT NOT NULL FOREIGN KEY REFERENCES Car(CarID),
@@ -180,7 +185,8 @@ CREATE TABLE Payment(
 );
 GO
 
-CREATE TABLE Bill(
+-- 15
+CREATE TABLE [Bill](
 	UserID INT,
 	PaymentID INT,
     PartID INT NOT NULL FOREIGN KEY REFERENCES PartInfo(PartID),
@@ -194,7 +200,7 @@ CREATE TABLE Bill(
 );
 GO
 
-
+-- Insert data
 -- mesage 
 CREATE PROCEDURE UpsertMessageRead
     @UserID INT,
@@ -640,8 +646,6 @@ INSERT INTO Branch(BranchName, BranchAddress) VALUES
 (N'Branch 2', N'456 Le Van Luong, District 9, Ho Chi Minh City'),
 (N'Branch 3', N'789 Nguyen Huu Tho, District 4, Ho Chi Minh City');
 
--- Sample data
-
 INSERT INTO [User](Username, Password, FirstName, LastName, Email, Phone, DOB, Role)
 VALUES ('doanhieu18', 'doanhieu18@', 'Hieu', 'Doan', 'doanhieu180204@gmail.com', '0325413488', '2004-02-18', 'Admin');
 
@@ -664,8 +668,6 @@ BEGIN
 END;
 GO
 
-GO
-
 INSERT INTO [Car](UserID, CarName, Brand, RegistrationNumber, [Year], [Status]) VALUES 
 (1, 'Car 1', 'Toyota', '123456', 2010, 'Active'),
 (1, 'Car 2', 'Honda', '654321', 2015, 'Maintaining'),
@@ -680,7 +682,6 @@ GO
 INSERT INTO [Order] (UserID, CarID, BranchID, PartID, ServiceID, QuantityUsed)
 VALUES (2, 1, 1, 8, 113, 2);
 GO
-
 
 ENABLE TRIGGER DeleteOrder ON [Order];
 GO

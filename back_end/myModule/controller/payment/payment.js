@@ -15,6 +15,7 @@ const payment = async (req, res) => {
     hashAlgorithm: "SHA512",
     loggerFn: ignoreLogger,
   });
+
   const exprire = new Date();
   exprire.setMinutes(exprire.getMinutes() + 15);
   const vnpayResponse = await vnp.buildPaymentUrl({

@@ -154,7 +154,10 @@ const {
 } = require("./myModule/controller/message/message.js");
 
 // calendar
-const { getEvents_api, addEvent_apis } = require("./myModule/controller/calendar/calendar.js");
+const {
+  getEvents_api,
+  addEvent_apis,
+} = require("./myModule/controller/calendar/calendar.js");
 
 // ----------------------------------------------------------
 // CREATE API
@@ -180,11 +183,15 @@ app.post("/TopProducts", authenticateADMIN, TopProducts);
 app.post("/Calendar/GetEvents", authenticateADMIN, getEvents_api);
 app.post("/Calendar/AddEvent", authenticateADMIN, addEvent_apis);
 app.post("/Employee/getEmployees", authenticateADMIN, getEmployees);
+<<<<<<< HEAD
+
+=======
 app.post("/TotalQuantity", authenticateADMIN, TotalQuantity);
 app.post("/ProductOverview", authenticateADMIN, ProductOverview);
 app.delete("/DeleteProduct", authenticateADMIN, DeleteProduct);
 app.post("/UpdateProduct", authenticateADMIN, UpdateProduct);
 app.post("/CompareTotalProduct", authenticateADMIN, CompareTotalProduct);
+>>>>>>> 8dff84a5512cee792f851614c6881edd929c33ea
 // app.post('/TotalRevenueToday', authenticateADMIN, TotalRevenueToday);
 // app.post('/TotalOrderToday', authenticateADMIN, TotalOrderToday);
 // app.post('/TotalProductSold', authenticateADMIN, TotalProductSold);

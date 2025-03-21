@@ -79,10 +79,8 @@ $(document).ready(function () {
       if (bill.QuantityUsed === 0) {
         billElement = `
         <div class="bill">
-        <div class="part-info">
-          <div class="part-img">
-            <img alt="" src="${part.Image}"/>
-          </div>
+        <div class="part-info">      
+          <img alt="" src="${part.Image}"/>
         </div>
         <div class="bill-info">
           <table width="100%">
@@ -112,10 +110,8 @@ $(document).ready(function () {
       } else {
         billElement = `
       <div class="bill">
-        <div class="part-info">
-          <div class="part-img">
-            <img alt="" src="${part.Image}"/>
-          </div>
+        <div class="part-info">       
+          <img alt="" src="${part.Image}"/>
         </div>
         <div class="bill-info">
           <table width="100%">
