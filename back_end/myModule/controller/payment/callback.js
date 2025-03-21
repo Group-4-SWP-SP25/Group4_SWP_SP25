@@ -11,7 +11,6 @@ const paymentCallback = async (req, res) => {
   const userID = vnpParams.userID;
   delete vnpParams.userID;
   const secureSecret = "ED5E7M12O7Y465NEFVJ7GYIWSEGSNR08";
-
   const secureHash = vnpParams["vnp_SecureHash"];
   delete vnpParams["vnp_SecureHash"];
   delete vnpParams["vnp_SecureHashType"];
@@ -34,9 +33,8 @@ const paymentCallback = async (req, res) => {
     try {
       await paymentSuccess(userID, carID, vnpParams, res);
     } catch (error) {
-      console.error("Payment processing failed:", error);
-      return res.redirect(
-        `http://127.0.0.1:5500/front_end/Payment/fail.html?err=Internal Server Error&carID=${carID}`
+      throw new Error(
+        "An error occurred during the transaction. Please try again."
       );
     }
   } else {
