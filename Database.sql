@@ -102,11 +102,11 @@ GO
 -- 7
 CREATE TABLE Branch (
 	BranchID INT IDENTITY (1, 1) NOT NULL PRIMARY KEY,
-	BranchName VARCHAR(200) NOT NULL,
-	BranchAddress VARCHAR(MAX) DEFAULT NULL,
+	BranchName NVARCHAR(200) NOT NULL,
+	BranchAddress NVARCHAR(MAX) DEFAULT NULL,
     BranchPhone VARCHAR(11) DEFAULT NULL,
     BranchEmail VARCHAR(200) DEFAULT NULL,
-    BranchLocation GEOGRAPHY DEFAULT NULL
+    BranchLocation Text DEFAULT NULL
 );
 GO
 
@@ -636,9 +636,9 @@ END;
 GO
 
 INSERT INTO Branch(BranchName, BranchAddress) VALUES
-('Branch 1', '123 Nguyen Van Linh, District 7, Ho Chi Minh City'),
-('Branch 2', '456 Le Van Luong, District 9, Ho Chi Minh City'),
-('Branch 3', '789 Nguyen Huu Tho, District 4, Ho Chi Minh City');
+(N'Branch 1', N'123 Nguyen Van Linh, District 7, Ho Chi Minh City'),
+(N'Branch 2', N'456 Le Van Luong, District 9, Ho Chi Minh City'),
+(N'Branch 3', N'789 Nguyen Huu Tho, District 4, Ho Chi Minh City');
 
 -- Sample data
 
