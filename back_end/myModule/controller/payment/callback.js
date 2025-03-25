@@ -50,10 +50,10 @@ const paymentCallback = async (req, res) => {
 };
 
 const paymentSuccess = async (userID, carID, vnpParams, res) => {
-  const orderList = await fetch("http://localhost:3000/listOrderByCar", {
+  const orderList = await fetch("http://localhost:3000/listOrder", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ userID, carID }),
+    body: JSON.stringify({ userID: parseInt(userID), carID: parseInt(carID) }),
   });
 
   const orders = await orderList.json();

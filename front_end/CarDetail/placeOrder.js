@@ -102,6 +102,7 @@ $(document).ready(function () {
             selectedService.ServicePrice.toLocaleString("vi-VN") + "₫"
           );
           if (selectedService.AffectInventory === 1) {
+            console.log(serviceID);
             const accessory = await $.ajax({
               url: "http://localhost:3000/accessoryInfo",
               method: "POST",
