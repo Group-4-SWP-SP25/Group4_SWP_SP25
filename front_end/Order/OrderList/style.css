@@ -5,8 +5,15 @@
 }
 
 body {
-  background-color: #000;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url("/resource/order-background.jpeg"); /* Đường dẫn đến ảnh */
+  background-size: cover; /* Ảnh phủ toàn bộ màn hình */
+  background-position: center; /* Căn giữa ảnh */
+  background-repeat: no-repeat; /* Không lặp ảnh */
+  background-attachment: fixed; /* Giữ background cố định */
+  width: 100vw;
   margin-top: 100px;
+  overflow-x: hidden;
   color: #fff;
 }
 
@@ -128,6 +135,11 @@ body.no-scroll {
     }
   }
 }
+
+.order-page {
+  margin-bottom: 30px;
+}
+
 .order-page .order-header-info {
   display: flex;
   padding: 7px 0;
@@ -211,7 +223,7 @@ body.no-scroll {
 }
 
 .order-page .order-body .grid {
-  width: 25%;
+  width: 27%;
   text-align: center;
   display: flex;
   align-items: center;
@@ -347,11 +359,11 @@ body.no-scroll {
 /* Window confirm delete order */
 
 .overlay {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   background-color: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(1px);
   z-index: 5;

@@ -5,7 +5,13 @@
 }
 
 body {
-  background-color: #000;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url("/resource/payment-background.jpeg"); /* Đường dẫn đến ảnh */
+  background-size: cover; /* Ảnh phủ toàn bộ màn hình */
+  background-position: center; /* Căn giữa ảnh */
+  background-repeat: no-repeat; /* Không lặp ảnh */
+  background-attachment: fixed; /* Giữ background cố định */
+  width: 100vw;
   margin-top: 100px;
   color: #fff;
 }
