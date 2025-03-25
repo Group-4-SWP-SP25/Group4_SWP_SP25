@@ -150,6 +150,8 @@ $(document).ready(function () {
     userChoosenID = userHeaderID;
     $(".choose-user").addClass("hidden");
     $(".manage-header").removeClass("hidden");
+    $(".order-table-container").addClass("hidden");
+    $(".order-table-container").removeClass("has-content");
     togglePopup();
 
     loadUserData(userChoosenID);
