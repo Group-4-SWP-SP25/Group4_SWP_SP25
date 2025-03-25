@@ -305,6 +305,16 @@ function hideUpdatePopup() {
 }
 
 async function confirmUpdatePopup() {
+    if (!chosenServiceName || chosenServiceName.trim() === '') {
+        alert('Service Name cannot be empty.');
+        return;
+    }
+
+    if (!chosenServiceDescription || chosenServiceDescription.trim() === '') {
+        alert('Service Description cannot be empty.');
+        return;
+    }
+
     updateService(chosenServiceID, chosenServiceTypeID, chosenServicePartID, chosenServiceName, chosenServiceDescription, chosenServicePrice, chosenEstimatedTime, chosenServiceImage);
 
     // reset display data
@@ -454,9 +464,19 @@ function hideAddPopup() {
 
 async function confirmAddPopup() {
     if (chosenServiceTypeID) {
+        if (!chosenServiceName || chosenServiceName.trim() === '') {
+            alert('Service Name cannot be empty.');
+            return;
+        }
+
+        if (!chosenServiceDescription || chosenServiceDescription.trim() === '') {
+            alert('Service Description cannot be empty.');
+            return;
+        }
+
         const exists = await isServiceNameExists(chosenServiceName);
         if (exists) {
-            alert('Service Name already exists. Please enter a different name.');
+            alert('Error: Service name already exists.');
             return;
         }
 
