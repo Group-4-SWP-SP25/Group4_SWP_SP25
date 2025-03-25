@@ -1,6 +1,6 @@
 const getListOrderByUserID = require("../../database/order/getListOrderByUserID.js");
 
-const listOrderByCar = async (req, res) => {
+const listOrder = async (req, res) => {
   try {
     const { userID, carID } = req.body;
     const orderList = await getListOrderByUserID(userID, carID);
@@ -10,4 +10,4 @@ const listOrderByCar = async (req, res) => {
   }
 };
 
-module.exports = listOrderByCar;
+module.exports = listOrder;

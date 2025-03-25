@@ -82,12 +82,11 @@ async function fetchOrdersByCarID(userID, carID, element) {
   try {
     // Lấy danh sách đơn hàng
     const orders = await $.ajax({
-      url: "http://localhost:3000/listOrderByCar",
+      url: "http://localhost:3000/listOrder",
       method: "POST",
       contentType: "application/json",
       data: JSON.stringify({ userID: userID, carID: carID }),
     });
-
     // Ẩn loading sau khi dữ liệu đã lấy xong
     $(".order-loading").remove();
 
