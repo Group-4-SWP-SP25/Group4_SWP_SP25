@@ -9,7 +9,7 @@ if (email != null) {
 const regexEmail = /^\w+@\w+(\.\w+)+$/; // Start with >1 word chars, then @, then >1 word chars, then (. and >1 word chars) >1 times
 const regexPhone = /^0\d{9}$/; // Start with 0, follow by exact 9 digits
 const regexPassword = /^(?=.*[A-Za-z])(?=.*\d).{6,}$/; // Have at least 6 chars, include a-z, A-Z and 0-9
-const regexUsername = /^[a-zA-Z0-9]{4,}$/; // Start with a-z, A-Z, 0-9, have at least 6 chars
+const regexUsername = /^[a-zA-Z0-9]{4,}$/; // Start with a-z, A-Z, 0-9, have at least 4 chars
 
 // Tags
 // Input field
@@ -172,7 +172,7 @@ function checkDOB(dobTag, errorTag) {
     // Check date of birth
     if (!dobTag.value) {
         errorStyle(dobTag);
-        contentError(errorTag, 'Date of Birth cannot be empty!');
+        contentError(errorTag, 'Date of birth cannot be empty!');
         return false;
     }
 
@@ -197,7 +197,7 @@ function checkDOB(dobTag, errorTag) {
 
     if (age < 18 || age > 75) {
         errorStyle(dobTag);
-        contentError(errorTag, 'Age must be between 18 and 75.'); //Sửa lại message cho hợp lý
+        contentError(errorTag, 'Age must be between 18 - 75.'); //Sửa lại message cho hợp lý
         return false;
     } else {
         successStyle(dobTag); //Sửa phoneTag thành dobTag
@@ -215,7 +215,7 @@ async function checkUsername(usernameTag, errorTag) {
     }
     if (!regexUsername.test(usernameTag.value.trim())) {
         errorStyle(usernameTag);
-        contentError(errorTag, 'Invalid username!');
+        contentError(errorTag, 'Username must be >= 4 characters and only contain numbers and letters!');
         return false;
     } else {
         successStyle(usernameTag);
@@ -252,14 +252,14 @@ function checkPassword(passwordTag, errorTag) {
         if (passwordTag === passwordInput) {
             contentError(errorTag, 'Password cannot be empty!');
         } else {
-            contentError(errorTag, 'You have not confirmed to change password!');
+            contentError(errorTag, 'Password do not match!');
         }
         return false;
     }
 
     if (!regexPassword.test(passwordTag.value)) {
         errorStyle(passwordTag);
-        contentError(errorTag, 'Invalid password');
+        contentError(errorTag, 'Password must be >= 6 characters and have both numbers and letters!');
         return false;
     }
 
@@ -322,6 +322,6 @@ document.addEventListener('keydown', function (e) {
         checkSubmit();
     }
     if (e.key === 'Enter' && !successWindow.classList.contains('hidden')) {
-        window.location.href = '../HomePage/HomePage.html';
+        window.location.href = 'front_end/Login/Login.html';
     }
 });

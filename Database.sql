@@ -49,6 +49,7 @@ CREATE TABLE [Car](
 	RegistrationNumber VARCHAR(50) DEFAULT NULL,
 	[Year] INT DEFAULT NULL,
     MaintenanceResgistrationDate DATE DEFAULT CURRENT_TIMESTAMP,
+    CarImage VARCHAR(MAX) DEFAULT NULL,
 	[Status] VARCHAR(50) DEFAULT NULL CHECK ([Status] IN ('Active', 'Maintaining'))
 );
 GO
@@ -389,9 +390,7 @@ INSERT INTO [ServiceType](ServiceTypeName, ServiceTypeDescription, ServiceTypeIm
 -- 7
 ('Shock Absorbers System', 'Your shock absorbers are the unsung heroes of your vehicle''s suspension system. They''re responsible for keeping your ride smooth and comfortable, even on the bumpiest roads.<br><br>At AUTO247, we understand the vital role your shock absorbers play, and that''s why we offer a comprehensive Shock Absorbers System Service designed to keep you riding in comfort and control.', 'https://germanic.ae/wp-content/uploads/2024/03/Shock-Absorber-Repair.webp'),
 -- 8
-('Fuel System', 'Your fuel system is the lifeline of your engine, responsible for delivering the precise amount of fuel needed for optimal performance.<br><br>At AUTO247, we understand the critical role your fuel system plays, and that''s why we offer a comprehensive Fuel System Service designed to keep your engine running strong and efficiently.', 'https://milexcompleteautocare.com/wp-content/uploads/2023/11/GettyImages-652660336.jpg'),
--- 9
-('Cleaning and Maintenance', 'Your car is more than just a mode of transportation; it''s an extension of your personality and a reflection of your style.<br><br>At AUTO247, we understand the importance of keeping your car looking and feeling its best, and that''s why we offer a comprehensive range of Cleaning and Maintenance services designed to help you maintain your car''s appearance and preserve its value.', 'https://di-uploads-pod18.dealerinspire.com/executivehonda/uploads/2024/03/EAG_March_Blog-1.jpg');
+('Fuel System', 'Your fuel system is the lifeline of your engine, responsible for delivering the precise amount of fuel needed for optimal performance.<br><br>At AUTO247, we understand the critical role your fuel system plays, and that''s why we offer a comprehensive Fuel System Service designed to keep your engine running strong and efficiently.', 'https://milexcompleteautocare.com/wp-content/uploads/2023/11/GettyImages-652660336.jpg');
 GO
 
 INSERT INTO [Service](ServiceTypeID, PartID, ServiceName, AffectInventory, ServiceDescription, ServicePrice, EstimatedTime, ServiceImage) VALUES
@@ -675,15 +674,15 @@ BEGIN
 END;
 GO
 
-INSERT INTO [Car](UserID, CarName, Brand, RegistrationNumber, [Year], [Status]) VALUES 
-(1, 'Car 1', 'Toyota', '123456', 2010, 'Active'),
-(1, 'Car 2', 'Honda', '654321', 2015, 'Maintaining'),
-(1, 'Car 3', 'Ford', '987654', 2018, 'Active'),
-(1, 'Car 4', 'BMW', '125478', 2020, 'Active'),
-(2, 'Car 1', 'Toyota', '123456', 2010, 'Active'),
-(2, 'Car 2', 'Honda', '654321', 2015, 'Maintaining'),
-(2, 'Car 3', 'Ford', '987654', 2018, 'Active'),
-(2, 'Car 4', 'BMW', '125478', 2020, 'Active');
+INSERT INTO [Car](UserID, CarName, Brand, RegistrationNumber, [Year], CarImage, [Status]) VALUES 
+(1, 'Car 1', 'Toyota', '123456', 2010, 'https://vov.vn/sites/default/files/styles/large/public/2022-08/289624929_453408263095020_5408162982360432160_n.png', 'Active'),
+(1, 'Car 2', 'Honda', '654321', 2015, 'https://akm-img-a-in.tosshub.com/indiatoday/styles/medium_crop_simple/public/2024-11/1_4.jpg', 'Maintaining'),
+(1, 'Car 3', 'Ford', '987654', 2018, 'https://images.dealer.com/autodata/us/640/2020/USD00FOS372A0/USC80FOS371A01300.jpg', 'Active'),
+(1, 'Car 4', 'BMW', '125478', 2020, '', 'Active'),
+(2, 'Car 1', 'Toyota', '123456', 2010, 'https://vov.vn/sites/default/files/styles/large/public/2022-08/289624929_453408263095020_5408162982360432160_n.png', 'Active'),
+(2, 'Car 2', 'Honda', '654321', 2015, 'https://akm-img-a-in.tosshub.com/indiatoday/styles/medium_crop_simple/public/2024-11/1_4.jpg', 'Maintaining'),
+(2, 'Car 3', 'Ford', '987654', 2018, 'https://images.dealer.com/autodata/us/640/2020/USD00FOS372A0/USC80FOS371A01300.jpg', 'Active'),
+(2, 'Car 4', 'BMW', '125478', 2020, '', 'Active');
 GO
 
 INSERT INTO [Order] (UserID, CarID, BranchID, PartID, ServiceID, QuantityUsed)
