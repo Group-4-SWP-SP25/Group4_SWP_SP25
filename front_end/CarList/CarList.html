@@ -54,6 +54,22 @@
                 });
         </script>
         <script src="scripts.js"></script>
+        <script>
+            window.onload = async () => {
+                console.log('get token');
+                const token = localStorage.getItem('token');
+
+                if (token === null) window.location.href = '/front_end/Login/Login.html';
+
+                const response = await fetch('http://localhost:3000/getUserInfo', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` }
+                });
+
+                const result = await response.json();
+                console.log('result: ', result);
+            };
+        </script>
         <!-- End scripts -->
     </body>
 </html>
