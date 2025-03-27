@@ -16,3 +16,7 @@ async function AddEmployeeCard(employee, linkAvatar) {
     `;
     employee_container.appendChild(item);
 }
+
+document.getElementById('add-employee').addEventListener('click', async () => {
+    window.location.href = '../../Register/Register.html?role=employee';
+});
