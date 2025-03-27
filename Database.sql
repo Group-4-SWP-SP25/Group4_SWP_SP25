@@ -49,6 +49,7 @@ CREATE TABLE [Car](
 	RegistrationNumber VARCHAR(50) DEFAULT NULL,
 	[Year] INT DEFAULT NULL,
     MaintenanceResgistrationDate DATE DEFAULT CURRENT_TIMESTAMP,
+    CarImage VARCHAR(MAX) DEFAULT NULL,
 	[Status] VARCHAR(50) DEFAULT NULL CHECK ([Status] IN ('Active', 'Maintaining'))
 );
 GO
@@ -389,9 +390,7 @@ INSERT INTO [ServiceType](ServiceTypeName, ServiceTypeDescription, ServiceTypeIm
 -- 7
 ('Shock Absorbers System', 'Your shock absorbers are the unsung heroes of your vehicle''s suspension system. They''re responsible for keeping your ride smooth and comfortable, even on the bumpiest roads.<br><br>At AUTO247, we understand the vital role your shock absorbers play, and that''s why we offer a comprehensive Shock Absorbers System Service designed to keep you riding in comfort and control.', 'https://germanic.ae/wp-content/uploads/2024/03/Shock-Absorber-Repair.webp'),
 -- 8
-('Fuel System', 'Your fuel system is the lifeline of your engine, responsible for delivering the precise amount of fuel needed for optimal performance.<br><br>At AUTO247, we understand the critical role your fuel system plays, and that''s why we offer a comprehensive Fuel System Service designed to keep your engine running strong and efficiently.', 'https://milexcompleteautocare.com/wp-content/uploads/2023/11/GettyImages-652660336.jpg'),
--- 9
-('Cleaning and Maintenance', 'Your car is more than just a mode of transportation; it''s an extension of your personality and a reflection of your style.<br><br>At AUTO247, we understand the importance of keeping your car looking and feeling its best, and that''s why we offer a comprehensive range of Cleaning and Maintenance services designed to help you maintain your car''s appearance and preserve its value.', 'https://di-uploads-pod18.dealerinspire.com/executivehonda/uploads/2024/03/EAG_March_Blog-1.jpg');
+('Fuel System', 'Your fuel system is the lifeline of your engine, responsible for delivering the precise amount of fuel needed for optimal performance.<br><br>At AUTO247, we understand the critical role your fuel system plays, and that''s why we offer a comprehensive Fuel System Service designed to keep your engine running strong and efficiently.', 'https://milexcompleteautocare.com/wp-content/uploads/2023/11/GettyImages-652660336.jpg');
 GO
 
 INSERT INTO [Service](ServiceTypeID, PartID, ServiceName, AffectInventory, ServiceDescription, ServicePrice, EstimatedTime, ServiceImage) VALUES
@@ -441,11 +440,11 @@ INSERT INTO [Service](ServiceTypeID, PartID, ServiceName, AffectInventory, Servi
 (3, 2, 'Spark Plug Replacement', 1, 'Installing new spark plugs for better ignition', 840000, 30, 'https://washford.a.bigcontent.io/v1/static/Spark_Plugs_770x470'),
 (3, 2, 'High-Performance Spark Plug Install', 1, 'Upgrading to high-performance spark plugs', 900000, 45, 'https://www.htsaves.com/wp-content/uploads/2024/10/Spark-plug.jpg'),
 (3, 2, 'Ignition System Check', 0, 'Diagnosing and repairing ignition issues', 1440000, 60, 'https://marvel-b1-cdn.bc0a.com/f00000000270529/s19536.pcdn.co/wp-content/uploads/2023/09/ignition-feature-1000x500.jpg'),
-(3, 2, 'Ignition Coil Replacement', 1, 'Installing new ignition coils', 1300000, 45, ''),
-(3, 3, 'Fuel Injector Cleaning', 0, 'Cleaning fuel injectors to improve engine efficiency', 1200000, 45, ''),
-(3, 3, 'Fuel Injector Replacement', 1, 'Replacing faulty fuel injectors with new ones', 3500000, 90, ''),
-(3, 3, 'Injector Flow Testing', 0, 'Testing fuel injector flow rate to diagnose issues', 900000, 30, ''),
-(3, 3, 'High-Performance Injector Upgrade', 1, 'Upgrading to high-performance fuel injectors for better power', 5000000, 120, ''),
+(3, 2, 'Ignition Coil Replacement', 1, 'Installing new ignition coils', 1300000, 45, 'https://cdn.hswstatic.com/gif/ignition-coil-1.jpg'),
+(3, 3, 'Fuel Injector Cleaning', 0, 'Cleaning fuel injectors to improve engine efficiency', 1200000, 45, 'https://azblogsingle.wpengine.com/wp-content/uploads/2022/09/fuelinjectors-scaled.jpg'),
+(3, 3, 'Fuel Injector Replacement', 1, 'Replacing faulty fuel injectors with new ones', 3500000, 90, 'https://images.contentstack.io/v3/assets/blt75c85f063ac4ae63/blt5d616de955dd04ce/65f91cdd72777fc13760726e/17-DIY-BMW-F30-Fuel-Injector-Replacement_Removing-Injectors.jpg'),
+(3, 3, 'Injector Flow Testing', 0, 'Testing fuel injector flow rate to diagnose issues', 900000, 30, 'https://i.ytimg.com/vi/dYyBORhV9ng/hq720.jpg'),
+(3, 3, 'High-Performance Injector Upgrade', 1, 'Upgrading to high-performance fuel injectors for better power', 5000000, 120, 'https://mountuneusa.com/cdn/shop/products/6069-FI-001-2.jpg?v=1675195170'),
 (3, 4, 'Cooling System Flush', 1, 'Draining and refilling coolant system', 2160000, 60, 'https://www.meyle.com/fileadmin/_processed_/4/1/csm_Spuelfuchs_Einsatz_760x507_d724c98cf5.jpg'),
 (3, 4, 'Cooling System Leak Check', 0, 'Identifying leaks in the cooling system', 1440000, 45, 'https://dsportmag.com/wp-content/uploads/2020/08/219-Tech-CoolingSystemPressureCheck-004-Test.jpg'),
 (3, 4, 'Coolant Replacement', 1, 'Replacing old coolant for optimal performance', 1200000, 30, 'https://www.familyhandyman.com/wp-content/uploads/2024/07/GettyImages-586723614-e1720102288877.jpg'),
@@ -675,15 +674,15 @@ BEGIN
 END;
 GO
 
-INSERT INTO [Car](UserID, CarName, Brand, RegistrationNumber, [Year], [Status]) VALUES 
-(1, 'Car 1', 'Toyota', '123456', 2010, 'Active'),
-(1, 'Car 2', 'Honda', '654321', 2015, 'Maintaining'),
-(1, 'Car 3', 'Ford', '987654', 2018, 'Active'),
-(1, 'Car 4', 'BMW', '125478', 2020, 'Active'),
-(2, 'Car 1', 'Toyota', '123456', 2010, 'Active'),
-(2, 'Car 2', 'Honda', '654321', 2015, 'Maintaining'),
-(2, 'Car 3', 'Ford', '987654', 2018, 'Active'),
-(2, 'Car 4', 'BMW', '125478', 2020, 'Active');
+INSERT INTO [Car](UserID, CarName, Brand, RegistrationNumber, [Year], CarImage, [Status]) VALUES 
+(1, 'Car 1', 'Toyota', '123456', 2010, 'https://vov.vn/sites/default/files/styles/large/public/2022-08/289624929_453408263095020_5408162982360432160_n.png', 'Active'),
+(1, 'Car 2', 'Honda', '654321', 2015, 'https://akm-img-a-in.tosshub.com/indiatoday/styles/medium_crop_simple/public/2024-11/1_4.jpg', 'Maintaining'),
+(1, 'Car 3', 'Ford', '987654', 2018, 'https://images.dealer.com/autodata/us/640/2020/USD00FOS372A0/USC80FOS371A01300.jpg', 'Active'),
+(1, 'Car 4', 'BMW', '125478', 2020, '', 'Active'),
+(2, 'Car 1', 'Toyota', '123456', 2010, 'https://vov.vn/sites/default/files/styles/large/public/2022-08/289624929_453408263095020_5408162982360432160_n.png', 'Active'),
+(2, 'Car 2', 'Honda', '654321', 2015, 'https://akm-img-a-in.tosshub.com/indiatoday/styles/medium_crop_simple/public/2024-11/1_4.jpg', 'Maintaining'),
+(2, 'Car 3', 'Ford', '987654', 2018, 'https://images.dealer.com/autodata/us/640/2020/USD00FOS372A0/USC80FOS371A01300.jpg', 'Active'),
+(2, 'Car 4', 'BMW', '125478', 2020, '', 'Active');
 GO
 
 INSERT INTO [Order] (UserID, CarID, BranchID, PartID, ServiceID, QuantityUsed)

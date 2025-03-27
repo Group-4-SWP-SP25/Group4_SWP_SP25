@@ -28,6 +28,10 @@ async function getCarList() {
             data: JSON.stringify({ userID: user.id })
         });
 
+        if (carList.length === 0) {
+            throw err;
+        }
+
         let carListItems = '';
         carList.forEach((car) => {
             const carListItem = `
