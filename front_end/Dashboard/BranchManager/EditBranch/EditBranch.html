@@ -45,7 +45,7 @@
 
     <div class="content custom-scrollbar">
         <div class="path">
-            <a href="../DashBoard/dashboard.html" class="homepath">Home</a>
+            <a href="../../DashBoard/dashboard.html" class="homepath">Home</a>
             /
             <a href="../BranchManagement.html" class="homepath">Branch Management</a>
             /
@@ -62,21 +62,34 @@
             <div class="branchinfo">
                 <div class="branchname branchinfo-item">
                     <Span>Branch Name: </Span>
-                    <input type="text" id="branchname" value="{Branch name}">
+                    <input type="text" id="branchname" value="{Branch name}" class="normal">
                 </div>
-                <div class="branchlocation branchinfo-item">
-                    <Span>Branch Location: </Span>
-                    <input type="text" id="branchlocation" value="{Branch location}">
+                <div class="branchaddress branchinfo-item">
+                    <Span>Branch Address: </Span>
+                    <input type="text" id="branchaddress" value="{Branch location}" class="normal">
                 </div>
                 <div class="branchphone branchinfo-item">
                     <Span>Branch Phone: </Span>
-                    <input type="text" id="branchphone" value="{Branch phone}">
+                    <input type="text" id="branchphone" value="{Branch phone}" class="normal">
                 </div>
                 <div class="branchemail branchinfo-item">
                     <Span>Branch Email: </Span>
-                    <input type="text" id="branchemail" value="{Branch email}">
+                    <input type="text" id="branchemail" value="{Branch email}" class="normal">
                 </div>
             </div>
+
+            <!-- submit -->
+            <div class="submit">
+                <div class="save">
+                    <span class="material-icons"> done </span>
+                    <span>Save</span>
+                </div>
+                <div class="cancel">
+                    <span class="material-icons"> close </span>
+                    <span>Cancel</span>
+                </div>
+            </div>
+
             <!-- branch map -->
             <div class="branchmap">
                 <div class="location-title">
@@ -98,15 +111,10 @@
                     <span>Done</span>
                 </div>
             </div>
-            <!-- submit -->
-            <div class="submit">
-                <div class="save">
-                    <span class="material-icons"> done </span>
-                    <span>Save</span>
-                </div>
-            </div>
         </div>
     </div>
+
+    <script src="./EditBranch.js"></script>
 </body>
 
 </html>

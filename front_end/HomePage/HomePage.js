@@ -70,6 +70,7 @@ const checkRead = () => {
 // open chat panel
 document.querySelector('.fixed-message-icon').addEventListener('click', () => {
     MessagePanel.classList.toggle('active');
+    NotiPanel.classList.remove('active');
     checkRead()
 })
 document.querySelector('.message-close').addEventListener('click', () => {
@@ -235,3 +236,12 @@ const Send = async (data) => {
     }
 
 }
+
+// notification
+const NotiPanel = document.querySelector('.notification-container');
+const NotiIcon = document.querySelector('.fixed-notification-icon');
+
+NotiIcon.addEventListener('click', () => {
+    NotiPanel.classList.toggle('active');
+    MessagePanel.classList.remove('active');
+});

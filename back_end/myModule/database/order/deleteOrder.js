@@ -20,9 +20,9 @@ const deletAllOrder = async (userID, carID) => {
   try {
     const pool = global.pool;
     const query = `
-      ALTER TABLE [Order] DISABLE TRIGGER DeleteOrder;
-      DELETE FROM [Order] WHERE UserID = @userID AND CarID = @carID;
       ALTER TABLE [Order] ENABLE TRIGGER DeleteOrder;
+      DELETE FROM [Order] WHERE UserID = @userID AND CarID = @carID;
+      ALTER TABLE [Order] DISABLE TRIGGER DeleteOrder;
     `;
     await pool
       .request()

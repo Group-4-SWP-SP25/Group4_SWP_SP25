@@ -3,77 +3,45 @@ const apiKey = "qn4R3GW87CxbHZJ6qJBdSj6QwyqmYNjaUcH2vnz7J6Q";
 const platform = new H.service.Platform({
     'apikey': apiKey
 });
-function DisplayMap() {
+async function DisplayMap(element, branchlocation) {
     try {
+        let branchLat = 0;
+        let branchLng = 0;
+        if (branchlocation != null) {
+            branchLat = branchlocation.split('-')[0];
+            branchLng = branchlocation.split('-')[1];
+        }
+        else {
+            branchLat = 21.024633;
+            branchLng = 105.53952;
+        }
+
         const defaultLayers = platform.createDefaultLayers();
-        const map = new H.Map(document.getElementById('map'),
+        const map = new H.Map(element,
             defaultLayers.vector.normal.map, {
             zoom: 15,
-            center: { lat: 10.7769, lng: 106.7009 },
+            center: { lat: branchLat, lng: branchLng },
             pixelRatio: window.devicePixelRatio || 1
         });
-        // Thêm khả năng tương tác như zoom, pan
-        const behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
-        const ui = H.ui.UI.createDefault(map, defaultLayers);
-
-        // Thêm marker có thể kéo thả
-        let marker = new H.map.Marker({ lat: 10.7769, lng: 106.7009 }, { volatility: true });
+        if (!map) {
+            console.error("Không thể tạo bản đồ!");
+            return;
+        }
+        let marker = new H.map.Marker({ lat: branchLat, lng: branchLng }, { volatility: true });
         marker.draggable = true;
         map.addObject(marker);
 
-        // Sự kiện kéo thả marker
-        map.addEventListener("dragend", function (evt) {
-            if (evt.target instanceof H.map.Marker) {
-                let position = evt.target.getGeometry();
-                console.log("Vị trí được chọn:", position.lat, position.lng);
-            }
-        });
-
-        // Sự kiện click trên bản đồ để chọn vị trí
-        map.addEventListener("tap", function (evt) {
-            let coord = map.screenToGeo(evt.currentPointer.viewportX, evt.currentPointer.viewportY);
-            marker.setGeometry(coord);
-            console.log("Vị trí được chọn:", coord.lat, coord.lng);
-        });
-
-        return map
     } catch (error) {
         console.log(error)
     }
 }
 
-async function getCoordinates(location) {
-    const url = `https://geocode.search.hereapi.com/v1/geocode?q=${encodeURIComponent(location)}&apiKey=${apiKey}`;
-
-    try {
-        const response = await fetch(url);
-        const data = await response.json();
-        if (data.items.length > 0) {
-            return data.items[0].position; // Lấy lat, lng
-        } else {
-            console.log("Không tìm thấy địa điểm");
-            return null;
-        }
-    } catch (error) {
-        console.error("Lỗi khi tìm kiếm:", error);
-        return null;
-    }
-}
-
-
-// const map = DisplayMap()
-// getCoordinates("Đại học FPT Hà Nội")
-//     .then(position => {
-//         if (position) {
-//             console.log("Tọa độ:", position.lat, position.lng);
-//             map.setCenter({ lat: position.lat, lng: position.lng });
-//         }
-//     });
 
 
 // first load
 window.onload = async () => {
     await GetListBranch();
+    DisplayMap(document.getElementById("maptest"));
 }
 
 
@@ -137,11 +105,14 @@ async function AddBranch(branch) {
         </div>
     `
     item.querySelector(".edit").addEventListener("click", () => EditBranch(branch.BranchID));
+    setTimeout(() => {
+        DisplayMap(item.querySelector(".map"), branch.BranchLocation);
+    }, 100);
     container.appendChild(item);
 }
 
 // edit branch
 
-EditBranch = (branchID) => {
+const EditBranch = (branchID) => {
     window.location.href = `./EditBranch/EditBranch.html?ID=${branchID}`;
 }

@@ -185,90 +185,6 @@
                     
         <!-- message body -->
         <div class="message-body custom-scrollbar">
-            <div class="msg left-msg">
-                <div class="msg-img">
-                    <img src="../../../resource/admin.jpg" alt="Admin">
-                </div>
-                <div class="msg-bubble">
-                    <div class="msg-text">
-                        asd asd asd as dsad asdad asdad asda asdasda
-                        <div class="msg-info-left">
-                            <div class="msg-info-name">${name}</div>
-                            <div class="msg-info-time">${time}</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="msg right-msg">
-                <div class="msg-bubble">
-                    <div class="msg-text">
-                        asd asd asd as dsad asdad asdad asda asdasda
-                        <div class="msg-info-right">
-                            <div class="msg-info-name">${name}</div>
-                            <div class="msg-info-time">${time}</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="status">
-                    <span class="material-icons">check_circle</span>
-                </div>
-            </div>
-            <div class="msg right-msg">
-                <div class="msg-bubble">
-                    <div class="msg-text">
-                        ${content}
-                        <div class="msg-info-right">
-                            <div class="msg-info-name">${name}</div>
-                            <div class="msg-info-time">${time}</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="status">
-                    <div class="loader"></div>
-                </div>
-            </div>
-            <div class="msg left-msg">
-                <div class="msg-img">
-                    <img src="../../../resource/admin.jpg" alt="Admin">
-                </div>
-                <div class="msg-bubble">
-                    <div class="msg-text">
-                        asd asd asd as dsad asdad asdad asda asdasda
-                        <div class="msg-info-left">
-                            <div class="msg-info-name">${name}</div>
-                            <div class="msg-info-time">${time}</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="msg right-msg">
-                <div class="msg-bubble">
-                    <div class="msg-text">
-                        asd asd asd as dsad asdad asdad asda asdasda
-                        <div class="msg-info-right">
-                            <div class="msg-info-name">${name}</div>
-                            <div class="msg-info-time">${time}</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="status">
-                    <span class="material-icons">check_circle</span>
-                </div>
-            </div>
-            <div class="msg right-msg">
-                <div class="msg-bubble">
-                    <div class="msg-text">
-                        ${content}
-                        <div class="msg-info-right">
-                            <div class="msg-info-name">${name}</div>
-                            <div class="msg-info-time">${time}</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="status">
-                    <div class="loader"></div>
-                </div>
-            </div>
         </div>
 
         <!-- message footer -->
@@ -293,6 +209,27 @@
 
 
     <!-- End Message panel -->
+
+    <!-- Notification panel -->
+    <div class="notification-container">
+        <!-- notification header -->
+        <div class="notification-header">
+            <div class="notification-header-info">
+                <img src="/resource/logo.jpg" alt="">
+                <Span>Notification</Span>
+            </div>
+            <div class="notification-close">
+                <span class="material-icons">
+                    close
+                </span>
+            </div>
+        </div>
+        <!-- notification body -->
+        <div class="notification-body custom-scrollbar">
+        </div>
+    </div>
+    <!-- End notification panel -->
+
     <script>
         fetch("../header/header.html")
             .then(response => response.text())

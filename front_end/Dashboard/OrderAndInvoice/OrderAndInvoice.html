@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,0,1,0&icon_names=check_circle" />
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <!-- Sidebar -->
+  <header>
+    <div class="page-frame"></div>
+  </header>
+  <!-- End sidebar -->
+
+  <!-- Content -->
+  <div class="content">
+    <div class="path">
+      <a href="/front_end/DashBoard/dashboard.html" style="text-decoration: none; color: white">
+        Home
+      </a>
+      /
+      <a href="/front_end/Dashboard/OrderAndInvoice/OrderAndInvoice.html" class="currentpath">
+        Order & Invoice Management
+      </a>
+    </div>
+
+    <div class="services-table">
+      <div class="table-header">
+        <h1>Order & Invoice Management</h1>
+        <div class="add-order hidden">
+          <button class="btn-add" onclick="showAddPopup()">
+            + Add Order
+          </button>
+        </div>
+
+        <div class="choose-user">
+          <button class="btn-user">
+            Choose User
+          </button>
+          </select>
+        </div>
+      </div>
+
+      <div class="manage-header hidden">
+        <div class="user-info">
+          <div class="user-name">
+            <p>User Name: <span class="user-name-text">aaa</span></p>
+          </div>
+          <span class="switch-user">Switch user</span>
+        </div>
+        <div class="choose-management">
+          <button class="btn-manage-order">
+            Manage Order
+          </button>
+          <button class="btn-manage-invoice">
+            Manage Invoice
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="order-table-container">
+      <table class="order-table hidden">
+        <thead class="order-header">
+          <tr>
+            <th style="width: 5%">
+              #
+            </th>
+            <th style="width: 10%">
+              Car
+            </th>
+            <th style="width: 15%">
+              Component
+            </th>
+            <th style="width: 20%">
+              Service
+            </th>
+            <th style="width: 15%">
+              Maintenanced Branch
+            </th>
+            <th style="width: 10%">
+              Quantity
+            </th>
+            <th style="width: 10%">
+              Order Date
+            </th>
+            <th style="width: 20%">
+              Total Cost
+            </th>
+            <th style="width: 10%">
+              Actions
+            </th>
+          </tr>
+        </thead>
+        <tbody class="order-data">
+
+        </tbody>
+      </table>
+
+      <div class="total-price-order hidden">
+        <p>Total Price: <span class="total-price">1</span></p>
+      </div>
+
+      <div class="text-center order-empty hidden">
+        <svg class="icon-box" fill="#000000" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink" width="800px" height="800px" viewBox="0 0 408.483 408.483"
+          xml:space="preserve">
+          <g>
+            <g>
+              <path
+                d="M87.748,388.784c0.461,11.01,9.521,19.699,20.539,19.699h191.911c11.018,0,20.078-8.689,20.539-19.699l13.705-289.316
+        H74.043L87.748,388.784z M247.655,171.329c0-4.61,3.738-8.349,8.35-8.349h13.355c4.609,0,8.35,3.738,8.35,8.349v165.293
+        c0,4.611-3.738,8.349-8.35,8.349h-13.355c-4.61,0-8.35-3.736-8.35-8.349V171.329z M189.216,171.329
+        c0-4.61,3.738-8.349,8.349-8.349h13.355c4.609,0,8.349,3.738,8.349,8.349v165.293c0,4.611-3.737,8.349-8.349,8.349h-13.355
+        c-4.61,0-8.349-3.736-8.349-8.349V171.329L189.216,171.329z M130.775,171.329c0-4.61,3.738-8.349,8.349-8.349h13.356
+        c4.61,0,8.349,3.738,8.349,8.349v165.293c0,4.611-3.738,8.349-8.349,8.349h-13.356c-4.61,0-8.349-3.736-8.349-8.349V171.329z" />
+              <path d="M343.567,21.043h-88.535V4.305c0-2.377-1.927-4.305-4.305-4.305h-92.971c-2.377,0-4.304,1.928-4.304,4.305v16.737H64.916
+        c-7.125,0-12.9,5.776-12.9,12.901V74.47h304.451V33.944C356.467,26.819,350.692,21.043,343.567,21.043z" />
+            </g>
+          </g>
+        </svg>
+        <p>There are no lost or found orders</p>
+      </div>
+      </section>
+    </div>
+    <!-- End content -->
+
+    <div class="overlay" id="overlay">
+    </div>
+
+    <div class="popup-container">
+      <div class="popup" id="popup">
+        <div class="popup-header">
+          <span class="popup-header-TO"> Choose User: </span>
+          <div class="popup-header-user"></div>
+        </div>
+        <div class="popup-search">
+          <span class="material-icons"> search </span>
+          <input type="text" placeholder="Search..." id="PopupsearchString" />
+        </div>
+        <div class="popup-list custom-scrollbar"></div>
+
+        <div class="popup-submit">
+          <button class="popup-btn-done">
+            <span class="material-icons"> done </span>
+          </button>
+          <button class="popup-btn-cancel">
+            <span class="material-icons"> close </span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+      integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+      crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="script.js"></script>
+    <script>
+      fetch('../page_frame/page_frame.html')
+        .then((response) => response.text())
+        .then((data) => {
+          document.querySelector('.page-frame').innerHTML = data;
+          const css = document.createElement('link');
+          css.rel = 'stylesheet';
+          css.href = '../page_frame/style.css';
+          document.head.appendChild(css);
+
+          // current page indicator
+          const currentPageFile = window.location.pathname.split('/').pop();
+          document
+            .querySelector('.page-frame')
+            .querySelectorAll('.option')
+            .forEach((option) => {
+              const anchorHref = option.getAttribute('href');
+              if (anchorHref.includes(currentPageFile)) {
+                option.style.backgroundColor = '#33334d';
+              }
+            });
+        });
+    </script>
+    <script src="./popupUser.js"></script>
+    <script src="./script.js"></script>
+    <!-- End scripts -->
+</body>
+
+</html>

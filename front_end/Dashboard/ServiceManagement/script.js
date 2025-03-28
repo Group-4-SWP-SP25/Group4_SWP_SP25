@@ -20,7 +20,6 @@ let chosenServicePrice = null; // chosen row data
 let chosenEstimatedTime = null; // chosen row data
 let chosenServiceImage = null; // chosen row data
 let oldServiceData = []; // store old render table
-let maxServiceID; // max current serviceID
 let maxServiceTypeID; // max current serviceTypeID
 let maxServicePartID; // max current partID
 let partName = {}; // name of partID
@@ -213,35 +212,23 @@ async function isServiceNameExists(serviceName) {
 }
 
 function showUpdatePopup(element) {
-    chosenServiceID = +element.dataset.serviceid; // get dataset from self
-    popupModify.querySelector('h2').textContent = 'Update Service'; // set title
-    popupModify.querySelector('.btn-yes').addEventListener('click', confirmUpdatePopup); // set yes button
-    popupModify.querySelector('.btn-no').addEventListener('click', hideUpdatePopup); // set no button
+    chosenServiceID = +element.dataset.serviceid;
+    popupModify.querySelector('h2').textContent = 'Update Service';
+    popupModify.querySelector('.btn-yes').addEventListener('click', confirmUpdatePopup);
+    popupModify.querySelector('.btn-no').addEventListener('click', hideUpdatePopup);
 
-    // preset data
-    chosenServiceID = data[0].children[0].selectedIndex = +element.dataset.serviceid;
-    chosenServiceTypeID = data[1].children[0].selectedIndex = +element.dataset.typeid;
-    chosenServicePartID = data[2].children[0].selectedIndex = +element.dataset.partid;
-    chosenServiceName = data[3].children[0].value = element.dataset.servicename;
-    chosenServiceDescription = data[4].children[0].value = element.dataset.servicedescription;
-    chosenServicePrice = data[5].children[0].value = element.dataset.serviceprice;
-    chosenEstimatedTime = data[6].children[0].value = element.dataset.estimatedtime;
-    chosenServiceImage = data[7].children[0].value = element.dataset.serviceimage;
+    // Preset data
+    chosenServiceID = +element.dataset.serviceid;
+    chosenServiceTypeID = data[0].children[0].selectedIndex = +element.dataset.typeid;
+    chosenServicePartID = data[1].children[0].selectedIndex = +element.dataset.partid;
+    chosenServiceName = data[2].children[0].value = element.dataset.servicename;
+    chosenServiceDescription = data[3].children[0].value = element.dataset.servicedescription;
+    chosenServicePrice = data[4].children[0].value = element.dataset.serviceprice;
+    chosenEstimatedTime = data[5].children[0].value = element.dataset.estimatedtime;
+    chosenServiceImage = data[6].children[0].value = element.dataset.serviceimage;
 
-    // listen change
-    const idSelect = data[0].children[0];
-    for (let i = 1; i <= maxServiceID; i++) {
-        const option = document.createElement('option');
-        if (i === chosenServiceID) option.selected = true;
-        option.value = i;
-        option.textContent = `${i}`;
-        idSelect.appendChild(option);
-    }
-    data[0].children[0].addEventListener('change', () => {
-        chosenServiceID = setNumValue(data[0].children[0], chosenServiceID, 1);
-    });
-
-    const typeSelect = data[1].children[0];
+    // Listen change
+    const typeSelect = data[0].children[0];
     typeSelect.innerHTML = '';
     for (let i = 1; i <= maxServiceTypeID; i++) {
         const option = document.createElement('option');
@@ -250,11 +237,11 @@ function showUpdatePopup(element) {
         option.textContent = `${i} - ${typeName[i]}`;
         typeSelect.appendChild(option);
     }
-    data[1].children[0].addEventListener('change', () => {
-        chosenServiceTypeID = setNumValue(data[1].children[0], chosenServiceTypeID, 1);
+    data[0].children[0].addEventListener('change', () => {
+        chosenServiceTypeID = setNumValue(data[0].children[0], chosenServiceTypeID, 1);
     });
 
-    const partSelect = data[2].children[0];
+    const partSelect = data[1].children[0];
     partSelect.innerHTML = '';
     for (let i = 1; i <= maxServicePartID; i++) {
         const option = document.createElement('option');
@@ -263,28 +250,40 @@ function showUpdatePopup(element) {
         option.textContent = `${i} - ${partName[i]}`;
         partSelect.appendChild(option);
     }
+    data[1].children[0].addEventListener('change', () => {
+        chosenServicePartID = setNumValue(data[1].children[0], chosenServicePartID, 1);
+    });
+
     data[2].children[0].addEventListener('change', () => {
-        chosenServicePartID = setNumValue(data[2].children[0], chosenServicePartID, 1);
+        chosenServiceName = setStrValue(data[2].children[0], chosenServiceName, chosenServiceName);
     });
 
     data[3].children[0].addEventListener('change', () => {
-        chosenServiceName = setStrValue(data[3].children[0], chosenServiceName, chosenServiceName);
+        chosenServiceDescription = setStrValue(data[3].children[0], chosenServiceDescription, chosenServiceDescription);
     });
 
     data[4].children[0].addEventListener('change', () => {
-        chosenServiceDescription = setStrValue(data[4].children[0], chosenServiceDescription, chosenServiceDescription);
+        chosenServicePrice = setNumValue(data[4].children[0], chosenServicePrice, chosenServicePrice);
     });
 
     data[5].children[0].addEventListener('change', () => {
-        chosenServicePrice = setNumValue(data[5].children[0], chosenServicePrice, chosenServicePrice);
+        let value = parseInt(data[5].children[0].value);
+        if (isNaN(value)) {
+            chosenEstimatedTime = parseInt(element.dataset.estimatedtime);
+            data[5].children[0].value = element.dataset.estimatedtime;
+        } else if (value > 10800) {
+            chosenEstimatedTime = 10800;
+            data[5].children[0].value = 10800;
+        } else if (value < 15) {
+            chosenEstimatedTime = 15;
+            data[5].children[0].value = 15;
+        } else {
+            chosenEstimatedTime = value;
+        }
     });
 
     data[6].children[0].addEventListener('change', () => {
-        chosenEstimatedTime = setNumValue(data[6].children[0], chosenEstimatedTime, chosenEstimatedTime);
-    });
-
-    data[7].children[0].addEventListener('change', () => {
-        chosenServiceImage = setStrValue(data[7].children[0], chosenServiceImage, chosenServiceImage);
+        chosenServiceImage = setStrValue(data[6].children[0], chosenServiceImage, chosenServiceImage);
     });
 
     popupModify.classList.remove('hidden');
@@ -305,6 +304,16 @@ function hideUpdatePopup() {
 }
 
 async function confirmUpdatePopup() {
+    if (!chosenServiceName || chosenServiceName.trim() === '') {
+        alert('Service Name cannot be empty.');
+        return;
+    }
+
+    if (!chosenServiceDescription || chosenServiceDescription.trim() === '') {
+        alert('Service Description cannot be empty.');
+        return;
+    }
+
     updateService(chosenServiceID, chosenServiceTypeID, chosenServicePartID, chosenServiceName, chosenServiceDescription, chosenServicePrice, chosenEstimatedTime, chosenServiceImage);
 
     // reset display data
@@ -342,23 +351,21 @@ async function updateService(ServiceID, ServiceTypeID, ServicePartID, ServiceNam
 
 // Add service
 function showAddPopup() {
-    chosenServiceID = maxServiceID + 1;
     popupModify.querySelector('h2').textContent = 'Add Service'; // set title
     popupModify.querySelector('.btn-yes').addEventListener('click', confirmAddPopup); // set yes button
     popupModify.querySelector('.btn-no').addEventListener('click', hideAddPopup); // set no button
 
     // preset data
-    data[0].children[0].appendChild(document.createElement('option')).textContent = `${chosenServiceID}`;
-    chosenServiceTypeID = data[1].children[0].selectedIndex = 1;
-    chosenServicePartID = data[2].children[0].selectedIndex = 1;
-    chosenServiceName = data[3].children[0].value = 'Unnamed Service';
-    chosenServiceDescription = data[4].children[0].value = 'No Description';
-    chosenServicePrice = data[5].children[0].value = 1000;
-    chosenEstimatedTime = data[6].children[0].value = 15;
-    chosenServiceImage = data[7].children[0].value = 'https://via.placeholder.com/1';
+    chosenServiceTypeID = data[0].children[0].selectedIndex = 1;
+    chosenServicePartID = data[1].children[0].selectedIndex = 1;
+    chosenServiceName = data[2].children[0].value = 'Unnamed Service';
+    chosenServiceDescription = data[3].children[0].value = 'No Description';
+    chosenServicePrice = data[4].children[0].value = 1000;
+    chosenEstimatedTime = data[5].children[0].value = 15;
+    chosenServiceImage = data[6].children[0].value = 'https://imaninsamila.co.tz/frontend/style/images/no-image.webp';
 
     // listen change
-    const typeSelect = data[1].children[0];
+    const typeSelect = data[0].children[0];
     typeSelect.innerHTML = '';
     for (let i = 1; i <= maxServiceTypeID; i++) {
         const option = document.createElement('option');
@@ -367,11 +374,11 @@ function showAddPopup() {
         option.textContent = `${i} - ${typeName[i]}`;
         typeSelect.appendChild(option);
     }
-    data[1].children[0].addEventListener('change', () => {
-        chosenServiceTypeID = setNumValue(data[1].children[0], chosenServiceTypeID, 1);
+    data[0].children[0].addEventListener('change', () => {
+        chosenServiceTypeID = setNumValue(data[0].children[0], chosenServiceTypeID, 1);
     });
 
-    const partSelect = data[2].children[0];
+    const partSelect = data[1].children[0];
     partSelect.innerHTML = '';
     for (let i = 1; i <= maxServicePartID; i++) {
         const option = document.createElement('option');
@@ -380,58 +387,112 @@ function showAddPopup() {
         option.textContent = `${i} - ${partName[i]}`;
         partSelect.appendChild(option);
     }
+    data[1].children[0].addEventListener('change', () => {
+        chosenServicePartID = setNumValue(data[1].children[0], chosenServicePartID, 1);
+    });
+
     data[2].children[0].addEventListener('change', () => {
-        chosenServicePartID = setNumValue(data[2].children[0], chosenServicePartID, 1);
+        chosenServiceName = setStrValue(data[2].children[0], chosenServiceName, 'Unnamed Service');
+    });
+    data[2].children[0].addEventListener('focus', () => {
+        if (data[2].children[0].value === 'Unnamed Service') {
+            data[2].children[0].value = '';
+        }
+    });
+    data[2].children[0].addEventListener('blur', () => {
+        if (data[2].children[0].value.trim() === '') {
+            data[2].children[0].value = 'Unnamed Service';
+            chosenServiceName = 'Unnamed Service';
+        } else {
+            chosenServiceName = data[2].children[0].value;
+        }
     });
 
     data[3].children[0].addEventListener('change', () => {
-        chosenServiceName = setStrValue(data[3].children[0], chosenServiceName, 'Unnamed Service');
+        chosenServiceDescription = setStrValue(data[3].children[0], chosenServiceDescription, 'No Description');
     });
     data[3].children[0].addEventListener('focus', () => {
-        data[3].children[0].value = '';
+        if (data[3].children[0].value === 'No Description') {
+            data[3].children[0].value = '';
+        }
     });
     data[3].children[0].addEventListener('blur', () => {
-        chosenServiceName = setStrValue(data[3].children[0], chosenServiceName, 'Unnamed Service');
+        if (data[3].children[0].value.trim() === '') {
+            data[3].children[0].value = 'No Description';
+            chosenServiceDescription = 'No Description';
+        } else {
+            chosenServiceDescription = data[3].children[0].value;
+        }
     });
 
     data[4].children[0].addEventListener('change', () => {
-        chosenServiceDescription = setStrValue(data[4].children[0], chosenServiceDescription, 'No Description');
+        chosenServicePrice = setNumValue(data[4].children[0], chosenServicePrice, 1000);
     });
     data[4].children[0].addEventListener('focus', () => {
-        data[4].children[0].value = '';
+        if (data[4].children[0].value === '1000') {
+            data[4].children[0].value = '';
+        }
     });
     data[4].children[0].addEventListener('blur', () => {
-        chosenServiceDescription = setStrValue(data[4].children[0], chosenServiceDescription, 'No Description');
+        if (data[4].children[0].value.trim() === '') {
+            data[4].children[0].value = '1000';
+            chosenServicePrice = 1000;
+        } else {
+            chosenServicePrice = setNumValue(data[4].children[0], chosenServicePrice, 1000);
+        }
     });
 
     data[5].children[0].addEventListener('change', () => {
-        chosenServicePrice = setNumValue(data[5].children[0], chosenServicePrice, 1000);
+        let value = parseInt(data[5].children[0].value);
+        if (isNaN(value)) {
+            chosenEstimatedTime = 15;
+            data[5].children[0].value = 15;
+        } else if (value > 10800) {
+            chosenEstimatedTime = 10800;
+            data[5].children[0].value = 10800;
+        } else if (value < 15) {
+            chosenEstimatedTime = 15;
+            data[5].children[0].value = 15;
+        } else {
+            chosenEstimatedTime = value;
+        }
     });
     data[5].children[0].addEventListener('focus', () => {
-        data[5].children[0].value = '';
+        if (data[5].children[0].value === '15') {
+            data[5].children[0].value = '';
+        }
     });
     data[5].children[0].addEventListener('blur', () => {
-        chosenServicePrice = setNumValue(data[5].children[0], chosenServicePrice, 1000);
+        let value = parseInt(data[5].children[0].value);
+        if (isNaN(value) || data[5].children[0].value.trim() === '') {
+            chosenEstimatedTime = 15;
+            data[5].children[0].value = 15;
+        } else if (value > 10800) {
+            chosenEstimatedTime = 10800;
+            data[5].children[0].value = 10800;
+        } else if (value < 15) {
+            chosenEstimatedTime = 15;
+            data[5].children[0].value = 15;
+        } else {
+            chosenEstimatedTime = value;
+        }
     });
 
     data[6].children[0].addEventListener('change', () => {
-        chosenEstimatedTime = setNumValue(data[6].children[0], chosenEstimatedTime, 15);
+        chosenServiceImage = setStrValue(data[6].children[0], chosenServiceImage, 'https://imaninsamila.co.tz/frontend/style/images/no-image.webp');
     });
     data[6].children[0].addEventListener('focus', () => {
-        data[6].children[0].value = '';
+        if (data[6].children[0].value === 'https://imaninsamila.co.tz/frontend/style/images/no-image.webp') {
+            data[6].children[0].value = '';
+        }
     });
     data[6].children[0].addEventListener('blur', () => {
-        chosenEstimatedTime = setNumValue(data[6].children[0], chosenEstimatedTime, 15);
-    });
-
-    data[7].children[0].addEventListener('change', () => {
-        chosenServiceImage = setStrValue(data[7].children[0], chosenServiceImage, 'https://via.placeholder.com/1');
-    });
-    data[7].children[0].addEventListener('focus', () => {
-        data[7].children[0].value = '';
-    });
-    data[7].children[0].addEventListener('blur', () => {
-        chosenServiceImage = setStrValue(data[7].children[0], chosenServiceImage, 'https://via.placeholder.com/1');
+        if (data[6].children[0].value.trim() === '') {
+            data[6].children[0].value = 'https://imaninsamila.co.tz/frontend/style/images/no-image.webp';
+            chosenServiceImage = 'https://imaninsamila.co.tz/frontend/style/images/no-image.webp';
+        } else {
+            chosenServiceImage = data[6].children[0].value;
+        }
     });
 
     popupModify.classList.remove('hidden');
@@ -454,9 +515,24 @@ function hideAddPopup() {
 
 async function confirmAddPopup() {
     if (chosenServiceTypeID) {
+        if (!chosenServiceName || chosenServiceName.trim() === '') {
+            alert('Service Name cannot be empty.');
+            return;
+        }
+
+        if (chosenServiceName === 'Unnamed Service') {
+            alert('Service Name must be changed from the default.');
+            return;
+        }
+
+        if (!chosenServiceDescription || chosenServiceDescription.trim() === '') {
+            alert('Service Description cannot be empty.');
+            return;
+        }
+
         const exists = await isServiceNameExists(chosenServiceName);
         if (exists) {
-            alert('Service Name already exists. Please enter a different name.');
+            alert('Error: Service name already exists.');
             return;
         }
 

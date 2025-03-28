@@ -13,7 +13,7 @@ async function getOrderList() {
 
     // Lấy danh sách đơn hàng
     const orders = await $.ajax({
-      url: "http://localhost:3000/listOrderByCar",
+      url: "http://localhost:3000/listOrder",
       method: "POST",
       contentType: "application/json",
       data: JSON.stringify({ userID: user.id, carID: carID }),

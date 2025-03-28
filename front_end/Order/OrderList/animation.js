@@ -141,7 +141,7 @@ async function deleteAnOrder() {
     showNotification();
 
     const orderResponse = await $.ajax({
-      url: "http://localhost:3000/listOrderByCar",
+      url: "http://localhost:3000/listOrder",
       method: "POST",
       contentType: "application/json",
       data: JSON.stringify({ userID: user.id, carID: orderDeleted.CarID }),

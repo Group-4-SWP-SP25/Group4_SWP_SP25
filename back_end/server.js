@@ -88,6 +88,12 @@ const { getEmployees } = require("./myModule/controller/employee/employee.js");
 // branch
 const branchInfo = require("./myModule/controller/branch/branchInfo.js");
 const branchList = require("./myModule/controller/branch/branchList.js");
+const editBranchInfo = require("./myModule/controller/branch/editBranchInfo.js");
+const {
+  getBranchLocation,
+  saveBranchLocation,
+} = require("./myModule/controller/map/map.js");
+
 const GetBrancheList= require("./myModule/database/about/GetBrancheList.js");
 const GetBranchesDetail= require("./myModule/database/about/GetBranchesDetail.js");
 // service
@@ -108,8 +114,8 @@ const carList = require("./myModule/controller/car/carList.js");
 const getCarPartsApi = require("./myModule/controller/car/carParts.js");
 const updateCarInfoApi = require("./myModule/controller/car/updateCarInfo.js");
 const createNewCarApi = require("./myModule/controller/car/createNewCar.js");
-const deleteCarApi = require('./myModule/controller/car/deleteCar.js')
-const UpdateCarPartApi = require('./myModule/controller/car/updateCarPartApi.js')
+const deleteCarApi = require("./myModule/controller/car/deleteCar.js");
+const UpdateCarPartApi = require("./myModule/controller/car/updateCarPartApi.js");
 
 // car part
 const carPartInfoInCar = require("./myModule/controller/carPart/carPartInfoInCar.js");
@@ -132,7 +138,7 @@ const componentInStockInfo = require("./myModule/controller/inventory/componentI
 // order
 const orderInfo = require("./myModule/controller/order/orderInfo.js");
 const placeOrder = require("./myModule/controller/order/placeOrder.js");
-const listOrderByCar = require("./myModule/controller/order/listOrderByCar.js");
+const listOrder = require("./myModule/controller/order/listOrder.js");
 const {
   removeAnOrder,
   removeAllOrder,
@@ -156,6 +162,11 @@ const {
 } = require("./myModule/controller/message/message.js");
 
 // calendar
+const {
+  getEvents_api,
+  addEvent_apis,
+} = require("./myModule/controller/calendar/calendar.js");
+
 const { getEvents_api, addEvent_apis } = require("./myModule/controller/calendar/calendar.js");
 // about
 const GetStats= require("./myModule/database/about/GetStats.js");
@@ -218,6 +229,9 @@ app.post("/getFileInfo", authenticateJWT, getFileInfo);
 // branch
 app.post("/branchInfo", branchInfo);
 app.post("/branchList", branchList);
+app.post("/editBranchInfo", authenticateADMIN, editBranchInfo);
+app.post("/getBranchLocation", getBranchLocation);
+app.post("/saveBranchLocation", authenticateADMIN, saveBranchLocation);
 
 app.get("/GetBrancheList", GetBrancheList);
 app.post("/GetBranchesDetail", GetBranchesDetail);
@@ -242,8 +256,8 @@ app.post("/carList", carList);
 app.post("/getCarParts", getCarPartsApi);
 app.post("/updateCarInfo", updateCarInfoApi);
 app.post("/createNewCar", authenticateADMIN, createNewCarApi);
-app.post('/deleteCar', authenticateADMIN, deleteCarApi)
-app.post('/updateCarPart', authenticateADMIN, UpdateCarPartApi)
+app.post("/deleteCar", authenticateADMIN, deleteCarApi);
+app.post("/updateCarPart", authenticateADMIN, UpdateCarPartApi);
 
 // car system
 app.post("/carSystemInfo", carSystemInfo);
@@ -266,7 +280,7 @@ app.post("/componentInStockInfo", componentInStockInfo);
 // order
 app.post("/orderInfo", orderInfo);
 app.post("/placeOrder", placeOrder);
-app.post("/listOrderByCar", listOrderByCar);
+app.post("/listOrder", listOrder);
 app.post("/removeAnOrder", removeAnOrder);
 app.post("/removeAllOrder", removeAllOrder);
 
