@@ -89,10 +89,13 @@ async function GetTimeLine(date, controller) {
 
 // get time line
 async function AddTimeLine(event) {
-    let startHour = event.start.split('T')[1].split(':')[0]
-    let endHour = event.end.split('T')[1].split(':')[0]
     let employeeid = event.summary.split('-')[1]
     let employee = document.querySelector(`[timeline-item-id="${employeeid}"]`);
+    if (employee == null) {
+        return
+    }
+    let startHour = event.start.split('T')[1].split(':')[0]
+    let endHour = event.end.split('T')[1].split(':')[0]
     let item = document.createElement("div");
     item.classList.add(`timeline-item-info`);
     item.innerHTML = `
@@ -112,9 +115,12 @@ async function AddTimeLine(event) {
 
 // -------------------------------------- Get employees --------------------------------------------------
 
-async function GetEmployees() {
+async function GetEmployees(branchID) {
+    document.getElementById('timeline-item-loader').style.display = 'block';
+    document.getElementById('employee-loader').style.display = 'block';
     timeline_item_container.style.display = 'none';
     employee_container.style.display = 'none';
+    employee_container.innerHTML = '';
     timeline_item_container.innerHTML = '';
     try {
         const response = await fetch('http://localhost:3000/Employee/getEmployees', {
@@ -123,6 +129,9 @@ async function GetEmployees() {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${localStorage.getItem("token")}`,
             },
+            body: JSON.stringify({
+                branchID: branchID
+            })
         })
         const result = await response.json()
         const employees = result.employees
@@ -198,6 +207,6 @@ async function AddEmployee(employee) {
 }
 
 window.onload = async () => {
-    await GetEmployees();
+    await GetEmployees(1);
     GetTimeLine(currentDay, new AbortController());
 }

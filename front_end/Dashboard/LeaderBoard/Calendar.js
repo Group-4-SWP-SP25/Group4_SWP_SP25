@@ -21,8 +21,8 @@ document.getElementById('calendar-today').addEventListener('click', () => {
 });
 
 
-document.addEventListener("DOMContentLoaded", function () {
-
+document.addEventListener("DOMContentLoaded", async function () {
+    await GetListBranch();
     renderCalendar(currentYear, currentMonthIndex);
 });
 
@@ -168,5 +168,42 @@ async function GetEvents(year, month, controller) {
     } catch (error) {
         console.log(error)
         return
+    }
+}
+
+
+// Branch dropdown
+const branchDropdown = document.getElementById("branch");
+const branchAddress = document.querySelector(".Branch-address");
+let branchID = 0;
+
+branchDropdown.addEventListener("change", function () {
+    // renderCalendar(currentYear, currentMonthIndex);\
+    branchID = branchDropdown.value;
+    branchAddress.innerHTML = branchDropdown.options[branchDropdown.selectedIndex].address;
+    GetEmployees(branchID);
+});
+
+async function GetListBranch() {
+    try {
+        const response = await fetch("http://localhost:3000/branchList", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem("token")}`,
+            },
+        });
+        const result = await response.json();
+        for (let branch of result) {
+            let option = document.createElement("option");
+            option.value = branch.BranchID;
+            option.address = branch.BranchAddress;
+            option.text = branch.BranchName;
+            branchDropdown.add(option);
+        }
+        branchID = result[0].BranchID;
+        branchAddress.innerHTML = result[0].BranchAddress;
+    } catch (error) {
+        console.log('Error: ', error)
     }
 }

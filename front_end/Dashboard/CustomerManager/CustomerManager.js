@@ -368,3 +368,8 @@ message.addEventListener('click', () => {
         window.location.href = `/front_end/Dashboard/Message/Message.html?ID=0`;
     }
 })
+
+// add button
+add.addEventListener('click', () => {
+    window.location.href = '../../Register/Register.html?role=customer';
+})

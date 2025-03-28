@@ -5,6 +5,7 @@ const body = document.getElementById('message-right-body');
 const messageInput = document.getElementById('message-input');
 const userList = document.getElementById('message-item-list');
 const headerUsername = document.getElementById('header-username');
+const headerAvatar = document.getElementById('header-avatar');
 const searchUser = document.querySelector('#searchString');
 let searchString = searchUser.value;
 let ReceiverID = 0;
@@ -278,21 +279,48 @@ const GetList = async () => {
 }
 
 // switch user
-const switchUser = (id, name) => {
+const switchUser = async (id, name) => {
     ReceiverID = id;
     const item = userList.querySelector(`[message-item-id="${id}"]`);
+    headerAvatar.src = "/resource/admin.jpg";
     item.classList.remove('unread');
     count = 15;
     body.innerHTML = "";
     firstIndex = 0;
     headerUsername.innerHTML = name;
     loadMessages();
+    // avatar
+    let linkAvatar = null;
+    try {
+        const response = await fetch('http://localhost:3000/getFileInfo', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            },
+            body: JSON.stringify({ name: id })
+        })
+        const status = response.status;
+        if (status == 200) {
+            const result = await response.json();
+            linkAvatar = result.avatar;
+        }
+    } catch (error) {
+        console.log(error);
+    }
+    if (linkAvatar != null) {
+        linkAvatar = `https://drive.google.com/thumbnail?id=${linkAvatar}`;
+    } else {
+        linkAvatar = "/resource/admin.jpg";
+    }
+    headerAvatar.src = linkAvatar;
 }
 
 // switch group
 const switchGroup = async () => {
     ReceiverID = 0;
     group = JSON.parse(localStorage.getItem('group'));
+    headerAvatar.src = "/resource/admin.jpg";
     localStorage.removeItem('group');
     let name = await fetch('http://localhost:3000/CustomerManager/getUserInfo', {
         method: 'POST',
@@ -310,13 +338,14 @@ const switchGroup = async () => {
 
 // add user 
 async function AddUser(id, name, lastMessage, lastMessageID) {
+
     // add
     const user = document.createElement("div");
     user.classList.add("message-item");
     user.setAttribute('message-item-id', id);
     user.innerHTML = `
         <div class="message-item-info">
-            <img src="../../../resource/admin.jpg" alt="User">
+            <img src="/resource/admin.jpg" alt="User">
             <div class="message-item-info-detail">
                 <span class="message-item-username">${name}</span>
                 <span class="last-message">${lastMessage}</span>
@@ -340,6 +369,33 @@ async function AddUser(id, name, lastMessage, lastMessageID) {
         event.stopPropagation();
     })
     userList.appendChild(user);
+
+    // avatar
+    let linkAvatar = null;
+    try {
+        const response = await fetch('http://localhost:3000/getFileInfo', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            },
+            body: JSON.stringify({ name: id })
+        })
+        const status = response.status;
+        if (status == 200) {
+            const result = await response.json();
+            linkAvatar = result.avatar;
+        }
+    } catch (error) {
+        console.log(error);
+    }
+    if (linkAvatar != null) {
+        linkAvatar = `https://drive.google.com/thumbnail?id=${linkAvatar}`;
+    } else {
+        linkAvatar = "/resource/admin.jpg";
+    }
+
+    user.querySelector('img').src = linkAvatar;
 }
 
 // move user to top 
