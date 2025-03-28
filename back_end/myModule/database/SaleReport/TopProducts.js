@@ -13,18 +13,16 @@ const TopProducts = async (req, res) => {
       .request()
       .input("branch", sql.NVarChar, branch)
       .input("year", sql.Int, year).query(`
-             SELECT 
+       
+SELECT 
     ai.AccessoryName AS ProductName, 
-    COUNT(o.OrderID) AS Sales 
-
-
+    sum (bi.QuantityUsed) AS Sales  
 FROM AccessoryInfo ai
-JOIN Inventory i ON ai.AccessoryID = i.AccessoryID
-JOIN [Order] o ON i.AccessoryID = o.PartID
-JOIN Branch b ON o.BranchID = b.BranchID
-WHERE CAST(b.BranchID AS NVARCHAR(MAX)) = @branch 
-AND YEAR(o.OrderDate) = @year
-
+JOIN [Service] s ON s.ServiceID = ai.ServiceID
+JOIN Bill bi ON bi.ServiceID = ai.ServiceID
+JOIN Branch b ON bi.BranchID = b.BranchID
+WHERE CAST(b.BranchID AS NVARCHAR(MAX)) = @branch
+AND YEAR(bi.OrderDate) = @year
 GROUP BY ai.AccessoryName
 ORDER BY Sales DESC;
             `);

@@ -1,0 +1,197 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+.about {
+    background: url('img.png') no-repeat center center/cover;
+    text-align: center;
+    padding: 50px 0;
+    color: white;
+    font-size: 24px;
+  
+}
+
+/* About Us Section */
+.about-us {
+    width: 80%;
+    margin: auto;
+    text-align: center;
+    padding: 20px 0;
+}
+
+.underline {
+    width: 50px;
+    height: 3px;
+    background-color: #ccc;
+    margin: 8px auto;
+}
+
+/* Bố cục chính */
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 30px;
+}
+
+/* Phần nội dung chính */
+.content {
+    display: flex;
+    width: 65%;
+    text-align: left;
+}
+
+.content img {
+    width: 270px;
+    height: 386px;
+    border-radius: 5px;
+    margin-right: 20px;
+}
+
+.text {
+    max-width: 500px;
+}
+
+.text h3 {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+/* Support Section */
+.support {
+    width: 30%;
+    background: #f7f7f7;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.phone {
+    font-size: 18px;
+    color: red;
+    font-weight: bold;
+}
+
+.contact-box {
+    background: white;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+/* Social Icons */
+.social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.social-icons img {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+
+
+.stats {
+    display: flex;
+    justify-content:center;
+    background: #d32f2f;
+    color: white;
+    
+    text-align: center;
+    gap: 140px;
+}
+
+.stats .stat h3 {
+    margin: 0;
+    font-size: 28px;
+ 
+}
+
+.why-choose {
+    text-align: center;
+    padding: 50px 20px;
+    background-color: #1e1e2f;
+}
+
+.features {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    padding: 20px;
+    padding-right: 60px;
+    padding-left: 60px;
+}
+
+.features div {
+    display: flex;
+    align-items: center;
+    background: #24243e;
+    padding: 15px;
+    border-radius: 5px;
+    gap: 15px;
+    
+}
+
+.features img {
+    width: 50px;
+    height: 50px;
+ 
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.feature h3 {
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+}
+
+.feature p {
+    font-size: 14px;
+    color: white;
+    margin-top: 5px;
+}
+
+.feature a {
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: none;
+    color: black;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.business-hours {
+    width: 300px;
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 5px;
+    font-family: Arial, sans-serif;
+}
+
+.hours {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #ddd;
+    color: #666;
+    font-size: 16px;
+}
+
+.row:last-child {
+    border-bottom: none;
+}
+    

@@ -29,6 +29,11 @@
         </header>
         <!-- End header -->
 
+    
+
+
+        
+
         <div class="content">
             <div class="path">
                 <a
@@ -44,164 +49,82 @@
                 </a>
             </div>
 
-            <div class="container">
-                <div class="Inventory_status">
-                    <h2 style="text-align: center">Inventory status</h2>
-                    <div class="sales-container">
-                        <div class="sales-card total-availability">
-                            <img
-                                src="Availability.png"
-                                alt="Availability" />
-                            <h3>Total Availability</h3>
-                            <p class="items-count"></p>
-                            <p class="description">Current supply stock levels are constantly updated to ensure stock availability.</p>
-                        </div>
-                        <div class="sales-card new-added">
-                            <img
-                                src="NewAdd.png"
-                                alt="New Added" />
-                            <h3>New Added</h3>
-                            <p class="items-count">128 Items <span class="increase">⬆ 2.5%</span></p>
-                            <p class="description">The latest supply stock levels that recently added in the system.</p>
-                        </div>
-                        <div class="sales-card sold-out">
-                            <img
-                                src="SoldOut.png"
-                                alt="Sold Out" />
-                            <h3>Sold Out</h3>
-                            <p class="items-count">240 Items <span class="decrease">⬇ 1.5%</span></p>
-                            <p class="description">The latest supply stock levels that recently sold or unavailable on the system.</p>
-                        </div>
+        <div class="container">
+            <div class="Inventory_status">
+                <h2 style="text-align: center;">Inventory status</h2>
+                <div class="sales-container">
+                    <div class="sales-card total-availability">
+                        <img src="Availability.png" alt="Availability">
+                        <h3>Total Availability</h3>
+                        <p class="items-count"></p>
+                        <p class="description">Current supply stock levels are constantly updated to ensure stock availability.</p>
+                    </div>
+                   
+                    <div class="sales-card sold-out">
+                        <img src="SoldOut.png" alt="Sold Out">
+                        <h3>Sold Out</h3>
+                        <p class="items-count">240 Items <span class="decrease">⬇ 1.5%</span></p>
+                        <p class="description">This figure shows the growth or decrease in the amount of products sold.</p>
                     </div>
                 </div>
+            </div>
+           
 
-                <div class="Product_overview">
-                    <h2 class="title">Product Overview</h2>
+            
 
-                    <div class="search-filter">
-                        <input
-                            type="text"
-                            id="searchInput"
-                            placeholder="Search product..."
-                            onkeyup="searchProduct()" />
-                        <select
-                            id="categoryFilter"
-                            onchange="filterProducts()">
-                            <option value="all">All Branch</option>
-                            <option value="Branch 1">Branch 1</option>
-                            <option value="Branch 2">Branch 2</option>
-                            <option value="Branch 3">Branch 3</option>
-                        </select>
-                        <select
-                            id="statusFilter"
-                            onchange="filterProducts()">
-                            <option value="all">All Status</option>
-                            <option value="Available">Available</option>
-                            <option value="Low Stock">Low Stock</option>
-                            <option value="Sold Out">Sold Out</option>
-                        </select>
-                    </div>
-
-                    <!-- Thêm div bọc bảng để có thể cuộn -->
-                    <div class="product-overview-container custom-scrollbar">
-                        <table class="product-table">
-                            <thead>
-                                <tr>
-                                    <th>Product ID</th>
-                                    <th>Product Name</th>
-                                    <th>Branch</th>
-                                    <th>Quantity</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody id="productTableBody">
-                                <tr>
-                                    <td>#1234</td>
-                                    <td>T-Shirt</td>
-                                    <td>Apparel</td>
-                                    <td>430 pcs</td>
-                                    <td><span class="status available">Available</span></td>
-                                    <td class="changeButton">
-                                        <button style="background-color: red; color: white">Delete</button>
-                                        <button style="background-color: #007bba; color: white">Edit</button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <!-- chart revenue per month of a year -->
-                <div
-                    class="CSS1"
-                    id="Car-system-chart">
-                    <!-- <div class="chart-header">
-                 <label for="yearSelect">Select Year: </label>
-                    <select id="yearSelect" style="background-color:whitesmoke; position: relative ; z-index: 10;">
-                    
-                       
-                        <option value="2025">2025</option>
-                        <option value="2024">2024</option>
-                        <option value="2023">2023</option>
-                        <option value="2022">2022</option>
-                        <option value="2021">2021</option>
-                       
+            <div class="Product_overview">
+                <h2 class="title">Product Overview</h2>
+            
+                <div class="search-filter">
+                    <input type="text" id="searchInput" placeholder="Search product..." onkeyup="searchProduct()">
+                    <select id="categoryFilter" onchange="filterProducts()">
+                        <option value="all">All Branch</option>
+                        <option value="Branch 1">Branch 1</option>
+                        <option value="Branch 2">Branch 2</option>
+                        <option value="Branch 3">Branch 3</option>
                     </select>
+                    <select id="statusFilter" onchange="filterProducts()">
+                        <option value="all">All Status</option>
+                        <option value="Available">Available</option>
+                        <option value="Low Stock">Low Stock</option>
+                        <option value="Sold Out">Sold Out</option>
+                    </select>
+                    <div >
+                        
+                        <button class="btn btn-primary" id="addProductBtn">+ Add More Product</button>
+                        <img src="NewAdd.png" style="width: 40px; ">
                 </div>
-                <canvas id="myChart1"></canvas> -->
+                </div>
+            
+                <!-- Thêm div bọc bảng để có thể cuộn -->
+                <div class="product-overview-container custom-scrollbar">
+                    <table class="product-table">
+                        <thead >
+                            <tr>
+                                <th>Product ID</th>
+                                <th>Product Name</th>
+                                <th>Branch</th>
+                                <th>Quantity</th>
+                                <th>Price</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="productTableBody">
+                            <tr>
+                               
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
-            <!-- get top product -->
-            <div class="CSS1 top-products">
-                <!-- <div class="left-content" style="font-size: 18px;width: 30%;gap: 20px; ">
-                <h2>Top Products</h2>
-                <img src="topProduct.png" style="width: 150px" alt="Products">
-            </div>
-        
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Top</th>
-                            <th>Product Name</th>
-                            <th>Popularity</th>
-                            <th>Sales</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tbody1">
-                        <tr>
-                            <td id="productNumber"></td>
-                            <td id="productName"></td>
-                            <td>
-                                <div class="popularity2">
-                                    <div class="bar" style="width: 70%; background-color: orange;"></div>
-                                </div>
-                            </td>
-                            <td><span class="sales" style="background-color: orange;">46%</span></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        
-            <div class="branch-year">
-                <label for="branchSelect">Select Brand:</label>
-                <select id="branchSelect">
-                    <option value="1">Branch 1</option>
-                    <option value="2">Branch 2</option>
-                    <option value="3">Branch 3</option>
-                </select>
-        
-                <label for="yearSelect1">Select Year:</label>
-                <select id="yearSelect1">
-                    <option value="2025">2025</option>
-                    <option value="2024">2024</option>
-                    <option value="2023">2023</option>
-                    <option value="2022">2022</option>
-                </select>
-            </div> -->
-            </div>
+         
+           
         </div>
+
+
+    
+   
         <!-- Custom JS -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/chart.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

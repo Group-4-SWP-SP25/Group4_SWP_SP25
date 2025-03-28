@@ -54,8 +54,8 @@ function EditDate(cell) {
         cell.appendChild(dateInput);
 
         dateInput.focus();
-
-        const outsideClick = () => {
+            
+            const outsideClick = () => {
             setTimeout(() => {
                 if (document.activeElement !== dateInput) {
                     cell.innerHTML = temp;
