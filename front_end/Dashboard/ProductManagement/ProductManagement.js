@@ -13,9 +13,9 @@ function filterProducts() {
   rows.forEach((row) => {
     let catMatch = category === "all" || row.cells[2].textContent === category;
     let statusMatch =
-      status === "all" || row.cells[4].textContent.trim() === status;
+      status === "all" || row.cells[5].textContent.trim() === status;
     row.style.display = catMatch && statusMatch ? "" : "none";
-  });
+  }); 
 }
 
 async function fetchProductOverview() {
@@ -57,7 +57,7 @@ async function fetchProductOverview() {
 
             <td>${item.BranchName}</td>
             <td>${item.Quantity} items</td>
-             <td>${item.UnitPrice}$</td>
+             <td>${item.UnitPrice} VND</td>
             <td style="${statusColor}">${statusText}</td>
             <td class="changeButton">
             
@@ -469,7 +469,7 @@ function attachDeleteEvent() {
   document.querySelectorAll(".delete-btn").forEach((button) => {
     button.addEventListener("click", (event) => {
       const productID = event.target.dataset.id;
-      const branchID = event.target.dataset.branch; // Lấy đúng branchID
+      const branchID = event.target.dataset.branch; 
 
       if (!branchID) {
         console.error("Lỗi: branchID không tồn tại!");
@@ -477,7 +477,7 @@ function attachDeleteEvent() {
       }
 
       if (confirm("Bạn có chắc chắn muốn xóa sản phẩm này?")) {
-        deleteProduct(productID, branchID); // Truyền đúng branchID
+        deleteProduct(productID, branchID); 
       }
     });
   });

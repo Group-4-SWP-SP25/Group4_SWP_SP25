@@ -88,7 +88,8 @@ const { getEmployees } = require("./myModule/controller/employee/employee.js");
 // branch
 const branchInfo = require("./myModule/controller/branch/branchInfo.js");
 const branchList = require("./myModule/controller/branch/branchList.js");
-
+const GetBrancheList= require("./myModule/database/about/GetBrancheList.js");
+const GetBranchesDetail= require("./myModule/database/about/GetBranchesDetail.js");
 // service
 const serviceInfo = require("./myModule/controller/service/serviceInfo.js");
 const getServiceListAll = require("./myModule/database/service/getServiceListAll.js");
@@ -156,7 +157,8 @@ const {
 
 // calendar
 const { getEvents_api, addEvent_apis } = require("./myModule/controller/calendar/calendar.js");
-
+// about
+const GetStats= require("./myModule/database/about/GetStats.js");
 // ----------------------------------------------------------
 // CREATE API
 // admin
@@ -189,6 +191,7 @@ app.post("/CompareTotalProduct",authenticateADMIN,CompareTotalProduct );
 app.get("/GetServiceTypes",authenticateADMIN,GetServiceTypes );
 app.get("/GetBranches",authenticateADMIN,GetBranches );
 app.post("/AddAccessory",authenticateADMIN,AddAccessory );
+
 // app.post('/TotalRevenueToday', authenticateADMIN, TotalRevenueToday);
 // app.post('/TotalOrderToday', authenticateADMIN, TotalOrderToday);
 // app.post('/TotalProductSold', authenticateADMIN, TotalProductSold);
@@ -216,6 +219,8 @@ app.post("/getFileInfo", authenticateJWT, getFileInfo);
 app.post("/branchInfo", branchInfo);
 app.post("/branchList", branchList);
 
+app.get("/GetBrancheList", GetBrancheList);
+app.post("/GetBranchesDetail", GetBranchesDetail);
 // service
 app.post("/serviceInfo", serviceInfo);
 app.post("/getServiceListAll", getServiceListAll);
@@ -273,6 +278,9 @@ app.post("/paymentInfo", paymentInfo);
 
 // bill
 app.post("/billList", billList);
+
+// about
+app.get("/GetStats", GetStats);
 // ----------------------------------------------------------
 // START SERVER
 app.listen(PORT, () => {

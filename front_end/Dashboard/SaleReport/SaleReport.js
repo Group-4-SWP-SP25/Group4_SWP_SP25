@@ -175,7 +175,7 @@ async function fetchTotalRevenueToday() {
 
     console.log(data);
     if (totalSaleElement) {
-      totalSaleElement.textContent = `$${data.totalSales}`;
+      totalSaleElement.textContent = `${data.totalSales} VND`;
     }
 
     if (changeElement) {
