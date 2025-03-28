@@ -68,6 +68,11 @@ body.no-scroll {
   border-radius: 5px;
   cursor: pointer;
   color: white;
+
+  background-color: #28a745;
+  &:hover {
+    background-color: #006e1a;
+  }
 }
 
 .choose-user button {
@@ -225,6 +230,71 @@ table {
   color: #fff;
   font-size: 16px;
   font-family: Arial, sans-serif;
+}
+
+/* Modal error no has car */
+.error-no-has-car {
+  opacity: 0;
+  position: fixed;
+  transition: opacity 0.3s ease-in-out, top 0.5s ease;
+  top: -25%;
+  left: 50%;
+  width: 450px;
+  transform: translate(-50%, -50%);
+  background-color: #1e1e1e;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+
+  h2 {
+    margin-top: 10px;
+    text-align: center;
+  }
+
+  button {
+    background-color: #28a745;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: block;
+    margin: 0 auto;
+    margin-top: 20px;
+    font-size: 16px;
+    font-weight: bold;
+
+    &:hover {
+      background-color: #218838;
+      cursor: pointer;
+    }
+  }
+}
+
+.error-no-has-car.active {
+  opacity: 1;
+  top: 25%;
+  left: 50%;
+}
+
+/* Add order */
+#add-order {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out, transform 0.5s ease; /* Hiệu ứng mượt */
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.95); /* Thu nhỏ nhẹ khi ẩn */
+  z-index: 1000;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  display: none; /* Ẩn ban đầu */
+}
+
+#add-order.active {
+  opacity: 1;
+  top: 50%;
+  left: 50%;
 }
 
 /* -----------------------------------scrolbar---------------------------- */

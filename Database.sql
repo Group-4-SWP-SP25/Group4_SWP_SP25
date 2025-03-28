@@ -541,7 +541,7 @@ INSERT INTO AccessoryInfo(ServiceID, AccessoryName, Description) VALUES
 (37, 'Supercharger Kit', 'Install supercharger kit'),
 (38, 'Intercooler', 'High-performance intercooler'),
 (42, 'Spark Plugs', 'Replace spark plugs'),
-(42, 'High Performance Spark Plugs', 'Upgrade to high-performance spark plugs'),
+(43, 'High Performance Spark Plugs', 'Upgrade to high-performance spark plugs'),
 (45, 'Ignition Coil', 'Replace ignition coils'),
 (47, 'Turbocharger Kit', 'Upgrade to high-performance turbocharger'),
 (49, 'Cold Air Intake', 'Install cold air intake system for better engine efficiency'),

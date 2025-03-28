@@ -34,7 +34,7 @@
       <div class="table-header">
         <h1>Order & Invoice Management</h1>
         <div class="add-order hidden">
-          <button class="btn-add" onclick="showAddPopup()">
+          <button class="btn-add-order">
             + Add Order
           </button>
         </div>
@@ -99,7 +99,6 @@
           </tr>
         </thead>
         <tbody class="order-data">
-
         </tbody>
       </table>
 
@@ -127,10 +126,10 @@
         </svg>
         <p>There are no lost or found orders</p>
       </div>
-      </section>
     </div>
     <!-- End content -->
 
+    <!-- Popup -->
     <div class="overlay" id="overlay">
     </div>
 
@@ -156,6 +155,20 @@
         </div>
       </div>
     </div>
+    <!-- End Popup -->
+
+    <!-- Place Order Window -->
+    <div id="add-order"></div>
+    <!-- End place order window -->
+
+    <div class="error-no-has-car">
+      <h2>This user does not have any car</h2>
+      <div class="btn-group">
+        <button class="btn-add-car">Add Car</button>
+      </div>
+      <span class="close">&times;</span>
+    </div>
+
     <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
       integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
@@ -183,9 +196,21 @@
               }
             });
         });
+
+
     </script>
     <script src="./popupUser.js"></script>
     <script src="./script.js"></script>
+    <script>
+      $.ajax({
+        url: "./addOrder.html",
+        method: "GET",
+        success: function (data) {
+          $("#add-order").html(data);
+        },
+      });
+    </script>
+
     <!-- End scripts -->
 </body>
 

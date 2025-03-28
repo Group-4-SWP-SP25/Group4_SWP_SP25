@@ -119,6 +119,7 @@ const UpdateCarPartApi = require("./myModule/controller/car/updateCarPartApi.js"
 
 // car part
 const carPartInfoInCar = require("./myModule/controller/carPart/carPartInfoInCar.js");
+const carPartList = require("./myModule/controller/carPart/carPartList.js");
 
 // part info
 const listPartBySystem = require("./myModule/controller/partInfo/listPartBySystem.js");
@@ -270,6 +271,7 @@ app.post("/listCarSystem", listCarSystem);
 
 // car part
 app.post("/carPartInfoInCar", carPartInfoInCar);
+app.post("/carPartList", carPartList);
 
 // part info
 app.post("/listPartBySystem", listPartBySystem);

@@ -44,7 +44,6 @@
       overflow: hidden;
     }
 
-
     .close-window {
       position: absolute;
       top: 1.2rem;
@@ -478,12 +477,16 @@
         validQuantity();
         const qtyInput = $(this).siblings(".qty-val");
         let quantity = parseInt(qtyInput.val());
-        if (isNaN(quantity) || qtyInput < 1) {
+        if (isNaN(quantity)) {
           qtyInput.val(1)
         }
 
         if (!isNaN(quantity)) {
-          qtyInput.val(quantity + 1);
+          if (quantity < 1) {
+            qtyInput.val(1)
+          } else {
+            qtyInput.val(quantity + 1);
+          }
         }
 
         calTotalPrice();
