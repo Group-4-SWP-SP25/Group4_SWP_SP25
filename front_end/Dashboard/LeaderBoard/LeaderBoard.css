@@ -923,3 +923,10 @@ input[type="date"]:focus {
 .popup-btn-cancel:hover {
     background-color: #d9534f;
 }
+
+.Branch-address {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 100%;
+}

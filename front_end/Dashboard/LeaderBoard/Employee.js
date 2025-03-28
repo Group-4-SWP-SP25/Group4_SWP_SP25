@@ -18,5 +18,5 @@ async function AddEmployeeCard(employee, linkAvatar) {
 }
 
 document.getElementById('add-employee').addEventListener('click', async () => {
-    window.location.href = '../../Register/Register.html?role=employee';
+    window.location.href = `../../Register/Register.html?role=employee&branchID=${branchID}`;
 });

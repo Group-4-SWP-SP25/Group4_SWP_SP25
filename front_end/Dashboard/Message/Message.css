@@ -364,6 +364,8 @@ body {
 .message-item img {
     height: 100%;
     border-radius: 50%;
+    width: 60px;
+    object-fit: cover;
 }
 
 .message-item-action {
@@ -388,6 +390,13 @@ body {
 }
 
 /* ---------------------right--------------------------- */
+
+#header-avatar {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    object-fit: cover;
+}
 
 .message-right-header {
     display: flex;

@@ -236,12 +236,3 @@ const Send = async (data) => {
     }
 
 }
-
-// notification
-const NotiPanel = document.querySelector('.notification-container');
-const NotiIcon = document.querySelector('.fixed-notification-icon');
-
-NotiIcon.addEventListener('click', () => {
-    NotiPanel.classList.toggle('active');
-    MessagePanel.classList.remove('active');
-});

@@ -34,6 +34,7 @@ const addEmployee = async (user) => {
         const query = `
                     INSERT INTO [User](UserName, Password, FirstName, LastName, Email, Address, Phone, DOB, Role)
                     VALUES (@userName, @password, @firstName, @lastName, @email, @address, @phone, @dob, 'Employee');
+                    SELECT SCOPE_IDENTITY() AS LastInsertedID;
                     `;
         // Example query
         const result = await pool
@@ -47,6 +48,17 @@ const addEmployee = async (user) => {
             .input('phone', sql.VarChar, user.phone)
             .input('dob', sql.VarChar, user.dob)
             .query(query);
+
+        const query2 = `
+                    INSERT INTO [Employee](EmployeeID, BranchID)
+                    VALUES (@employeeID, @branchID);
+                    `;
+        // Example query
+        const result2 = await pool
+            .request()
+            .input('employeeID', sql.Int, result.recordset[0].LastInsertedID)
+            .input('branchID', sql.Int, user.branchID)
+            .query(query2);
 
         return 1; // Optionally return the result
         // Close the connection (optional because `mssql` handles pooling)

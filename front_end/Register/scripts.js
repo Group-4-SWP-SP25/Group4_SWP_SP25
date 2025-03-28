@@ -317,6 +317,8 @@ async function checkSubmit() {
     } else {
         // Register
         if (role === 'employee') {
+            // Register employee
+            const branchID = urlParams.get('branchID');
             await fetch('http://localhost:3000/register/Employee', {
                 method: 'POST',
                 headers: {
@@ -331,7 +333,8 @@ async function checkSubmit() {
                     email: emailInput.value,
                     address: addressInput.value,
                     phone: phoneInput.value,
-                    dob: dobInput.value
+                    dob: dobInput.value,
+                    branchID: branchID
                 })
             });
             showSuccessWindow();
