@@ -331,7 +331,7 @@ body {
 
 .fixed-message-icon {
     position: fixed;
-    bottom: 120px;
+    bottom: 20px;
     right: 20px;
     z-index: 1000;
     border-radius: 50%;
@@ -636,68 +636,4 @@ body {
 
 .message-footer-input textarea::placeholder {
     text-align: center;
-}
-
-/* ------------------------- Notification */
-.notification-container.active {
-    position: fixed;
-    bottom: 20px;
-    right: 120px;
-    background-color: #1e1e1e;
-    height: 600px;
-    width: 500px;
-    display: flex;
-    flex-direction: column;
-    border-radius: 10px;
-    z-index: 1000;
-}
-
-.notification-header {
-    box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.2);
-    height: 10%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    flex: 0 0 auto;
-    background-color: #4288d5;
-}
-
-.notification-container {
-    display: none;
-}
-
-.notification-header-info {
-    height: 100%;
-    display: flex;
-    align-items: center;
-}
-
-.notification-close {
-    height: 100%;
-    width: 40px;
-}
-
-.notification-close:hover {
-    background-color: #444;
-    cursor: pointer;
-}
-
-.notification-close span {
-    height: 100%;
-    width: 40px;
-    color: #ddd;
-    font-size: 40px;
-}
-
-.notification-header-info span {
-    font-size: 30px;
-    height: 100%;
-    margin-left: 20px;
-    color: #ddd;
-}
-
-.notification-header-info img {
-    height: 100%;
-    border-radius: 50%;
 }

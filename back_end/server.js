@@ -66,7 +66,7 @@ const AddAccessory= require("./myModule/database/ProductManagement/AddAccessory.
 // const TopProduct = require('./myModule/database/SaleReport/TopProduct.js');
 
 // user
-const register = require("./myModule/controller/register.js");
+const { register, registerEmployee } = require("./myModule/controller/register.js");
 const getPassword = require("./myModule/controller/user/getPassword.js");
 const changePassword = require("./myModule/database/user/changePassword.js");
 const checkAccount = require("./myModule/controller/user/checkAccount.js");
@@ -195,6 +195,11 @@ app.post("/Calendar/GetEvents", authenticateADMIN, getEvents_api);
 app.post("/Calendar/AddEvent", authenticateADMIN, addEvent_apis);
 app.post("/Employee/getEmployees", authenticateADMIN, getEmployees);
 app.post("/TotalQuantity", authenticateADMIN, TotalQuantity);
+app.post("/ProductOverview", authenticateADMIN, ProductOverview);
+app.delete("/DeleteProduct", authenticateADMIN, DeleteProduct);
+app.post("/UpdateProduct", authenticateADMIN, UpdateProduct);
+app.post("/CompareTotalProduct", authenticateADMIN, CompareTotalProduct);
+app.post("/register/Employee", authenticateADMIN, registerEmployee);
 app.post("/ProductOverview",authenticateADMIN, ProductOverview);
 app.delete("/DeleteProduct",authenticateADMIN,DeleteProduct );
 app.put("/UpdateProduct",authenticateADMIN,UpdateProduct );

@@ -273,6 +273,7 @@ document.addEventListener('keydown', function (event) {
 
 gpsBtn.addEventListener('click', () => {
     navigator.geolocation.getCurrentPosition(function (position) {
+        console.log("Tọa độ:", position.coords.latitude, position.coords.longitude);
         map.setCenter({ lat: position.coords.latitude, lng: position.coords.longitude });
         marker.setGeometry({ lat: position.coords.latitude, lng: position.coords.longitude });
     });

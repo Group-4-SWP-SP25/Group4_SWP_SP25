@@ -4,6 +4,24 @@ if (email != null) {
     document.getElementById('email').value = email;
     document.getElementById('email').setAttribute('readonly', true);
 }
+const backButton = document.getElementById('back-button');
+const loginButton = document.getElementById('Login-button');
+const role = urlParams.get('role');
+if (role != null) {
+    loginButton.style.display = 'none';
+    if (role === 'employee') {
+        backButton.innerText = '< Back to Leader Board';
+        backButton.onclick = () => {
+            window.location.href = '/front_end/Dashboard/LeaderBoard/LeaderBoard.html';
+        }
+    }
+    else if (role === 'customer') {
+        backButton.innerText = '< Back to Customer Manager';
+        backButton.onclick = () => {
+            window.location.href = '/front_end/Dashboard/CustomerManager/customer_management.html';
+        }
+    }
+}
 
 // Regex
 const regexEmail = /^\w+@\w+(\.\w+)+$/; // Start with >1 word chars, then @, then >1 word chars, then (. and >1 word chars) >1 times
@@ -297,6 +315,31 @@ async function checkSubmit() {
     if (!(firstName && lastName && email && phone && dob && username && password && repassword)) {
         return;
     } else {
+        // Register
+        if (role === 'employee') {
+            // Register employee
+            const branchID = urlParams.get('branchID');
+            await fetch('http://localhost:3000/register/Employee', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                },
+                body: JSON.stringify({
+                    username: usernameInput.value,
+                    password: passwordInput.value,
+                    firstName: firstNameInput.value,
+                    lastName: lastNameInput.value,
+                    email: emailInput.value,
+                    address: addressInput.value,
+                    phone: phoneInput.value,
+                    dob: dobInput.value,
+                    branchID: branchID
+                })
+            });
+            showSuccessWindow();
+            return;
+        }
         await fetch('http://localhost:3000/register', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
