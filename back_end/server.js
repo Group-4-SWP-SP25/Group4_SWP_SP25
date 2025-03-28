@@ -167,7 +167,7 @@ const {
   addEvent_apis,
 } = require("./myModule/controller/calendar/calendar.js");
 
-const { getEvents_api, addEvent_apis } = require("./myModule/controller/calendar/calendar.js");
+// const { getEvents_api, addEvent_apis } = require("./myModule/controller/calendar/calendar.js");
 // about
 const GetStats= require("./myModule/database/about/GetStats.js");
 // ----------------------------------------------------------
