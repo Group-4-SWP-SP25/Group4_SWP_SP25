@@ -21,7 +21,7 @@ $(document).ready(async function () {
   document.getElementById("name").innerHTML = result.name;
 
   switch (result.role) {
-    case "Admin":
+    case ("Admin", "Employee"):
       $("#my-cars").addClass("hidden");
       $("#my-orders").addClass("hidden");
       $("#payment-invoice").addClass("hidden");

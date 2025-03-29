@@ -46,15 +46,15 @@ const TotalProductSold = require("./myModule/database/SaleReport/TotalProductSol
 const TotalNewCustomer = require("./myModule/database/SaleReport/TotalNewCustomer.js");
 const TopService = require("./myModule/database/SaleReport/TopService.js");
 const TopRevenueByMonth = require("./myModule/database/SaleReport/TopRevenueByMonth.js");
-const TopProducts=require("./myModule/database/SaleReport/TopProducts.js");
-const TotalQuantity=require("./myModule/database/ProductManagement/TotalQuantity.js");  
-const ProductOverview=require("./myModule/database/ProductManagement/ProductOverview.js");
-const DeleteProduct= require("./myModule/database/ProductManagement/DeleteProduct.js");
-const UpdateProduct= require("./myModule/database/ProductManagement/UpdateProduct.js");
-const CompareTotalProduct= require("./myModule/database/ProductManagement/CompareTotalProduct.js");
-const GetServiceTypes= require("./myModule/database/ProductManagement/GetServiceTypes.js");
-const GetBranches= require("./myModule/database/ProductManagement/GetBranches.js");
-const AddAccessory= require("./myModule/database/ProductManagement/AddAccessory.js");
+const TopProducts = require("./myModule/database/SaleReport/TopProducts.js");
+const TotalQuantity = require("./myModule/database/ProductManagement/TotalQuantity.js");
+const ProductOverview = require("./myModule/database/ProductManagement/ProductOverview.js");
+const DeleteProduct = require("./myModule/database/ProductManagement/DeleteProduct.js");
+const UpdateProduct = require("./myModule/database/ProductManagement/UpdateProduct.js");
+const CompareTotalProduct = require("./myModule/database/ProductManagement/CompareTotalProduct.js");
+const GetServiceTypes = require("./myModule/database/ProductManagement/GetServiceTypes.js");
+const GetBranches = require("./myModule/database/ProductManagement/GetBranches.js");
+const AddAccessory = require("./myModule/database/ProductManagement/AddAccessory.js");
 // const connectDB = require('./myModule/database/connectDB.js');
 // const { authenticateJWT, authenticateADMIN } = require('./myModule/Utils/JWT.js');
 // const { GetUserInfo, GetUserInfo_Admin } = require('./myModule/database/user/getUserInfo.js');
@@ -66,7 +66,10 @@ const AddAccessory= require("./myModule/database/ProductManagement/AddAccessory.
 // const TopProduct = require('./myModule/database/SaleReport/TopProduct.js');
 
 // user
-const { register, registerEmployee } = require("./myModule/controller/register.js");
+const {
+  register,
+  registerEmployee,
+} = require("./myModule/controller/register.js");
 const getPassword = require("./myModule/controller/user/getPassword.js");
 const changePassword = require("./myModule/database/user/changePassword.js");
 const checkAccount = require("./myModule/controller/user/checkAccount.js");
@@ -94,8 +97,8 @@ const {
   saveBranchLocation,
 } = require("./myModule/controller/map/map.js");
 
-const GetBrancheList= require("./myModule/database/about/GetBrancheList.js");
-const GetBranchesDetail= require("./myModule/database/about/GetBranchesDetail.js");
+const GetBrancheList = require("./myModule/database/about/GetBrancheList.js");
+const GetBranchesDetail = require("./myModule/database/about/GetBranchesDetail.js");
 // service
 const serviceInfo = require("./myModule/controller/service/serviceInfo.js");
 const getServiceListAll = require("./myModule/database/service/getServiceListAll.js");
@@ -135,6 +138,7 @@ const accessoryInfo = require("./myModule/controller/accessory/accessoryInfo.js"
 // inventory
 const accessoryListInStock = require("./myModule/controller/inventory/accessoryListInStock.js");
 const componentInStockInfo = require("./myModule/controller/inventory/componentInStockInfo.js");
+const totalQuantityInOrder = require("./myModule/controller/inventory/totalQuantityInOrder.js");
 
 // order
 const orderInfo = require("./myModule/controller/order/orderInfo.js");
@@ -170,11 +174,11 @@ const {
 
 // const { getEvents_api, addEvent_apis } = require("./myModule/controller/calendar/calendar.js");
 // about
-const GetStats= require("./myModule/database/about/GetStats.js");
+const GetStats = require("./myModule/database/about/GetStats.js");
 // ----------------------------------------------------------
 // CREATE API
 // admin
-app.post("/CustomerManager/getUserList", authenticateADMIN, getUserList);
+app.post("/CustomerManager/getUserList", getUserList);
 app.post(
   "/CustomerManager/getTotelUserCount",
   authenticateADMIN,
@@ -201,13 +205,13 @@ app.delete("/DeleteProduct", authenticateADMIN, DeleteProduct);
 app.post("/UpdateProduct", authenticateADMIN, UpdateProduct);
 app.post("/CompareTotalProduct", authenticateADMIN, CompareTotalProduct);
 app.post("/register/Employee", authenticateADMIN, registerEmployee);
-app.post("/ProductOverview",authenticateADMIN, ProductOverview);
-app.delete("/DeleteProduct",authenticateADMIN,DeleteProduct );
-app.put("/UpdateProduct",authenticateADMIN,UpdateProduct );
-app.post("/CompareTotalProduct",authenticateADMIN,CompareTotalProduct );
-app.get("/GetServiceTypes",authenticateADMIN,GetServiceTypes );
-app.get("/GetBranches",authenticateADMIN,GetBranches );
-app.post("/AddAccessory",authenticateADMIN,AddAccessory );
+app.post("/ProductOverview", authenticateADMIN, ProductOverview);
+app.delete("/DeleteProduct", authenticateADMIN, DeleteProduct);
+app.put("/UpdateProduct", authenticateADMIN, UpdateProduct);
+app.post("/CompareTotalProduct", authenticateADMIN, CompareTotalProduct);
+app.get("/GetServiceTypes", authenticateADMIN, GetServiceTypes);
+app.get("/GetBranches", authenticateADMIN, GetBranches);
+app.post("/AddAccessory", authenticateADMIN, AddAccessory);
 
 // app.post('/TotalRevenueToday', authenticateADMIN, TotalRevenueToday);
 // app.post('/TotalOrderToday', authenticateADMIN, TotalOrderToday);
@@ -283,6 +287,7 @@ app.post("/accessoryInfo", accessoryInfo);
 // inventory
 app.post("/accessoryListInStock", accessoryListInStock);
 app.post("/componentInStockInfo", componentInStockInfo);
+app.post("/totalQuantityInOrder", totalQuantityInOrder);
 
 // order
 app.post("/orderInfo", orderInfo);
