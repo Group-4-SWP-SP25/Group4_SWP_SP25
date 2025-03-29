@@ -216,6 +216,26 @@
       margin-bottom: 20px;
     }
 
+    .accessory {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+      font-size: 18px;
+      margin-bottom: 20px;
+
+      .accessory-name span:first-child {
+        font-weight: bold;
+      }
+
+      .accessory-quantity span:first-child {
+        font-weight: bold;
+      }
+
+      .quanity-remain {
+        font-weight: normal;
+      }
+    }
+
     .quantity-component {
       display: flex;
       gap: 20px;
@@ -407,6 +427,17 @@
           </div>
         </div>
 
+        <div class="accessory hidden">
+          <div class="accessory-name">
+            <span>Accessory needed:</span>
+            <span class="accessory-name-text"></span>
+          </div>
+          <div class="accessory-quantity">
+            <span>Remaining quantity:</span>
+            <span><span class="quantity-remain"></span> left</span>
+          </div>
+        </div>
+
         <div class="quantity hidden">
           <div class="quantity-component">
             <p>Quantity: </p>
@@ -434,6 +465,11 @@
             <p class="total hidden"></p>
           </div>
         </div>
+
+        <div class="form-error-message error-not-enough-quantity hidden" style="font-size: 14px;">
+          <span class="error-navigation-message">This service does not have enough accessories to complete the order!
+            Please choose another service.</span>
+        </div>
       </li>
 
       <li class="form-input-wide">
@@ -459,12 +495,18 @@
         $(".error-quantity").addClass("hidden");
         $(".price").removeClass("hidden");
       }
+
       $(document).on("click", ".btn-dec", function () {
         validQuantity();
         const qtyInput = $(this).siblings(".qty-val");
         let quantity = parseInt(qtyInput.val());
 
-        if (!isNaN(quantity) && quantity > 1) {
+        if (!isNaN(quantity)) {
+          if (quantity <= 1) {
+            $(".error-quantity").removeClass("hidden");
+            $(".error-quantity span").text("Quantity is too low!");
+            return;
+          }
           qtyInput.val(quantity - 1);
         } else {
           qtyInput.val(1)
@@ -474,6 +516,7 @@
       });
 
       $(document).on("click", ".btn-inc", function () {
+
         validQuantity();
         const qtyInput = $(this).siblings(".qty-val");
         let quantity = parseInt(qtyInput.val());
@@ -481,10 +524,16 @@
           qtyInput.val(1)
         }
 
+        const accessoryQuantity = parseInt($(".quantity-remain").text());
         if (!isNaN(quantity)) {
           if (quantity < 1) {
             qtyInput.val(1)
           } else {
+            if (quantity >= accessoryQuantity) {
+              $(".error-quantity").removeClass("hidden");
+              $(".error-quantity span").text("Quantity exceeds the limit!");
+              return;
+            }
             qtyInput.val(quantity + 1);
           }
         }
@@ -500,10 +549,18 @@
       $(".qty-val").on("input", function () {
         $(".error-quantity").addClass("hidden");
         const quantity = parseInt($(this).val());
+        const accessoryQuantity = parseInt($(".quantity-remain").text());
         if (isNaN(quantity) || quantity <= 0) {
           $(".error-quantity").removeClass("hidden");
           $(".price").addClass("hidden");
+          return;
         }
+        if (quantity > accessoryQuantity) {
+          $(".error-quantity").removeClass("hidden");
+          $(".error-quantity span").text("Quantity exceeds the limit!");
+          return;
+        }
+        $(".price").removeClass("hidden");
         calTotalPrice();
       });
 

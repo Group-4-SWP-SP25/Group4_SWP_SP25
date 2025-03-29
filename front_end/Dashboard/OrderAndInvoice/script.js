@@ -76,8 +76,9 @@ $(document).ready(function () {
 
   // Khi bấm nút close, đóng popup đang mở
   $(".close").click(function () {
-    const popup = $(this).closest(".active");
-    toggleErrorNoCar();
+    if ($(".error-no-has-car").hasClass("active")) {
+      toggleErrorNoCar();
+    }
   });
 });
 

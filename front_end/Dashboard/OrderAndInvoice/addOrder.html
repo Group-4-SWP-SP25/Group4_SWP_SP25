@@ -189,13 +189,13 @@
         </select>
 
         <div class="component hidden">
-          <div class="componet-name">
+          <div class="component-name">
             <span>Component needed:</span>
-            <span>Component 1</span>
+            <span class="component-name-text">Component 1</span>
           </div>
           <div class="component-quantity">
             <span>Remaining quantity:</span>
-            <span>8 left</span>
+            <span><span class="quantity-remain"></span> left</span>
           </div>
         </div>
 
@@ -381,9 +381,26 @@
 
       // Load component list
       serviceSelect.change(async function () {
-        if ($(".component").hasClass("hidden")) {
-          $(".component").removeClass("hidden").slideDown(500);
+        const service = await $.ajax({
+          url: "http://localhost:3000/serviceInfo",
+          method: "POST",
+          contentType: "application/json",
+          data: JSON.stringify({ serviceID: serviceSelect.val() }),
+        });
+
+        if (service.AffectInventory == 1) {
+          $(".component").removeClass("hidden");
+          const accessory = await $.ajax({
+            url: "http://localhost:3000/accessoryInfo",
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({ serviceID: serviceSelect.val() }),
+          });
+          $(".component-name-text").text(accessory.AccessoryName);
+
+
         }
+
       });
     }
 
