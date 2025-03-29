@@ -58,7 +58,10 @@ const AddAccessory= require("./myModule/database/ProductManagement/AddAccessory.
 
 
 // user
-const { register, registerEmployee } = require("./myModule/controller/register.js");
+const {
+  register,
+  registerEmployee,
+} = require("./myModule/controller/register.js");
 const getPassword = require("./myModule/controller/user/getPassword.js");
 const changePassword = require("./myModule/database/user/changePassword.js");
 const checkAccount = require("./myModule/controller/user/checkAccount.js");
@@ -110,6 +113,7 @@ const UpdateCarPartApi = require("./myModule/controller/car/updateCarPartApi.js"
 
 // car part
 const carPartInfoInCar = require("./myModule/controller/carPart/carPartInfoInCar.js");
+const carPartList = require("./myModule/controller/carPart/carPartList.js");
 
 // part info
 const listPartBySystem = require("./myModule/controller/partInfo/listPartBySystem.js");
@@ -125,6 +129,7 @@ const accessoryInfo = require("./myModule/controller/accessory/accessoryInfo.js"
 // inventory
 const accessoryListInStock = require("./myModule/controller/inventory/accessoryListInStock.js");
 const componentInStockInfo = require("./myModule/controller/inventory/componentInStockInfo.js");
+const totalQuantityInOrder = require("./myModule/controller/inventory/totalQuantityInOrder.js");
 
 // order
 const orderInfo = require("./myModule/controller/order/orderInfo.js");
@@ -165,7 +170,7 @@ const branchDetail=require("./myModule/database/about/branchDetail.js");
 // ----------------------------------------------------------
 // CREATE API
 // admin
-app.post("/CustomerManager/getUserList", authenticateADMIN, getUserList);
+app.post("/CustomerManager/getUserList", getUserList);
 app.post(
   "/CustomerManager/getTotelUserCount",
   authenticateADMIN,
@@ -192,13 +197,13 @@ app.delete("/DeleteProduct", authenticateADMIN, DeleteProduct);
 app.post("/UpdateProduct", authenticateADMIN, UpdateProduct);
 app.post("/CompareTotalProduct", authenticateADMIN, CompareTotalProduct);
 app.post("/register/Employee", authenticateADMIN, registerEmployee);
-app.post("/ProductOverview",authenticateADMIN, ProductOverview);
-app.delete("/DeleteProduct",authenticateADMIN,DeleteProduct );
-app.put("/UpdateProduct",authenticateADMIN,UpdateProduct );
-app.post("/CompareTotalProduct",authenticateADMIN,CompareTotalProduct );
-app.get("/GetServiceTypes",authenticateADMIN,GetServiceTypes );
-app.get("/GetBranches",authenticateADMIN,GetBranches );
-app.post("/AddAccessory",authenticateADMIN,AddAccessory );
+app.post("/ProductOverview", authenticateADMIN, ProductOverview);
+app.delete("/DeleteProduct", authenticateADMIN, DeleteProduct);
+app.put("/UpdateProduct", authenticateADMIN, UpdateProduct);
+app.post("/CompareTotalProduct", authenticateADMIN, CompareTotalProduct);
+app.get("/GetServiceTypes", authenticateADMIN, GetServiceTypes);
+app.get("/GetBranches", authenticateADMIN, GetBranches);
+app.post("/AddAccessory", authenticateADMIN, AddAccessory);
 
 
 
@@ -257,6 +262,7 @@ app.post("/listCarSystem", listCarSystem);
 
 // car part
 app.post("/carPartInfoInCar", carPartInfoInCar);
+app.post("/carPartList", carPartList);
 
 // part info
 app.post("/listPartBySystem", listPartBySystem);
@@ -268,6 +274,7 @@ app.post("/accessoryInfo", accessoryInfo);
 // inventory
 app.post("/accessoryListInStock", accessoryListInStock);
 app.post("/componentInStockInfo", componentInStockInfo);
+app.post("/totalQuantityInOrder", totalQuantityInOrder);
 
 // order
 app.post("/orderInfo", orderInfo);

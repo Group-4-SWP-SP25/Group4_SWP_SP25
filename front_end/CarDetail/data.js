@@ -10,7 +10,7 @@ $(document).ready(function () {
         contentType: "application/json",
         data: JSON.stringify({ carID: carID }),
       });
-      console.log(car);
+
       $(".car-name").html(car.CarName);
       $(".car-brand").html(car.Brand);
       $(".registration-number").html(car.RegistrationNumber);
@@ -45,8 +45,8 @@ $(document).ready(function () {
       });
 
       // Gắn sự kiện click cho từng system-item
-      $(".system-item").on("click", async function (event) {
-        event.preventDefault();
+      $(".system-item").on("click", async function (e) {
+        e.preventDefault();
         const carSystemID = $(this).data("id");
         await togglePart(carSystemID);
       });

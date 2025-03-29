@@ -184,7 +184,7 @@ body.no-scroll {
   gap: 20px;
 }
 
-/* InvoiceInvoice empty */
+/* Invoice empty */
 .invoice-empty {
   display: flex;
   flex-direction: column;

@@ -1,3 +1,4 @@
+let selectedPartID = null;
 $(document).ready(function () {
   const urlParams = new URLSearchParams(window.location.search);
   const carID = parseInt(urlParams.get("carID"));
@@ -7,6 +8,8 @@ $(document).ready(function () {
     showHidePlaceOrder();
 
     const partID = $(this).data("id");
+    selectedPartID = partID;
+    console.log(partID);
 
     async function getCarPartInfo() {
       try {
@@ -102,7 +105,6 @@ $(document).ready(function () {
             selectedService.ServicePrice.toLocaleString("vi-VN") + "₫"
           );
           if (selectedService.AffectInventory === 1) {
-            console.log(serviceID);
             const accessory = await $.ajax({
               url: "http://localhost:3000/accessoryInfo",
               method: "POST",
@@ -121,6 +123,37 @@ $(document).ready(function () {
                 accessoryID: accessory.AccessoryID,
               }),
             });
+
+            const totalQuantityAccessoryInOrder = await $.ajax({
+              url: "http://localhost:3000/totalQuantityInOrder",
+              method: "POST",
+              contentType: "application/json",
+              data: JSON.stringify({
+                branchID: branchID,
+                accessoryID: accessory.AccessoryID,
+              }),
+            });
+
+            const quantityRemain =
+              componentInStock.Quantity -
+              totalQuantityAccessoryInOrder.totalQuantity;
+
+            $(".accessory").removeClass("hidden");
+            $(".accessory-name-text").html(accessory.AccessoryName);
+            $(".quantity-remain").html(quantityRemain);
+
+            if (quantityRemain === 0) {
+              $(".accessory").addClass("hidden");
+              $(".qty-val").val(0);
+              quantityContainer.slideUp(500);
+              $(".price-title .component-unit").addClass("hidden");
+              $(".price-title .total").addClass("hidden");
+              $(".price-value .component-unit").addClass("hidden");
+              $(".price-value .total").addClass("hidden");
+              $(".error-not-enough-quantity").removeClass("hidden");
+              return;
+            }
+            $(".error-not-enough-quantity").addClass("hidden");
             quantityContainer.slideDown(500);
             $(".qty-val").val(1);
             $(".price-title .component-unit").removeClass("hidden");
@@ -129,6 +162,7 @@ $(document).ready(function () {
               .html(componentInStock.UnitPrice.toLocaleString("vi-VN") + "₫");
             calTotalPrice();
           } else {
+            $(".accessory").addClass("hidden");
             $(".qty-val").val(0);
             quantityContainer.slideUp(500);
             $(".price-title .component-unit").addClass("hidden");
@@ -166,7 +200,8 @@ async function placeOrder() {
       },
     });
 
-    const partID = $(".show-service").data("id");
+    const partID = selectedPartID;
+    console.log(partID);
 
     const branchID = parseInt($(".select-branch").val());
     if (isNaN(branchID)) {
@@ -230,7 +265,7 @@ function showHidePlaceOrder() {
   $("body").toggleClass("no-scroll");
 
   $(".choose-service").slideUp();
-
+  $(".accessory").addClass("hidden");
   $(".quantity").slideUp();
   $(".price-title .component-unit").addClass("hidden");
   $(".price-title .service").addClass("hidden");

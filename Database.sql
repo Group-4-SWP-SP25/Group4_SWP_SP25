@@ -230,6 +230,8 @@ BEGIN
 END;
 GO
 
+INSERT INTO [User](UserName, Password, FirstName, LastName, Email, Role) VALUES('EmpCenter', 'employee123', 'Emp1', 'Emp', 'email@gmail.com', 'Employee');
+ 
 INSERT INTO [CarSystem](CarSystemName) VALUES 
 ('Engine System'),
 ('Braking System'),
@@ -541,7 +543,7 @@ INSERT INTO AccessoryInfo(ServiceID, AccessoryName, Description) VALUES
 (37, 'Supercharger Kit', 'Install supercharger kit'),
 (38, 'Intercooler', 'High-performance intercooler'),
 (42, 'Spark Plugs', 'Replace spark plugs'),
-(42, 'High Performance Spark Plugs', 'Upgrade to high-performance spark plugs'),
+(43, 'High Performance Spark Plugs', 'Upgrade to high-performance spark plugs'),
 (45, 'Ignition Coil', 'Replace ignition coils'),
 (47, 'Turbocharger Kit', 'Upgrade to high-performance turbocharger'),
 (49, 'Cold Air Intake', 'Install cold air intake system for better engine efficiency'),
@@ -657,6 +659,8 @@ INSERT INTO Branch(BranchName, BranchAddress) VALUES
 (N'Branch 2', N'456 Le Van Luong, District 9, Ho Chi Minh City'),
 (N'Branch 3', N'789 Nguyen Huu Tho, District 4, Ho Chi Minh City');
 
+INSERT INTO Employee(EmployeeID, BranchID) VALUES (1, 1);
+
 INSERT INTO [User](Username, Password, FirstName, LastName, Email, Phone, DOB, Role)
 VALUES ('doanhieu18', 'doanhieu18@', 'Hieu', 'Doan', 'doanhieu180204@gmail.com', '0325413488', '2004-02-18', 'Admin');
 
@@ -680,14 +684,14 @@ END;
 GO
 
 INSERT INTO [Car](UserID, CarName, Brand, RegistrationNumber, [Year], CarImage, [Status]) VALUES 
-(1, 'Car 1', 'Toyota', '123456', 2010, 'https://vov.vn/sites/default/files/styles/large/public/2022-08/289624929_453408263095020_5408162982360432160_n.png', 'Active'),
-(1, 'Car 2', 'Honda', '654321', 2015, 'https://akm-img-a-in.tosshub.com/indiatoday/styles/medium_crop_simple/public/2024-11/1_4.jpg', 'Maintaining'),
-(1, 'Car 3', 'Ford', '987654', 2018, 'https://images.dealer.com/autodata/us/640/2020/USD00FOS372A0/USC80FOS371A01300.jpg', 'Active'),
-(1, 'Car 4', 'BMW', '125478', 2020, '', 'Active'),
-(2, 'Car 1', 'Toyota', '123456', 2010, 'https://vov.vn/sites/default/files/styles/large/public/2022-08/289624929_453408263095020_5408162982360432160_n.png', 'Active'),
-(2, 'Car 2', 'Honda', '654321', 2015, 'https://akm-img-a-in.tosshub.com/indiatoday/styles/medium_crop_simple/public/2024-11/1_4.jpg', 'Maintaining'),
-(2, 'Car 3', 'Ford', '987654', 2018, 'https://images.dealer.com/autodata/us/640/2020/USD00FOS372A0/USC80FOS371A01300.jpg', 'Active'),
-(2, 'Car 4', 'BMW', '125478', 2020, '', 'Active');
+(3, 'Car 1', 'Toyota', '123456', 2010, 'https://vov.vn/sites/default/files/styles/large/public/2022-08/289624929_453408263095020_5408162982360432160_n.png', 'Active'),
+(3, 'Car 2', 'Honda', '654321', 2015, 'https://akm-img-a-in.tosshub.com/indiatoday/styles/medium_crop_simple/public/2024-11/1_4.jpg', 'Maintaining'),
+(3, 'Car 3', 'Ford', '987654', 2018, 'https://images.dealer.com/autodata/us/640/2020/USD00FOS372A0/USC80FOS371A01300.jpg', 'Active'),
+(3, 'Car 4', 'BMW', '125478', 2020, '', 'Active'),
+(4, 'Car 1', 'Toyota', '123456', 2010, 'https://vov.vn/sites/default/files/styles/large/public/2022-08/289624929_453408263095020_5408162982360432160_n.png', 'Active'),
+(4, 'Car 2', 'Honda', '654321', 2015, 'https://akm-img-a-in.tosshub.com/indiatoday/styles/medium_crop_simple/public/2024-11/1_4.jpg', 'Maintaining'),
+(4, 'Car 3', 'Ford', '987654', 2018, 'https://images.dealer.com/autodata/us/640/2020/USD00FOS372A0/USC80FOS371A01300.jpg', 'Active'),
+(4, 'Car 4', 'BMW', '125478', 2020, '', 'Active');
 GO
 
 INSERT INTO [Order] (UserID, CarID, BranchID, PartID, ServiceID, QuantityUsed)
