@@ -291,9 +291,9 @@ function Select(userID) {
 const numSelect = document.querySelector(".num-select");
 const selectAll = document.querySelector(".select-all");
 const unselectAll = document.querySelector(".unselect-all");
-const filter = document.querySelector(".filter");
+// const filter = document.querySelector(".filter");
 const add = document.querySelector(".add");
-const remove = document.querySelector(".remove");
+// const remove = document.querySelector(".remove");
 const message = document.querySelector(".message");
 
 // select all
@@ -332,17 +332,17 @@ function ToggleButton() {
     numSelect.style.display = "none";
     selectAll.style.display = "none";
     unselectAll.style.display = "none";
-    remove.style.display = "none";
+    // remove.style.display = "none";
     message.style.display = "none";
-    filter.style.display = "flex";
+    // filter.style.display = "flex";
     add.style.display = "flex";
   } else {
     numSelect.style.display = "flex";
     selectAll.style.display = "flex";
     unselectAll.style.display = "flex";
-    remove.style.display = "flex";
+    // remove.style.display = "flex"; 
     message.style.display = "flex";
-    filter.style.display = "none";
+    // filter.style.display = "none";
     add.style.display = "none";
   }
 }
