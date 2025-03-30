@@ -171,7 +171,7 @@
         </select>
       </div>
 
-      <h3 class="branch">Branch: <span>branch</span></h3>
+      <h3 class="branch">Branch: <span class="branch-name"></span></h3>
 
       <div class="choose choose-part hidden">
         <h3>Choose Part</h3>
@@ -191,7 +191,7 @@
         <div class="component hidden">
           <div class="component-name">
             <span>Component needed:</span>
-            <span class="component-name-text">Component 1</span>
+            <span class="component-name-text"></span>
           </div>
           <div class="component-quantity">
             <span>Remaining quantity:</span>
@@ -208,10 +208,19 @@
               <button class="qty-btn btn-inc">+</button>
             </div>
           </div>
-          <div class="error-container error-quantity">
+          <div class="error-container error-quantity hidden" style="font-size: 14px;">
             <span></span>
           </div>
         </div>
+      </div>
+
+      <div class="error-container error-not-enough-quantity hidden">
+        <span>This service does not have enough accessories to complete the order!
+          Please choose another service.</span>
+      </div>
+
+      <div class="error-container error-add-order hidden">
+        <span></span>
       </div>
 
       <div class="btn-group">
@@ -226,7 +235,22 @@
 
   <script>
 
-    $(document).ready(function () {
+    $(document).ready(async function () {
+      const employee = await $.ajax({
+        url: "http://localhost:3000/getUserInfo",
+        method: "POST",
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      });
+
+      const employeeID = employee.id;
+
+      const branch = await $.ajax({
+        url: "http://localhost:3000/branchOfEmployee",
+        method: "POST",
+        contentType: "application/json",
+        data: JSON.stringify({ employeeID: employeeID }),
+      });
+
       $(document).on("click", ".btn-dec", function () {
         validQuantity();
         const qtyInput = $(this).siblings(".qty-val");
@@ -289,7 +313,92 @@
 
 
 
-      $(".btn-add").click(function () {
+      $(".btn-add").click(async function () {
+        const userID = $(".user-name").data("user-id");
+        const carID = $(".choose-car select").val();
+        console.log(carID);
+
+        if (!carID) {
+          $(".error-add-order").removeClass("hidden");
+          $(".error-add-order span").text("Please choose a car!");
+          return;
+        }
+
+        const partID = $(".choose-part select").val();
+
+        if (!partID) {
+          $(".error-add-order").removeClass("hidden");
+          $(".error-add-order span").text("Please choose a part!");
+          return;
+        }
+
+        const serviceID = $(".choose-service select").val();
+
+        if (!serviceID) {
+          $(".error-add-order").removeClass("hidden");
+          $(".error-add-order span").text("Please choose a service!");
+          return;
+        }
+
+
+        const service = await $.ajax({
+          url: "http://localhost:3000/serviceInfo",
+          method: "POST",
+          contentType: "application/json",
+          data: JSON.stringify({ serviceID: serviceID }),
+        });
+
+
+
+        const quantity = parseInt($(".qty-val").val());
+        if (service.AffectInventory == 1 && (isNaN(quantity) || quantity <= 0)) {
+          $(".error-quantity").removeClass("hidden");
+          $(".error-quantity span").text("Quantity is invalid!");
+          return;
+        }
+
+
+        const componentInStock = await $.ajax({
+          url: "http://localhost:3000/componentInStockInfo",
+          method: "POST",
+          contentType: "application/json",
+          data: JSON.stringify({
+            branchID: branch.BranchID,
+            accessoryID: accessory.AccessoryID,
+          }),
+        });
+
+        const totalQuantityAccessoryInOrder = await $.ajax({
+          url: "http://localhost:3000/totalQuantityInOrder",
+          method: "POST",
+          contentType: "application/json",
+          data: JSON.stringify({
+            branchID: branch.BranchID,
+            accessoryID: accessory.AccessoryID,
+          }),
+        });
+
+        const quantityRemain =
+          componentInStock.Quantity -
+          totalQuantityAccessoryInOrder.totalQuantity;
+
+        if (quantityRemain < quantity) {
+          return;
+        }
+
+        $.ajax({
+          url: "http://localhost:3000/placeOrder",
+          method: "POST",
+          contentType: "application/json",
+          data: JSON.stringify({
+            userID: userID,
+            carID: carID,
+            partID: partID,
+            serviceID: serviceID,
+            branchID: branch.BranchID,
+            quantityUsed: quantity,
+          }),
+        });
 
       });
     });
@@ -298,6 +407,21 @@
     }
 
     async function getDataForOrder() {
+      const employee = await $.ajax({
+        url: "http://localhost:3000/getUserInfo",
+        method: "POST",
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      });
+
+      const employeeID = employee.id;
+
+      const branch = await $.ajax({
+        url: "http://localhost:3000/branchOfEmployee",
+        method: "POST",
+        contentType: "application/json",
+        data: JSON.stringify({ employeeID: employeeID }),
+      });
+
       const userID = await $(".user-name").data("user-id");
 
       // Load car list
@@ -309,7 +433,7 @@
       });
 
       const carSelect = $(".choose-car select");
-      let carOptions = `<option disabled style="text-align: center;" selected>-- Choose a car --</option>`;
+      let carOptions = `<option disabled style="text-align: center;" selected value="0">-- Choose a car --</option>`;
       cars.forEach((car) => {
         carOptions += `<option value="${car.CarID}">${car.CarName}</option>`;
       });
@@ -323,8 +447,9 @@
         if ($(".choose-part").hasClass("hidden")) {
           $(".choose-part").removeClass("hidden").slideDown(500);
         }
-
-        let partOptions = `<option disabled style="text-align: center;" selected>-- Choose a part --</option>`;
+        $(".error-add-order").addClass("hidden");
+        $(".branch-name").html(branch.BranchName);
+        let partOptions = `<option disabled style="text-align: center;" selected value="0">-- Choose a part --</option>`;
 
 
         const carParts = await $.ajax({
@@ -354,6 +479,9 @@
 
         // Cập nhật phần tử select
         partSelect.html(partOptions);
+
+        const serviceSelect = $(".choose-service select");
+        serviceSelect.html(`<option disabled style="text-align: center;" selected>-- Choose a service --</option>`);
       });
 
       // Load service list
@@ -362,7 +490,7 @@
         if ($(".choose-service").hasClass("hidden")) {
           $(".choose-service").removeClass("hidden").slideDown(500);
         }
-
+        $(".error-add-order").addClass("hidden");
         let serviceOptions = `<option disabled style="text-align: center;" selected>-- Choose a service --</option>`;
 
         const services = await $.ajax({
@@ -387,9 +515,10 @@
           contentType: "application/json",
           data: JSON.stringify({ serviceID: serviceSelect.val() }),
         });
-
+        $(".error-add-order").addClass("hidden");
         if (service.AffectInventory == 1) {
           $(".component").removeClass("hidden");
+          $(".quantity").removeClass("hidden");
           const accessory = await $.ajax({
             url: "http://localhost:3000/accessoryInfo",
             method: "POST",
@@ -398,12 +527,43 @@
           });
           $(".component-name-text").text(accessory.AccessoryName);
 
+          const componentInStock = await $.ajax({
+            url: "http://localhost:3000/componentInStockInfo",
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({
+              branchID: branch.BranchID,
+              accessoryID: accessory.AccessoryID,
+            }),
+          });
 
+          const totalQuantityAccessoryInOrder = await $.ajax({
+            url: "http://localhost:3000/totalQuantityInOrder",
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({
+              branchID: branch.BranchID,
+              accessoryID: accessory.AccessoryID,
+            }),
+          });
+
+          const quantityRemain =
+            componentInStock.Quantity -
+            totalQuantityAccessoryInOrder.totalQuantity;
+
+          $(".quantity-remain").html(quantityRemain);
+
+          if (quantityRemain === 0) {
+            $(".error-quantity").addClass("hidden");
+            $(".error-not-enough-quantity").removeClass("hidden");
+          }
+        } else {
+          $(".error-not-enough-quantity").addClass("hidden");
+          $(".component").addClass("hidden");
+          $(".quantity").addClass("hidden");
         }
-
       });
     }
-
   </script>
 </body>
 

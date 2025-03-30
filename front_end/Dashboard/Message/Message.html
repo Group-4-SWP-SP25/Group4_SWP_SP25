@@ -121,6 +121,9 @@
     <!-- Scripts -->
     <script src="./Message.js"></script>
     <script src="./PopUp.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
         fetch('../page_frame/page_frame.html')
             .then((response) => response.text())
@@ -130,6 +133,10 @@
                 css.rel = 'stylesheet';
                 css.href = '../page_frame/style.css';
                 document.head.appendChild(css);
+                const script = document.createElement('script');
+                script.src = '../page_frame/script.js';
+                document.head.appendChild(script);
+
 
                 // current page indicator
                 const currentPageFile = window.location.pathname.split('/').pop();

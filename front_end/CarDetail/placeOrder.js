@@ -143,12 +143,14 @@ $(document).ready(function () {
             $(".quantity-remain").html(quantityRemain);
 
             if (quantityRemain === 0) {
-              $(".accessory").addClass("hidden");
+              $(".accessory").removeClass("hidden");
               $(".qty-val").val(0);
               quantityContainer.slideUp(500);
-              $(".price-title .component-unit").addClass("hidden");
+              $(".price-title .component-unit").removeClass("hidden");
               $(".price-title .total").addClass("hidden");
-              $(".price-value .component-unit").addClass("hidden");
+              $(".price-value .component-unit")
+                .removeClass("hidden")
+                .html(componentInStock.UnitPrice.toLocaleString("vi-VN") + "₫");
               $(".price-value .total").addClass("hidden");
               $(".error-not-enough-quantity").removeClass("hidden");
               return;
@@ -163,6 +165,7 @@ $(document).ready(function () {
             calTotalPrice();
           } else {
             $(".accessory").addClass("hidden");
+            $(".error-not-enough-quantity").addClass("hidden");
             $(".qty-val").val(0);
             quantityContainer.slideUp(500);
             $(".price-title .component-unit").addClass("hidden");
@@ -189,6 +192,33 @@ $(document).ready(function () {
 
 async function placeOrder() {
   try {
+    const componentInStock = await $.ajax({
+      url: "http://localhost:3000/componentInStockInfo",
+      method: "POST",
+      contentType: "application/json",
+      data: JSON.stringify({
+        branchID: branchID,
+        accessoryID: accessory.AccessoryID,
+      }),
+    });
+
+    const totalQuantityAccessoryInOrder = await $.ajax({
+      url: "http://localhost:3000/totalQuantityInOrder",
+      method: "POST",
+      contentType: "application/json",
+      data: JSON.stringify({
+        branchID: branchID,
+        accessoryID: accessory.AccessoryID,
+      }),
+    });
+
+    const quantityRemain =
+      componentInStock.Quantity - totalQuantityAccessoryInOrder.totalQuantity;
+
+    if (quantityRemain === 0) {
+      return;
+    }
+
     const urlParams = new URLSearchParams(window.location.search);
     const carID = parseInt(urlParams.get("carID"));
     const user = await $.ajax({

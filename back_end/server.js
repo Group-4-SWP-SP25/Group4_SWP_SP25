@@ -83,6 +83,8 @@ const { getEmployees } = require("./myModule/controller/employee/employee.js");
 // branch
 const branchInfo = require("./myModule/controller/branch/branchInfo.js");
 const branchList = require("./myModule/controller/branch/branchList.js");
+const branchOfEmployee = require("./myModule/controller/branch/branchOfEmployee.js");
+
 const editBranchInfo = require("./myModule/controller/branch/editBranchInfo.js");
 const {
   getBranchLocation,
@@ -171,12 +173,8 @@ const branchDetail=require("./myModule/database/about/branchDetail.js");
 // CREATE API
 // admin
 app.post("/CustomerManager/getUserList", getUserList);
-app.post(
-  "/CustomerManager/getTotelUserCount",
-  authenticateADMIN,
-  getTotalUserCount
-);
-app.post("/CustomerManager/getUserInfo", authenticateADMIN, GetUserInfo_Admin);
+app.post("/CustomerManager/getTotelUserCount", getTotalUserCount);
+app.post("/CustomerManager/getUserInfo", GetUserInfo_Admin);
 app.post("/Message/SendMessage", authenticateJWT, SendMessage);
 app.post("/Message/GetMessage", authenticateJWT, GetMessage);
 app.post("/Message/GetList", authenticateJWT, GetList);
@@ -229,6 +227,7 @@ app.post("/branchInfo", branchInfo);
 app.post("/branchList", branchList);
 app.post("/editBranchInfo", authenticateADMIN, editBranchInfo);
 app.post("/getBranchLocation", getBranchLocation);
+app.post("/branchOfEmployee", branchOfEmployee);
 app.post("/saveBranchLocation", authenticateADMIN, saveBranchLocation);
 
 
