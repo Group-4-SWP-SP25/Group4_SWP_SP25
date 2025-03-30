@@ -671,7 +671,7 @@ BEGIN
     INSERT INTO [User] (Username, Password, FirstName, LastName, Email, Phone, DOB, LastActivity)
     VALUES (
         CONCAT('user', @counter), -- Username
-        'password', -- Password
+        'abc123', -- Password
         CONCAT('FirstName', @counter), -- FirstName
         CONCAT('LastName', @counter), -- LastName
         CONCAT('user', @counter, '@example.com'), -- Email
@@ -692,17 +692,4 @@ INSERT INTO [Car](UserID, CarName, Brand, RegistrationNumber, [Year], CarImage, 
 (4, 'Car 2', 'Honda', '654321', 2015, 'https://akm-img-a-in.tosshub.com/indiatoday/styles/medium_crop_simple/public/2024-11/1_4.jpg', 'Maintaining'),
 (4, 'Car 3', 'Ford', '987654', 2018, 'https://images.dealer.com/autodata/us/640/2020/USD00FOS372A0/USC80FOS371A01300.jpg', 'Active'),
 (4, 'Car 4', 'BMW', '125478', 2020, '', 'Active');
-GO
-
-INSERT INTO [Order] (UserID, CarID, BranchID, PartID, ServiceID, QuantityUsed)
-VALUES (2, 1, 1, 8, 113, 2);
-GO
-
-ENABLE TRIGGER DeleteOrder ON [Order];
-GO
-
-DELETE FROM [Order] WHERE UserID = 2 AND CarID = 1;
-GO
-
-DISABLE TRIGGER DeleteOrder ON [Order]
 GO
