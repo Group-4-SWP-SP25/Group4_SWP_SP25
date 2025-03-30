@@ -2,7 +2,19 @@ $(document).ready(function () {
   let totalPrice = 0;
 
   $(".btn-manage-order").click(async function () {
-    $(".add-order").removeClass("hidden");
+    const user = await $.ajax({
+      url: "http://localhost:3000/getUserInfo",
+      method: "POST",
+      contentType: "application/json",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+
+    if (user.role === "Employee") {
+      $(".add-order").removeClass("hidden");
+    }
+
     $(".order-table-container").removeClass("hidden");
     $(".order-empty").addClass("hidden");
     $(".total-price-order").addClass("hidden");
@@ -206,6 +218,8 @@ function toggleErrorNoCar() {
 }
 
 function toggleAddOrder() {
+  $(".popup-add-order").toggleClass("hidden");
+  $(".choose-part, .choose-service, .quantity").addClass("hidden"); // Gộp selector
   if (!$(".overlay").hasClass("active")) {
     $("#add-order").css("display", "flex");
     $(".overlay").css("display", "flex");
@@ -223,8 +237,6 @@ function toggleAddOrder() {
       $(".overlay").css("display", "none");
     }, 300);
   }
-  $(".popup-add-order").toggleClass("hidden");
-  $(".choose-part, .choose-service, .quantity").addClass("hidden"); // Gộp selector
 
   $("body").toggleClass("no-scroll");
 }

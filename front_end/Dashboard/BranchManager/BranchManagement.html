@@ -17,31 +17,9 @@
 <body>
 
 
-    <div class="header">
-        <h1>Dashboard</h1>
-        <div class="user-info">
-            <span>Welcome, Admin</span>
-        </div>
-    </div>
-
-    <div class="sidebar">
-        <h2><a href="../../HomePage/HomePage.html" id="HomePage">Auto Care 247</a>
-        </h2>
-        <div class="admin">
-            <img src="../../../resource/admin.jpg" alt="Admin">
-            <span>Admin</span>
-        </div>
-        <a class="option" href="../DashBoard/dashboard.html">Overview</a>
-        <a class="option" href="#">Leaderboard</a>
-        <a class="option" href="#">Order</a>
-        <a class="option" href="#">Products</a>
-        <a class="option" href="#">Sales Report</a>
-        <a class="option" href="../CustomerManager/customer_management.html">Customer
-            Management</a>
-        <a class="option" href="#">Messages</a>
-        <a class="option" href="#" style="background-color: #33334d">Settings</a>
-        <a class="option" href="#">Sign Out</a>
-    </div>
+    <header>
+        <div class="page-frame"></div>
+    </header>
 
     <div class="content custom-scrollbar">
         <div class="path">
@@ -52,7 +30,64 @@
         </div>
         <!-- branch  -->
 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+            integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script>
+            fetch('../page_frame/page_frame.html')
+                .then((response) => response.text())
+                .then((data) => {
+                    document.querySelector('.page-frame').innerHTML = data;
+                    const css = document.createElement('link');
+                    css.rel = 'stylesheet';
+                    css.href = '../page_frame/style.css';
+                    document.head.appendChild(css);
+                    const script = document.createElement('script');
+                    script.src = '../page_frame/script.js';
+                    document.head.appendChild(script);
 
+
+                    // current page indicator
+                    const currentPageFile = window.location.pathname.split('/').pop();
+                    document
+                        .querySelector('.page-frame')
+                        .querySelectorAll('.option')
+                        .forEach((option) => {
+                            const anchorHref = option.getAttribute('href');
+                            if (anchorHref.includes(currentPageFile)) {
+                                option.style.backgroundColor = '#33334d';
+                            }
+                        });
+                });
+        </script>
+        <!-- End scripts -->
+        <script>
+            fetch('../page_frame/page_frame.html')
+                .then((response) => response.text())
+                .then((data) => {
+                    document.querySelector('.page-frame').innerHTML = data;
+                    const css = document.createElement('link');
+                    css.rel = 'stylesheet';
+                    css.href = '../page_frame/style.css';
+                    document.head.appendChild(css);
+                    const script = document.createElement('script');
+                    script.src = '../page_frame/script.js';
+                    document.head.appendChild(script);
+
+
+                    // current page indicator
+                    const currentPageFile = window.location.pathname.split('/').pop();
+                    document
+                        .querySelector('.page-frame')
+                        .querySelectorAll('.option')
+                        .forEach((option) => {
+                            const anchorHref = option.getAttribute('href');
+                            if (anchorHref.includes(currentPageFile)) {
+                                option.style.backgroundColor = '#33334d';
+                            }
+                        });
+                });
+        </script>
         <script src="./BranchManagement.js"></script>
 </body>
 

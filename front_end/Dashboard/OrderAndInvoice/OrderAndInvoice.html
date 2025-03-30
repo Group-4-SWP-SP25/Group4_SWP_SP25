@@ -50,7 +50,7 @@
       <div class="manage-header hidden">
         <div class="user-info">
           <div class="user-name">
-            <p>User Name: <span class="user-name-text">aaa</span></p>
+            <p>User Name: <span class="user-name-text"></span></p>
           </div>
           <span class="switch-user">Switch user</span>
         </div>
@@ -183,6 +183,10 @@
           css.rel = 'stylesheet';
           css.href = '../page_frame/style.css';
           document.head.appendChild(css);
+          const script = document.createElement('script');
+          script.src = '../page_frame/script.js';
+          document.head.appendChild(script);
+
 
           // current page indicator
           const currentPageFile = window.location.pathname.split('/').pop();
