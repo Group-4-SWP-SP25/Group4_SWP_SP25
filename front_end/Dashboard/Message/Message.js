@@ -351,23 +351,13 @@ async function AddUser(id, name, lastMessage, lastMessageID) {
                 <span class="last-message">${lastMessage}</span>
             </div>
         </div>
-        <div class="message-item-action">
-            <button class="message-item-action-btn">
-                <span class="material-icons">
-                    menu
-                </span>
-            </button>
-        </div>
     `;
 
     user.querySelector('.last-message').setAttribute('last-message-id', lastMessageID)
     user.addEventListener('click', () => {
         switchUser(id, name)
     })
-    user.querySelector('.message-item-action-btn').addEventListener('click', () => {
-        alert('click action button of ' + name);
-        event.stopPropagation();
-    })
+
     userList.appendChild(user);
 
     // avatar
