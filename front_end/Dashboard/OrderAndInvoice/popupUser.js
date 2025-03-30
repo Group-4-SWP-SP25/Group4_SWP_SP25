@@ -151,6 +151,7 @@ async function removeUser(id) {
   let $item = $(".popup-list").find(`[item-id="${id}"]`);
   $item.removeClass("choose");
   $PopupHeader.html("");
+
   userHeaderID = 0;
 }
 

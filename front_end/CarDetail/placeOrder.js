@@ -192,12 +192,39 @@ $(document).ready(function () {
 
 async function placeOrder() {
   try {
+    const urlParams = new URLSearchParams(window.location.search);
+    const carID = parseInt(urlParams.get("carID"));
+    const user = await $.ajax({
+      url: "http://localhost:3000/getUserInfo",
+      method: "POST",
+      contentType: "application/json",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
 
     const branchID = parseInt($(".select-branch").val());
+
     if (isNaN(branchID)) {
       $(".error-branch").removeClass("hidden");
       return;
     }
+
+    const serviceID = parseInt($(".select-service").val());
+
+    if (isNaN(serviceID)) {
+      $(".error-service").removeClass("hidden");
+      return;
+    }
+
+    const accessory = await $.ajax({
+      url: "http://localhost:3000/accessoryInfo",
+      method: "POST",
+      contentType: "application/json",
+      data: JSON.stringify({
+        serviceID: serviceID,
+      }),
+    });
 
     const componentInStock = await $.ajax({
       url: "http://localhost:3000/componentInStockInfo",
@@ -225,29 +252,6 @@ async function placeOrder() {
     if (quantityRemain === 0) {
       return;
     }
-
-    const urlParams = new URLSearchParams(window.location.search);
-    const carID = parseInt(urlParams.get("carID"));
-    const user = await $.ajax({
-      url: "http://localhost:3000/getUserInfo",
-      method: "POST",
-      contentType: "application/json",
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    });
-
-    const partID = selectedPartID;
-    console.log(partID);
-
-
-
-    const serviceID = parseInt($(".select-service").val());
-
-    if (isNaN(serviceID)) {
-      $(".error-service").removeClass("hidden");
-      return;
-    }
     const selectedService = await $.ajax({
       url: "http://localhost:3000/serviceInfo",
       method: "POST",
@@ -257,6 +261,7 @@ async function placeOrder() {
       }),
     });
     const quantityUsed = parseInt($(".qty-val").val());
+    console.log(quantityUsed);
     if (
       selectedService.AffectInventory === 1 &&
       (isNaN(quantityUsed) || quantityUsed <= 0)
@@ -273,7 +278,7 @@ async function placeOrder() {
       data: JSON.stringify({
         userID: user.id,
         carID: carID,
-        partID: partID,
+        partID: selectedPartID,
         serviceID: serviceID,
         branchID: branchID,
         quantityUsed: quantityUsed,
@@ -284,7 +289,7 @@ async function placeOrder() {
 
     showNotification();
   } catch (err) {
-    console.error("Cannot place order!", err);
+    throw err;
   }
 }
 
