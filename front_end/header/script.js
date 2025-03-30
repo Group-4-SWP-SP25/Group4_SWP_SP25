@@ -40,7 +40,7 @@ $(document).ready(async function () {
   });
 
   $("#dashboard").on("click", function () {
-    window.location.href = "/front_end/Dashboard/DashBoard/dashboard.html";
+    window.location.href = "/front_end/Dashboard/LeaderBoard/LeaderBoard.html";
   });
 
   $("#my-cars").on("click", function () {

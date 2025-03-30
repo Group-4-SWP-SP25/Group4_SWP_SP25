@@ -192,6 +192,13 @@ $(document).ready(function () {
 
 async function placeOrder() {
   try {
+
+    const branchID = parseInt($(".select-branch").val());
+    if (isNaN(branchID)) {
+      $(".error-branch").removeClass("hidden");
+      return;
+    }
+
     const componentInStock = await $.ajax({
       url: "http://localhost:3000/componentInStockInfo",
       method: "POST",
@@ -233,11 +240,7 @@ async function placeOrder() {
     const partID = selectedPartID;
     console.log(partID);
 
-    const branchID = parseInt($(".select-branch").val());
-    if (isNaN(branchID)) {
-      $(".error-branch").removeClass("hidden");
-      return;
-    }
+
 
     const serviceID = parseInt($(".select-service").val());
 
@@ -281,7 +284,7 @@ async function placeOrder() {
 
     showNotification();
   } catch (err) {
-    console.error("Cannot place order!");
+    console.error("Cannot place order!", err);
   }
 }
 
