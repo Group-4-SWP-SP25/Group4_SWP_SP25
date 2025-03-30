@@ -12,7 +12,7 @@
     <div class="header">
         <h1>Dashboard</h1>
         <div class="user-info">
-            <span>Welcome, Admin</span>
+            <span class="welcome">Welcome, Admin</span>
         </div>
     </div>
 
@@ -22,29 +22,29 @@
         </a>
 
         <div class="admin">
-            <img src="../../../resource/admin.jpg" alt="Admin" />
-            <h3>Admin</h3>
+            <img src="/resource/admin.jpg" alt="Admin" />
+            <h3 class="role"></h3>
         </div>
 
-        <a class="option" href="/front_end/Dashboard/DashBoard/dashboard.html">
+        <a class="option" id="overview" href="/front_end/Dashboard/DashBoard/dashboard.html">
             Overview
         </a>
-        <a class="option" href="/front_end/Dashboard/LeaderBoard/LeaderBoard.html">
+        <a class="option" id="leaderboard" href="/front_end/Dashboard/LeaderBoard/LeaderBoard.html">
             Leaderboard
         </a>
-        <a class="option" href="/front_end/Dashboard/ServiceManagement/ServiceManagement.html">
+        <a class="option" id="service-management" href="/front_end/Dashboard/ServiceManagement/ServiceManagement.html">
             Service Management
         </a>
-        <a class="option" href="/front_end/Dashboard/ProductManagement/ProductManager.html">
+        <a class="option" id="product-management" href="/front_end/Dashboard/ProductManagement/ProductManager.html">
             Product Management
         </a>
-        <a class="option" href="/front_end/Dashboard/OrderAndInvoice/OrderAndInvoice.html">
+        <a class="option" id="order-invoice" href="/front_end/Dashboard/OrderAndInvoice/OrderAndInvoice.html">
             Order & Invoice
         </a>
-        <a class="option" href="/front_end/Dashboard/SaleReport/SaleReport.html">
+        <a class="option" id="sales-report" href="/front_end/Dashboard/SaleReport/SaleReport.html">
             Sales Report
         </a>
-        <a class="option" href="/front_end/Dashboard/CustomerManager/customer_management.html">
+        <a class="option" id="customer-management" href="/front_end/Dashboard/CustomerManager/customer_management.html">
             Customer Management
         </a>
         <a class="option" href="/front_end/Dashboard/BranchManager/BranchManagement.html">
@@ -53,12 +53,17 @@
         <a class="option" href="/front_end/Dashboard/Message/Message.html">
             Messages
         </a>
-        <a class="option sign-out" href="#">
+        <a class="option sign-out" id="sign-out">
             Sign Out
         </a>
     </div>
 
+    <!-- Script -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="script.js"></script>
+    <!-- End Script -->
 </body>
 
 </html>

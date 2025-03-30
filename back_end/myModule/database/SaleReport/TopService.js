@@ -5,14 +5,15 @@ const TopService = async (req, res) => {
         const pool = global.pool;
         const result = await pool.request()
             .query(`
-                SELECT 
-                    s.ServiceID, 
-                    s.ServiceName, 
-                    COUNT(o.OrderID) AS TotalOrders
-                FROM Service s
-                LEFT JOIN [Order] o ON s.ServiceID = o.ServiceID
-                GROUP BY s.ServiceID, s.ServiceName
-                ORDER BY TotalOrders DESC
+             SELECT 
+    s.ServiceID, 
+    s.ServiceName, 
+    COUNT (*) AS TotalOrders
+FROM Service s
+LEFT JOIN Bill b ON s.ServiceID = b.ServiceID
+WHERE b.TotalPrice > 0 
+GROUP BY s.ServiceID, s.ServiceName
+ORDER BY TotalOrders DESC;
             `);
 
         res.json(result.recordset); // Trả về danh sách service cùng số lượng order

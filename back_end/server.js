@@ -46,24 +46,22 @@ const TotalProductSold = require("./myModule/database/SaleReport/TotalProductSol
 const TotalNewCustomer = require("./myModule/database/SaleReport/TotalNewCustomer.js");
 const TopService = require("./myModule/database/SaleReport/TopService.js");
 const TopRevenueByMonth = require("./myModule/database/SaleReport/TopRevenueByMonth.js");
-const TopProducts = require("./myModule/database/SaleReport/TopProducts.js");
-const TotalQuantity = require("./myModule/database/ProductManagement/TotalQuantity.js");
-const ProductOverview = require("./myModule/database/ProductManagement/ProductOverview.js");
-const DeleteProduct = require("./myModule/database/ProductManagement/DeleteProduct.js");
-const UpdateProduct = require("./myModule/database/ProductManagement/UpdateProduct.js");
-const CompareTotalProduct = require("./myModule/database/ProductManagement/CompareTotalProduct.js");
-// const connectDB = require('./myModule/database/connectDB.js');
-// const { authenticateJWT, authenticateADMIN } = require('./myModule/Utils/JWT.js');
-// const { GetUserInfo, GetUserInfo_Admin } = require('./myModule/database/user/getUserInfo.js');
-// const { getUserList, getTotalUserCount } = require('./myModule/controller/UserListControl.js');
-// const TotalRevenueToday = require('./myModule/database/SaleReport/TotalRevenueToday.js');
-// const TotalOrderToday = require('./myModule/database/SaleReport/TotalOrderToday.js');
-// const TotalProductSold = require('./myModule/database/SaleReport/TotalProductSold.js');
-// const TotalNewCustomer = require('./myModule/database/SaleReport/TotalNewCustomer.js');
-// const TopProduct = require('./myModule/database/SaleReport/TopProduct.js');
+const TopProducts=require("./myModule/database/SaleReport/TopProducts.js");
+const TotalQuantity=require("./myModule/database/ProductManagement/TotalQuantity.js");  
+const ProductOverview=require("./myModule/database/ProductManagement/ProductOverview.js");
+const DeleteProduct= require("./myModule/database/ProductManagement/DeleteProduct.js");
+const UpdateProduct= require("./myModule/database/ProductManagement/UpdateProduct.js");
+const CompareTotalProduct= require("./myModule/database/ProductManagement/CompareTotalProduct.js");
+const GetServiceTypes= require("./myModule/database/ProductManagement/GetServiceTypes.js");
+const GetBranches= require("./myModule/database/ProductManagement/GetBranches.js");
+const AddAccessory= require("./myModule/database/ProductManagement/AddAccessory.js");
+
 
 // user
-const { register, registerEmployee } = require("./myModule/controller/register.js");
+const {
+  register,
+  registerEmployee,
+} = require("./myModule/controller/register.js");
 const getPassword = require("./myModule/controller/user/getPassword.js");
 const changePassword = require("./myModule/database/user/changePassword.js");
 const checkAccount = require("./myModule/controller/user/checkAccount.js");
@@ -85,11 +83,14 @@ const { getEmployees } = require("./myModule/controller/employee/employee.js");
 // branch
 const branchInfo = require("./myModule/controller/branch/branchInfo.js");
 const branchList = require("./myModule/controller/branch/branchList.js");
+const branchOfEmployee = require("./myModule/controller/branch/branchOfEmployee.js");
+
 const editBranchInfo = require("./myModule/controller/branch/editBranchInfo.js");
 const {
   getBranchLocation,
   saveBranchLocation,
 } = require("./myModule/controller/map/map.js");
+
 
 // service
 const serviceInfo = require("./myModule/controller/service/serviceInfo.js");
@@ -114,6 +115,7 @@ const UpdateCarPartApi = require("./myModule/controller/car/updateCarPartApi.js"
 
 // car part
 const carPartInfoInCar = require("./myModule/controller/carPart/carPartInfoInCar.js");
+const carPartList = require("./myModule/controller/carPart/carPartList.js");
 
 // part info
 const listPartBySystem = require("./myModule/controller/partInfo/listPartBySystem.js");
@@ -129,6 +131,7 @@ const accessoryInfo = require("./myModule/controller/accessory/accessoryInfo.js"
 // inventory
 const accessoryListInStock = require("./myModule/controller/inventory/accessoryListInStock.js");
 const componentInStockInfo = require("./myModule/controller/inventory/componentInStockInfo.js");
+const totalQuantityInOrder = require("./myModule/controller/inventory/totalQuantityInOrder.js");
 
 // order
 const orderInfo = require("./myModule/controller/order/orderInfo.js");
@@ -162,16 +165,16 @@ const {
   addEvent_apis,
 } = require("./myModule/controller/calendar/calendar.js");
 
+// const { getEvents_api, addEvent_apis } = require("./myModule/controller/calendar/calendar.js");
+// about
+const GetStats= require("./myModule/database/about/GetStats.js");
+const branchDetail=require("./myModule/database/about/branchDetail.js");
 // ----------------------------------------------------------
 // CREATE API
 // admin
-app.post("/CustomerManager/getUserList", authenticateADMIN, getUserList);
-app.post(
-  "/CustomerManager/getTotelUserCount",
-  authenticateADMIN,
-  getTotalUserCount
-);
-app.post("/CustomerManager/getUserInfo", authenticateADMIN, GetUserInfo_Admin);
+app.post("/CustomerManager/getUserList", getUserList);
+app.post("/CustomerManager/getTotelUserCount", getTotalUserCount);
+app.post("/CustomerManager/getUserInfo", GetUserInfo_Admin);
 app.post("/Message/SendMessage", authenticateJWT, SendMessage);
 app.post("/Message/GetMessage", authenticateJWT, GetMessage);
 app.post("/Message/GetList", authenticateJWT, GetList);
@@ -192,11 +195,15 @@ app.delete("/DeleteProduct", authenticateADMIN, DeleteProduct);
 app.post("/UpdateProduct", authenticateADMIN, UpdateProduct);
 app.post("/CompareTotalProduct", authenticateADMIN, CompareTotalProduct);
 app.post("/register/Employee", authenticateADMIN, registerEmployee);
-// app.post('/TotalRevenueToday', authenticateADMIN, TotalRevenueToday);
-// app.post('/TotalOrderToday', authenticateADMIN, TotalOrderToday);
-// app.post('/TotalProductSold', authenticateADMIN, TotalProductSold);
-// app.post('/TotalNewCustomer', authenticateADMIN, TotalNewCustomer);
-// app.post('/TopProduct', authenticateADMIN, TopProduct);
+app.post("/ProductOverview", authenticateADMIN, ProductOverview);
+app.delete("/DeleteProduct", authenticateADMIN, DeleteProduct);
+app.put("/UpdateProduct", authenticateADMIN, UpdateProduct);
+app.post("/CompareTotalProduct", authenticateADMIN, CompareTotalProduct);
+app.get("/GetServiceTypes", authenticateADMIN, GetServiceTypes);
+app.get("/GetBranches", authenticateADMIN, GetBranches);
+app.post("/AddAccessory", authenticateADMIN, AddAccessory);
+
+
 
 // user
 app.post("/getPassword", getPassword);
@@ -220,7 +227,9 @@ app.post("/branchInfo", branchInfo);
 app.post("/branchList", branchList);
 app.post("/editBranchInfo", authenticateADMIN, editBranchInfo);
 app.post("/getBranchLocation", getBranchLocation);
+app.post("/branchOfEmployee", branchOfEmployee);
 app.post("/saveBranchLocation", authenticateADMIN, saveBranchLocation);
+
 
 // service
 app.post("/serviceInfo", serviceInfo);
@@ -252,6 +261,7 @@ app.post("/listCarSystem", listCarSystem);
 
 // car part
 app.post("/carPartInfoInCar", carPartInfoInCar);
+app.post("/carPartList", carPartList);
 
 // part info
 app.post("/listPartBySystem", listPartBySystem);
@@ -263,6 +273,7 @@ app.post("/accessoryInfo", accessoryInfo);
 // inventory
 app.post("/accessoryListInStock", accessoryListInStock);
 app.post("/componentInStockInfo", componentInStockInfo);
+app.post("/totalQuantityInOrder", totalQuantityInOrder);
 
 // order
 app.post("/orderInfo", orderInfo);
@@ -279,6 +290,10 @@ app.post("/paymentInfo", paymentInfo);
 
 // bill
 app.post("/billList", billList);
+
+// about
+app.get("/GetStats", GetStats);
+app.get("/branchDetail", branchDetail);
 // ----------------------------------------------------------
 // START SERVER
 app.listen(PORT, () => {
