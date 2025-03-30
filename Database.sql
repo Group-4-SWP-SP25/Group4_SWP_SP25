@@ -654,10 +654,10 @@ BEGIN
 END;
 GO
 
-INSERT INTO Branch(BranchName, BranchAddress) VALUES
-(N'Branch 1', N'123 Nguyen Van Linh, District 7, Ho Chi Minh City'),
-(N'Branch 2', N'456 Le Van Luong, District 9, Ho Chi Minh City'),
-(N'Branch 3', N'789 Nguyen Huu Tho, District 4, Ho Chi Minh City');
+INSERT INTO Branch(BranchName, BranchAddress, BranchPhone, BranchEmail) VALUES
+(N'Branch 1', N'123 Nguyen Van Linh, District 7, Ho Chi Minh City', '0989940126', 'hhh@gmail.com'),
+(N'Branch 2', N'456 Le Van Luong, District 9, Ho Chi Minh City', '0335677005', 'nlh@gmail.com'),
+(N'Branch 3', N'789 Nguyen Huu Tho, District 4, Ho Chi Minh City', '0967844348', 'vxt@gmail.com');
 
 INSERT INTO Employee(EmployeeID, BranchID) VALUES (1, 1);
 
